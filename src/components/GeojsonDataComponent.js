@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MapContainer as LeafletMap, TileLayer, Marker, Popup } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
-import { Icon, map } from "leaflet";
+import { Icon } from "leaflet";
 
 const GeojsonDataComponent = ({ filePath }) => {
   const [markers, setMarkers] = useState([]);

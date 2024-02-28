@@ -118,7 +118,7 @@ function App() {
   }
 
   const toggleJson = () => {
-    if (chosenJson == gymgeojson) {
+    if (chosenJson === gymgeojson) {
       setChosenJson(hawkergeojson)
     } else setChosenJson(gymgeojson)
   }
