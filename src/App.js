@@ -3,8 +3,7 @@ import { Auth } from './components/auth';
 import { getFirestore, collection, addDoc, deleteDoc, onSnapshot, updateDoc, getDocs } from 'firebase/firestore';
 import { query, where } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
-import PaginationComponent from './components/PaginationComponent';
-import GeojsonDataComponent from "./components/GeojsonDataComponent";
+import GeojsonMapComponent from "./components/GeojsonMapComponent";
 import gymgeojson from "./geojson/GymsSGGEOJSON.geojson";
 import hawkergeojson from "./geojson/HawkerCentresGEOJSON.geojson";
 
@@ -125,15 +124,18 @@ function App() {
   
   return (
     <div className="App">
-    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px', marginTop: '20px'}}>
-      <GeojsonDataComponent filePath={chosenJson}/>
+
+    {/* Map Div */}
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px'}}>
+      <GeojsonMapComponent filePath={chosenJson}/>
     </div>
-    <button onClick={toggleJson}>Change Json</button>
+    <button onClick={toggleJson}>Change GEOJson</button>
 
+    <hr />
+    {/* Auth Component */}
     <Auth />
-
-    <PaginationComponent />
-    
+    <hr />
+    {/* Database Editing */}
     <h3>Add Data</h3>
     <form className='add' onSubmit={(e) => { e.preventDefault(); addData(); }}>
       <label htmlFor="email">Email: </label>
@@ -162,8 +164,10 @@ function App() {
     </form>
     <br />
     
+    <hr />
+    {/* Display Database Contents */}
     <h2 style={{ marginBottom: '5px'}}>List of Users Preferences</h2>
-    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px'}}>
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px'}}>
     <table>
         <thead>
           <tr>
@@ -182,6 +186,8 @@ function App() {
       </table>
     </div>
 
+    <hr />
+    {/* LTA Datamall Test */}
     <label>Enter Bus Stop Code: </label>
     <input type="text" value={busStopCode} onChange={(event) => setBusStopCode(event.target.value)}/>
     <br />
