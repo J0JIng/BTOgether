@@ -13,7 +13,7 @@ const PaginationComponent = () => {
         setLoading(true);
         const response = await fetch(`/api/action/datastore_search?resource_id=d_11e68bba3b3c76733475a72d09759eeb&page=${currentPage}`);
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error('Failed to fetch data.gov data');
         }
         const jsonData = await response.json();
         setData(prevData => [...prevData, ...jsonData.result.records]);

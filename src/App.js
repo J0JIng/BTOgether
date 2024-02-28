@@ -4,6 +4,9 @@ import { getFirestore, collection, addDoc, deleteDoc, onSnapshot, updateDoc, get
 import { query, where } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import PaginationComponent from './components/PaginationComponent';
+import GeojsonDataComponent from "./components/GeojsonDataComponent";
+import mygeojson from "./GymsSGGEOJSON.geojson";
+
 
 var myHeaders = new Headers();
 myHeaders.append("AccountKey", "++qZshXPQSea0zZRKDZgdw==");
@@ -22,6 +25,7 @@ function formatTime(timestamp) {
 function App() {
   const [busServices, setBusServices] = useState([])
   const [busStopCode, setBusStopCode] = useState(''); // Initial value
+  const filePath = "./GymsSGGEOJSON.geojson";
 
   // Get bus times
   useEffect(() => {
@@ -113,6 +117,10 @@ function App() {
   
   return (
     <div className="App">
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px', marginTop: '20px'}}>
+      <GeojsonDataComponent filePath={mygeojson}/>
+    </div>
+
     <Auth />
 
     <PaginationComponent />
@@ -192,7 +200,7 @@ function App() {
         ))}
       </tbody>
     </table>
-</ul>
+    </ul>
     </div>
     
     </div>
