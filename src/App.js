@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import PaginationComponent from './components/PaginationComponent';
 import GeojsonDataComponent from "./components/GeojsonDataComponent";
 import gymgeojson from "./geojson/GymsSGGEOJSON.geojson";
+import hawkergeojson from "./geojson/HawkerCentresGEOJSON.geojson";
 
 
 
@@ -26,6 +27,7 @@ function formatTime(timestamp) {
 function App() {
   const [busServices, setBusServices] = useState([])
   const [busStopCode, setBusStopCode] = useState(''); // Initial value
+  const [chosenJson, setChosenJson] = useState(gymgeojson);
 
   // Get bus times
   useEffect(() => {
@@ -114,12 +116,19 @@ function App() {
       })
       .catch((error) => { console.error("Error fetching documents:", error); });
   }
+
+  const toggleJson = () => {
+    if (chosenJson == gymgeojson) {
+      setChosenJson(hawkergeojson)
+    } else setChosenJson(gymgeojson)
+  }
   
   return (
     <div className="App">
     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px', marginTop: '20px'}}>
-    <GeojsonDataComponent filePath={gymgeojson}/>
+      <GeojsonDataComponent filePath={chosenJson}/>
     </div>
+    <button onClick={toggleJson}>Change Json</button>
 
     <Auth />
 

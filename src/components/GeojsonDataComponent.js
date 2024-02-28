@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { MapContainer as LeafletMap, TileLayer, Marker, Popup } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
-import { Icon } from "leaflet";
+import { Icon, map } from "leaflet";
 
 const GeojsonDataComponent = ({ filePath }) => {
   const [markers, setMarkers] = useState([]);
-  const customIcon = new Icon({
-    iconUrl: require("../icons/gympin.png"),
-    iconSize: [38, 38]
-  });
+  const [markerIcon, setMarkerIcon] = useState();
+  const [mapTitle, setMapTitle] = useState();
+
+  const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [38, 38]});
+  const hawkerIcon = new Icon({ iconUrl: require("../icons/hawkerpin.png"), iconSize: [38, 38]});
 
   useEffect(() => {
     if (filePath) {
@@ -29,25 +30,31 @@ const GeojsonDataComponent = ({ filePath }) => {
         })
         .catch((error) => console.error("Error fetching GeoJSON:", error));
     }
+    if (filePath.includes("Gym")) {
+      setMarkerIcon(gymIcon)
+      setMapTitle("Gyms")
+    } else {
+      setMarkerIcon(hawkerIcon)
+      setMapTitle("Hawkers")
+    }
   }, [filePath]);
 
   // Custom style for the popup
   const popupStyle = {
-    maxWidth: "600px",
     maxHeight: "100px",
     overflowY: "auto"
   };
 
   return (
     <div>
-    <h2 style={{marginBottom: 10}}>Map View</h2>
+    <h2 style={{marginBottom: 10}}>Map View of {mapTitle}</h2>
     <LeafletMap center={[1.3634488, 103.8165308]} zoom={12.26} style={{ height: '60vh', width: '1000px', border: '4px LightSteelBlue solid'}}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {markers.map((marker, index) => (
-        <Marker key={index} position={marker.geocode} icon={customIcon}>
+        <Marker key={index} position={marker.geocode} icon={markerIcon}>
           <Popup style={popupStyle}>
             {/* Integration of filtered and non-blank HTML content from Description into the Popup */}
             <div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} />
