@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useMap } from 'react-leaflet';
 
 L.Marker.prototype.options.icon = L.icon({
-    iconUrl: require("../icons/google-maps.png"), iconSize: [32, 32]
+    iconUrl: require("../icons/google-maps.png"), iconSize: [0, 0]
 });
 
 const RoutingMachine = ({ markerLat, markerLng }) => {
@@ -37,22 +37,22 @@ const RoutingMachine = ({ markerLat, markerLng }) => {
                     showAlternatives: false
                 });
 
-                routingControl.on('routeselected', function(event) {
-                    const route = event.route;
-                    if (route) {
-                        const travelTime = route.summary.totalTime; // in seconds
-                        const distanceInMeters = route.summary.totalDistance;
+                // routingControl.on('routeselected', function(event) {
+                //     const route = event.route;
+                //     if (route) {
+                //         const travelTime = route.summary.totalTime; // in seconds
+                //         const distanceInMeters = route.summary.totalDistance;
 
-                        // Convert travel time to hours, minutes, and seconds
-                        const hours = Math.floor(travelTime / 3600);
-                        const minutes = Math.floor((travelTime % 3600) / 60);
+                //         // Convert travel time to hours, minutes, and seconds
+                //         const hours = Math.floor(travelTime / 3600);
+                //         const minutes = Math.floor((travelTime % 3600) / 60);
 
-                        const distanceInKm = (distanceInMeters / 1000).toFixed(2); // Convert to kilometers with two decimal places
+                //         const distanceInKm = (distanceInMeters / 1000).toFixed(2); // Convert to kilometers with two decimal places
 
-                        console.log('Travel time:', hours, 'hours', minutes, 'minutes');
-                        console.log('Distance:', distanceInKm, 'km');
-                    }
-                });
+                //         console.log('Travel time:', hours, 'hours', minutes, 'minutes');
+                //         console.log('Distance:', distanceInKm, 'km');
+                //     }
+                // });
 
                 routingControl.addTo(map);
                 routingControlRef.current = routingControl;

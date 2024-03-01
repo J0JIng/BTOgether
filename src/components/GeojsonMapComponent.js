@@ -53,23 +53,12 @@ const GeojsonMapComponent = ({ filePath }) => {
     overflowY: "auto"
   };
 
-  const updateHome = (coords, type) => {
-    if (coords !== 0) {
-      const parsedCoords = parseFloat(coords.trim());
-      if (isNaN(parsedCoords)) {
-        console.error("Invalid input: Please enter a valid number for latitude or longitude.");
-        return;
-      }
-      return setHomeMarker(prevHomeMarker => {
-        const updatedArray = [...prevHomeMarker];
-        if (type === "lat") {
-          updatedArray[0] = parsedCoords;
-        } else {
-          updatedArray[1] = parsedCoords;
-        }
-        return updatedArray;
-      });
-    }
+  const handleMarkerDragEnd = (event) => {
+    const marker = event.target;
+    const position = marker.getLatLng();
+    setHomeMarker([position.lat, position.lng]);
+    setLatitude(position.lat);
+    setLongitude(position.lng);
   };
 
   const handleGeocode = async () => {
@@ -85,19 +74,6 @@ const GeojsonMapComponent = ({ filePath }) => {
       }
     } catch (error) {
       console.error('Error geocoding address:', error);
-    }
-  };
-
-  const handleReverseGeocode = async () => {
-    try {
-      const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`);
-      if (response.data.address) {
-        setAddress(response.data.address);
-      } else {
-        console.error('Coordinates not found');
-      }
-    } catch (error) {
-      console.error('Error reverse geocoding coordinates:', error);
     }
   };
 
@@ -118,7 +94,7 @@ const GeojsonMapComponent = ({ filePath }) => {
           </Marker>
         ))}
         {homeMarker[0] && homeMarker[1] && (
-          <Marker position={homeMarker} icon={homeIcon}>
+          <Marker position={homeMarker} icon={homeIcon} draggable={true} eventHandlers={{ dragend: handleMarkerDragEnd }}>
             <Popup><h3>Home</h3></Popup>
           </Marker>
         )}
@@ -127,12 +103,9 @@ const GeojsonMapComponent = ({ filePath }) => {
       <label>Address: </label>
       <input type='text' value={address} onChange={(e) => setAddress(e.target.value)}></input>
       <button onClick={handleGeocode}>Geocode</button>
-      <button onClick={handleReverseGeocode}>Reverse Geocode</button>
-      <label>Latitude: </label>
-      <input type='text' value={latitude} onChange={(e) => setLatitude(parseFloat(e.target.value))}></input>
-      <label>Longitude: </label>
-      <input type='text' value={longitude} onChange={(e) => setLongitude(parseFloat(e.target.value))}></input>
-      <button onClick={() => setHomeMarker([latitude, longitude])}>Set Home Marker</button>
+      {latitude && longitude && (
+        <h4>Latitude: {latitude}, Longitude: {longitude}</h4>
+      )}
     </div>
   );
 };
