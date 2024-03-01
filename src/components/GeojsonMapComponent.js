@@ -3,6 +3,8 @@ import { MapContainer as LeafletMap, TileLayer, Marker, Popup } from "react-leaf
 import 'leaflet/dist/leaflet.css';
 import { Icon } from "leaflet";
 
+import RoutingMachine from "./routingMachine";
+
 const GeojsonMapComponent = ({ filePath }) => {
   const [markers, setMarkers] = useState([]);
   const [markerIcon, setMarkerIcon] = useState();
@@ -71,16 +73,17 @@ const GeojsonMapComponent = ({ filePath }) => {
       })
     }
   };
-  
+
 
   return (
     <div>
     <h2 style={{marginBottom: 10}}>Map View of {mapTitle}</h2>
-    <LeafletMap center={[1.354, 103.825]} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '1000px', border: '4px LightSteelBlue solid'}}>
+    <LeafletMap center={[1.354, 103.825]} zoom={11.5} ref={mapRef} style={{ height: '80vh', width: '1200px', border: '4px LightSteelBlue solid'}}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      <RoutingMachine markerLat={homeMarker[0]} markerLng={homeMarker[1]} />
       {markers.map((marker, index) => (
         <Marker key={index} position={marker.geocode} icon={markerIcon}>
           <Popup style={popupStyle}>
