@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useMap } from 'react-leaflet';
 
 L.Marker.prototype.options.icon = L.icon({
-    iconUrl: require("../icons/google-maps.png"), iconSize: [4, 4]
+    iconUrl: require("../icons/google-maps.png"), iconSize: [32, 32]
 });
 
 const RoutingMachine = ({ markerLat, markerLng }) => {
