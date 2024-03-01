@@ -27,7 +27,7 @@ const RoutingMachine = ({ markerLat, markerLng }) => {
                         L.latLng(markerLat, markerLng)
                     ],
                     lineOptions: {
-                        styles: [{ color: "#0000FF", weight: 4 }]
+                        styles: [{ color: "#1893ff", weight: 4 }]
                     },
                     show: false, // Hide routing control's UI
                     addWaypoints: false,
@@ -36,23 +36,6 @@ const RoutingMachine = ({ markerLat, markerLng }) => {
                     fitSelectedRoutes: true,
                     showAlternatives: false
                 });
-
-                // routingControl.on('routeselected', function(event) {
-                //     const route = event.route;
-                //     if (route) {
-                //         const travelTime = route.summary.totalTime; // in seconds
-                //         const distanceInMeters = route.summary.totalDistance;
-
-                //         // Convert travel time to hours, minutes, and seconds
-                //         const hours = Math.floor(travelTime / 3600);
-                //         const minutes = Math.floor((travelTime % 3600) / 60);
-
-                //         const distanceInKm = (distanceInMeters / 1000).toFixed(2); // Convert to kilometers with two decimal places
-
-                //         console.log('Travel time:', hours, 'hours', minutes, 'minutes');
-                //         console.log('Distance:', distanceInKm, 'km');
-                //     }
-                // });
 
                 routingControl.addTo(map);
                 routingControlRef.current = routingControl;

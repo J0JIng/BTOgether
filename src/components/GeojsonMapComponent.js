@@ -14,6 +14,7 @@ const GeojsonMapComponent = ({ filePath }) => {
   const [address, setAddress] = useState('');
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [locationNotFound, setLocationNotFound] = useState(false);
   const mapRef = useRef();
 
   const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [38, 38]});
@@ -69,7 +70,9 @@ const GeojsonMapComponent = ({ filePath }) => {
         setLatitude(parseFloat(lat));
         setLongitude(parseFloat(lon));
         setHomeMarker([parseFloat(lat), parseFloat(lon)]);
+        setLocationNotFound(false);
       } else {
+        setLocationNotFound(true);
         console.error('Address not found');
       }
     } catch (error) {
@@ -102,7 +105,8 @@ const GeojsonMapComponent = ({ filePath }) => {
       <h3 style={{ marginBottom: '5px'}}>Set Home Waypoint</h3>
       <label>Address: </label>
       <input type='text' value={address} onChange={(e) => setAddress(e.target.value)}></input>
-      <button onClick={handleGeocode}>Geocode</button>
+      <button onClick={handleGeocode}>Set Home</button>
+      {locationNotFound && <p style={{ color: 'red' }}>Location not found. Please try another address.</p>}
       {latitude && longitude && (
         <h4>Latitude: {latitude}, Longitude: {longitude}</h4>
       )}
