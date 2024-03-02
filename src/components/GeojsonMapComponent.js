@@ -104,10 +104,14 @@ const GeojsonMapComponent = ({ filePath }) => {
     <div>
       <h2 style={{marginBottom: 10}}>Map View of {mapTitle}</h2>
       <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '1000px', border: '4px LightSteelBlue solid'}}>
-        <TileLayer
+      <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        { /* Google Maps Style <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
-        />
+        /> */}
         <RoutingMachine markerLat={homeLocation.latitude} markerLng={homeLocation.longitude} />
         {markers.map((marker, index) => (
           <Marker key={index} position={marker.geocode} icon={markerIcon}>
