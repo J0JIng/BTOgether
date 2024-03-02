@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MapContainer as LeafletMap, TileLayer, Marker, Popup } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
-import { Icon } from "leaflet";
 import axios from 'axios';
+import { Icon } from "leaflet";
 
 import RoutingMachine from "./routingMachine";
+import Routing from "./Routing";
 
 const GeojsonMapComponent = ({ filePath }) => {
   const [markers, setMarkers] = useState([]);
@@ -13,13 +14,14 @@ const GeojsonMapComponent = ({ filePath }) => {
   const [mapCenter, setMapCenter] = useState([1.354, 103.825]);
   const [homeLocation, setHomeLocation] = useState({ address: '', latitude: null, longitude: null });
   const [errorMessage, setErrorMessage] = useState('');
-  const mapRef = useRef();
+  const mapRef = useRef(null);
 
-  const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [38, 38]});
-  const hawkerIcon = new Icon({ iconUrl: require("../icons/hawkerpin.png"), iconSize: [38, 38]});
-  const homeIcon = new Icon({ iconUrl: require("../icons/home-button.png"), iconSize: [38, 38]});
+  const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [24, 24]});
+  const hawkerIcon = new Icon({ iconUrl: require("../icons/hawkerpin.png"), iconSize: [24, 24]});
+  const homeIcon = new Icon({ iconUrl: require("../icons/home-button.png"), iconSize: [24, 24]});
 
-  // Fetch GeoJSON data and set markers and map title
+  const apiKey = 'ssJnHuXxZBHgTKHCyuaMMxIj0r05GW4vC3K49sWkeZI'; // HERE API key
+
   useEffect(() => {
     if (filePath) {
       fetch(filePath)
@@ -45,9 +47,8 @@ const GeojsonMapComponent = ({ filePath }) => {
       setMarkerIcon(hawkerIcon)
       setMapTitle("Hawkers")
     }
-  }, [filePath, mapRef]);
+  }, [filePath]);
 
-  // Handle marker drag end event
   const handleMarkerDragEnd = (event) => {
     const marker = event.target;
     const position = marker.getLatLng();
@@ -58,7 +59,6 @@ const GeojsonMapComponent = ({ filePath }) => {
     }));
   };
 
-  // Geocode address using Nominatim API
   const handleGeocode = async () => {
     try {
       const response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${homeLocation.address}&format=json&addressdetails=1&limit=1`);
@@ -66,8 +66,7 @@ const GeojsonMapComponent = ({ filePath }) => {
         const { lat, lon } = response.data[0];
         const latitude = parseFloat(lat).toFixed(5);
         const longitude = parseFloat(lon).toFixed(5);
-        
-        // Check if the geocoded location is within the bounds of Singapore
+
         const singaporeBounds = {
           north: 1.47,
           south: 1.20,
@@ -103,16 +102,17 @@ const GeojsonMapComponent = ({ filePath }) => {
   return (
     <div>
       <h2 style={{marginBottom: 10}}>Map View of {mapTitle}</h2>
-      <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '1000px', border: '4px LightSteelBlue solid'}}>
-      <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '1200px', border: '4px LightSteelBlue solid'}}>
+        <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         { /* Google Maps Style <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
         /> */}
         <RoutingMachine markerLat={homeLocation.latitude} markerLng={homeLocation.longitude} />
+        
         {markers.map((marker, index) => (
           <Marker key={index} position={marker.geocode} icon={markerIcon}>
             <Popup><div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} /></Popup>
@@ -123,6 +123,7 @@ const GeojsonMapComponent = ({ filePath }) => {
             {/* Popup for home marker */}
           </Marker>
         )}
+        
       </LeafletMap>
       <h3 style={{ marginBottom: '5px'}}>Set Home Waypoint</h3>
       <label>Address: </label>
@@ -134,11 +135,11 @@ const GeojsonMapComponent = ({ filePath }) => {
       {homeLocation.latitude && homeLocation.longitude && (
         <h4>Latitude: {homeLocation.latitude}, Longitude: {homeLocation.longitude}</h4>
       )}
+      <Routing startLat={1.3455586} startLng={103.6817077} endLat={homeLocation.latitude} endLng={homeLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
     </div>
   );
 };
 
-// Filter HTML content
 const filterHtmlContent = (htmlContent) => {
   const tempElement = document.createElement('div');
   tempElement.innerHTML = htmlContent;
