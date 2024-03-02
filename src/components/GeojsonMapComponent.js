@@ -16,12 +16,15 @@ const GeojsonMapComponent = ({ filePath }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const mapRef = useRef(null);
 
+  // These are the icons for the map
   const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [24, 24]});
   const hawkerIcon = new Icon({ iconUrl: require("../icons/hawkerpin.png"), iconSize: [24, 24]});
   const homeIcon = new Icon({ iconUrl: require("../icons/home-button.png"), iconSize: [24, 24]});
 
+  // This is the API key for the public transport route using HERE
   const apiKey = 'ssJnHuXxZBHgTKHCyuaMMxIj0r05GW4vC3K49sWkeZI'; // HERE API key
 
+  // This is to parse the GEOJson data
   useEffect(() => {
     if (filePath) {
       fetch(filePath)
@@ -49,6 +52,7 @@ const GeojsonMapComponent = ({ filePath }) => {
     }
   }, [filePath]);
 
+  // This for dragging the destination marker
   const handleMarkerDragEnd = (event) => {
     const marker = event.target;
     const position = marker.getLatLng();
@@ -59,6 +63,7 @@ const GeojsonMapComponent = ({ filePath }) => {
     }));
   };
 
+  // This is for the address field, to convert user input to latitude and longtitude
   const handleGeocode = async () => {
     try {
       const response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${homeLocation.address}&format=json&addressdetails=1&limit=1`);
@@ -99,32 +104,42 @@ const GeojsonMapComponent = ({ filePath }) => {
     }
   };
 
+  // This is the content for the Map
   return (
     <div>
       <h2 style={{marginBottom: 10}}>Map View of {mapTitle}</h2>
       <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '1200px', border: '4px LightSteelBlue solid'}}>
-        <TileLayer
+        {/* Enable this Tile Layer for OpenStreetMap's Map */}
+        {/* <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        { /* Google Maps Style <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
         /> */}
+
+        {/* Enable this Tile Layer for Google Map's Map */}
+        <TileLayer
+          attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
+          url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+        />
+        
+        {/* This is for the driving route */}
         <RoutingMachine markerLat={homeLocation.latitude} markerLng={homeLocation.longitude} />
         
+        {/* This are markers from the GEOJson data */}
         {markers.map((marker, index) => (
           <Marker key={index} position={marker.geocode} icon={markerIcon}>
             <Popup><div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} /></Popup>
           </Marker>
         ))}
+
+        {/* This is for the home marker */}
         {homeLocation.latitude && homeLocation.longitude && (
           <Marker position={[homeLocation.latitude, homeLocation.longitude]} icon={homeIcon} draggable={true} eventHandlers={{ dragend: handleMarkerDragEnd }}>
             {/* Popup for home marker */}
           </Marker>
         )}
-        
       </LeafletMap>
+
+      {/* This area is the form for the Map */}
       <h3 style={{ marginBottom: '5px'}}>Set Home Waypoint</h3>
       <label>Address: </label>
       <input type='text' placeholder="Enter Address here..." value={homeLocation.address} onChange={(e) => setHomeLocation({ ...homeLocation, address: e.target.value })}></input>
@@ -135,11 +150,15 @@ const GeojsonMapComponent = ({ filePath }) => {
       {homeLocation.latitude && homeLocation.longitude && (
         <h4>Latitude: {homeLocation.latitude}, Longitude: {homeLocation.longitude}</h4>
       )}
+
+      {/* This is for the public transport route */}
       <Routing startLat={1.3455586} startLng={103.6817077} endLat={homeLocation.latitude} endLng={homeLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
+    
     </div>
   );
 };
 
+// This is to parse the GEOJson data to semi-readable format
 const filterHtmlContent = (htmlContent) => {
   const tempElement = document.createElement('div');
   tempElement.innerHTML = htmlContent;
