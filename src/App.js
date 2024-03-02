@@ -23,6 +23,30 @@ function formatTime(timestamp) {
   return new Date(timestamp).toLocaleTimeString();
 }
 
+function fetchBTO() {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Skip-Redirect': '1',
+    },
+    body: JSON.stringify({})
+  };
+
+  fetch("/home-api/public/v1/launch/getUpcomingProjects", requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      // Handle the data here
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+// Call the function wherever you need
+fetchBTO();
+
 function App() {
   const [busServices, setBusServices] = useState([])
   const [busStopCode, setBusStopCode] = useState(''); // Initial value
@@ -35,6 +59,7 @@ function App() {
         try {
           const response = await fetch(`/ltaodataservice/BusArrivalv2?BusStopCode=${busStopCode}`, requestOptions);
           const data = await response.json(); // Parse JSON response
+          console.log(data);
           setBusServices(data.Services);
         } catch (error) {
           console.log(error);
