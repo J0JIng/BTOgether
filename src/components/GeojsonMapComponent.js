@@ -11,7 +11,8 @@ const GeojsonMapComponent = ({ filePath }) => {
   const [markerIcon, setMarkerIcon] = useState();
   const [mapTitle, setMapTitle] = useState();
   const [mapCenter, setMapCenter] = useState([1.354, 103.825]);
-  const [location, setLocation] = useState({ address: '', latitude: null, longitude: null });
+  const [homeLocation, setHomeLocation] = useState({ address: '', latitude: null, longitude: null });
+  const [errorMessage, setErrorMessage] = useState('');
   const mapRef = useRef();
 
   const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [38, 38]});
@@ -50,29 +51,51 @@ const GeojsonMapComponent = ({ filePath }) => {
   const handleMarkerDragEnd = (event) => {
     const marker = event.target;
     const position = marker.getLatLng();
-    setLocation(prevLocation => ({
-      ...prevLocation,
-      latitude: position.lat,
-      longitude: position.lng
+    setHomeLocation(prevHomeLocation => ({
+      ...prevHomeLocation,
+      latitude: position.lat.toFixed(5),
+      longitude: position.lng.toFixed(5)
     }));
   };
 
   // Geocode address using Nominatim API
   const handleGeocode = async () => {
     try {
-      const response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${location.address}&format=json&addressdetails=1&limit=1`);
+      const response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${homeLocation.address}&format=json&addressdetails=1&limit=1`);
       if (response.data.length > 0) {
         const { lat, lon } = response.data[0];
-        setLocation({
-          address: location.address,
-          latitude: parseFloat(lat),
-          longitude: parseFloat(lon)
-        });
-        setMapCenter([parseFloat(lat), parseFloat(lon)]);
+        const latitude = parseFloat(lat).toFixed(5);
+        const longitude = parseFloat(lon).toFixed(5);
+        
+        // Check if the geocoded location is within the bounds of Singapore
+        const singaporeBounds = {
+          north: 1.47,
+          south: 1.20,
+          east: 104.05,
+          west: 103.60
+        };
+
+        if (
+          latitude >= singaporeBounds.south &&
+          latitude <= singaporeBounds.north &&
+          longitude >= singaporeBounds.west &&
+          longitude <= singaporeBounds.east
+        ) {
+          setHomeLocation({
+            address: homeLocation.address,
+            latitude,
+            longitude
+          });
+          setMapCenter([latitude, longitude]);
+          setErrorMessage('');
+        } else {
+          setErrorMessage('The location is outside Singapore. Please refine your search.');
+        }
       } else {
-        console.error('Address not found');
+        setErrorMessage('Address not found');
       }
     } catch (error) {
+      setErrorMessage('Error geocoding address');
       console.error('Error geocoding address:', error);
     }
   };
@@ -80,29 +103,32 @@ const GeojsonMapComponent = ({ filePath }) => {
   return (
     <div>
       <h2 style={{marginBottom: 10}}>Map View of {mapTitle}</h2>
-      <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '70vh', width: '1200px', border: '4px LightSteelBlue solid'}}>
+      <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '1000px', border: '4px LightSteelBlue solid'}}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
         />
-        <RoutingMachine markerLat={location.latitude} markerLng={location.longitude} />
+        <RoutingMachine markerLat={homeLocation.latitude} markerLng={homeLocation.longitude} />
         {markers.map((marker, index) => (
           <Marker key={index} position={marker.geocode} icon={markerIcon}>
             <Popup><div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} /></Popup>
           </Marker>
         ))}
-        {location.latitude && location.longitude && (
-          <Marker position={[location.latitude, location.longitude]} icon={homeIcon} draggable={true} eventHandlers={{ dragend: handleMarkerDragEnd }}>
+        {homeLocation.latitude && homeLocation.longitude && (
+          <Marker position={[homeLocation.latitude, homeLocation.longitude]} icon={homeIcon} draggable={true} eventHandlers={{ dragend: handleMarkerDragEnd }}>
             {/* Popup for home marker */}
           </Marker>
         )}
       </LeafletMap>
       <h3 style={{ marginBottom: '5px'}}>Set Home Waypoint</h3>
       <label>Address: </label>
-      <input type='text' value={location.address} onChange={(e) => setLocation({ ...location, address: e.target.value })}></input>
+      <input type='text' placeholder="Enter Address here..." value={homeLocation.address} onChange={(e) => setHomeLocation({ ...homeLocation, address: e.target.value })}></input>
+      {errorMessage && (
+        <div style={{ color: 'red' }}>{errorMessage}</div>
+      )}
       <button onClick={handleGeocode}>Set Home</button>
-      {location.latitude && location.longitude && (
-        <h4>Latitude: {location.latitude}, Longitude: {location.longitude}</h4>
+      {homeLocation.latitude && homeLocation.longitude && (
+        <h4>Latitude: {homeLocation.latitude}, Longitude: {homeLocation.longitude}</h4>
       )}
     </div>
   );
