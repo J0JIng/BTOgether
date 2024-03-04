@@ -20,6 +20,10 @@ const GeojsonMapComponent = ({ filePath }) => {
   const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [24, 24]});
   const hawkerIcon = new Icon({ iconUrl: require("../icons/hawkerpin.png"), iconSize: [24, 24]});
   const homeIcon = new Icon({ iconUrl: require("../icons/home-button.png"), iconSize: [24, 24]});
+  const parkIcon = new Icon({ iconUrl: require("../icons/parks.png"), iconSize: [24, 24]});
+  const preschoolIcon = new Icon({ iconUrl: require("../icons/preschools.png"), iconSize: [24, 24]});
+  const clincsIcon = new Icon({ iconUrl: require("../icons/clinics.png"), iconSize: [24, 24]});
+  const mallsIcon = new Icon({ iconUrl: require("../icons/malls.png"), iconSize: [24, 24]});
 
   // This is the API key for the public transport route using HERE
   const apiKey = 'ssJnHuXxZBHgTKHCyuaMMxIj0r05GW4vC3K49sWkeZI'; // HERE API key
@@ -44,12 +48,25 @@ const GeojsonMapComponent = ({ filePath }) => {
         .catch((error) => console.error("Error fetching GeoJSON:", error));
     }
     if (filePath.includes("Gym")) {
-      setMarkerIcon(gymIcon)
-      setMapTitle("Gyms")
-    } else {
-      setMarkerIcon(hawkerIcon)
-      setMapTitle("Hawkers")
+      setMarkerIcon(gymIcon);
+      setMapTitle("Gyms");
+    } else if (filePath.includes("Hawker")) {
+      setMarkerIcon(hawkerIcon);
+      setMapTitle("Hawkers");
+    } else if (filePath.includes("Park")) {
+      setMarkerIcon(parkIcon);
+      setMapTitle("Parks");
+    } else if (filePath.includes("PreSchool")) {
+      setMarkerIcon(preschoolIcon);
+      setMapTitle("Preschools");
+    } else if (filePath.includes("CHASClinic")) {
+      setMarkerIcon(clincsIcon);
+      setMapTitle("Clinics");
+    } else if (filePath.includes("shopping_mall")) {
+      setMarkerIcon(mallsIcon);
+      setMapTitle("Malls");
     }
+
   }, [filePath]);
 
   // This for dragging the destination marker
@@ -127,7 +144,11 @@ const GeojsonMapComponent = ({ filePath }) => {
         {/* This are markers from the GEOJson data */}
         {markers.map((marker, index) => (
           <Marker key={index} position={marker.geocode} icon={markerIcon}>
-            <Popup><div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} /></Popup>
+            <Popup autoClose={false} minWidth={200}> {/* Set a minWidth to ensure the popup has some initial width */}
+              <div style={{ width: 'auto', maxWidth: '100%' }}> {/* Set width to auto and maxWidth to 100% */}
+                <div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} />
+              </div>
+            </Popup>
           </Marker>
         ))}
 
@@ -165,7 +186,7 @@ const filterHtmlContent = (htmlContent) => {
   tempElement.querySelectorAll('th').forEach((thElement) => {
     const textContent = thElement.textContent.trim();
     const tdElement = thElement.nextElementSibling;
-    if (!textContent || !tdElement || !tdElement.textContent.trim() || textContent === 'LANDYADDRESSPOINT'|| textContent === 'LANDXADDRESSPOINT'|| textContent === 'INC_CRC'|| textContent === 'FMEL_UPD_D') {
+    if (!textContent || !tdElement || !tdElement.textContent.trim() || textContent === 'LANDYADDRESSPOINT'|| textContent === 'LANDXADDRESSPOINT'|| textContent === 'INC_CRC'|| textContent === 'FMEL_UPD_D' || textContent === 'PHOTOURL' || textContent === 'EST_ORIGINAL_COMPLETION_DATE' || textContent === 'ADDRESSBLOCKHOUSENUMBER') {
       thElement.parentNode.remove();
     }
   });
