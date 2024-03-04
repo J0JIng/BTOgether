@@ -27,13 +27,12 @@ const RoutingMachine = ({ markerLat, markerLng }) => {
                         L.latLng(markerLat, markerLng)
                     ],
                     lineOptions: {
-                        styles: [{ color: "#0F53FF", weight: 6 }]
+                        styles: [{ color: "#0F53FF", weight: 8 }]
                     },
                     altLineOptions: {
                         styles: [
-                            { color: 'rgb(110, 134, 217)', opacity: 0.6, weight: 8 },
-                            { color: 'rgb(188, 206, 251)', opacity: 0.8, weight: 6 },
-                            { color: 'rgb(110, 134, 217)', opacity: 1, weight: 2 }
+                            { color: 'rgb(110, 134, 217)', opacity: 1, weight: 8 },
+                            { color: 'rgb(188, 206, 251)', opacity: 1, weight: 4 }
                         ]
                     },
                     show: false, // Hide routing control's UI

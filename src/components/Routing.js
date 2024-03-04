@@ -45,7 +45,7 @@ const Routing = ({ startLat, startLng, endLat, endLng, apiKey, mapRef }) => {
   
     // Define color mapping for different transport modes and longNames
     const colorMapping = {
-      "pedestrian": "darkblue",
+      "pedestrian": "#BCCEFB",
       "bus": "#55DD33",
       "busRapid": "#55DD33",
       "subway": {
@@ -58,32 +58,51 @@ const Routing = ({ startLat, startLng, endLat, endLng, apiKey, mapRef }) => {
         // Add more longNames and corresponding colors as needed
       }
     };
+
+    const trainBorder = {
+      "North South Line": "#832D2A",
+      "East West Line": "#1E6037",
+      "North East Line": "#553455",
+      "Circle Line": "#A07625",
+      "Downtown Line": "#133B63",
+      "Thomson East Coast Line": "#684326"
+    };
   
     // Draw new polylines with colors based on transport mode and longName
     routeData.sections.forEach((section) => {
       const coordinates = [
         [section.departure.place.location.lat, section.departure.place.location.lng]
       ];
-
+    
       // Add intermediate stops as points
       if (section.intermediateStops) {
         section.intermediateStops.forEach(stop => {
-            //console.log(stop.departure.place.location.lat)
           coordinates.push([stop.departure.place.location.lat, stop.departure.place.location.lng]);
         });
       }
       
       coordinates.push([section.arrival.place.location.lat, section.arrival.place.location.lng]);
-  
+    
       const color =
         colorMapping[section.transport.mode] &&
         section.transport.mode === "subway" &&
         colorMapping[section.transport.mode][section.transport.longName]
           ? colorMapping[section.transport.mode][section.transport.longName]
           : colorMapping[section.transport.mode] || "#A8A8A8"; // Default color
-  
-      L.polyline(coordinates, { color: color, weight: 5, className: 'publictransport'}).addTo(mapRef.current);
-
+    
+      // Check if this is the section where you want dotted lines
+      if (section.transport.mode === "pedestrian") {
+        L.polyline(coordinates, { color: 'rgb(110, 134, 217)', weight: 8, className: 'publictransport' }).addTo(mapRef.current);
+        L.polyline(coordinates, { color: color, weight: 4, className: 'publictransport' }).addTo(mapRef.current);
+        L.polyline(coordinates, { color: "#0F53FF", weight: 4, className: 'publictransport', dashArray: '2, 10' }).addTo(mapRef.current);
+      } else if (section.transport.mode === "bus" || section.transport.mode === "busRapid") {
+          L.polyline(coordinates, { color: "#428F2F", weight: 8, className: 'publictransport' }).addTo(mapRef.current);
+          L.polyline(coordinates, { color: color, weight: 4, className: 'publictransport' }).addTo(mapRef.current);
+      } else {
+        L.polyline(coordinates, { color: trainBorder[section.transport.longName], weight: 8, className: 'publictransport' }).addTo(mapRef.current);
+        L.polyline(coordinates, { color: color, weight: 4, className: 'publictransport' }).addTo(mapRef.current);
+      }
+    
       // Add markers for intermediate stops
       if (section.intermediateStops) {
         section.intermediateStops.forEach(stop => {
@@ -91,6 +110,7 @@ const Routing = ({ startLat, startLng, endLat, endLng, apiKey, mapRef }) => {
         });
       }
     });
+    
   
     // Fit map bounds to the new polylines
     const bounds = L.latLngBounds(routeData.sections.map(section => [
