@@ -3,12 +3,32 @@ import { MapContainer as LeafletMap, TileLayer, Marker, Popup } from "react-leaf
 import 'leaflet/dist/leaflet.css';
 import { Icon } from "leaflet";
 
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
 const GeojsonMapComponent = ({ filePath }) => {
   const [markers, setMarkers] = useState([]);
   const [markerIcon, setMarkerIcon] = useState();
   const [mapTitle, setMapTitle] = useState();
   const [homeMarker, setHomeMarker] = useState([]);
+  const [distance, setDistance] = useState(5); 
   const mapRef = useRef();
+  
 
   const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [38, 38]});
   const hawkerIcon = new Icon({ iconUrl: require("../icons/hawkerpin.png"), iconSize: [38, 38]});
@@ -28,11 +48,18 @@ const GeojsonMapComponent = ({ filePath }) => {
               geocode: [lat, lng],
               popUp: Description // Assuming Description contains HTML content
             };
+          })
+          // Filter markers by distance
+          .filter((marker) => {
+            if (!homeMarker[0] || !homeMarker[1]) return true; // Show all if no home marker is set
+            const distanceFromHome = getDistanceFromLatLonInKm(homeMarker[0], homeMarker[1], marker.geocode[0], marker.geocode[1]);
+            return distanceFromHome <= distance;
           });
           setMarkers(newMarkers);
         })
         .catch((error) => console.error("Error fetching GeoJSON:", error));
     }
+   
     if (filePath.includes("Gym")) {
       setMarkerIcon(gymIcon)
       setMapTitle("Gyms")
@@ -40,7 +67,7 @@ const GeojsonMapComponent = ({ filePath }) => {
       setMarkerIcon(hawkerIcon)
       setMapTitle("Hawkers")
     }
-  }, [filePath, mapRef]);
+  }, [filePath, homeMarker,distance]);
 
   // Custom style for the popup
   const popupStyle = {
@@ -76,6 +103,19 @@ const GeojsonMapComponent = ({ filePath }) => {
   return (
     <div>
     <h2 style={{marginBottom: 10}}>Map View of {mapTitle}</h2>
+
+    <div style={{marginBottom: '10px'}}>
+      <label>Filter Distance (in km): </label>
+      <input
+        type="range"
+        min="1"
+        max="20"
+        value={distance}
+        onChange={(e) => setDistance(e.target.value)}
+      />
+      <span>{distance} km</span>
+    </div>
+
     <LeafletMap center={[1.354, 103.825]} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '1000px', border: '4px LightSteelBlue solid'}}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -103,6 +143,8 @@ const GeojsonMapComponent = ({ filePath }) => {
     <button onClick={() => {homeMarker[0] != null && homeMarker[1] != null && mapRef.current.flyTo(homeMarker)}}>Fly Home</button>
     <button onClick={(e) => mapRef.current.flyTo([1.354, 103.825])}>Center to SG</button>
     </div>
+
+    
   );
 };
 
