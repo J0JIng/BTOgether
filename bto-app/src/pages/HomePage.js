@@ -1,10 +1,13 @@
 import NavBar from "../components/NavBar";
+
+
 const HomePage = () => {
     return (  
-        <div>
+        <dev className="home-page">
             <NavBar/>
-            <h1>Hello Home Page</h1>
-        </div>
+            <h1>Home Page</h1>
+        
+        </dev>
     );
 }
  

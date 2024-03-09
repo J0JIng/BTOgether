@@ -21,7 +21,7 @@ export const Auth = () => {
     if (!auth.currentUser) {
       try {
         await createUserWithEmailAndPassword(auth, email, password)
-        setHeading("Welcome to ApartMate " + auth.currentUser.email);
+        setHeading("Welcome to BTOgether" + auth.currentUser.email);
       } catch (err) {
         if (err.code === "auth/email-already-in-use") {
           alert("The email address is already in use");
@@ -67,6 +67,7 @@ export const Auth = () => {
       <input placeholder="Password..." type="password" 
               style={{ marginLeft: '10px' }} 
               onChange={(e) => setPassword(e.target.value)} />
+    
       <button onClick={register} style={{ marginLeft: '10px' }}>Register</button>
       <button onClick={signin} style={{ marginLeft: '10px' }}>Sign In</button>
       <button onClick={logout} style={{ marginLeft: '10px' }}>Sign Out</button>
