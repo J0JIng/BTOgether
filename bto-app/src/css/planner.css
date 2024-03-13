@@ -50,3 +50,29 @@ body {
     cursor: pointer;
     transition-duration: 0.2s;
 }
+
+.contents-box{
+    display: block;
+    margin-top: 10vh;
+
+}
+
+.options-box{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-link, .dashboard-link, .planner-link{
+    background-color: #f7776b;
+    padding: 10%;
+    margin: 0 5px;
+    border-radius: 5px;
+    color: black;
+    width: 20vb;
+    height: 20vh;
+    font-weight: bold;
+    
+}
