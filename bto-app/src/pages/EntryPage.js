@@ -6,7 +6,7 @@ const EntryPage = () => {
             <div className="navbar">
                 <h1>Entry page</h1>
              </div>
-             <Link to ='/login'>login</Link>
+             <Link to ='/login'>Get Started</Link>
         </div>
     );
 }
