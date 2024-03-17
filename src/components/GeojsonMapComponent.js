@@ -7,6 +7,24 @@ import { Icon } from "leaflet";
 import RoutingMachine from "./routingMachine";
 import Routing from "./Routing";
 
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
 const GeojsonMapComponent = ({ filePath }) => {
   const [markers, setMarkers] = useState([]);
   const [markerIcon, setMarkerIcon] = useState();
@@ -14,6 +32,7 @@ const GeojsonMapComponent = ({ filePath }) => {
   const [mapCenter, setMapCenter] = useState([1.354, 103.825]);
   const [homeLocation, setHomeLocation] = useState({ address: '', latitude: null, longitude: null });
   const [errorMessage, setErrorMessage] = useState('');
+  const [distance, setDistance] = useState(5); 
   const mapRef = useRef(null);
 
   // These are the icons for the map
@@ -38,6 +57,12 @@ const GeojsonMapComponent = ({ filePath }) => {
               geocode: [lat, lng],
               popUp: Description // Assuming Description contains HTML content
             };
+          })
+          // Filter markers by distance
+          .filter((marker) => {
+            if (!homeLocation.latitude || !homeLocation.longitude) return true; // Show all if no home marker is set
+            const distanceFromHome = getDistanceFromLatLonInKm(homeLocation.latitude, homeLocation.longitude, marker.geocode[0], marker.geocode[1]);
+            return distanceFromHome <= distance;
           });
           setMarkers(newMarkers);
         })
@@ -50,7 +75,7 @@ const GeojsonMapComponent = ({ filePath }) => {
       setMarkerIcon(hawkerIcon)
       setMapTitle("Hawkers")
     }
-  }, [filePath]);
+  }, [filePath,homeLocation,distance]);
 
   // This for dragging the destination marker
   const handleMarkerDragEnd = (event) => {
@@ -108,6 +133,19 @@ const GeojsonMapComponent = ({ filePath }) => {
   return (
     <div>
       <h2 style={{marginBottom: 10}}>Map View of {mapTitle}</h2>
+
+      <div style={{marginBottom: '10px'}}>
+      <label>Filter Distance (in km): </label>
+      <input
+        type="range"
+        min="1"
+        max="20"
+        value={distance}
+        onChange={(e) => setDistance(e.target.value)}
+      />
+      <span>{distance} km</span>
+      </div>
+
       <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '1200px', border: '4px LightSteelBlue solid'}}>
         {/* Enable this Tile Layer for OpenStreetMap's Map */}
         {/* <TileLayer
