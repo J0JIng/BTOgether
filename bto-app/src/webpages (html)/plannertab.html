@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planner</title>
+    <link rel="stylesheet"
+        href="C:\Users\aaron\Documents\Sc2006 project\BTOgether-frontend\BTOgether-frontend\bto-app\src\css\plannertab.css">
+    <style>
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+        }
+
+        .accordion input[type="checkbox"] {
+            position: absolute;
+            right: 60px;
+            /* Adjust the distance from the right */
+            width: 20px;
+            /* Adjust the size of the checkbox */
+            height: 20px;
+            /* Adjust the size of the checkbox */
+            appearance: none;
+            /* Remove default checkbox appearance */
+            -webkit-appearance: none;
+            /* Remove default checkbox appearance for Safari */
+            background-color: #FFFFFF;
+            /* Checkbox background color */
+            border-radius: 4px;
+            /* Rounded corners */
+            border: 1px solid #bbb;
+            /* Border color */
+            outline: 2px solid #000000;
+            /* Black outline */
+            cursor: pointer;
+            /* Add cursor pointer */
+        }
+
+        /*checkbox tick */
+        .accordion input[type="checkbox"]:checked::before {
+            content: '\2713';
+            /* Unicode checkmark symbol */
+            font-size: 22px;
+            /* Adjust the size of the checkmark */
+            color: #ffffff;
+            /* White color for the tick */
+            position: relative;
+            /* Adjust the positioning */
+            bottom: 6px;
+            /* Adjust the vertical positioning if needed */
+        }
+
+        .accordion input[type="checkbox"]:checked {
+            position: absolute;
+            right: 60px;
+            /* Adjust the distance from the right */
+            width: 20px;
+            /* Adjust the size of the checkbox */
+            height: 20px;
+            /* Adjust the size of the checkbox */
+            appearance: none;
+            /* Remove default checkbox appearance */
+            -webkit-appearance: none;
+            /* Remove default checkbox appearance for Safari */
+            background-color: #00FF00;
+            /* Checkbox background color */
+            border-radius: 4px;
+            /* Rounded corners */
+            border: 1px solid #bbb;
+            /* Border color */
+            outline: 2px solid #000000;
+            /* Black outline */
+            cursor: pointer;
+            /* Add cursor pointer */
+        }
+
+        .active,
+        .accordion:hover {
+            background-color: #ccc;
+        }
+
+        .panel {
+            padding: 0 18px;
+            display: none;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        .tab-container {
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            background-color: #f4f4f4;
+        }
+
+        .tab {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .tab:hover {
+            background-color: #ccc;
+        }
+
+        /* Checkmark checkbox style */
+        .checkmark {
+            display: inline-block;
+            vertical-align: middle;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-right: 10px;
+        }
+
+        .checkmark::after {
+            content: '';
+            display: none;
+            width: 14px;
+            height: 7px;
+            border: solid #000;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkmark.checked::after {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-box">
+        <img src="C:\Users\aaron\Documents\Sc2006 project\BTOgether-frontend\BTOgether-frontend\bto-app\src\images\btodraftlogo.png" alt=""
+            style="width: 60px; height: 60px; border-radius: 5px;">
+        <div class="options">
+            <a class="search-link" href="">BTO Find</a>
+            <a class="planner-link" href="">BTO Planner</a>
+            <a class="dashboard-link" href="">Dashboard</a>
+            <a class="homepage-link" href="">Homepage</a>
+            <a class="profile-link" href="">Profile</a>
+        </div>
+    </div>
+
+    <h2>Planner</h2>
+
+    <div class="tab-container">
+        <div class="tab" data-panel="panel1">Pre-Acquisition Phase</div>
+        <div class="tab" data-panel="panel2">Application Process</div>
+        <div class="tab" data-panel="panel3">Financial Planning & Grants</div>
+        <div class="tab" data-panel="panel4">Flat Selection & Allocation</div>
+        <div class="tab" data-panel="panel5">Key Collection & Move-In Process</div>
+        <div class="tab" data-panel="panel6">Renovation & Interior Design</div>
+        <div class="tab" data-panel="panel7">Post-Acquisition Maintenance</div>
+        <div class="tab" data-panel="panel8">Resale & Upgrading Options</div>
+    </div>
+
+    <div class="panel" id="panel1">
+        <h2>Pre-Acquisition Phase</h2>
+        <button class="accordion">Section 1<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 2<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 3<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+    </div>
+
+    <div class="panel" id="panel2">
+        <h2>Application Process</h2>
+        <button class="accordion">Section 1<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 2<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 3<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+    </div>
+
+    <div class="panel" id="panel3">
+        <h2>Financial Planning & Grants</h2>
+        <button class="accordion">Section 1<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 2<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 3<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+    </div>
+
+    <div class="panel" id="panel4">
+        <h2>Flat Selection & Allocation</h2>
+        <button class="accordion">Section 1<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 2<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 3<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+    </div>
+
+    <div class="panel" id="panel5">
+        <h2>Key Collection & Move-In Proces</h2>
+        <button class="accordion">Section 1<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 2<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 3<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+    </div>
+
+    <div class="panel" id="panel6">
+        <h2>Renovation & Interior Design</h2>
+        <button class="accordion">Section 1<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 2<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 3<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+    </div>
+
+    <div class="panel" id="panel7">
+        <h2>Post-Acquisition Maintenance</h2>
+        <button class="accordion">Section 1<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 2<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 3<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+    </div>
+
+    <div class="panel" id="panel8">
+        <h2>Resale & Upgrading Options</h2>
+        <button class="accordion">Section 1<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 2<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 3<input type="checkbox" class="section-checkbox"></button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+    </div>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+
+        for (var i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                // Toggle active class for the clicked accordion
+                this.classList.toggle("active");
+
+                // Toggle panel display for the clicked accordion
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+
+                // Close previously opened accordion panels
+                var siblings = this.parentElement.getElementsByClassName("accordion");
+                for (var j = 0; j < siblings.length; j++) {
+                    if (siblings[j] !== this) {
+                        siblings[j].classList.remove("active");
+                        siblings[j].nextElementSibling.style.display = "none";
+                    }
+                }
+            });
+        }
+
+        var tabs = document.querySelectorAll('.tab');
+        var panels = document.querySelectorAll('.panel');
+
+        tabs.forEach(function (tab) {
+            tab.addEventListener('click', function () {
+                // Hide all panels
+                panels.forEach(function (panel) {
+                    panel.style.display = 'none';
+                });
+
+                // Show the corresponding panel
+                var panelId = this.dataset.panel;
+                document.getElementById(panelId).style.display = 'block';
+            });
+        });
+
+        document.querySelector('.tab-container').addEventListener('wheel', (event) => {
+            const container = event.currentTarget;
+            const scrollAmount = 200; // Adjust the scroll amount as needed
+
+            if (event.deltaY < 0) {
+                container.scrollLeft -= scrollAmount;
+            } else {
+                container.scrollLeft += scrollAmount;
+            }
+
+            event.preventDefault();
+        });
+
+        // Toggle checkmark on tab click
+        tabs.forEach(function (tab) {
+            tab.addEventListener('click', function () {
+                var checkmark = this.querySelector('.checkmark');
+                checkmark.classList.toggle('checked');
+            });
+        });
+
+        // Prevent accordion toggle when clicking on the checkbox
+        var checkboxes = document.querySelectorAll('.section-checkbox');
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+    </script>
+
+</body>
+
+</html>
