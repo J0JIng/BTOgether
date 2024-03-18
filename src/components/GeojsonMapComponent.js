@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MapContainer as LeafletMap, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import { MapContainer as LeafletMap, TileLayer, Marker, Popup, Circle, useMap } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import { Icon } from "leaflet";
@@ -43,6 +43,7 @@ const GeojsonMapComponent = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [distance, setDistance] = useState(5);
   const [chosenJson, setChosenJson] = useState('');
+  const [mapStyle, setMapStyle] = useState('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}');
   const mapRef = useRef(null);
 
   // These are the icons for the map
@@ -59,7 +60,7 @@ const GeojsonMapComponent = () => {
 
   // This is to parse the GEOJson data
   useEffect(() => {
-    if (chosenJson != '') {
+    if (chosenJson) {
       fetch(chosenJson)
         .then((response) => response.json())
         .then((data) => {
@@ -194,6 +195,103 @@ const GeojsonMapComponent = () => {
     }
   }, [homeLocation]);
 
+  const MapStylePanel = () => {
+    const map = useMap();
+    const [expanded, setExpanded] = useState(false);
+  
+    const controlStyle = {
+      position: 'absolute',
+      bottom: '10px',
+      left: '10px',
+      zIndex: 1000,
+      fontFamily: 'Arial, sans-serif',
+      transition: 'width 0.3s ease',
+      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+      width: expanded ? '330px' : '60px', // Initial width when collapsed and expanded width on hover
+      height: expanded ? '150px' : '90px', // Initial width when collapsed and expanded width on hover
+      overflow: 'hidden',
+    };
+  
+    const containerStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100px', // Set height to match collapsed height
+      cursor: 'pointer',
+    };
+  
+    const imgStyle = {
+      maxWidth: '100%',
+      maxHeight: '100%',
+      transition: 'opacity 0.3s ease', // Fade in/out effect
+      opacity: expanded ? 0 : 1, // Hide image when expanded
+    };
+  
+    const buttonContainerStyle = {
+      display: 'flex',
+      flexDirection: 'row', // Display buttons horizontally
+      alignItems: 'center',
+    };
+  
+    const buttonStyle = {
+      backgroundColor: '#f8f9fa',
+      border: '1px solid #d1d3d4',
+      borderRadius: '3px',
+      color: '#70757a',
+      cursor: 'pointer',
+      fontSize: '14px',
+      marginBottom: '5px',
+      padding: '8px 12px',
+      textAlign: 'left',
+      textDecoration: 'none',
+      margin: '0 5px', // Add margin between buttons
+    };
+  
+    const handleClick = (mapStyle) => {
+      setExpanded(false); // Collapse the panel when clicked
+      setMapStyle(mapStyle);
+    };
+  
+    return (
+      <div
+        style={controlStyle}
+        className="leaflet-bar leaflet-control"
+        onMouseEnter={() => setExpanded(true)} // Expand on hover
+        onMouseLeave={() => setExpanded(false)} // Collapse on mouse leave
+      >
+        <div style={containerStyle}>
+          <img
+            src="https://via.placeholder.com/40"
+            alt="Map styles"
+            style={imgStyle}
+          />
+          <span style={{ marginTop: '5px', opacity: expanded ? 0 : 1 }}>Styles</span>
+          {expanded && (
+            <div style={buttonContainerStyle}>
+              <div style={{ display: 'flex', flexDirection: 'column', marginRight: '10px' }}>
+                <img src="https://via.placeholder.com/40" alt="Base Map" style={{ marginBottom: '5px' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}')} />
+                <span onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}')}>Base Map</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', marginRight: '10px' }}>
+                <img src="https://via.placeholder.com/40" alt="Base Map" style={{ marginBottom: '5px' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}')} />
+                <span onClick={() => handleClick('https://mt1.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}')}>Satellite Map</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', marginRight: '10px' }}>
+                <img src="https://via.placeholder.com/40" alt="Base Map" style={{ marginBottom: '5px' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,transit&hl=en&x={x}&y={y}&z={z}')} />
+                <span onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,transit&hl=en&x={x}&y={y}&z={z}')}>Transit Map</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', marginRight: '10px' }}>
+                <img src="https://via.placeholder.com/40" alt="Base Map" style={{ marginBottom: '5px' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,traffic&hl=en&x={x}&y={y}&z={z}')} />
+                <span onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,traffic&hl=en&x={x}&y={y}&z={z}')}>Traffic Map</span>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   // This is the content for the Map
   return (
     <div>
@@ -212,11 +310,11 @@ const GeojsonMapComponent = () => {
       <span>{distance} km</span>
       </div>
 
-      <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '1200px', border: '4px LightSteelBlue solid'}}>
+      <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '70vh', width: '1200px', border: '4px LightSteelBlue solid'}}>
         {/* Google Map Tile Layer */}
         <TileLayer
           attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
-          url="https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}"
+          url={mapStyle}
         />
         {/* Use url="https://mt1.google.com/vt/lyrs=m@221097413,transit&hl=en&x={x}&y={y}&z={z}" to show mrt lines */}
         
@@ -241,6 +339,8 @@ const GeojsonMapComponent = () => {
         {homeLocation.latitude && homeLocation.longitude && (
           addCircleToMap(mapRef.current, [homeLocation.latitude, homeLocation.longitude], distance*1000) // Adjust radius as needed
         )}
+
+          <MapStylePanel />
         </LeafletMap>
 
       {/* This area is the form for the Map */}
