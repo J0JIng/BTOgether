@@ -20,7 +20,7 @@ const Routing = ({ startLat, startLng, endLat, endLng, apiKey, mapRef }) => {
         });
         drawRoute(response.data.routes[0]);
         setRouteData(response.data.routes[0]);
-        console.log(routeData)
+        //console.log(routeData)
 
       } catch (error) {
         setErrorMessage('Error fetching route data');

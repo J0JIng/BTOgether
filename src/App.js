@@ -4,12 +4,6 @@ import { getFirestore, collection, addDoc, deleteDoc, onSnapshot, updateDoc, get
 import { query, where } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import GeojsonMapComponent from "./components/GeojsonMapComponent";
-import gymgeojson from "./geojson/GymsSGGEOJSON.geojson";
-import hawkergeojson from "./geojson/HawkerCentresGEOJSON.geojson";
-import parksgeojson from "./geojson/Parks.geojson";
-import preschoolgeojson from "./geojson/PreSchoolsLocation.geojson";
-import clinicgeojson from "./geojson/CHASClinics.geojson";
-import mallsgeojson from "./geojson/shopping_mall_coordinates.geojson";
 
 var myHeaders = new Headers();
 myHeaders.append("AccountKey", "++qZshXPQSea0zZRKDZgdw==");
@@ -52,7 +46,6 @@ fetchBTO();
 function App() {
   const [busServices, setBusServices] = useState([])
   const [busStopCode, setBusStopCode] = useState(''); // Initial value
-  const [chosenJson, setChosenJson] = useState(gymgeojson);
 
   // Get bus times
   useEffect(() => {
@@ -142,31 +135,14 @@ function App() {
       })
       .catch((error) => { console.error("Error fetching documents:", error); });
   }
-
-  const toggleJson = () => {
-    if (chosenJson === gymgeojson) {
-      setChosenJson(hawkergeojson)
-    } else if (chosenJson === hawkergeojson) {
-      setChosenJson(parksgeojson) 
-    } else if (chosenJson === parksgeojson) {
-      setChosenJson(preschoolgeojson) 
-    } else if (chosenJson === preschoolgeojson) {
-      setChosenJson(clinicgeojson) 
-    } else if (chosenJson === clinicgeojson) {
-      setChosenJson(mallsgeojson) 
-    } else if (chosenJson === mallsgeojson) {
-      setChosenJson(gymgeojson) 
-    } 
-  }
   
   return (
     <div className="App">
 
     {/* Map Div */}
     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px'}}>
-      <GeojsonMapComponent filePath={chosenJson}/>
+      <GeojsonMapComponent />
     </div>
-    <button onClick={toggleJson}>Change GEOJson</button>
 
     <hr />
     {/* Auth Component */}

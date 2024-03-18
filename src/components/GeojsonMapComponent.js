@@ -4,6 +4,15 @@ import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import { Icon } from "leaflet";
 
+// GeoJson Files
+import gymgeojson from "../geojson/GymsSGGEOJSON.geojson";
+import hawkergeojson from "../geojson/HawkerCentresGEOJSON.geojson";
+import parksgeojson from "../geojson/Parks.geojson";
+import preschoolgeojson from "../geojson/PreSchoolsLocation.geojson";
+import clinicgeojson from "../geojson/CHASClinics.geojson";
+import mallsgeojson from "../geojson/shopping_mall_coordinates.geojson";
+
+// RoutingMachine for Car, Routing for Public transport
 import RoutingMachine from "./routingMachine";
 import Routing from "./Routing";
 
@@ -25,14 +34,15 @@ function deg2rad(deg) {
   return deg * (Math.PI/180)
 }
 
-const GeojsonMapComponent = ({ filePath }) => {
+const GeojsonMapComponent = () => {
   const [markers, setMarkers] = useState([]);
   const [markerIcon, setMarkerIcon] = useState();
   const [mapTitle, setMapTitle] = useState();
   const [mapCenter, setMapCenter] = useState([1.354, 103.825]);
   const [homeLocation, setHomeLocation] = useState({ address: '', latitude: null, longitude: null });
   const [errorMessage, setErrorMessage] = useState('');
-  const [distance, setDistance] = useState(5); 
+  const [distance, setDistance] = useState(5);
+  const [chosenJson, setChosenJson] = useState('');
   const mapRef = useRef(null);
 
   // These are the icons for the map
@@ -49,8 +59,8 @@ const GeojsonMapComponent = ({ filePath }) => {
 
   // This is to parse the GEOJson data
   useEffect(() => {
-    if (filePath) {
-      fetch(filePath)
+    if (chosenJson != '') {
+      fetch(chosenJson)
         .then((response) => response.json())
         .then((data) => {
           const newMarkers = data.features.map((feature) => {
@@ -72,26 +82,30 @@ const GeojsonMapComponent = ({ filePath }) => {
         })
         .catch((error) => console.error("Error fetching GeoJSON:", error));
     }
-    if (filePath.includes("Gym")) {
+    if (chosenJson === '') {
+      setMarkerIcon(null);
+      setMarkers([])
+      setMapTitle("Singapore");
+    } else if (chosenJson.includes("Gym")) {
       setMarkerIcon(gymIcon);
       setMapTitle("Gyms");
-    } else if (filePath.includes("Hawker")) {
+    } else if (chosenJson.includes("Hawker")) {
       setMarkerIcon(hawkerIcon);
       setMapTitle("Hawkers");
-    } else if (filePath.includes("Park")) {
+    } else if (chosenJson.includes("Park")) {
       setMarkerIcon(parkIcon);
       setMapTitle("Parks");
-    } else if (filePath.includes("PreSchool")) {
+    } else if (chosenJson.includes("PreSchool")) {
       setMarkerIcon(preschoolIcon);
       setMapTitle("Preschools");
-    } else if (filePath.includes("CHASClinic")) {
+    } else if (chosenJson.includes("CHASClinic")) {
       setMarkerIcon(clincsIcon);
       setMapTitle("Clinics");
-    } else if (filePath.includes("shopping_mall")) {
+    } else if (chosenJson.includes("shopping_mall")) {
       setMarkerIcon(mallsIcon);
       setMapTitle("Malls");
     }
-  }, [filePath,homeLocation,distance]);
+  }, [chosenJson,homeLocation,distance]);
 
   // This for dragging the destination marker
   const handleMarkerDragEnd = (event) => {
@@ -114,10 +128,7 @@ const GeojsonMapComponent = ({ filePath }) => {
         const longitude = parseFloat(lon).toFixed(5);
 
         const singaporeBounds = {
-          north: 1.47,
-          south: 1.20,
-          east: 104.05,
-          west: 103.60
+          north: 1.5, south: 1.1, east: 104.1, west: 103.6
         };
 
         if (
@@ -127,9 +138,7 @@ const GeojsonMapComponent = ({ filePath }) => {
           longitude <= singaporeBounds.east
         ) {
           setHomeLocation({
-            address: homeLocation.address,
-            latitude,
-            longitude
+            address: homeLocation.address, latitude, longitude
           });
           setMapCenter([latitude, longitude]);
           setErrorMessage('');
@@ -145,6 +154,24 @@ const GeojsonMapComponent = ({ filePath }) => {
     }
   };
 
+  const toggleJson = () => {
+    if (chosenJson === gymgeojson) {
+      setChosenJson(hawkergeojson)
+    } else if (chosenJson === hawkergeojson) {
+      setChosenJson(parksgeojson) 
+    } else if (chosenJson === parksgeojson) {
+      setChosenJson(preschoolgeojson) 
+    } else if (chosenJson === preschoolgeojson) {
+      setChosenJson(clinicgeojson) 
+    } else if (chosenJson === clinicgeojson) {
+      setChosenJson(mallsgeojson) 
+    } else if (chosenJson === mallsgeojson) {
+      setChosenJson('') 
+    } else {
+      setChosenJson(gymgeojson)
+    }
+  }
+
   // Add a function to add a circle to the map
   const addCircleToMap = (map, center, radius) => {
     if (map && center) {
@@ -154,14 +181,14 @@ const GeojsonMapComponent = ({ filePath }) => {
     }
   };
 
-  // Call the function within useEffect
+  // useEffect for radius circle
   useEffect(() => {
     if (mapRef.current && homeLocation.latitude && homeLocation.longitude) {
-      const circle = addCircleToMap(mapRef.current, [homeLocation.latitude, homeLocation.longitude], distance*1000); // Adjust radius as needed
+      const circle = addCircleToMap(mapRef.current, [homeLocation.latitude, homeLocation.longitude], distance*1000);
       if (circle) {
-        const map = mapRef.current.leafletElement; // Access the leafletElement property
+        const map = mapRef.current.leafletElement;
         if (map) {
-          map.addLayer(circle); // Add the circle to the map
+          map.addLayer(circle);
         }
       }
     }
@@ -172,6 +199,7 @@ const GeojsonMapComponent = ({ filePath }) => {
     <div>
       <h2 style={{marginBottom: 10}}>Map View of {mapTitle}</h2>
 
+      {/* Distance slider*/}
       <div style={{marginBottom: '10px'}}>
       <label>Filter Distance (in km): </label>
       <input
@@ -185,17 +213,12 @@ const GeojsonMapComponent = ({ filePath }) => {
       </div>
 
       <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '1200px', border: '4px LightSteelBlue solid'}}>
-        {/* Enable this Tile Layer for OpenStreetMap's Map */}
-        {/* <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        /> */}
-
-        {/* Enable this Tile Layer for Google Map's Map */}
+        {/* Google Map Tile Layer */}
         <TileLayer
           attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
-          url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+          url="https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}"
         />
+        {/* Use url="https://mt1.google.com/vt/lyrs=m@221097413,transit&hl=en&x={x}&y={y}&z={z}" to show mrt lines */}
         
         {/* This is for the driving route */}
         <RoutingMachine markerLat={homeLocation.latitude} markerLng={homeLocation.longitude} />
@@ -228,11 +251,14 @@ const GeojsonMapComponent = ({ filePath }) => {
         <div style={{ color: 'red' }}>{errorMessage}</div>
       )}
       <button onClick={handleGeocode}>Set Home</button>
+      <button onClick={toggleJson}>Toggle GEOJson</button>
+
+      {/* This is to show latitude and longtitude coords when available*/}
       {homeLocation.latitude && homeLocation.longitude && (
         <h4>Latitude: {homeLocation.latitude}, Longitude: {homeLocation.longitude}</h4>
       )}
 
-      {/* This is for the public transport route */}
+      {/* This is for the public transport route, put at the end so routing table is at the bottom*/}
       <Routing startLat={1.3455586} startLng={103.6817077} endLat={homeLocation.latitude} endLng={homeLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
     
     </div>
