@@ -9,7 +9,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 32px;
+    padding: 14px 32px;
     background-color: #f7776b;
     border-radius: 10px;
 
@@ -31,11 +31,15 @@ body {
 }
 
 /* for hovering over the buttons */
-.options *:hover, .logo-link:hover {
+.options *:hover, .app-logo:hover {
     color: white;
     /* border-bottom: 2px solid white;  */
     cursor: pointer;
     transition-duration: 0.2s;
+}
+
+.app-logo:hover {
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 /* still for the 3 buttons */
@@ -44,6 +48,7 @@ body {
     display: flex;
     justify-content: space-evenly;
 }
+
 
 .title-and-sign-up {
     display: flex;
@@ -118,7 +123,7 @@ body {
 
 
 .input:focus {
-    border-color: #f7776b;
+    border-color: #f00042;
 }
 
 .password {
@@ -148,7 +153,7 @@ body {
 }
 
 .sign-in-button:hover {
-    border: 2px solid rgb(124, 38, 27);
+    border: 2px solid #f00042;
     cursor: pointer;
     transition-duration: 0.2s;
 }
