@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MapContainer as LeafletMap, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer as LeafletMap, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import { Icon } from "leaflet";
@@ -145,6 +145,28 @@ const GeojsonMapComponent = ({ filePath }) => {
     }
   };
 
+  // Add a function to add a circle to the map
+  const addCircleToMap = (map, center, radius) => {
+    if (map && center) {
+      return (
+        <Circle center={center} pathOptions={{ color: 'blue', fillColor: 'blue', fillOpacity: 0.1 }} radius={radius} />
+      );
+    }
+  };
+
+  // Call the function within useEffect
+  useEffect(() => {
+    if (mapRef.current && homeLocation.latitude && homeLocation.longitude) {
+      const circle = addCircleToMap(mapRef.current, [homeLocation.latitude, homeLocation.longitude], distance*1000); // Adjust radius as needed
+      if (circle) {
+        const map = mapRef.current.leafletElement; // Access the leafletElement property
+        if (map) {
+          map.addLayer(circle); // Add the circle to the map
+        }
+      }
+    }
+  }, [homeLocation]);
+
   // This is the content for the Map
   return (
     <div>
@@ -191,7 +213,12 @@ const GeojsonMapComponent = ({ filePath }) => {
             {/* Popup for home marker */}
           </Marker>
         )}
-      </LeafletMap>
+
+        {/* This is for the amenities radius circle */}
+        {homeLocation.latitude && homeLocation.longitude && (
+          addCircleToMap(mapRef.current, [homeLocation.latitude, homeLocation.longitude], distance*1000) // Adjust radius as needed
+        )}
+        </LeafletMap>
 
       {/* This area is the form for the Map */}
       <h3 style={{ marginBottom: '5px'}}>Set Home Waypoint</h3>
