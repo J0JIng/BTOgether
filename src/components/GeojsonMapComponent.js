@@ -36,9 +36,13 @@ const GeojsonMapComponent = ({ filePath }) => {
   const mapRef = useRef(null);
 
   // These are the icons for the map
-  const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [24, 24]});
-  const hawkerIcon = new Icon({ iconUrl: require("../icons/hawkerpin.png"), iconSize: [24, 24]});
-  const homeIcon = new Icon({ iconUrl: require("../icons/home-button.png"), iconSize: [24, 24]});
+  const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [26, 26]});
+  const hawkerIcon = new Icon({ iconUrl: require("../icons/hawkerpin.png"), iconSize: [26, 26]});
+  const homeIcon = new Icon({ iconUrl: require("../icons/home-button.png"), iconSize: [26, 26]});
+  const parkIcon = new Icon({ iconUrl: require("../icons/parks.png"), iconSize: [26, 24]});
+  const preschoolIcon = new Icon({ iconUrl: require("../icons/preschools.png"), iconSize: [26, 26]});
+  const clincsIcon = new Icon({ iconUrl: require("../icons/clinics.png"), iconSize: [26, 26]});
+  const mallsIcon = new Icon({ iconUrl: require("../icons/malls.png"), iconSize: [26, 26]});
 
   // This is the API key for the public transport route using HERE
   const apiKey = 'ssJnHuXxZBHgTKHCyuaMMxIj0r05GW4vC3K49sWkeZI'; // HERE API key
@@ -69,11 +73,23 @@ const GeojsonMapComponent = ({ filePath }) => {
         .catch((error) => console.error("Error fetching GeoJSON:", error));
     }
     if (filePath.includes("Gym")) {
-      setMarkerIcon(gymIcon)
-      setMapTitle("Gyms")
-    } else {
-      setMarkerIcon(hawkerIcon)
-      setMapTitle("Hawkers")
+      setMarkerIcon(gymIcon);
+      setMapTitle("Gyms");
+    } else if (filePath.includes("Hawker")) {
+      setMarkerIcon(hawkerIcon);
+      setMapTitle("Hawkers");
+    } else if (filePath.includes("Park")) {
+      setMarkerIcon(parkIcon);
+      setMapTitle("Parks");
+    } else if (filePath.includes("PreSchool")) {
+      setMarkerIcon(preschoolIcon);
+      setMapTitle("Preschools");
+    } else if (filePath.includes("CHASClinic")) {
+      setMarkerIcon(clincsIcon);
+      setMapTitle("Clinics");
+    } else if (filePath.includes("shopping_mall")) {
+      setMarkerIcon(mallsIcon);
+      setMapTitle("Malls");
     }
   }, [filePath,homeLocation,distance]);
 
@@ -203,7 +219,7 @@ const filterHtmlContent = (htmlContent) => {
   tempElement.querySelectorAll('th').forEach((thElement) => {
     const textContent = thElement.textContent.trim();
     const tdElement = thElement.nextElementSibling;
-    if (!textContent || !tdElement || !tdElement.textContent.trim() || textContent === 'LANDYADDRESSPOINT'|| textContent === 'LANDXADDRESSPOINT'|| textContent === 'INC_CRC'|| textContent === 'FMEL_UPD_D') {
+    if (!textContent || !tdElement || !tdElement.textContent.trim() || textContent === 'LANDYADDRESSPOINT'|| textContent === 'LANDXADDRESSPOINT'|| textContent === 'INC_CRC'|| textContent === 'FMEL_UPD_D' || textContent === 'PHOTOURL' || textContent === 'EST_ORIGINAL_COMPLETION_DATE' || textContent === 'ADDRESSBLOCKHOUSENUMBER') {
       thElement.parentNode.remove();
     }
   });

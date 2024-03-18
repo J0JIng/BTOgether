@@ -6,8 +6,10 @@ import { useState, useEffect } from 'react';
 import GeojsonMapComponent from "./components/GeojsonMapComponent";
 import gymgeojson from "./geojson/GymsSGGEOJSON.geojson";
 import hawkergeojson from "./geojson/HawkerCentresGEOJSON.geojson";
-
-
+import parksgeojson from "./geojson/Parks.geojson";
+import preschoolgeojson from "./geojson/PreSchoolsLocation.geojson";
+import clinicgeojson from "./geojson/CHASClinics.geojson";
+import mallsgeojson from "./geojson/shopping_mall_coordinates.geojson";
 
 var myHeaders = new Headers();
 myHeaders.append("AccountKey", "++qZshXPQSea0zZRKDZgdw==");
@@ -144,7 +146,17 @@ function App() {
   const toggleJson = () => {
     if (chosenJson === gymgeojson) {
       setChosenJson(hawkergeojson)
-    } else setChosenJson(gymgeojson)
+    } else if (chosenJson === hawkergeojson) {
+      setChosenJson(parksgeojson) 
+    } else if (chosenJson === parksgeojson) {
+      setChosenJson(preschoolgeojson) 
+    } else if (chosenJson === preschoolgeojson) {
+      setChosenJson(clinicgeojson) 
+    } else if (chosenJson === clinicgeojson) {
+      setChosenJson(mallsgeojson) 
+    } else if (chosenJson === mallsgeojson) {
+      setChosenJson(gymgeojson) 
+    } 
   }
   
   return (
