@@ -16,6 +16,11 @@ import mallsgeojson from "../geojson/shopping_mall_coordinates.geojson";
 import RoutingMachine from "./routingMachine";
 import Routing from "./Routing";
 
+import traffic from "../icons/traffic.png"
+import transit from "../icons/transit.png"
+import satellite from "../icons/satellite.png"
+import base from "../icons/base.png"
+
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);
@@ -44,6 +49,7 @@ const GeojsonMapComponent = () => {
   const [distance, setDistance] = useState(5);
   const [chosenJson, setChosenJson] = useState('');
   const [mapStyle, setMapStyle] = useState('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}');
+  const [currentSource, setCurrentSource] = useState(satellite)
   const mapRef = useRef(null);
 
   // These are the icons for the map
@@ -198,96 +204,127 @@ const GeojsonMapComponent = () => {
   const MapStylePanel = () => {
     const map = useMap();
     const [expanded, setExpanded] = useState(false);
+    const [timeoutId, setTimeoutId] = useState(null); // To store the timeout ID
+    const [hoveringOverSide, setHoveringOverSide] = useState(false)
   
-    const controlStyle = {
+    const iconSize = '50px';
+  
+    const mainPanelStyle = {
       position: 'absolute',
       bottom: '10px',
       left: '10px',
       zIndex: 1000,
-      fontFamily: 'Arial, sans-serif',
-      transition: 'width 0.3s ease',
-      backgroundColor: 'rgba(255, 255, 255, 0.7)',
-      width: expanded ? '330px' : '60px', // Initial width when collapsed and expanded width on hover
-      height: expanded ? '150px' : '90px', // Initial width when collapsed and expanded width on hover
-      overflow: 'hidden',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      width: '70px',
+      height: '90px',
     };
   
-    const containerStyle = {
+    const sidePanelStyle = {
+      position: 'absolute',
       display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
+      zIndex: 1000,
+      flexDirection: 'row',
+      justifyContent: 'right',
       alignItems: 'center',
-      height: '100px', // Set height to match collapsed height
+      bottom: '10px',
+      left: '90px',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      width: '290px',
+      height: '90px',
       cursor: 'pointer',
+      transition: 'opacity 0.3s ease', // Add transition for smooth hiding
+      opacity: expanded ? 1 : 0, // Hide when not expanded
     };
   
-    const imgStyle = {
-      maxWidth: '100%',
-      maxHeight: '100%',
-      transition: 'opacity 0.3s ease', // Fade in/out effect
-      opacity: expanded ? 0 : 1, // Hide image when expanded
-    };
-  
-    const buttonContainerStyle = {
-      display: 'flex',
-      flexDirection: 'row', // Display buttons horizontally
-      alignItems: 'center',
-    };
-  
-    const buttonStyle = {
-      backgroundColor: '#f8f9fa',
-      border: '1px solid #d1d3d4',
-      borderRadius: '3px',
-      color: '#70757a',
-      cursor: 'pointer',
-      fontSize: '14px',
-      marginBottom: '5px',
-      padding: '8px 12px',
-      textAlign: 'left',
-      textDecoration: 'none',
-      margin: '0 5px', // Add margin between buttons
-    };
-  
-    const handleClick = (mapStyle) => {
+    const handleClick = (mapStyle, type) => {
       setExpanded(false); // Collapse the panel when clicked
+      clearTimeout(timeoutId); // Clear any existing timeout
       setMapStyle(mapStyle);
+      setHoveringOverSide(false);
+
+      if (type == 'base') {
+        setCurrentSource(satellite)
+      } else if (type == 'satellite') {
+        setCurrentSource(base)
+      } else if (type == 'traffic') {
+        setCurrentSource(traffic)
+      } else if (type == 'transit') {
+        setCurrentSource(transit)
+      }
+    };
+  
+    const handleMainPanelHover = () => {
+      clearTimeout(timeoutId); // Clear any existing timeout
+      setExpanded(true); // Always expand when hovering over the main panel
+    };
+  
+    const handleMainPanelLeave = () => {
+      clearTimeout(timeoutId); // Clear any existing timeout
+      // Set a new timeout to hide the side panel after 3 seconds
+      setTimeoutId(
+        setTimeout(() => {
+          if (hoveringOverSide == false) {
+            setExpanded(false);
+          }
+        }, 1000)
+      );
+    };
+  
+    const handleSidePanelHover = () => {
+      clearTimeout(timeoutId); // Clear any existing timeout
+      setExpanded(true);
+      setHoveringOverSide(true);
+    };
+
+    const handleSidePanelLeave = () => {
+      setHoveringOverSide(false);
+      setExpanded(false);
     };
   
     return (
-      <div
-        style={controlStyle}
-        className="leaflet-bar leaflet-control"
-        onMouseEnter={() => setExpanded(true)} // Expand on hover
-        onMouseLeave={() => setExpanded(false)} // Collapse on mouse leave
-      >
-        <div style={containerStyle}>
+      <div>
+        <div
+          style={mainPanelStyle}
+          className="leaflet-bar leaflet-control"
+          onMouseEnter={handleMainPanelHover}
+          onMouseLeave={handleMainPanelLeave}
+        >
           <img
-            src="https://via.placeholder.com/40"
-            alt="Map styles"
-            style={imgStyle}
+            src={currentSource}
+            alt="Base Map"
+            style={{ marginTop: '10px', width: iconSize, height: iconSize, border: "2px solid LightSteelBlue", borderRadius: '5px'}}
+            onClick={() =>
+              handleClick('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}')
+            }
           />
-          <span style={{ marginTop: '5px', opacity: expanded ? 0 : 1 }}>Styles</span>
-          {expanded && (
-            <div style={buttonContainerStyle}>
-              <div style={{ display: 'flex', flexDirection: 'column', marginRight: '10px' }}>
-                <img src="https://via.placeholder.com/40" alt="Base Map" style={{ marginBottom: '5px' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}')} />
-                <span onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}')}>Base Map</span>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', marginRight: '10px' }}>
-                <img src="https://via.placeholder.com/40" alt="Base Map" style={{ marginBottom: '5px' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}')} />
-                <span onClick={() => handleClick('https://mt1.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}')}>Satellite Map</span>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', marginRight: '10px' }}>
-                <img src="https://via.placeholder.com/40" alt="Base Map" style={{ marginBottom: '5px' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,transit&hl=en&x={x}&y={y}&z={z}')} />
-                <span onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,transit&hl=en&x={x}&y={y}&z={z}')}>Transit Map</span>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', marginRight: '10px' }}>
-                <img src="https://via.placeholder.com/40" alt="Base Map" style={{ marginBottom: '5px' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,traffic&hl=en&x={x}&y={y}&z={z}')} />
-                <span onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,traffic&hl=en&x={x}&y={y}&z={z}')}>Traffic Map</span>
-              </div>
-            </div>
-          )}
+          <span>Layers</span>
         </div>
+  
+          {expanded && (
+          <div
+            style={sidePanelStyle}
+            className="leaflet-bar leaflet-control"
+            onMouseEnter={handleSidePanelHover}
+            onMouseLeave={handleSidePanelLeave} // Still hide when leaving the side panel
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', marginRight: '15px', alignItems: 'center'}} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}', 'base')}>
+              <img src={base} alt="Base Map" style={{ marginTop: '5px', marginBottom: '5px', width: iconSize, height: iconSize, border: "2px solid LightSteelBlue", borderRadius: '5px'}} />
+              <span>Base</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', marginRight: '15px', alignItems: 'center'}} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}', 'satellite')}>
+              <img src={satellite} alt="Base Map" style={{ marginTop: '5px', marginBottom: '5px', width: iconSize, height: iconSize, border: "2px solid LightSteelBlue", borderRadius: '5px'}} />
+              <span>Satellite</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', marginRight: '15px', alignItems: 'center'}} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,transit&hl=en&x={x}&y={y}&z={z}', 'transit')}>
+              <img src={transit} alt="Base Map" style={{ marginTop: '5px', marginBottom: '5px', width: iconSize, height: iconSize, border: "2px solid LightSteelBlue", borderRadius: '5px'}} />
+              <span>Transit</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', marginRight: '15px', alignItems: 'center'}} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,traffic&hl=en&x={x}&y={y}&z={z}', 'traffic')}>
+              <img src={traffic} alt="Base Map" style={{ marginTop: '5px', marginBottom: '5px', width: iconSize, height: iconSize, border: "2px solid LightSteelBlue", borderRadius: '5px'}} />
+              <span>Traffic</span>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
