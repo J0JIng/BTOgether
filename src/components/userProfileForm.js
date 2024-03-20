@@ -76,7 +76,7 @@ const UserProfileForm = () => {
         <br />
         <label>
           Salary:
-          <input name="salary" value={formData.salary} onChange={handleChange} />
+          <input type="number" name="salary" value={formData.salary} onChange={handleChange} />
         </label>
         <br />
         <label>

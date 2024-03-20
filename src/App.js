@@ -15,11 +15,6 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-function formatTime(timestamp) {
-  // Implement your desired time formatting logic here
-  return new Date(timestamp).toLocaleTimeString();
-}
-
 function fetchBTO() {
   const requestOptions = {
     method: 'POST',
@@ -45,25 +40,6 @@ function fetchBTO() {
 fetchBTO();
 
 function App() {
-  const [busServices, setBusServices] = useState([])
-  const [busStopCode, setBusStopCode] = useState(''); // Initial value
-
-  // Get bus times
-  useEffect(() => {
-    if (/^\d{1,5}$/.test(busStopCode.trim())) { // Check if busStopCode is 1-5 digits
-      const getBusTime = async () => {
-        try {
-          const response = await fetch(`/ltaodataservice/BusArrivalv2?BusStopCode=${busStopCode}`, requestOptions);
-          const data = await response.json(); // Parse JSON response
-          console.log(data);
-          setBusServices(data.Services);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      getBusTime();
-    }
-  }, [busStopCode]);
 
   // init services
   const db = getFirestore();
@@ -203,38 +179,6 @@ function App() {
       </table>
     )}
 
-    </div>
-
-    <hr />
-    {/* LTA Datamall Test */}
-    <label>Enter Bus Stop Code: </label>
-    <input type="text" value={busStopCode} onChange={(event) => setBusStopCode(event.target.value)}/>
-    <br />
-
-    <h3 style={{ marginBottom: '0px'}}>Bus Arrival Times</h3>
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-    <ul>
-    <table>
-      <thead>
-        <tr>
-          <th>Service Number</th>
-          <th>Next Bus</th>
-          <th>Second Bus</th>
-          <th>Third Bus</th>
-        </tr>
-      </thead>
-      <tbody>
-        {busServices.map((service) => (
-          <tr key={service.ServiceNo}>
-            <td>{service.ServiceNo}</td>
-            <td>{formatTime(service.NextBus.EstimatedArrival)}</td>
-            <td>{formatTime(service.NextBus2.EstimatedArrival)}</td>
-            <td>{formatTime(service.NextBus3.EstimatedArrival)}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    </ul>
     </div>
     
     <hr />
