@@ -54,8 +54,9 @@ const GeojsonMapComponent = () => {
   const [mapStyle, setMapStyle] = useState('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}');
   const [currentSource, setCurrentSource] = useState(satellite)
   const [routingLocation, setRoutingLocation] = useState({latitude: null, longitude: null});
+  const [addressField, setAddressField] = useState('');
   const mapRef = useRef(null);
-  const iconSize = 30;
+  const iconSize = 36;
 
   // These are the icons for the map
   const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [iconSize, iconSize]});
@@ -75,38 +76,52 @@ const GeojsonMapComponent = () => {
   const colRef = collection(db, 'User_prefs');
 
   const setHome = () => {
-    const q = query(colRef, where("email", "==", auth.currentUser.email));
+    let homeLayerExists = false; // Flag to track if the 'home' layer exists
+    
+    mapRef.current.eachLayer((layer) => {
+      if (layer.options.layerName === "home") {
+        homeLayerExists = true; // Set flag to true if 'home' layer is found
+      }
+    });
   
-    getDocs(q)
-      .then((snapshot) => {
-        if (!snapshot.empty) {
-          const doc = snapshot.docs[0].ref;
-          updateDoc(doc, {
-            homeAddress: homeLocation.address,
-            homeLatitude: homeLocation.latitude,
-            homeLongitude: homeLocation.longitude
-          })
-          .then(() => { console.log("Updated Home Location!"); })
-          .catch((error) => { console.error("Error updating document:", error); });
-        } else {
-          console.log("Creating document for user");
-          addDoc(colRef, {
-            email: auth.currentUser.email // Accessing email property
-          })
-          .then((docRef) => {
-            updateDoc(docRef, {
+    if (homeLayerExists) {
+      // Home pin is on map, proceed to set home
+      const q = query(colRef, where("email", "==", auth.currentUser.email));
+    
+      getDocs(q)
+        .then((snapshot) => {
+          if (!snapshot.empty) {
+            const doc = snapshot.docs[0].ref;
+            updateDoc(doc, {
               homeAddress: homeLocation.address,
               homeLatitude: homeLocation.latitude,
               homeLongitude: homeLocation.longitude
             })
-            .then(() => { console.log("Saved Home Location!"); })
+            .then(() => { console.log("Updated Home Location!"); })
             .catch((error) => { console.error("Error updating document:", error); });
-          })
-          .catch((error) => { console.error("Error adding document:", error); });
-        }
-      })
-      .catch((error) => { console.error("Error fetching document:", error); });
+          } else {
+            console.log("Creating document for user");
+            addDoc(colRef, {
+              email: auth.currentUser.email // Accessing email property
+            })
+            .then((docRef) => {
+              updateDoc(docRef, {
+                homeAddress: homeLocation.address,
+                homeLatitude: homeLocation.latitude,
+                homeLongitude: homeLocation.longitude
+              })
+              .then(() => { console.log("Saved Home Location!"); })
+              .catch((error) => { console.error("Error updating document:", error); });
+            })
+            .catch((error) => { console.error("Error adding document:", error); });
+          }
+        })
+        .catch((error) => { console.error("Error fetching document:", error); });
+    } else {
+      alert("Click 'Find Home' to Place a Pin");
+    }
   };
+  
   
 
   // Load Home
@@ -220,8 +235,12 @@ const GeojsonMapComponent = () => {
 
   // This is for the address field, to convert user input to latitude and longitude
   const handleGeocode = async () => {
+    if (addressField == null || addressField == '') {
+      alert("Type in an Address")
+      return
+    }
     try {
-      const response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${homeLocation.address}&format=json&addressdetails=1&limit=1`);
+      const response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${addressField}&format=json&addressdetails=1&limit=1`);
       if (response.data.length > 0) {
         const { lat, lon } = response.data[0];
         const latitude = parseFloat(lat).toFixed(5);
@@ -513,7 +532,7 @@ const GeojsonMapComponent = () => {
         {/* This are markers from the GEOJson data */}
         {markers.map((marker, index) => (
           <Marker key={index} position={marker.geocode} icon={markerIcon}>
-            <Popup><div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} /><button onClick={() => routeHere(marker.geocode)}>Route here</button></Popup>
+            <Popup><div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} /><button onClick={() => routeHere(marker.geocode)}>Get Directions</button></Popup>
           </Marker>
         ))}
 
@@ -535,7 +554,7 @@ const GeojsonMapComponent = () => {
       {/* This area is the form for the Map */}
       <h3 style={{ marginBottom: '5px'}}>Set Home Waypoint</h3>
       <label>Address: </label>
-      <input type='text' placeholder="Enter Address here..." onChange={(e) => setHomeLocation({ ...homeLocation, address: e.target.value })}></input>
+      <input type='text' placeholder="Enter Address here..." onChange={(e) => setAddressField(e.target.value)}></input>
       {errorMessage && (
         <div style={{ color: 'red' }}>{errorMessage}</div>
       )}
@@ -551,7 +570,7 @@ const GeojsonMapComponent = () => {
       )}
 
       {markers.length > 0 && (
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px'}}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px', marginTop: '20px'}}>
         <table style={{ borderCollapse: 'collapse', border: '1px solid black', padding: '2px' }}>
           <thead>
           <tr>
