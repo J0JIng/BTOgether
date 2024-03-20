@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { MapContainer as LeafletMap, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
-import { Icon } from "leaflet";
+import { Icon, L } from "leaflet";
 import { getFirestore, collection, updateDoc, addDoc, getDocs } from 'firebase/firestore';
 import { query, where } from 'firebase/firestore';
 import { auth } from '../utils/firebase';
@@ -49,20 +49,22 @@ const GeojsonMapComponent = () => {
   const [mapCenter, setMapCenter] = useState([1.354, 103.825]);
   const [homeLocation, setHomeLocation] = useState({ address: '', latitude: null, longitude: null });
   const [errorMessage, setErrorMessage] = useState('');
-  const [distance, setDistance] = useState(5);
+  const [distance, setDistance] = useState(1);
   const [chosenJson, setChosenJson] = useState('');
   const [mapStyle, setMapStyle] = useState('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}');
   const [currentSource, setCurrentSource] = useState(satellite)
+  const [routingLocation, setRoutingLocation] = useState({latitude: null, longitude: null});
   const mapRef = useRef(null);
+  const iconSize = 30;
 
   // These are the icons for the map
-  const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [26, 26]});
-  const hawkerIcon = new Icon({ iconUrl: require("../icons/hawkerpin.png"), iconSize: [26, 26]});
-  const homeIcon = new Icon({ iconUrl: require("../icons/home-button.png"), iconSize: [26, 26]});
-  const parkIcon = new Icon({ iconUrl: require("../icons/parks.png"), iconSize: [26, 24]});
-  const preschoolIcon = new Icon({ iconUrl: require("../icons/preschools.png"), iconSize: [26, 26]});
-  const clincsIcon = new Icon({ iconUrl: require("../icons/clinics.png"), iconSize: [26, 26]});
-  const mallsIcon = new Icon({ iconUrl: require("../icons/malls.png"), iconSize: [26, 26]});
+  const gymIcon = new Icon({ iconUrl: require("../icons/gympin.png"), iconSize: [iconSize, iconSize]});
+  const hawkerIcon = new Icon({ iconUrl: require("../icons/hawkerpin.png"), iconSize: [iconSize, iconSize]});
+  const homeIcon = new Icon({ iconUrl: require("../icons/home-button.png"), iconSize: [iconSize, iconSize]});
+  const parkIcon = new Icon({ iconUrl: require("../icons/parks.png"), iconSize: [iconSize, iconSize]});
+  const preschoolIcon = new Icon({ iconUrl: require("../icons/preschools.png"), iconSize: [iconSize, iconSize]});
+  const clincsIcon = new Icon({ iconUrl: require("../icons/clinics.png"), iconSize: [iconSize, iconSize]});
+  const mallsIcon = new Icon({ iconUrl: require("../icons/malls.png"), iconSize: [iconSize, iconSize]});
 
   // This is the API key for the public transport route using HERE
   const apiKey = 'ssJnHuXxZBHgTKHCyuaMMxIj0r05GW4vC3K49sWkeZI'; // HERE API key
@@ -126,6 +128,8 @@ const GeojsonMapComponent = () => {
             address: homeAddress, latitude: homeLatitude, longitude: homeLongitude
           });
           setErrorMessage('');
+          setDistance(0.5)
+          flyToCoords(homeLatitude, homeLongitude);
         } else {
           console.log("No home location saved")
         }
@@ -134,11 +138,20 @@ const GeojsonMapComponent = () => {
   };
 
   // WIP
-  const clearHome = () => {
-    setHomeLocation({
-      address: '', latitude: null, longitude: null
+  const clearMap = () => {
+    mapRef.current.eachLayer((layer) => {
+      if (layer.options.layerName != "mapLayer") {
+        mapRef.current.removeLayer(layer);
+      }
     });
+    setRoutingLocation({latitude: null, longitude: null})
+    setHomeLocation({address: '', latitude: null, longitude: null});
+    setChosenJson('')
     setMapCenter(1.354, 103.825);
+    mapRef.current.flyTo([1.354, 103.825], 12, {
+      animate: true,
+      duration: 1 // in seconds
+    });
     setErrorMessage('');
   };
 
@@ -202,6 +215,7 @@ const GeojsonMapComponent = () => {
       latitude: position.lat.toFixed(5),
       longitude: position.lng.toFixed(5)
     }));
+    flyToCoords(position.lat.toFixed(5), position.lng.toFixed(5))
   };
 
   // This is for the address field, to convert user input to latitude and longitude
@@ -212,11 +226,12 @@ const GeojsonMapComponent = () => {
         const { lat, lon } = response.data[0];
         const latitude = parseFloat(lat).toFixed(5);
         const longitude = parseFloat(lon).toFixed(5);
-
+        const road = response.data[0].address.road ? response.data[0].address.road : response.data[0].address.suburb;
+  
         const singaporeBounds = {
           north: 1.5, south: 1.1, east: 104.1, west: 103.6
         };
-
+  
         if (
           latitude >= singaporeBounds.south &&
           latitude <= singaporeBounds.north &&
@@ -224,10 +239,11 @@ const GeojsonMapComponent = () => {
           longitude <= singaporeBounds.east
         ) {
           setHomeLocation({
-            address: response.data[0].address.road, latitude: latitude, longitude: longitude
+            address: road, latitude: latitude, longitude: longitude
           });
-          setMapCenter([latitude, longitude]);
           setErrorMessage('');
+          // Fly to the location
+          flyToCoords(latitude, longitude);
         } else {
           setErrorMessage('The location is outside Singapore. Please refine your search.');
         }
@@ -240,13 +256,22 @@ const GeojsonMapComponent = () => {
     }
   };
   
+  const flyToCoords = (lat, long) => {
+    if (mapRef.current && lat && long) {
+      mapRef.current.flyTo([lat, long], 17, {
+        animate: true,
+        duration: 1 // in seconds
+      });
+    }
+  };
+  
   const handleReverseGeocode = async (latitude, longitude) => {
     try {
       const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`);
       if (response.data) {
-        const address = response.data.address.road; // Extract the address from the response
+        const road = response.data.address.road ? response.data.address.road : response.data.address.suburb;
         setHomeLocation({
-          address: address,
+          address: road,
           latitude: latitude,
           longitude: longitude
         });
@@ -262,6 +287,7 @@ const GeojsonMapComponent = () => {
   };
 
   const toggleJson = () => {
+    setRoutingLocation({latitude: null, longitude: null})
     if (chosenJson === gymgeojson) {
       setChosenJson(hawkergeojson)
     } else if (chosenJson === hawkergeojson) {
@@ -283,7 +309,7 @@ const GeojsonMapComponent = () => {
   const addCircleToMap = (map, center, radius) => {
     if (map && center) {
       return (
-        <Circle center={center} pathOptions={{ color: 'blue', fillColor: 'blue', fillOpacity: 0.1 }} radius={radius} />
+        <Circle center={center} pathOptions={{ color: 'blue', fillColor: 'blue', fillOpacity: 0.1 }} radius={radius} layerName="circle" />
       );
     }
   };
@@ -428,6 +454,11 @@ const GeojsonMapComponent = () => {
     );
   };
 
+  const routeHere = (coords) => {
+    setRoutingLocation({latitude: coords[0], longitude: coords[1]})
+    mapRef.current.closePopup();
+  };
+
   // This is the content for the Map
   return (
     <div>
@@ -451,22 +482,23 @@ const GeojsonMapComponent = () => {
         <TileLayer
           attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
           url={mapStyle}
+          layerName='mapLayer'
         />
         {/* Use url="https://mt1.google.com/vt/lyrs=m@221097413,transit&hl=en&x={x}&y={y}&z={z}" to show mrt lines */}
         
         {/* This is for the driving route */}
-        {/* <RoutingMachine markerLat={homeLocation.latitude} markerLng={homeLocation.longitude} /> */}
+        <RoutingMachine start={homeLocation} markerLat={routingLocation.latitude} markerLng={routingLocation.longitude} />
         
         {/* This are markers from the GEOJson data */}
         {markers.map((marker, index) => (
           <Marker key={index} position={marker.geocode} icon={markerIcon}>
-            <Popup><div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} /></Popup>
+            <Popup><div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} /><button onClick={() => routeHere(marker.geocode)}>Route here</button></Popup>
           </Marker>
         ))}
 
         {/* This is for the home marker */}
         {homeLocation.latitude && homeLocation.longitude && (
-          <Marker position={[homeLocation.latitude, homeLocation.longitude]} icon={homeIcon} draggable={true} eventHandlers={{ dragend: handleMarkerDragEnd }}>
+          <Marker position={[homeLocation.latitude, homeLocation.longitude]} layerName="home" icon={homeIcon} draggable={true} eventHandlers={{ dragend: handleMarkerDragEnd }}>
             {/* Popup for home marker */}
           </Marker>
         )}
@@ -482,7 +514,7 @@ const GeojsonMapComponent = () => {
       {/* This area is the form for the Map */}
       <h3 style={{ marginBottom: '5px'}}>Set Home Waypoint</h3>
       <label>Address: </label>
-      <input type='text' placeholder="Enter Address here..." value={homeLocation.address} onChange={(e) => setHomeLocation({ ...homeLocation, address: e.target.value })}></input>
+      <input type='text' placeholder="Enter Address here..." onChange={(e) => setHomeLocation({ ...homeLocation, address: e.target.value })}></input>
       {errorMessage && (
         <div style={{ color: 'red' }}>{errorMessage}</div>
       )}
@@ -490,7 +522,7 @@ const GeojsonMapComponent = () => {
       {auth.currentUser && <button onClick={setHome}>Set Home</button>}
       {auth.currentUser && <button onClick={loadHome}>Load Saved Home Location</button>}
       <button onClick={toggleJson}>Toggle GEOJson</button>
-      <button onClick={clearHome}>Clear Home Location</button>
+      <button onClick={clearMap}>Clear Map</button>
 
       {/* This is to show latitude and longitude coords when available*/}
       {homeLocation.latitude && homeLocation.longitude && (
@@ -498,8 +530,7 @@ const GeojsonMapComponent = () => {
       )}
 
       {/* This is for the public transport route, put at the end so routing table is at the bottom*/}
-      {/* <Routing startLat={1.3455586} startLng={103.6817077} endLat={homeLocation.latitude} endLng={homeLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
-     */}
+      <Routing startLat={homeLocation.latitude} startLng={homeLocation.longitude} endLat={routingLocation.latitude} endLng={routingLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
     </div>
   );
 };

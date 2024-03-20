@@ -7,7 +7,7 @@ L.Marker.prototype.options.icon = L.icon({
     iconUrl: require("../icons/google-maps.png"), iconSize: [0, 0]
 });
 
-const RoutingMachine = ({ markerLat, markerLng }) => {
+const RoutingMachine = ({ start, markerLat, markerLng }) => {
     const map = useMap();
     const routingControlRef = useRef(null);
 
@@ -17,13 +17,13 @@ const RoutingMachine = ({ markerLat, markerLng }) => {
             if (routingControlRef.current) {
                 // Reset waypoints of existing routing control
                 routingControlRef.current.setWaypoints([
-                    L.latLng(1.3455586, 103.6817077),
+                    L.latLng(start.latitude, start.longitude),
                     L.latLng(markerLat, markerLng)
                 ]);
             } else {
                 const routingControl = L.Routing.control({
                     waypoints: [
-                        L.latLng(1.3455586,103.6817077),
+                        L.latLng(start.latitude, start.longitude),
                         L.latLng(markerLat, markerLng)
                     ],
                     lineOptions: {
@@ -56,12 +56,15 @@ const RoutingMachine = ({ markerLat, markerLng }) => {
         } else {
             const element = document.querySelector('.leaflet-routing-container');
             if (element) {
-                element.style.display = 'none'; // Hide the div
+                element.remove(); // Remove the div
             }
             // Reset routing control reference if lat/lng is null or 0
+            if (routingControlRef.current) {
+                routingControlRef.current.setWaypoints([]);
+            }
             routingControlRef.current = null;
         }
-    }, [map, markerLat, markerLng]);
+    }, [start, markerLat, markerLng]);
 
     return null;
 };
