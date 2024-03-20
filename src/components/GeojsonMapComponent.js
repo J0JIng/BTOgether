@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MapContainer as LeafletMap, TileLayer, Marker, Popup, Circle, useMap } from "react-leaflet";
+import { MapContainer as LeafletMap, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import { Icon } from "leaflet";
+import { getFirestore, collection, updateDoc, addDoc, getDocs } from 'firebase/firestore';
+import { query, where } from 'firebase/firestore';
+import { auth } from '../utils/firebase';
 
 // GeoJson Files
 import gymgeojson from "../geojson/GymsSGGEOJSON.geojson";
@@ -64,6 +67,81 @@ const GeojsonMapComponent = () => {
   // This is the API key for the public transport route using HERE
   const apiKey = 'ssJnHuXxZBHgTKHCyuaMMxIj0r05GW4vC3K49sWkeZI'; // HERE API key
 
+  // init services
+  const db = getFirestore();
+  // Users_pref collection ref
+  const colRef = collection(db, 'User_prefs');
+
+  const setHome = () => {
+    const q = query(colRef, where("email", "==", auth.currentUser.email));
+  
+    getDocs(q)
+      .then((snapshot) => {
+        if (!snapshot.empty) {
+          const doc = snapshot.docs[0].ref;
+          updateDoc(doc, {
+            homeAddress: homeLocation.address,
+            homeLatitude: homeLocation.latitude,
+            homeLongitude: homeLocation.longitude
+          })
+          .then(() => { console.log("Updated Home Location!"); })
+          .catch((error) => { console.error("Error updating document:", error); });
+        } else {
+          console.log("Creating document for user");
+          addDoc(colRef, {
+            email: auth.currentUser.email // Accessing email property
+          })
+          .then((docRef) => {
+            updateDoc(docRef, {
+              homeAddress: homeLocation.address,
+              homeLatitude: homeLocation.latitude,
+              homeLongitude: homeLocation.longitude
+            })
+            .then(() => { console.log("Saved Home Location!"); })
+            .catch((error) => { console.error("Error updating document:", error); });
+          })
+          .catch((error) => { console.error("Error adding document:", error); });
+        }
+      })
+      .catch((error) => { console.error("Error fetching document:", error); });
+  };
+  
+
+  // Load Home
+  const loadHome = () => {
+    const q = query(colRef, where("email", "==", auth.currentUser.email));
+    
+    getDocs(q)
+      .then((snapshot) => {
+        // Check if a document exists
+        if (snapshot.empty) { alert("No document found with provided email"); return; }
+        // Get the document reference from the first snapshot
+        const docData = snapshot.docs[0].data();
+        // Update the document
+        const homeAddress = docData.homeAddress;
+        const homeLatitude = docData.homeLatitude;
+        const homeLongitude = docData.homeLongitude;
+        if (homeLatitude && homeLongitude) {
+          setHomeLocation({
+            address: homeAddress, latitude: homeLatitude, longitude: homeLongitude
+          });
+          setErrorMessage('');
+        } else {
+          console.log("No home location saved")
+        }
+      })
+      .catch((error) => { console.error("Error fetching documents:", error); });
+  };
+
+  // WIP
+  const clearHome = () => {
+    setHomeLocation({
+      address: '', latitude: null, longitude: null
+    });
+    setMapCenter(1.354, 103.825);
+    setErrorMessage('');
+  };
+
   // This is to parse the GEOJson data
   useEffect(() => {
     if (chosenJson) {
@@ -118,6 +196,7 @@ const GeojsonMapComponent = () => {
   const handleMarkerDragEnd = (event) => {
     const marker = event.target;
     const position = marker.getLatLng();
+    handleReverseGeocode(position.lat.toFixed(5), position.lng.toFixed(5))
     setHomeLocation(prevHomeLocation => ({
       ...prevHomeLocation,
       latitude: position.lat.toFixed(5),
@@ -125,7 +204,7 @@ const GeojsonMapComponent = () => {
     }));
   };
 
-  // This is for the address field, to convert user input to latitude and longtitude
+  // This is for the address field, to convert user input to latitude and longitude
   const handleGeocode = async () => {
     try {
       const response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${homeLocation.address}&format=json&addressdetails=1&limit=1`);
@@ -145,7 +224,7 @@ const GeojsonMapComponent = () => {
           longitude <= singaporeBounds.east
         ) {
           setHomeLocation({
-            address: homeLocation.address, latitude, longitude
+            address: response.data[0].address.road, latitude: latitude, longitude: longitude
           });
           setMapCenter([latitude, longitude]);
           setErrorMessage('');
@@ -158,6 +237,27 @@ const GeojsonMapComponent = () => {
     } catch (error) {
       setErrorMessage('Error geocoding address');
       console.error('Error geocoding address:', error);
+    }
+  };
+  
+  const handleReverseGeocode = async (latitude, longitude) => {
+    try {
+      const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`);
+      if (response.data) {
+        const address = response.data.address.road; // Extract the address from the response
+        setHomeLocation({
+          address: address,
+          latitude: latitude,
+          longitude: longitude
+        });
+        setMapCenter([latitude, longitude]);
+        setErrorMessage('');
+      } else {
+        setErrorMessage('Address not found');
+      }
+    } catch (error) {
+      setErrorMessage('Error reverse geocoding address');
+      console.error('Error reverse geocoding address:', error);
     }
   };
 
@@ -202,7 +302,6 @@ const GeojsonMapComponent = () => {
   }, [homeLocation]);
 
   const MapStylePanel = () => {
-    const map = useMap();
     const [expanded, setExpanded] = useState(false);
     const [timeoutId, setTimeoutId] = useState(null); // To store the timeout ID
     const [hoveringOverSide, setHoveringOverSide] = useState(false)
@@ -242,13 +341,13 @@ const GeojsonMapComponent = () => {
       setMapStyle(mapStyle);
       setHoveringOverSide(false);
 
-      if (type == 'base') {
+      if (type === 'base') {
         setCurrentSource(satellite)
-      } else if (type == 'satellite') {
+      } else if (type === 'satellite') {
         setCurrentSource(base)
-      } else if (type == 'traffic') {
+      } else if (type === 'traffic') {
         setCurrentSource(traffic)
-      } else if (type == 'transit') {
+      } else if (type === 'transit') {
         setCurrentSource(transit)
       }
     };
@@ -263,7 +362,7 @@ const GeojsonMapComponent = () => {
       // Set a new timeout to hide the side panel after 3 seconds
       setTimeoutId(
         setTimeout(() => {
-          if (hoveringOverSide == false) {
+          if (hoveringOverSide === false) {
             setExpanded(false);
           }
         }, 1000)
@@ -339,7 +438,7 @@ const GeojsonMapComponent = () => {
       <label>Filter Distance (in km): </label>
       <input
         type="range"
-        min="1"
+        min="0"
         max="20"
         value={distance}
         onChange={(e) => setDistance(e.target.value)}
@@ -356,7 +455,7 @@ const GeojsonMapComponent = () => {
         {/* Use url="https://mt1.google.com/vt/lyrs=m@221097413,transit&hl=en&x={x}&y={y}&z={z}" to show mrt lines */}
         
         {/* This is for the driving route */}
-        <RoutingMachine markerLat={homeLocation.latitude} markerLng={homeLocation.longitude} />
+        {/* <RoutingMachine markerLat={homeLocation.latitude} markerLng={homeLocation.longitude} /> */}
         
         {/* This are markers from the GEOJson data */}
         {markers.map((marker, index) => (
@@ -387,17 +486,20 @@ const GeojsonMapComponent = () => {
       {errorMessage && (
         <div style={{ color: 'red' }}>{errorMessage}</div>
       )}
-      <button onClick={handleGeocode}>Set Home</button>
+      <button onClick={handleGeocode}>Find Home</button>
+      {auth.currentUser && <button onClick={setHome}>Set Home</button>}
+      {auth.currentUser && <button onClick={loadHome}>Load Saved Home Location</button>}
       <button onClick={toggleJson}>Toggle GEOJson</button>
+      <button onClick={clearHome}>Clear Home Location</button>
 
-      {/* This is to show latitude and longtitude coords when available*/}
+      {/* This is to show latitude and longitude coords when available*/}
       {homeLocation.latitude && homeLocation.longitude && (
-        <h4>Latitude: {homeLocation.latitude}, Longitude: {homeLocation.longitude}</h4>
+        <h4>Latitude: {homeLocation.latitude}, Longitude: {homeLocation.longitude}, Road: {homeLocation.address}</h4>
       )}
 
       {/* This is for the public transport route, put at the end so routing table is at the bottom*/}
-      <Routing startLat={1.3455586} startLng={103.6817077} endLat={homeLocation.latitude} endLng={homeLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
-    
+      {/* <Routing startLat={1.3455586} startLng={103.6817077} endLat={homeLocation.latitude} endLng={homeLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
+     */}
     </div>
   );
 };

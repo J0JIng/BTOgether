@@ -77,7 +77,7 @@ function App() {
       snapshot.docs.forEach((doc) => {
         prefsData.push({ ...doc.data(), id: doc.id });
       });
-      console.log(prefsData)
+      //console.log(prefsData)
       setPrefs(prefsData);
     });
 
@@ -89,7 +89,7 @@ function App() {
     const addPrefForm = document.querySelector('.add')
     addDoc(colRef, {
       email: addPrefForm.email.value,
-      gender: addPrefForm.gender.value,
+      gender: addPrefForm.gender.value
     })
     .then(() => { addPrefForm.reset() })
   }
@@ -129,7 +129,7 @@ function App() {
         // Update the document
         updateDoc(doc, {
           email: updatePrefForm.email.value,
-          gender: updatePrefForm.gender.value,
+          gender: updatePrefForm.gender.value
         }).then(() => { updatePrefForm.reset(); console.log("Document updated successfully!");})
           .catch((error) => { console.error("Error updating document:", error); });
       })
@@ -186,6 +186,9 @@ function App() {
           <tr>
             <th>Email</th>
             <th>Gender</th>
+            <th>Home Latitude</th>
+            <th>Home Longitude</th>
+            <th>Home Address</th>
           </tr>
         </thead>
         <tbody>
@@ -193,6 +196,9 @@ function App() {
             <tr key={pref.id}>
               <td>{pref.email}</td>
               <td>{pref.gender}</td>
+              <td>{pref.homeLatitude}</td>
+              <td>{pref.homeLongitude}</td>
+              <td>{pref.homeAddress}</td>
             </tr>
           ))}
         </tbody>
