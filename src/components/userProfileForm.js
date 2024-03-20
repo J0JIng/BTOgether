@@ -15,10 +15,10 @@ const UserProfileForm = () => {
     parentsAddress: '',
     workplaceLocation: ''
   });
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (value || value === 0) { // Check if value is truthy or zero
+    if (value || value === 0 || value === '') { // Check if value is truthy, zero, or empty string
       setFormData({ ...formData, [name]: value });
     }
   };
