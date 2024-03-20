@@ -128,7 +128,7 @@ const GeojsonMapComponent = () => {
             address: homeAddress, latitude: homeLatitude, longitude: homeLongitude
           });
           setErrorMessage('');
-          setDistance(0.5)
+          setDistance(1)
           flyToCoords(homeLatitude, homeLongitude);
         } else {
           console.log("No home location saved")
@@ -459,6 +459,27 @@ const GeojsonMapComponent = () => {
     mapRef.current.closePopup();
   };
 
+  // Function to parse HTML content and extract attribute values
+  const extractNameFromHtml = (htmlContent) => {
+    const tableRegex = /<(table|tr|th|td)\b[^>]*>/i;
+    if (tableRegex.test(htmlContent.popUp) == true ) {
+      const tempElement = document.createElement('div');
+      tempElement.innerHTML = htmlContent.popUp;
+      const thElements = tempElement.querySelectorAll('th');
+      let nameElement = null;
+      thElements.forEach(th => {
+        if (th.textContent.trim() === 'NAME' || th.textContent.trim() === 'CENTRE_NAME' || th.textContent.trim() === 'HCI_NAME') {
+          nameElement = th;
+        }
+      });
+      if (nameElement) {
+        const tdElement = nameElement.nextElementSibling;
+        if (tdElement) {return tdElement.textContent.trim();}
+      }
+      return ''; // Return an empty string if "NAME" is not found
+    } else { return htmlContent.popUp }
+  };
+
   // This is the content for the Map
   return (
     <div>
@@ -527,6 +548,25 @@ const GeojsonMapComponent = () => {
       {/* This is to show latitude and longitude coords when available*/}
       {homeLocation.latitude && homeLocation.longitude && (
         <h4>Latitude: {homeLocation.latitude}, Longitude: {homeLocation.longitude}, Road: {homeLocation.address}</h4>
+      )}
+
+      {markers.length > 0 && (
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px'}}>
+        <table style={{ borderCollapse: 'collapse', border: '1px solid black', padding: '2px' }}>
+          <thead>
+          <tr>
+              <th style={{ border: '1px solid black', padding: '2px' }}>{markers.length} {mapTitle} in {distance}km Radius: </th>
+            </tr>
+          </thead>
+          <tbody>
+            {markers.map((marker, index) => (
+              <tr key={index}>
+                <td style={{ border: '1px solid black', padding: '5px' }}>{extractNameFromHtml(marker)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </div>
       )}
 
       {/* This is for the public transport route, put at the end so routing table is at the bottom*/}
