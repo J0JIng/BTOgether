@@ -4,6 +4,7 @@ import { getFirestore, collection, addDoc, deleteDoc, onSnapshot, updateDoc, get
 import { query, where } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import GeojsonMapComponent from "./components/GeojsonMapComponent";
+import UserProfileForm from './components/userProfileForm';
 
 var myHeaders = new Headers();
 myHeaders.append("AccountKey", "++qZshXPQSea0zZRKDZgdw==");
@@ -181,28 +182,27 @@ function App() {
     {/* Display Database Contents */}
     <h2 style={{ marginBottom: '5px'}}>List of Users Preferences</h2>
     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px'}}>
-    <table>
+    {prefs && prefs.length > 0 && (
+      <table>
         <thead>
           <tr>
-            <th>Email</th>
-            <th>Gender</th>
-            <th>Home Latitude</th>
-            <th>Home Longitude</th>
-            <th>Home Address</th>
+            {Object.keys(prefs[0]).map((key) => (
+              <th key={key}>{key}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
           {prefs.map((pref) => (
             <tr key={pref.id}>
-              <td>{pref.email}</td>
-              <td>{pref.gender}</td>
-              <td>{pref.homeLatitude}</td>
-              <td>{pref.homeLongitude}</td>
-              <td>{pref.homeAddress}</td>
+              {Object.keys(pref).map((key) => (
+                <td key={key}>{pref[key]}</td>
+              ))}
             </tr>
           ))}
         </tbody>
       </table>
+    )}
+
     </div>
 
     <hr />
@@ -237,6 +237,9 @@ function App() {
     </ul>
     </div>
     
+    <hr />
+    <UserProfileForm />
+
     </div>
     );
   }
