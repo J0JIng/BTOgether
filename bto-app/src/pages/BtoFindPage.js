@@ -1,6 +1,9 @@
+import Navbar from "../components/NavBar";
+
 const BtoFindPage = () => {
     return (  
-        <div className="navbar">
+        <div className="bto-find-page">
+            <Navbar/>
             <h1> Manage Bto Find Page</h1>
         </div>
     );

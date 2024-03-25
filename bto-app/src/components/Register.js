@@ -30,7 +30,7 @@ const SignUp = ({ user }) => {
   }
 
   return (
-      <div className="login-form">
+      <div className="register-form">
         <form>
           <legend>Sign Up</legend>
 

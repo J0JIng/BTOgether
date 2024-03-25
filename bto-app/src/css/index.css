@@ -1,31 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+/* Your existing CSS */
 
-/* Reset styles */
-body, h1, h2, h3, p, a, button, input, textarea, select {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Global styles */
-body {
-  font-family: "Quicksand", sans-serif;
-  color: #333; /* Dark text color for better readability */
-  background-color: #f4f4f4; /* Light background color */
+.active {
+  background-color:  #a12419;
 }
 
 /* Navbar styles */
 .navbar {
-  background-color: #2c3e50; /* Darker background color */
+  background-color:  #f7776b;
   padding: 20px;
   display: flex;
   align-items: center;
   max-width: 100%;
   margin: 0 auto;
-  border-bottom: 1px solid #34495e; /* Darker border color */
+  border-bottom: 1px solid  #f7776b;
 }
 
-.navbar h1 {
+.navbar .title-heading {
   color: #ecf0f1; /* Light text color */
 }
 
@@ -41,174 +31,62 @@ body {
 }
 
 .navbar a:hover {
-  color: #3498db; /* Highlight color on hover */
+  color: #913139; /* Highlight color on hover */
 }
 
-.navbar-button {
-    text-decoration: none;
-    padding: 10px;
-    color: #ecf0f1;
-    background-color: #2c3e50;
-    transition: color 0.3s ease-in-out;
+/* Menu icon */
+.menu {
+  display: none;
+  cursor: pointer;
+  margin-left: auto;
 }
-  
-.navbar-button:hover {
-    color: #3498db; /* Highlight color on hover */
+
+.menu span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #ecf0f1;
+  margin: 5px;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Menu icon animation */
+.menu.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Responsive styles */
+@media screen and (max-width: 890px) {
+  .navbar .links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #f7776b;
+    border-top: 1px solid #ecf0f1;
   }
 
+  .navbar .links.open {
+    display: flex;
+  }
 
-/* Content styles */
-.content {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #ffffff; /* White background color */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
-}
+  .navbar .links a {
+    padding: 15px;
+    border-bottom: 1px solid #ecf0f1;
+  }
 
-.journal-preview {
-  padding: 20px;
-  margin: 20px 0;
-  background-color: #ecf0f1; /* Light background color */
-  border: 1px solid #dfe6e9; /* Light border color */
-  border-radius: 8px;
-  transition: box-shadow 0.3s ease-in-out;
-}
-
-.journal-preview:hover {
-  box-shadow: 0 0 15px rgba(52, 152, 219, 0.3); /* Highlight box shadow on hover */
-}
-
-.journal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.journal-header h2 {
-  font-size: 24px;
-  color: #3498db; /* Highlight color */
-  margin-bottom: 8px;
-}
-
-.time-container {
-  display: flex;
-  align-items: center;
-  justify-content: center; 
-  background-color: #6289af;
-  padding: 1px; 
-  border-radius: 20px; 
-}
-
-.journal-time {
-  color: #ffffff; 
-  border-radius: 8px;
-  padding: 6px;
-  padding-top: 15px;
-  margin-bottom: 8px;
-  
-}
-
-.journal-preview a {
-  text-decoration: none;
-}
-
-/* Journal details page styles */
-.journal-details h2 {
-  font-size: 24px;
-  color: #3498db;
-  margin-bottom: 10px;
-}
-
-.journal-details div {
-  margin: 20px 0;
-}
-
-.journal-details button {
-  background: #3498db;
-  color: #ecf0f1;
-  border: 0;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
-}
-
-.journal-details button:hover {
-  background: #2980b9; /* Darker background color on hover */
-}
-
-/* Create new blog form styles */
-.create {
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.create label {
-  text-align: left;
-  display: block;
-}
-
-.create h2 {
-  font-size: 24px;
-  color: #3498db;
-  margin-bottom: 30px;
-}
-
-.create input,
-.create textarea,
-.create select {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #dfe6e9;
-  border-radius: 4px;
-  box-sizing: border-box;
-  display: block;
-}
-
-.create button {
-  background: #3498db;
-  color: #ecf0f1;
-  border: 0;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
-}
-
-.create button:hover {
-  background: #2980b9; /* Darker background color on hover */
-}
-
-/* Not Found page styles */
-.not-found {
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.not-found h2,
-.not-found p {
-  font-size: 24px;
-  color: #3498db;
-  margin-bottom: 30px;
-}
-
-.not-found button,
-.not-found a.button-link {
-  background: #3498db;
-  color: #ecf0f1;
-  border: 0;
-  padding: 10px;
-  border-radius: 8px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
-}
-
-.not-found button:hover,
-.not-found a.button-link:hover {
-  background: #2980b9; /* Darker background color on hover */
+  .menu {
+    display: flex;
+    margin-left: auto;
+  }
 }
