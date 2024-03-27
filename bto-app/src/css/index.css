@@ -6,13 +6,15 @@
 
 /* Navbar styles */
 .navbar {
-  background-color:  #f7776b;
+  background-color: #f7776b;
   padding: 20px;
   display: flex;
   align-items: center;
   max-width: 100%;
   margin: 0 auto;
-  border-bottom: 1px solid  #f7776b;
+  border-bottom: 1px solid #f7776b;
+  position: relative;
+   /* Add this line */
 }
 
 .navbar .title-heading {
@@ -41,28 +43,6 @@
   margin-left: auto;
 }
 
-.menu span {
-  display: block;
-  width: 25px;
-  height: 3px;
-  background-color: #ecf0f1;
-  margin: 5px;
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Menu icon animation */
-.menu.open span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-}
-
-.menu.open span:nth-child(2) {
-  opacity: 0;
-}
-
-.menu.open span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
-}
-
 /* Responsive styles */
 @media screen and (max-width: 890px) {
   .navbar .links {
@@ -70,14 +50,10 @@
     flex-direction: column;
     position: absolute;
     top: 100%;
-    left: 0;
+    right: 0;
     width: 100%;
     background-color: #f7776b;
     border-top: 1px solid #ecf0f1;
-  }
-
-  .navbar .links.open {
-    display: flex;
   }
 
   .navbar .links a {
@@ -85,8 +61,17 @@
     border-bottom: 1px solid #ecf0f1;
   }
 
+  .navbar .links.open  {
+    display:flex ;
+    width: 100%;
+  }
+
   .menu {
     display: flex;
     margin-left: auto;
   }
+
 }
+
+/* Your existing CSS */
+
