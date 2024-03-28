@@ -79,6 +79,20 @@ const Title = styled.p`
   min-width: 350px;
 `;
 
+const NavBarLinks = styled(Link)`
+  text-decoration: none;
+  color: rgb(124, 38, 27);
+  padding: 4px;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.2s;
+  }
+
+`;
+
 
 const LoginBox = styled.div`
     background-color: white;
@@ -169,8 +183,11 @@ const Password = styled.div`
     }
 `;
 
-const GoogleButton = styled.button`
-    margin-top: 30px;
+const GoogleButton = styled(Link)`
+  
+margin-top: 30px;
+text-decoration: none;
+text-align: center;
 
 transition: background-color .3s, box-shadow .3s;
   
@@ -218,10 +235,10 @@ const LoginPage = () => {
     return ( 
         <LoginPageContainer>
             <TopBox>
-                <img src="/bto-app/src/images/btodraftlogo.png" className="app-logo" style={{width: '60px', height: '60px', borderRadius: '5px'}} />
+                <img src={process.env.PUBLIC_URL + 'btodraftlogo.png'} className="app-logo" style={{width: '60px', height: '60px', borderRadius: '5px'}} />
                 <div className="options">
-                    <a className="homepage-link" href>Homepage</a>
-                    <a className="login-link" href>Login</a>
+                    <NavBarLinks to=''>Homepage</NavBarLinks>
+                    <NavBarLinks to=''>Login</NavBarLinks>
                 </div>
             </TopBox>
             {/* rmbr to add the href to the correct pages for the links */}
@@ -246,7 +263,7 @@ const LoginPage = () => {
                     <div className="divider">
                         <div className="continue">Or continue with</div>
                     </div>
-                    <GoogleButton>
+                    <GoogleButton to='/home'>
                         Sign in with Google
                     </GoogleButton>
                 </LoginBox>
