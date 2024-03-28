@@ -1,0 +1,78 @@
+/* css page for the planner */
+
+/* @font-face {
+    font-family: 'Inter-Regular';
+    src: local('Inter-Regular'), url('C:/Users/Gokul/Desktop/Inter/static/Inter-Regular.ttf') format('truetype');
+} */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500');
+
+body {
+    background-color: rgb(249, 250, 251);
+    font-family:'Inter', Helvetica,Arial,sans-serif;
+}
+
+.top-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 32px;
+    background-color: #f7776b;
+    border-radius: 10px;
+
+    height: 35px;
+    font-size: 20px;
+    font-weight: 500;
+    
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    min-width: 600px;
+}
+
+.options *, .logo-link{     /*for all the links*/
+    text-decoration: none;
+    color: rgb(124, 38, 27);
+    padding: 4px;
+
+    border-bottom: 2px solid transparent;
+}
+
+.options {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 14px;
+}
+
+.options *:hover, .logo-link:hover {
+    color: white;
+    /* border-bottom: 2px solid white;  */
+    cursor: pointer;
+    transition-duration: 0.2s;
+}
+
+.contents-box{
+    display: block;
+    margin-top: 10vh;
+
+}
+
+.options-box{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-link, .dashboard-link, .planner-link{
+    background-color: #f7776b;
+    padding: 10%;
+    margin: 0 5px;
+    border-radius: 5px;
+    color: black;
+    width: 20vb;
+    height: 20vh;
+    font-weight: bold;
+    
+}
