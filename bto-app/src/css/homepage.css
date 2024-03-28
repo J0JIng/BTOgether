@@ -1,4 +1,9 @@
-/* css page for the planner tab*/
+/* css page for the planner */
+
+/* @font-face {
+    font-family: 'Inter-Regular';
+    src: local('Inter-Regular'), url('C:/Users/Gokul/Desktop/Inter/static/Inter-Regular.ttf') format('truetype');
+} */
 
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500');
@@ -58,4 +63,16 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.search-link, .dashboard-link, .planner-link{
+    background-color: #f7776b;
+    padding: 10%;
+    margin: 0 5px;
+    border-radius: 5px;
+    color: black;
+    width: 20vb;
+    height: 20vh;
+    font-weight: bold;
+    
 }

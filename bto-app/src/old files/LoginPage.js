@@ -1,56 +1,3 @@
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import Login from '../components/Login'; 
-import Register from '../components/Register'; 
-import AuthGoogle from '../components/AuthGoogle';
-import styled from 'styled-components';
-
-
-const LoginPage = ({ user }) => {
-  const [isSignUpActive, setIsSignUpActive] = useState(false);
-  const handleMethodChange = () => {
-    setIsSignUpActive(!isSignUpActive);
-  };
-
-  if (user) {
-    return <Navigate to="/home" />;
-  }
-
-  return (
-    <div className="login-page">
-      
-      <div className="navbar">
-        <h1>Login page</h1>
-      </div>
-
-      <div className="welcome-section">
-        <h1>Welcome to BTOgether</h1>
-      </div>
-
-      <div className="login-page-wrapper">
-
-      {isSignUpActive ? (
-            <Register user={user} handleMethodChange={handleMethodChange} />
-          ) : (
-            <Login user={user} handleMethodChange={handleMethodChange} />
-          )}  
-
-          <AuthGoogle user={user}/>
-
-      </div>
-
-      {isSignUpActive && <a onClick={handleMethodChange}>Login</a>}
-      {!isSignUpActive && (<a onClick={handleMethodChange}>Dont have an account? Create here</a>)}
-
-    </div>
-  );
-};
-
-export default LoginPage;
-
-
-/*
-
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 
@@ -130,6 +77,20 @@ const Title = styled.p`
   font-size: 30px;
   color: rgb(55, 65, 81);
   min-width: 350px;
+`;
+
+const NavBarLinks = styled(Link)`
+  text-decoration: none;
+  color: rgb(124, 38, 27);
+  padding: 4px;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.2s;
+  }
+
 `;
 
 
@@ -222,8 +183,11 @@ const Password = styled.div`
     }
 `;
 
-const GoogleButton = styled.button`
-    margin-top: 30px;
+const GoogleButton = styled(Link)`
+  
+margin-top: 30px;
+text-decoration: none;
+text-align: center;
 
 transition: background-color .3s, box-shadow .3s;
   
@@ -271,13 +235,13 @@ const LoginPage = () => {
     return ( 
         <LoginPageContainer>
             <TopBox>
-                <img src="/bto-app/src/images/btodraftlogo.png" className="app-logo" style={{width: '60px', height: '60px', borderRadius: '5px'}} />
+                <img src={process.env.PUBLIC_URL + 'btodraftlogo.png'} className="app-logo" style={{width: '60px', height: '60px', borderRadius: '5px'}} />
                 <div className="options">
-                    <a className="homepage-link" href>Homepage</a>
-                    <a className="login-link" href>Login</a>
+                    <NavBarLinks to=''>Homepage</NavBarLinks>
+                    <NavBarLinks to=''>Login</NavBarLinks>
                 </div>
             </TopBox>
-            
+            {/* rmbr to add the href to the correct pages for the links */}
             <TitleAndBox>
                 <TitleAndSignUp>
                     <Title>Sign in to your account</Title>
@@ -299,7 +263,7 @@ const LoginPage = () => {
                     <div className="divider">
                         <div className="continue">Or continue with</div>
                     </div>
-                    <GoogleButton>
+                    <GoogleButton to='/home'>
                         Sign in with Google
                     </GoogleButton>
                 </LoginBox>
@@ -317,5 +281,3 @@ const LoginPage = () => {
 }
  
 export default LoginPage;
-
-*/

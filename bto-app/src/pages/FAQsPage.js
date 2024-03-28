@@ -1,7 +1,9 @@
+import Navbar from "../components/NavBar";
 const FAQsPage = () => {
     return (  
-        <div className="navbar">
-            <h1>Hello FAQ Page</h1>
+        <div className="faq-page">
+                <Navbar/>
+            <h1> FAQ Page</h1>
         </div>
     );
 }
