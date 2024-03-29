@@ -4,13 +4,18 @@ import { getFirestore, collection, addDoc, updateDoc, getDocs, onSnapshot } from
 import { query, where } from 'firebase/firestore';
 import axios from 'axios'; // Import axios
 import { Button, Typography, FormControl, Input, InputLabel, FormHelperText, TextField, Select, MenuItem, Container, InputAdornment } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { MapContainer as LeafletMap, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import 'leaflet/dist/leaflet.css';
 
 const UserProfileForm = () => {
   // init services
   const db = getFirestore();
   // Users_pref collection ref
   const colRef = collection(db, 'User_prefs');
-  const [errorMessage, setErrorMessage] = useState(''); // Define errorMessage state
+  const [errorMessageParent, setErrorMessageParent] = useState(); // Define errorMessage state
+  const [errorMessageWork, setErrorMessageWork] = useState(); // Define errorMessage state
 
   const [prefs, setPrefs] = useState([]);
 
@@ -42,12 +47,6 @@ const UserProfileForm = () => {
     }
   };
 
-  useEffect(() => {
-    if (formData.parentsAddress === '' || formData.workplaceLocation === '') {
-      setErrorMessage('')
-    }
-  }, [formData.parentsAddress, formData.workplaceLocation])
-
   const handleSubmit = async (e) => {
     console.log("pressed submit");
     e.preventDefault();
@@ -67,21 +66,15 @@ const UserProfileForm = () => {
       }
     }
 
-    // Check if any field is updated
-    if (Object.keys(updatedData).length === 0) {
-      setErrorMessage('Please provide either Parents Address or Workplace Location.');
-      return;
-    }
-
     try {
       // Geocode the address for each updated field
       for (const key in updatedData) {
         if (updatedData.hasOwnProperty(key) && (key === 'parentsAddress' || key === 'workplaceLocation')) {
           console.log(key)
           const addressToGeocode = updatedData[key];
-          const geocodedAddress = await geocodeAddress(addressToGeocode);
+          const geocodedAddress = await geocodeAddress(addressToGeocode, key);
           if (geocodedAddress === null) {
-            setErrorMessage('Error geocoding Parents or Workplace Address')
+            //setErrorMessage('Error geocoding Parents or Workplace Address')
             // Remove the key from updatedData
             delete updatedData[key];
           } else {
@@ -105,14 +98,14 @@ const UserProfileForm = () => {
           .catch((error) => { console.error("Error adding document:", error); });
       }
     } catch (error) {
-      setErrorMessage('Error geocoding address');
+      //setErrorMessage('Error geocoding address');
       console.error('Error geocoding address:', error);
     }
 
   };
 
   // Function to geocode the address
-  const geocodeAddress = async (address) => {
+  const geocodeAddress = async (address, fieldName) => {
     try {
       const geocodingResponse = await axios.get(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&addressdetails=1&limit=1`);
       if (geocodingResponse.data.length > 0) {
@@ -120,34 +113,52 @@ const UserProfileForm = () => {
         const latitude = parseFloat(lat).toFixed(5);
         const longitude = parseFloat(lon).toFixed(5);
         const road = geocodingResponse.data[0].address.road || geocodingResponse.data[0].address.suburb || geocodingResponse.data[0].address.postcode;
-
+  
         const singaporeBounds = {
           north: 1.5, south: 1.1, east: 104.1, west: 103.6
         };
-
+  
         if (
           latitude >= singaporeBounds.south &&
           latitude <= singaporeBounds.north &&
           longitude >= singaporeBounds.west &&
           longitude <= singaporeBounds.east
         ) {
+          if (fieldName === 'parentsAddress') {
+            setErrorMessageParent(null);
+          } else if (fieldName === 'workplaceLocation') {
+            setErrorMessageWork(null);
+          }
           return {
             latitude,
             longitude,
             road
           };
         } else {
-          setErrorMessage('The location is outside Singapore. Please refine your search.');
+          if (fieldName === 'parentsAddress') {
+            setErrorMessageParent('The location of Parents Address is outside Singapore. Please refine your search.');
+          } else if (fieldName === 'workplaceLocation') {
+            setErrorMessageWork('The location of Workplace Address is outside Singapore. Please refine your search.');
+          }
         }
       } else {
-        setErrorMessage('Address not found');
+        if (fieldName === 'parentsAddress') {
+          setErrorMessageParent('Address not found for Parents Address.');
+        } else if (fieldName === 'workplaceLocation') {
+          setErrorMessageWork('Address not found for Workplace Address.');
+        }
       }
     } catch (error) {
-      setErrorMessage('Error geocoding address');
-      console.error('Error geocoding address:', error);
+      if (fieldName === 'parentsAddress') {
+        setErrorMessageParent('Error geocoding Parents Address.');
+      } else if (fieldName === 'workplaceLocation') {
+        setErrorMessageWork('Error geocoding Workplace Address.');
+      }
+      console.error(`Error geocoding ${fieldName}:`, error);
     }
     return null; // Return null if geocoding fails
   };
+  
 
   return (
     <Container>
@@ -155,7 +166,7 @@ const UserProfileForm = () => {
       <hr />
       <br />
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '5px' }}>
           <FormControl fullWidth>
             <InputLabel>Marital Status</InputLabel>
             <Select
@@ -173,11 +184,12 @@ const UserProfileForm = () => {
             </Select>
           </FormControl>
         </div>
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '5px' }}>
           <TextField
             variant='outlined'
             label="Salary"
             name='salary'
+            type="number"
             onChange={handleChange}
             value={formData.salary}
             InputProps={{
@@ -187,7 +199,7 @@ const UserProfileForm = () => {
             sx={{ mb: 2 }}
           />
         </div>
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '5px' }}>
           <TextField
             variant='outlined'
             label="Parent's Address"
@@ -196,11 +208,32 @@ const UserProfileForm = () => {
             value={formData.parentsAddress}
             fullWidth
             sx={{ mb: 2 }}
-            error={errorMessage}
-            helperText={errorMessage ? errorMessage : ''}
+            error={errorMessageParent!=null}
+            helperText={errorMessageParent ? errorMessageParent : null}
           />
         </div>
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '20px'}}>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ArrowDropDownIcon />}
+              aria-controls="panel2-content">
+              <Typography>Map of Parent's Address</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div>
+                <LeafletMap center={[1.354, 103.825]} zoom={11.5} style={{ height: '60vh', width: '100%', border: '4px LightSteelBlue solid' }}>
+                  {/* Google Map Tile Layer */}
+                  <TileLayer
+                    attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
+                    url='https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}'
+                    layerName='mapLayer'
+                  />
+                </LeafletMap>
+              </div>
+            </AccordionDetails>
+          </Accordion>
+        </div>
+        <div style={{ marginBottom: '5px' }}>
           <TextField
             variant='outlined'
             label="Workplace Address"
@@ -209,11 +242,31 @@ const UserProfileForm = () => {
             value={formData.workplaceLocation}
             fullWidth
             sx={{ mb: 2 }}
-            error={errorMessage}
-            helperText={errorMessage ? errorMessage : ''}
+            error={errorMessageWork!=null}
+            helperText={errorMessageWork ? errorMessageWork : null}
           />
         </div>
-        {/*errorMessage && <p style={{ color: 'red', marginBottom: '20px' }}>{errorMessage}</p>*/}
+        <div style={{ marginBottom: '20px'}}>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ArrowDropDownIcon />}
+              aria-controls="panel2-content">
+              <Typography>Map of Workplace Address</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div>
+                <LeafletMap center={[1.354, 103.825]} zoom={11.5} style={{ height: '60vh', width: '100%', border: '4px LightSteelBlue solid' }}>
+                  {/* Google Map Tile Layer */}
+                  <TileLayer
+                    attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
+                    url='https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}'
+                    layerName='mapLayer'
+                  />
+                </LeafletMap>
+              </div>
+            </AccordionDetails>
+          </Accordion>
+        </div>
         <Button type="submit" variant="contained">Update Profile</Button>
       </form>
 
