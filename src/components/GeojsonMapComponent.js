@@ -517,78 +517,85 @@ const GeojsonMapComponent = () => {
         <span>{distance} km</span>
       </div>
 
-      <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '70vh', width: '1200px', border: '4px LightSteelBlue solid' }}>
-        {/* Google Map Tile Layer */}
-        <TileLayer
-          attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
-          url={mapStyle}
-          layerName='mapLayer'
-        />
-
-        {/* This is for the driving route */}
-        <RoutingMachine start={homeLocation} markerLat={routingLocation.latitude} markerLng={routingLocation.longitude} />
-
-        {/* This are markers from the GEOJson data */}
-        {markers.map((marker, index) => (
-          <Marker key={index} position={marker.geocode} icon={markerIcon}>
-            <Popup><div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} /><button onClick={() => routeHere(marker.geocode)}>Get Directions</button></Popup>
-          </Marker>
-        ))}
-
-        {/* This is for the home marker */}
-        {homeLocation.latitude && homeLocation.longitude && (
-          <Marker position={[homeLocation.latitude, homeLocation.longitude]} layerName="home" icon={homeIcon} draggable={true} eventHandlers={{ dragend: handleMarkerDragEnd }}>
-            {/* Popup for home marker */}
-          </Marker>
-        )}
-
-        {/* This is for the amenities radius circle */}
-        {homeLocation.latitude && homeLocation.longitude && (
-          addCircleToMap(mapRef.current, [homeLocation.latitude, homeLocation.longitude], distance * 1000) // Adjust radius as needed
-        )}
-
-        <MapStylePanel />
-      </LeafletMap>
-
-      {/* This area is the form for the Map */}
-      <h3 style={{ marginBottom: '5px' }}>Set Home Waypoint</h3>
-      <label>Address: </label>
-      <input type='text' placeholder="Enter Address here..." onChange={(e) => setAddressField(e.target.value)}></input>
-      {errorMessage && (
-        <div style={{ color: 'red' }}>{errorMessage}</div>
-      )}
-      <button onClick={handleGeocode}>Find Home</button>
-      {auth.currentUser && <button onClick={setHome}>Set Home</button>}
-      {auth.currentUser && <button onClick={loadHome}>Load Saved Home Location</button>}
-      <button onClick={toggleJson}>Toggle GEOJson</button>
-      <button onClick={clearMap}>Clear Map</button>
-
-      {/* This is to show latitude and longitude coords when available*/}
-      {homeLocation.latitude && homeLocation.longitude && (
-        <h4>Latitude: {homeLocation.latitude}, Longitude: {homeLocation.longitude}, Road: {homeLocation.address}</h4>
-      )}
-
-      {markers.length > 0 && (
-        <div style={{ display: 'inline-block', maxWidth: '100%', marginBottom: '20px', marginTop: '20px', maxHeight: '300px', overflowY: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid black', padding: '2px' }}>
-            <thead>
-              <tr>
-                <th style={{ border: '1px solid black', padding: '2px' }}>{markers.length} {mapTitle} in {distance}km Radius: </th>
-              </tr>
-            </thead>
-            <tbody>
-              {markers.map((marker, index) => (
-                <tr key={index}>
-                  <td style={{ border: '1px solid black', padding: '5px' }}>{extractNameFromHtml(marker)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div style={{ display: 'flex' }}>
+        {/* This is for the public transport route, put at the end so routing table is at the bottom*/}
+        <div style={{ flex: 1, padding: '10px' }}>
+          {/* Table of Markers */}
+          {markers.length > 0 && (
+              <div style={{ display: 'inline-block', maxWidth: '100%', marginBottom: '20px', marginTop: '20px', maxHeight: '300px', overflowY: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid black', padding: '2px' }}>
+                  <thead>
+                    <tr>
+                      <th style={{ border: '1px solid black', padding: '2px' }}>{markers.length} {mapTitle} in {distance}km Radius: </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {markers.map((marker, index) => (
+                      <tr key={index}>
+                        <td style={{ border: '1px solid black', padding: '5px' }}>{extractNameFromHtml(marker)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          {/* Public Transport Table */}
+          <Routing startLat={homeLocation.latitude} startLng={homeLocation.longitude} endLat={routingLocation.latitude} endLng={routingLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
         </div>
-      )}
+        <div style={{ flex: 1, padding: '10px' }}>
+          <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '70vh', width: '1200px', border: '4px LightSteelBlue solid' }}>
+            {/* Google Map Tile Layer */}
+            <TileLayer
+              attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
+              url={mapStyle}
+              layerName='mapLayer'
+            />
 
-      {/* This is for the public transport route, put at the end so routing table is at the bottom*/}
-      <Routing startLat={homeLocation.latitude} startLng={homeLocation.longitude} endLat={routingLocation.latitude} endLng={routingLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
+            {/* This is for the driving route */}
+            <RoutingMachine start={homeLocation} markerLat={routingLocation.latitude} markerLng={routingLocation.longitude} />
+
+            {/* This are markers from the GEOJson data */}
+            {markers.map((marker, index) => (
+              <Marker key={index} position={marker.geocode} icon={markerIcon}>
+                <Popup><div dangerouslySetInnerHTML={{ __html: filterHtmlContent(marker.popUp) }} /><button onClick={() => routeHere(marker.geocode)}>Get Directions</button></Popup>
+              </Marker>
+            ))}
+
+            {/* This is for the home marker */}
+            {homeLocation.latitude && homeLocation.longitude && (
+              <Marker position={[homeLocation.latitude, homeLocation.longitude]} layerName="home" icon={homeIcon} draggable={true} eventHandlers={{ dragend: handleMarkerDragEnd }}>
+                {/* Popup for home marker */}
+              </Marker>
+            )}
+
+            {/* This is for the amenities radius circle */}
+            {homeLocation.latitude && homeLocation.longitude && (
+              addCircleToMap(mapRef.current, [homeLocation.latitude, homeLocation.longitude], distance * 1000) // Adjust radius as needed
+            )}
+
+            <MapStylePanel />
+          </LeafletMap>
+
+          {/* This area is the form for the Map */}
+          <h3 style={{ marginBottom: '5px' }}>Set Home Waypoint</h3>
+          <label>Address: </label>
+          <input type='text' placeholder="Enter Address here..." onChange={(e) => setAddressField(e.target.value)}></input>
+          {errorMessage && (
+            <div style={{ color: 'red' }}>{errorMessage}</div>
+          )}
+          <button onClick={handleGeocode}>Find Home</button>
+          {auth.currentUser && <button onClick={setHome}>Set Home</button>}
+          {auth.currentUser && <button onClick={loadHome}>Load Saved Home Location</button>}
+          <button onClick={toggleJson}>Toggle GEOJson</button>
+          <button onClick={clearMap}>Clear Map</button>
+
+          {/* This is to show latitude and longitude coords when available*/}
+          {homeLocation.latitude && homeLocation.longitude && (
+            <h4>Latitude: {homeLocation.latitude}, Longitude: {homeLocation.longitude}, Road: {homeLocation.address}</h4>
+          )}
+
+        </div>
+      </div>
     </div>
   );
 };
