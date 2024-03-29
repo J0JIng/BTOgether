@@ -1,23 +1,26 @@
 {
-  "name": "apartmate",
+  "name": "bto-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://homes.hdb.gov.sg",
-  "__proxy": "http://datamall2.mytransport.sg",
-  "_proxy": "https://data.gov.sg",
   "dependencies": {
+    "@dnd-kit/sortable": "^8.0.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.14",
+    "@mui/material": "^5.15.14",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.6.7",
+    "axios": "^1.6.8",
     "firebase": "^10.8.0",
     "leaflet": "^1.9.4",
     "leaflet-routing-machine": "^3.2.12",
-    "polyline-encoded": "^0.0.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
+    "react-router-dom": "^6.22.1",
     "react-scripts": "5.0.1",
+    "styled-components": "^6.1.8",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -43,8 +46,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "http-proxy-middleware": "^2.0.6"
   }
 }
