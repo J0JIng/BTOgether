@@ -76,3 +76,53 @@ body {
     font-weight: bold;
     
 }
+
+
+.container{
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.linkbox{
+    margin: 0 10px;
+    width:  400px;
+    height: 600px;
+    background-color: #f7776b;
+    border-radius: 10px;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: background-image 2s ease; /* Smooth transition for hover effect */
+    background-image: none; /* Initially no background image */
+}
+
+.linkbox.btosearch:hover {
+    background-image: url('../assets/yellowhdb\ \(1\).jpeg'); /* Change background image on hover */
+    color: white;
+    text-shadow: -1px -1px 0 black,  
+    1px -1px 0 black,
+   -1px  1px 0 black,
+    1px  1px 0 black; /* Add black outline */
+}
+
+.linkbox.dashboard:hover {
+    background-image: url('../assets/redhdb\ \(1\).jpg'); /* Change background image on hover */
+    color: white;
+    text-shadow: -1px -1px 0 black,  
+    1px -1px 0 black,
+   -1px  1px 0 black,
+    1px  1px 0 black; /* Add black outline */
+}
+
+.linkbox.planner:hover {
+    background-image: url('../assets/greenhdb\ \(2\).jpg'); /* Change background image on hover */
+    color: white;
+    text-shadow: -1px -1px 0 black,  
+    1px -1px 0 black,
+   -1px  1px 0 black,
+    1px  1px 0 black; /* Add black outline */
+}

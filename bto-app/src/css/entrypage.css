@@ -7,7 +7,7 @@ body {
 
 .heading-box{
     top: 10px;
-    width: 98%;
+    width: 99%;
     background-color: #f7776b;
     border-radius: 10px;
 
@@ -16,7 +16,7 @@ body {
     font-weight: 500;
     
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    position: fixed;
+    position: absolute;
     z-index: -1;
 }
 
@@ -60,13 +60,22 @@ body {
     margin-top: -50px;
     display: flex;
     flex-direction: column;
+    margin-bottom: 100px;
 }
 
 .desc-heading{
     text-align: left;
-    margin-left: 10%;
     font-size: 25px;
-    text-decoration: underline;
+    margin-left: 5%;
+}
+
+.desc-heading-r{
+    text-align: left;
+    font-size: 25px;
+    margin-left: 12%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .desc-heading-box{
@@ -84,11 +93,19 @@ body {
 }
 
 .get-started-button{
+    align-self: center;
     margin-right: 15%;
-    background-color: #f7776b;
+    background-color: #fa003d;
     border-radius: 5px;
-    border: none;
     padding: 10px 30px;
     font-size: 18px;
     font-weight: bold;
+    border: 1px solid black;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.get-started-button:hover {
+    background-color: #a52418; /* Change background color on hover */
+    color: rgb(0, 0, 0); /* Change text color on hover */
 }
