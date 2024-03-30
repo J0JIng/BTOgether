@@ -20,11 +20,11 @@ import {
 } from '@dnd-kit/sortable';
 
 // Components
-import Container from '../components/Container/Container';
-import Items from '../components/Item/Item';
-import Modal from '../components/Modal/Modal';
-import Input from '../components/Input/Input';
-import { Button } from '../components/Button/Button';
+import Container from '../components/Container';
+import Items from '../components/Item';
+import Modal from '../components/Modal';
+import Input from '../components/Input';
+import { Button } from '../components/Button';
 
 // Create unique identifiers
 const generateId = () => `item-${uuidv4()}`;
@@ -337,9 +337,11 @@ export default function Home() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl py-10">
+    <div>
       <Navbar/>
-      {/* Add Container Modal */}
+        <div className="mx-auto max-w-7xl py-10">
+      
+      {/* Add Container Modal  <Navbar/>*/}
       <Modal
         showModal={showAddContainerModal}
         setShowModal={setShowAddContainerModal}
@@ -353,7 +355,7 @@ export default function Home() {
             value={containerName}
             onChange={(e) => setContainerName(e.target.value)}
           />
-          <Button onClick={onAddContainer}>Add container</Button>
+          <Button onClick={onAddContainer} >Add container</Button>
         </div>
       </Modal>
       {/* Add Item Modal */}
@@ -372,7 +374,7 @@ export default function Home() {
       </Modal>
       <div className="flex items-center justify-between gap-y-2">
         <h1 className="text-gray-800 text-3xl font-bold">Dashboard</h1>
-        <Button onClick={() => setShowAddContainerModal(true)}>
+        <Button onClick={() => setShowAddContainerModal(true)} >
           Add Container
         </Button>
       </div>
@@ -424,6 +426,8 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </div>
+
   );
 }
 

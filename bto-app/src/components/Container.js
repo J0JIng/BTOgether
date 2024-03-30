@@ -2,7 +2,7 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
-import { Button } from '../Button/Button';
+import { Button } from './Button';
 
 const Container = ({
   id,
@@ -33,8 +33,8 @@ const Container = ({
         transform: CSS.Translate.toString(transform),
       },
       className: clsx(
-        'w-full h-full p-4 bg-gray-50 rounded-xl flex flex-col gap-y-4',
-        isDragging && 'opacity-50',
+        'w-full h-full p-4 bg-black-50 rounded-xl flex flex-col gap-y-4',
+        isDragging && 'opacity-100',
       ),
     }), [
       React.createElement('div', { className: 'flex items-center justify-between' }, [
