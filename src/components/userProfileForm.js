@@ -1,50 +1,77 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { auth } from '../utils/firebase';
 import { getFirestore, collection, addDoc, updateDoc, getDocs, onSnapshot } from 'firebase/firestore';
 import { query, where } from 'firebase/firestore';
-import axios from 'axios'; // Import axios
 import { Button, Typography, FormControl, Input, InputLabel, FormHelperText, TextField, Select, MenuItem, Container, InputAdornment } from '@mui/material';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { MapContainer as LeafletMap, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import { TileLayer, Marker, MapContainer, useMap } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
+import MapDialog from './MapDialog';
+import { Icon } from "leaflet";
 
 const UserProfileForm = () => {
   // init services
   const db = getFirestore();
   // Users_pref collection ref
   const colRef = collection(db, 'User_prefs');
-  const [errorMessageParent, setErrorMessageParent] = useState(); // Define errorMessage state
-  const [errorMessageWork, setErrorMessageWork] = useState(); // Define errorMessage state
+  const homeIcon = new Icon({ iconUrl: require("../icons/home-button.png"), iconSize: [40, 40] });
 
   const [prefs, setPrefs] = useState([]);
 
+  const [formData, setFormData] = useState({
+    maritalStatus: '',
+    salary: '',
+    parentsAddress: { address: '', latitude: null, longitude: null },
+    workplaceLocation: { address: '', latitude: null, longitude: null }
+  });
+
   useEffect(() => {
-    const unsubscribe = onSnapshot(colRef, (snapshot) => {
+    const unsubscribe = onSnapshot(query(colRef, where("email", "==", auth.currentUser.email)), (snapshot) => {
       // Modified colRef, execute this code:
       let prefsData = [];
       snapshot.docs.forEach((doc) => {
         prefsData.push({ ...doc.data(), id: doc.id });
       });
-      console.log(prefsData)
       setPrefs(prefsData);
+      console.log(prefsData[0])
+      if (prefsData[0].salary != null) {
+        setFormData(prevState => ({ ...prevState, salary: prefsData[0].salary }));
+      }
+      if (prefsData[0].maritalStatus != null) {
+        setFormData(prevState => ({ ...prevState, maritalStatus: prefsData[0].maritalStatus }));
+      }
     });
 
     return () => unsubscribe();
   }, []);
-
-  const [formData, setFormData] = useState({
-    maritalStatus: '',
-    salary: '',
-    parentsAddress: '',
-    workplaceLocation: ''
-  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (value || value !== 0 || value !== '') { // Check if value is truthy, zero, or empty string
       setFormData({ ...formData, [name]: value });
     }
+  };
+
+  const addressUpdate = (type, homeLocation) => {
+    console.log("geocoded", type, homeLocation);
+    if (homeLocation != null) {
+      if (type === 'parentAddress') {
+        setFormData(prevState => ({ ...prevState, parentsAddress: homeLocation }));
+      }
+      else {
+        setFormData(prevState => ({ ...prevState, workplaceLocation: homeLocation }));
+      }
+    }
+  };
+
+  const clearFields = () => {
+    setFormData({
+      maritalStatus: '',
+      salary: '',
+      parentsAddress: { address: '', latitude: null, longitude: null },
+      workplaceLocation: { address: '', latitude: null, longitude: null }
+    })
   };
 
   const handleSubmit = async (e) => {
@@ -59,30 +86,23 @@ const UserProfileForm = () => {
     for (const key in formData) {
       if (formData.hasOwnProperty(key)) {
         const fieldValue = formData[key];
-        if (fieldValue && fieldValue.trim() !== '') {
-          // Field has value, add it to updatedData
-          updatedData[key] = fieldValue;
+        if (key === 'parentsAddress' || key === 'workplaceLocation') {
+          // For objects (addresses), check if the 'address' property is not empty
+          if (fieldValue.address.trim() !== '') {
+            // Field has value, add it to updatedData
+            updatedData[key] = fieldValue;
+          }
+        } else {
+          // For other fields, check if the value is not empty
+          if (fieldValue && fieldValue.trim() !== '') {
+            // Field has value, add it to updatedData
+            updatedData[key] = fieldValue;
+          }
         }
       }
     }
 
     try {
-      // Geocode the address for each updated field
-      for (const key in updatedData) {
-        if (updatedData.hasOwnProperty(key) && (key === 'parentsAddress' || key === 'workplaceLocation')) {
-          console.log(key)
-          const addressToGeocode = updatedData[key];
-          const geocodedAddress = await geocodeAddress(addressToGeocode, key);
-          if (geocodedAddress === null) {
-            //setErrorMessage('Error geocoding Parents or Workplace Address')
-            // Remove the key from updatedData
-            delete updatedData[key];
-          } else {
-            updatedData[key] = geocodedAddress; // Replace address with geocoded data
-          }
-        }
-      }
-
       // Continue with updating or adding document
       const snapshot = await getDocs(q);
       if (!snapshot.empty) {
@@ -98,67 +118,31 @@ const UserProfileForm = () => {
           .catch((error) => { console.error("Error adding document:", error); });
       }
     } catch (error) {
-      //setErrorMessage('Error geocoding address');
-      console.error('Error geocoding address:', error);
+      console.error('Error submitting:', error);
     }
-
   };
 
-  // Function to geocode the address
-  const geocodeAddress = async (address, fieldName) => {
-    try {
-      const geocodingResponse = await axios.get(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&addressdetails=1&limit=1`);
-      if (geocodingResponse.data.length > 0) {
-        const { lat, lon } = geocodingResponse.data[0];
-        const latitude = parseFloat(lat).toFixed(5);
-        const longitude = parseFloat(lon).toFixed(5);
-        const road = geocodingResponse.data[0].address.road || geocodingResponse.data[0].address.suburb || geocodingResponse.data[0].address.postcode;
-  
-        const singaporeBounds = {
-          north: 1.5, south: 1.1, east: 104.1, west: 103.6
-        };
-  
-        if (
-          latitude >= singaporeBounds.south &&
-          latitude <= singaporeBounds.north &&
-          longitude >= singaporeBounds.west &&
-          longitude <= singaporeBounds.east
-        ) {
-          if (fieldName === 'parentsAddress') {
-            setErrorMessageParent(null);
-          } else if (fieldName === 'workplaceLocation') {
-            setErrorMessageWork(null);
-          }
-          return {
-            latitude,
-            longitude,
-            road
-          };
-        } else {
-          if (fieldName === 'parentsAddress') {
-            setErrorMessageParent('The location of Parents Address is outside Singapore. Please refine your search.');
-          } else if (fieldName === 'workplaceLocation') {
-            setErrorMessageWork('The location of Workplace Address is outside Singapore. Please refine your search.');
-          }
-        }
-      } else {
-        if (fieldName === 'parentsAddress') {
-          setErrorMessageParent('Address not found for Parents Address.');
-        } else if (fieldName === 'workplaceLocation') {
-          setErrorMessageWork('Address not found for Workplace Address.');
-        }
-      }
-    } catch (error) {
-      if (fieldName === 'parentsAddress') {
-        setErrorMessageParent('Error geocoding Parents Address.');
-      } else if (fieldName === 'workplaceLocation') {
-        setErrorMessageWork('Error geocoding Workplace Address.');
-      }
-      console.error(`Error geocoding ${fieldName}:`, error);
+  const [parentAddressCenter, setParentAddressCenter] = useState([1.354, 103.825]); // Initialize center with default values
+  const [workplaceAddressCenter, setWorkplaceAddressCenter] = useState([1.354, 103.825]); // Initialize center with default values
+
+  useEffect(() => {
+    if (prefs.length > 0 && prefs[0].workplaceLocation) {
+      const { latitude, longitude } = prefs[0].workplaceLocation;
+      setWorkplaceAddressCenter([latitude, longitude]);
     }
-    return null; // Return null if geocoding fails
-  };
-  
+    if (prefs.length > 0 && prefs[0].parentsAddress) {
+      const { latitude, longitude } = prefs[0].parentsAddress;
+      setParentAddressCenter([latitude, longitude]);
+    }
+  }, [prefs]);
+
+  const RecenterAutomatically = ({ lat, lng }) => {
+    const map = useMap();
+    useEffect(() => {
+      map.setView([lat, lng]);
+    }, [lat, lng]);
+    return null;
+  }
 
   return (
     <Container>
@@ -200,78 +184,91 @@ const UserProfileForm = () => {
           />
         </div>
         <div style={{ marginBottom: '5px' }}>
-          <TextField
-            variant='outlined'
-            label="Parent's Address"
-            name="parentsAddress"
-            onChange={handleChange}
-            value={formData.parentsAddress}
-            fullWidth
-            sx={{ mb: 2 }}
-            error={errorMessageParent!=null}
-            helperText={errorMessageParent ? errorMessageParent : null}
-          />
+          <MapDialog type="parentsAddress" locationInfo={(homeLocation) => addressUpdate("parentAddress", homeLocation)} />
         </div>
-        <div style={{ marginBottom: '20px'}}>
-          <Accordion>
+        <Typography style={{ marginBottom: '10px' }}>
+          {formData.parentsAddress.address!='' && "New Parent's Address: " + formData.parentsAddress.address}
+        </Typography>
+        <div style={{ marginBottom: '20px' }}>
+          <Accordion sx={{ border: 1, borderColor: 'silver', borderRadius: 1 }}>
             <AccordionSummary
               expandIcon={<ArrowDropDownIcon />}
               aria-controls="panel2-content">
-              <Typography>Map of Parent's Address</Typography>
+              <Typography variant='h7'>Map of Parent's Address: {prefs[0] && prefs[0].parentsAddress && prefs[0].parentsAddress.address}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <div>
-                <LeafletMap center={[1.354, 103.825]} zoom={11.5} style={{ height: '60vh', width: '100%', border: '4px LightSteelBlue solid' }}>
-                  {/* Google Map Tile Layer */}
-                  <TileLayer
-                    attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
-                    url='https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}'
-                    layerName='mapLayer'
-                  />
-                </LeafletMap>
-              </div>
+              <MapContainer
+                center={[
+                  prefs[0]?.parentsAddress?.address?.latitude || 1.354,
+                  prefs[0]?.parentsAddress?.address?.longitude || 103.825
+                ]}
+                zoom={16}
+                scrollWheelZoom={true}
+                style={{ height: '60vh', width: '100%', border: '4px LightSteelBlue solid' }}
+              >
+                {/* Google Map Tile Layer */}
+                <TileLayer
+                  attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
+                  url='https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}'
+                  layerName='mapLayer'
+                />
+                {/* This is for the parents marker */}
+                {parentAddressCenter && (
+                  <Marker position={[parentAddressCenter[0], parentAddressCenter[1]]} layerName="home" icon={homeIcon} draggable={false}>
+                    {/* Popup for home marker */}
+                  </Marker>
+                )}
+                <RecenterAutomatically lat={parentAddressCenter[0]} lng={parentAddressCenter[1]} />
+              </MapContainer>
             </AccordionDetails>
           </Accordion>
         </div>
         <div style={{ marginBottom: '5px' }}>
-          <TextField
-            variant='outlined'
-            label="Workplace Address"
-            name="workplaceLocation"
-            onChange={handleChange}
-            value={formData.workplaceLocation}
-            fullWidth
-            sx={{ mb: 2 }}
-            error={errorMessageWork!=null}
-            helperText={errorMessageWork ? errorMessageWork : null}
-          />
+          <MapDialog type="workplaceAddress" locationInfo={(homeLocation) => addressUpdate("workplaceAddress", homeLocation)} />
         </div>
-        <div style={{ marginBottom: '20px'}}>
-          <Accordion>
+        <Typography style={{ marginBottom: '10px' }}>
+          {formData.workplaceLocation.address!='' && "New Workplace Address: " + formData.workplaceLocation.address}
+        </Typography>
+        <div style={{ marginBottom: '20px' }}>
+          <Accordion sx={{ border: 1, borderColor: 'silver', borderRadius: 1 }}>
             <AccordionSummary
               expandIcon={<ArrowDropDownIcon />}
               aria-controls="panel2-content">
-              <Typography>Map of Workplace Address</Typography>
+              <Typography variant='h7'>Map of Workplace Address: {prefs[0] && prefs[0].workplaceLocation && prefs[0].workplaceLocation.address}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <div>
-                <LeafletMap center={[1.354, 103.825]} zoom={11.5} style={{ height: '60vh', width: '100%', border: '4px LightSteelBlue solid' }}>
-                  {/* Google Map Tile Layer */}
-                  <TileLayer
-                    attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
-                    url='https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}'
-                    layerName='mapLayer'
-                  />
-                </LeafletMap>
-              </div>
+              <MapContainer
+                center={[
+                  workplaceAddressCenter[0] || 1.354,
+                  workplaceAddressCenter[1] || 103.825
+                ]}
+                zoom={16}
+                scrollWheelZoom={true}
+                style={{ height: '60vh', width: '100%', border: '4px LightSteelBlue solid' }}
+              >
+                {/* Google Map Tile Layer */}
+                <TileLayer
+                  attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
+                  url='https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}'
+                  layerName='mapLayer'
+                />
+                {/* This is for the workplace marker */}
+                {workplaceAddressCenter && (
+                  <Marker position={[workplaceAddressCenter[0], workplaceAddressCenter[1]]} layerName="home" icon={homeIcon} draggable={false}>
+                    {/* Popup for home marker */}
+                  </Marker>
+                )}
+                <RecenterAutomatically lat={workplaceAddressCenter[0]} lng={workplaceAddressCenter[1]} />
+              </MapContainer>
             </AccordionDetails>
           </Accordion>
         </div>
+        <Button variant="outlined" onClick={clearFields} sx={{ mr: 1, boxShadow: 1 }}>Clear Fields</Button>
         <Button type="submit" variant="contained">Update Profile</Button>
       </form>
 
       {/* Display Database Contents */}
-      <h2 style={{ marginBottom: '5px' }}>List of Users Preferences</h2>
+      <h2 style={{ marginBottom: '5px' }}>My Saved Profile</h2>
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
         {prefs && prefs.length > 0 && (
           <table style={{ borderCollapse: 'collapse', border: '1px solid black', padding: '2px' }}>
@@ -288,24 +285,26 @@ const UserProfileForm = () => {
                   {Object.keys(pref).map((key) => (
                     <td style={{ border: '1px solid black', padding: '5px' }} key={key}>
                       {/* Check if the value is not null, undefined, or an empty string */}
-                      {pref[key] !== null && pref[key] !== undefined && pref[key] !== '' &&
+                      {pref[key] !== null && pref[key] !== undefined && pref[key] !== '' ? (
                         // Check if the value is an object
-                        typeof pref[key] === 'object' &&
-                        // Check if the object has specific keys (longitude, latitude, road)
-                        'longitude' in pref[key] && 'latitude' in pref[key] && 'road' in pref[key] ? (
-                        <div>
-                          <p>Latitude: {pref[key].latitude}</p>
-                          <p>Longitude: {pref[key].longitude}</p>
-                          <p>Road: {pref[key].road}</p>
-                        </div>
-                      )
-                        : // Render the value directly if it's not an object with specific keys
-                        pref[key]}
+                        typeof pref[key] === 'object' ? (
+                          // Render specific properties of the object
+                          <div>
+                            <p>Latitude: {pref[key].latitude}</p>
+                            <p>Longitude: {pref[key].longitude}</p>
+                            <p>Address: {pref[key].address}</p>
+                          </div>
+                        ) : (
+                          // Render the value directly if it's not an object
+                          pref[key]
+                        )
+                      ) : null /* or any other fallback value */}
                     </td>
                   ))}
                 </tr>
               ))}
             </tbody>
+
           </table>
         )}
       </div>

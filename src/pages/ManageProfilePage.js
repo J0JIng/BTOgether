@@ -1,5 +1,5 @@
 import Navbar from "../components/NavBar";
-import UserProfileForm from "../components/userProfileForm"
+import UserProfileForm from "../components/UserProfileForm"
 
 const ManageProfilePage = () => {
     return (  
