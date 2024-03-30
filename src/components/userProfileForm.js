@@ -9,6 +9,7 @@ import { TileLayer, Marker, MapContainer, useMap } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import MapDialog from './MapDialog';
 import { Icon } from "leaflet";
+import { Toaster, toast } from 'sonner'
 
 const UserProfileForm = () => {
   // init services
@@ -34,7 +35,6 @@ const UserProfileForm = () => {
         prefsData.push({ ...doc.data(), id: doc.id });
       });
       setPrefs(prefsData);
-      console.log(prefsData[0])
       if (prefsData[0].salary != null) {
         setFormData(prevState => ({ ...prevState, salary: prefsData[0].salary }));
       }
@@ -108,13 +108,23 @@ const UserProfileForm = () => {
       if (!snapshot.empty) {
         const doc = snapshot.docs[0].ref;
         updateDoc(doc, updatedData)
-          .then(() => { console.log("Updated User Preferences!"); })
+          .then(() => { 
+            console.log("Updated User Preferences!");
+            toast.success('Updated User Preferences!', {
+              position: 'top-center',
+            });
+          })
           .catch((error) => { console.error("Error updating document:", error); });
       } else {
         console.log("Creating document for user");
         const addData = { email: auth.currentUser.email, ...updatedData };
         addDoc(colRef, addData)
-          .then(() => { console.log("Saved User Preferences!"); })
+          .then(() => { 
+            console.log("Saved User Preferences!"); 
+            toast.success('Saved User Preferences!', {
+              position: 'top-center',
+            });
+          })
           .catch((error) => { console.error("Error adding document:", error); });
       }
     } catch (error) {
@@ -146,6 +156,10 @@ const UserProfileForm = () => {
 
   return (
     <Container>
+      <Toaster toastOptions={{
+        style: { border: '2px green solid' },
+        duration: 3000
+      }} richColors/>
       <h1>Manage Profile</h1>
       <hr />
       <form onSubmit={handleSubmit}>
