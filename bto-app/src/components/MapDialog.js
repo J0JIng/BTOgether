@@ -192,9 +192,9 @@ export default function MapDialog({ type, locationInfo }) {
                             ),
                         }}
                     />
-                    <div>
+                    <div style={{ marginRight: '7px' }}>
                         <Typography variant='h6' sx={{mb: 2}}>{homeLocation.address}</Typography>
-                        <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '100%', border: '4px LightSteelBlue solid' }}>
+                        <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '60vh', width: '100%', border: '4px LightSteelBlue solid', borderRadius: '5px' }}>
                             {/* Google Map Tile Layer */}
                             <TileLayer
                                 attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
