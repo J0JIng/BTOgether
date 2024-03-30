@@ -27,6 +27,7 @@ export default function MapDialog({ type, locationInfo }) {
     const handleClickOpen = () => {
         setFormData('')
         setCanSubmit(false)
+        setErrorMessage()
         setOpen(true);
     };
 

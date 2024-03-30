@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { auth } from '../utils/firebase';
 import { getFirestore, collection, addDoc, updateDoc, getDocs, onSnapshot } from 'firebase/firestore';
 import { query, where } from 'firebase/firestore';
-import { Button, Typography, FormControl, Input, InputLabel, FormHelperText, TextField, Select, MenuItem, Container, InputAdornment } from '@mui/material';
+import { Button, Typography, FormControl, InputLabel, TextField, Select, MenuItem, Container, InputAdornment } from '@mui/material';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { TileLayer, Marker, MapContainer, useMap } from "react-leaflet";
@@ -148,9 +148,11 @@ const UserProfileForm = () => {
     <Container>
       <h1>Manage Profile</h1>
       <hr />
-      <br />
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '5px' }}>
+          <div style={{ marginBottom: '20px', marginTop: '15px' }}>
+          <Typography variant='h7'>Marital Status: {prefs[0] && prefs[0].maritalStatus}</Typography>
+          </div>
           <FormControl fullWidth>
             <InputLabel>Marital Status</InputLabel>
             <Select
@@ -168,6 +170,9 @@ const UserProfileForm = () => {
             </Select>
           </FormControl>
         </div>
+        <div style={{ marginBottom: '20px' }}>
+          <Typography variant='h7'>Salary: ${prefs[0] && prefs[0].salary}</Typography>
+          </div>
         <div style={{ marginBottom: '5px' }}>
           <TextField
             variant='outlined'
@@ -202,7 +207,7 @@ const UserProfileForm = () => {
                   prefs[0]?.parentsAddress?.address?.latitude || 1.354,
                   prefs[0]?.parentsAddress?.address?.longitude || 103.825
                 ]}
-                zoom={16}
+                zoom={18}
                 scrollWheelZoom={true}
                 style={{ height: '60vh', width: '100%', border: '4px LightSteelBlue solid' }}
               >
@@ -242,7 +247,7 @@ const UserProfileForm = () => {
                   workplaceAddressCenter[0] || 1.354,
                   workplaceAddressCenter[1] || 103.825
                 ]}
-                zoom={16}
+                zoom={18}
                 scrollWheelZoom={true}
                 style={{ height: '60vh', width: '100%', border: '4px LightSteelBlue solid' }}
               >
@@ -266,48 +271,6 @@ const UserProfileForm = () => {
         <Button variant="outlined" onClick={clearFields} sx={{ mr: 1, boxShadow: 1 }}>Clear Fields</Button>
         <Button type="submit" variant="contained">Update Profile</Button>
       </form>
-
-      {/* Display Database Contents */}
-      <h2 style={{ marginBottom: '5px' }}>My Saved Profile</h2>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
-        {prefs && prefs.length > 0 && (
-          <table style={{ borderCollapse: 'collapse', border: '1px solid black', padding: '2px' }}>
-            <thead>
-              <tr>
-                {Object.keys(prefs[0]).map((key) => (
-                  <th style={{ border: '1px solid black', padding: '2px' }} key={key}>{key}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {prefs.map((pref) => (
-                <tr key={pref.id}>
-                  {Object.keys(pref).map((key) => (
-                    <td style={{ border: '1px solid black', padding: '5px' }} key={key}>
-                      {/* Check if the value is not null, undefined, or an empty string */}
-                      {pref[key] !== null && pref[key] !== undefined && pref[key] !== '' ? (
-                        // Check if the value is an object
-                        typeof pref[key] === 'object' ? (
-                          // Render specific properties of the object
-                          <div>
-                            <p>Latitude: {pref[key].latitude}</p>
-                            <p>Longitude: {pref[key].longitude}</p>
-                            <p>Address: {pref[key].address}</p>
-                          </div>
-                        ) : (
-                          // Render the value directly if it's not an object
-                          pref[key]
-                        )
-                      ) : null /* or any other fallback value */}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-
-          </table>
-        )}
-      </div>
     </Container>
 
   );
