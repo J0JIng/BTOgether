@@ -2,6 +2,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import React from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
+import "tailwindcss/tailwind.css";
 
 const Items = ({ id, title }) => {
   const {

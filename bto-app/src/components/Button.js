@@ -1,6 +1,7 @@
 import React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import clsx from 'clsx';
+import "tailwindcss/tailwind.css";
 
 const buttonVariants = (className) => ({
   variant = 'default',

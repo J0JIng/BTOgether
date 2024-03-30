@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Navbar from "../components/NavBar";
 import { v4 as uuidv4 } from 'uuid';
-import '../css/dashboard.css'
+import "tailwindcss/tailwind.css";
 
 // DnD
 import {
@@ -28,7 +28,6 @@ import { Button } from '../components/Button';
 
 // Create unique identifiers
 const generateId = () => `item-${uuidv4()}`;
-
 
 // DNDType
 const DNDType = {
@@ -338,10 +337,15 @@ export default function Home() {
 
   return (
     <div>
-      <Navbar/>
-        <div className="mx-auto max-w-7xl py-10">
+
       
-      {/* Add Container Modal  <Navbar/>*/}
+
+      {/* add <Navbar/>*/}
+      <Navbar/>
+
+      <div className="mx-auto max-w-7xl py-10">
+      
+      {/* Add Container Modal*/}
       <Modal
         showModal={showAddContainerModal}
         setShowModal={setShowAddContainerModal}

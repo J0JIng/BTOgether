@@ -1,12 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+
+  corePlugins: {
+    preflight: false,
+  },
+ 
   content: [
     './src/pages/DashboardPage.js',
     './src/components/Button.js',
     './src/components/Container.js',
     './src/components/Input.js',
     './src/components/Item.js',
-    './src/components/Modal.js',
+    './src/components/Modal.js'
   ],
   theme: {
     extend: {
