@@ -1,0 +1,77 @@
+/* Your existing CSS */
+
+.active {
+  background-color:  #a12419;
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: #f7776b;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  margin: 0 auto;
+  border-bottom: 1px solid #f7776b;
+  position: relative;
+   /* Add this line */
+}
+
+.navbar .title-heading {
+  color: #ecf0f1; /* Light text color */
+}
+
+.navbar .links {
+  margin-left: auto;
+}
+
+.navbar a {
+  text-decoration: none;
+  padding: 10px;
+  color: #ecf0f1;
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar a:hover {
+  color: #913139; /* Highlight color on hover */
+}
+
+/* Menu icon */
+.menu {
+  display: none;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 890px) {
+  .navbar .links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    background-color: #f7776b;
+    border-top: 1px solid #ecf0f1;
+  }
+
+  .navbar .links a {
+    padding: 15px;
+    border-bottom: 1px solid #ecf0f1;
+  }
+
+  .navbar .links.open  {
+    display:flex ;
+    width: 100%;
+  }
+
+  .menu {
+    display: flex;
+    margin-left: auto;
+  }
+
+}
+
+/* Your existing CSS */
+
