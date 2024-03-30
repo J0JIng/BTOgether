@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import btoLogo from '../assets/btodraftlogo.png';
 import { spinalCase, aboutUs, faqsTabName, profile, dashboard, btofind, btoplanner, home } from "../utils/pageConstants";
-
+import '../css/navbar.css'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
