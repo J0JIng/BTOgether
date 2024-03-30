@@ -157,7 +157,7 @@ export default function MapDialog({ type, locationInfo }) {
     return (
         <React.Fragment>
             <Button variant="contained" onClick={handleClickOpen} style={{ marginBottom: '10px' }}>
-                Find New {type=='parentsAddress'? "Parent's Address" : "Workplace Address"}
+                Set {type=='parentsAddress'? "Parent's Address" : "Workplace Address"}
             </Button>
             <Dialog
                 open={open}

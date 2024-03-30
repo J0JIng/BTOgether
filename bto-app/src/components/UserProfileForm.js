@@ -209,7 +209,7 @@ const UserProfileForm = () => {
         <Typography style={{ marginBottom: '10px' }}>
           {formData.parentsAddress.address!='' && "New Parent's Address: " + formData.parentsAddress.address}
         </Typography>
-        <div style={{ marginBottom: '20px' }}>
+        {prefs[0]?.parentsAddress &&<div style={{ marginBottom: '20px' }}>
           <Accordion sx={{ border: 1, borderColor: 'silver', borderRadius: 1 }}>
             <AccordionSummary
               expandIcon={<ArrowDropDownIcon />}
@@ -233,7 +233,7 @@ const UserProfileForm = () => {
                   layerName='mapLayer'
                 />
                 {/* This is for the parents marker */}
-                {parentAddressCenter && (
+                {parentAddressCenter && prefs[0]?.parentsAddress && (
                   <Marker position={[parentAddressCenter[0], parentAddressCenter[1]]} layerName="home" icon={homeIcon} draggable={false}>
                     {/* Popup for home marker */}
                   </Marker>
@@ -242,14 +242,14 @@ const UserProfileForm = () => {
               </MapContainer>
             </AccordionDetails>
           </Accordion>
-        </div>
+        </div>}
         <div style={{ marginBottom: '5px' }}>
           <MapDialog type="workplaceAddress" locationInfo={(homeLocation) => addressUpdate("workplaceAddress", homeLocation)} />
         </div>
         <Typography style={{ marginBottom: '10px' }}>
           {formData.workplaceLocation.address!='' && "New Workplace Address: " + formData.workplaceLocation.address}
         </Typography>
-        <div style={{ marginBottom: '20px' }}>
+        {prefs[0]?.workplaceLocation && <div style={{ marginBottom: '20px' }}>
           <Accordion sx={{ border: 1, borderColor: 'silver', borderRadius: 1 }}>
             <AccordionSummary
               expandIcon={<ArrowDropDownIcon />}
@@ -273,7 +273,7 @@ const UserProfileForm = () => {
                   layerName='mapLayer'
                 />
                 {/* This is for the workplace marker */}
-                {workplaceAddressCenter && (
+                {workplaceAddressCenter && prefs[0]?.workplaceLocation && (
                   <Marker position={[workplaceAddressCenter[0], workplaceAddressCenter[1]]} layerName="home" icon={homeIcon} draggable={false}>
                     {/* Popup for home marker */}
                   </Marker>
@@ -282,7 +282,7 @@ const UserProfileForm = () => {
               </MapContainer>
             </AccordionDetails>
           </Accordion>
-        </div>
+        </div>}
         <Button variant="outlined" onClick={clearFields} sx={{ mr: 1, boxShadow: 1 }}>Clear Fields</Button>
         <Button type="submit" variant="contained" sx={{ mr: 1, boxShadow: 1 }}>Update Profile</Button>
         <DeleteAccountDialog/>
