@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import btoLogo from '../assets/btodraftlogo.png';
-import { spinalCase, aboutUs, faqsTabName, profile, dashboard, btofind, btoplanner } from "../utils/pageConstants";
+import { spinalCase, aboutUs, faqsTabName, profile, dashboard, btofind, btoplanner, home } from "../utils/pageConstants";
 
 
 const Navbar = () => {
@@ -22,10 +22,10 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${menuOpen ? 'open' : ''}`}>
       <div className="logo-image">
-        <img src={btoLogo} alt="bto-logo" style={{ width: '60px', height: '60px', borderRadius: '5px' }} />
+        <img src={btoLogo} alt="bto-logo" style={{ width: '60px', height: '60px', borderRadius: '5px', marginTop: '-4px'}} />
       </div>
       
-      <div className="title-heading">
+      <div className="title-heading" style={{ marginTop: '5px' }}>
         BTOgether
       </div>
 
@@ -34,12 +34,12 @@ const Navbar = () => {
       </div>
 
       <div className={`links ${menuOpen ? 'open' : ''}`}>
-        <Link to={spinalCase(aboutUs)}>About Us</Link>
-        <Link to={spinalCase(faqsTabName)}>FAQs</Link>
+        <Link to={spinalCase(home)}>Home</Link>
         <Link to={spinalCase(profile)}>Profile</Link>
-        <Link to={spinalCase(dashboard)}>Dashboard</Link>
         <Link to={spinalCase(btofind)}>BTO Find</Link>
+        <Link to={spinalCase(dashboard)}>Dashboard</Link>
         <Link to={spinalCase(btoplanner)}>BTO Planner</Link>
+        <Link to={spinalCase(aboutUs)}>About Us</Link>
         <a onClick={handleSignOut}>Sign Out</a>
       </div>
     </nav>
