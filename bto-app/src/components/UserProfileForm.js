@@ -10,6 +10,7 @@ import 'leaflet/dist/leaflet.css';
 import MapDialog from './MapDialog';
 import { Icon } from "leaflet";
 import { Toaster, toast } from 'sonner'
+import DeleteAccountDialog from './DeleteAccountDialog';
 
 const UserProfileForm = () => {
   // init services
@@ -283,7 +284,8 @@ const UserProfileForm = () => {
           </Accordion>
         </div>
         <Button variant="outlined" onClick={clearFields} sx={{ mr: 1, boxShadow: 1 }}>Clear Fields</Button>
-        <Button type="submit" variant="contained">Update Profile</Button>
+        <Button type="submit" variant="contained" sx={{ mr: 1, boxShadow: 1 }}>Update Profile</Button>
+        <DeleteAccountDialog/>
       </form>
     </Container>
 
