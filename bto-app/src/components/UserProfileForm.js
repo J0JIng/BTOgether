@@ -12,7 +12,7 @@ import { Icon } from "leaflet";
 import { Toaster, toast } from 'sonner'
 import DeleteAccountDialog from './DeleteAccountDialog';
 
-import UserDataUtility from './UserDataUtility';
+import UserDataUtility from '../utils/UserDataUtility';
 
 const UserProfileForm = () => {
   // init services
@@ -169,7 +169,7 @@ const UserProfileForm = () => {
   const dataUtilityRef = useRef(null);
   // myData Object to add, modify or delete
   var myData = {
-    salary: '999',
+    salary: '1',
     parentsAddress: { address: '', latitude: null, longitude: null },
     workplaceLocation: { address: 'Changi Business Park Central 1', latitude: 1.33411, longitude: 103.96271 }
   }
@@ -178,13 +178,13 @@ const UserProfileForm = () => {
   delete myData.parentsAddress  // Delete fields
 
   // Function created in parent component to call Utility save function
-  const saveDataFunction = () => {
-    dataUtilityRef.current.saveData();
+  const funcA = () => {
+    dataUtilityRef.current.saveUserData();
   }
 
   // Function created in parent component to call Utility load function
-  const loadDataFunction = () => {
-    dataUtilityRef.current.loadedData();
+  const funcB = () => {
+    dataUtilityRef.current.loadUserData();
   }
 
   return (
@@ -318,8 +318,8 @@ const UserProfileForm = () => {
         <Button variant="outlined" onClick={clearFields} sx={{ mr: 1, boxShadow: 1 }}>Clear Fields</Button>
         <Button type="submit" variant="contained" sx={{ mr: 1, boxShadow: 1 }}>Update Profile</Button>
         <DeleteAccountDialog/>
-        <Button variant="contained" sx={{ mr: 1, boxShadow: 1 }} onClick={saveDataFunction}>Save Data</Button>
-        <Button variant="contained" sx={{ mr: 1, boxShadow: 1 }} onClick={loadDataFunction}>Load Data</Button>
+        <Button variant="contained" sx={{ mr: 1, boxShadow: 1 }} onClick={funcA}>Save Data</Button>
+        <Button variant="contained" sx={{ mr: 1, boxShadow: 1 }} onClick={funcB}>Load Data</Button>
         <UserDataUtility ref={dataUtilityRef} saveData={myData} loadedData={handleLoadedData} />
       </form>
     </Container>

@@ -1,6 +1,6 @@
 import React, { useEffect, forwardRef } from 'react';
 import { Button } from '@mui/material';
-import { auth } from "../utils/firebase";
+import { auth } from "./firebase";
 import { query, where } from 'firebase/firestore';
 import { getFirestore, collection, getDocs, addDoc, updateDoc } from 'firebase/firestore';
 
@@ -68,8 +68,8 @@ const UserDataUtility = forwardRef(({ saveData, loadedData }, ref) => {
     useEffect(() => {
         if (ref) {
             ref.current = {
-                saveData: handleSaveData,
-                loadedData: handleLoadData
+                saveUserData: handleSaveData,
+                loadUserData: handleLoadData
             };
         }
     }, [ref, handleSaveData, handleLoadData]);
