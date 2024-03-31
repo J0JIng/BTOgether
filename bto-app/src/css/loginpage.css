@@ -23,7 +23,7 @@
 }
 
 /* For the 3 buttons at the top of page */
-.logo-link, .homepage-link, .login-link {
+/* .logo-link, .homepage-link, .login-link {
     text-decoration: none;
     color: white;
     padding: 4px;
@@ -32,23 +32,23 @@
 }
 
 /* for hovering over the buttons */
-.options *:hover, .app-logo:hover {
-    color: rgb(124, 38, 27);
+/* .options *:hover, .app-logo:hover {
+    color: rgb(124, 38, 27); */
     /* border-bottom: 2px solid white;  */
-    cursor: pointer;
+    /* cursor: pointer;
     transition-duration: 0.2s;
-}
+} */
 
-.app-logo:hover {
+/* .app-logo:hover {
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-}
+} */
 
 /* still for the 3 buttons */
-.options {
+/* .options {
     width: 200px;
     display: flex;
     justify-content: space-evenly;
-}
+} */ 
 
 .title-and-sign-up {
     display: flex;

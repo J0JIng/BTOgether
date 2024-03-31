@@ -23,7 +23,7 @@ const LoginPage = ({ user }) => {
       <div className="top-box">
           <img src={process.env.PUBLIC_URL + 'btodraftlogo.png'} className="app-logo" style={{width: '60px', height: '60px', borderRadius: '5px'}} />
           <div className="options">
-            <a className="homepage-link" href>Homepage</a>
+            {/* <a className="homepage-link" href>Homepage</a> */}
             {/* <a className="login-link" href>Login</a> */}
           </div>
       </div>
@@ -46,7 +46,7 @@ const LoginPage = ({ user }) => {
         {isSignUpActive ? (
               <Register user={user} handleMethodChange={handleMethodChange} />
             ) 
-            
+
             : (
               <Login user={user} handleMethodChange={handleMethodChange} />
             )}  
