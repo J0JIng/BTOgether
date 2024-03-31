@@ -4,6 +4,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500');
 
 body {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(
+        to right,
+        #f4f4f4 0%,
+        #f4f4f4 20%,
+        rgb(249, 250, 251) 20%,
+        rgb(249, 250, 251) 100%
+    );
     background-color: rgb(249, 250, 251);
     font-family:'Inter', Helvetica,Arial,sans-serif;
 }
@@ -17,7 +26,7 @@ body {
     background-color: #f7776b;
     border-radius: 10px;
 
-    height: 35px;
+    height: 45px;
     font-size: 20px;
     font-weight: 500;
     
@@ -58,4 +67,175 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.accordion input[type="checkbox"] {
+    position: absolute;
+    right: 60px;
+    /* Adjust the distance from the right */
+    width: 20px;
+    /* Adjust the size of the checkbox */
+    height: 20px;
+    /* Adjust the size of the checkbox */
+    appearance: none;
+    /* Remove default checkbox appearance */
+    -webkit-appearance: none;
+    /* Remove default checkbox appearance for Safari */
+    background-color: #FFFFFF;
+    /* Checkbox background color */
+    border-radius: 4px;
+    /* Rounded corners */
+    border: 1px solid #bbb;
+    /* Border color */
+    outline: 2px solid #000000;
+    /* Black outline */
+    cursor: pointer;
+    /* Add cursor pointer */
+}
+
+/*checkbox tick */
+.accordion input[type="checkbox"]:checked::before {
+    content: '\2713';
+    /* Unicode checkmark symbol */
+    font-size: 22px;
+    /* Adjust the size of the checkmark */
+    color: #ffffff;
+    /* White color for the tick */
+    position: relative;
+    /* Adjust the positioning */
+    bottom: 6px;
+    /* Adjust the vertical positioning if needed */
+}
+
+.accordion input[type="checkbox"]:checked {
+    position: absolute;
+    right: 60px;
+    /* Adjust the distance from the right */
+    width: 20px;
+    /* Adjust the size of the checkbox */
+    height: 20px;
+    /* Adjust the size of the checkbox */
+    appearance: none;
+    /* Remove default checkbox appearance */
+    -webkit-appearance: none;
+    /* Remove default checkbox appearance for Safari */
+    background-color: #00FF00;
+    /* Checkbox background color */
+    border-radius: 4px;
+    /* Rounded corners */
+    border: 1px solid #bbb;
+    /* Border color */
+    outline: 2px solid #000000;
+    /* Black outline */
+    cursor: pointer;
+    /* Add cursor pointer */
+}
+
+.active,
+.accordion:hover {
+    background-color: #ccc;
+}
+
+.panel {
+    padding: 0 18px;
+    display: none;
+    background-color:rgb(249, 250, 251);
+    overflow: hidden;
+}
+
+.left-sidebar {
+    width: 19.6%;
+    background-color: #f4f4f4; /* Desired color for the left quarter of the screen */
+    float: left;
+}
+
+.left-sidebar .category {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ensure the category list fills the sidebar vertically */
+}
+
+.left-sidebar .category h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.left-sidebar .category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.left-sidebar .category ul li {
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.left-sidebar .category ul li:hover {
+    text-decoration: underline; /* Add underline effect on hover */
+}
+
+/* Checkmark checkbox style */
+.checkmark {
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+.checkmark::after {
+    content: '';
+    display: none;
+    width: 14px;
+    height: 7px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkmark.checked::after {
+    display: block;
+}
+
+.planner-heading {
+    font-size: 70px; /* Adjust the font size as needed */
+    margin-top: 70 px; /* Adjust the margin from the top */
+    margin-left: 2.83%; /* Adjust the margin from the left */
+}
+
+.counter {
+    display: inline-block;
+    margin-left: 10px; /* Adjust the margin as needed */
+    padding: 4px 8px; /* Adjust padding as needed */
+    border-radius: 10px; /* Adjust border-radius for rounded corners */
+    background-color: #f7776b; /* Adjust background color */
+    color: white; /* Adjust text color */
+}
+
+.counter.all-checked {
+    background-color: #009f00; /* Change to green when all checkboxes are checked */
+}
+
+.tab.bold {
+    font-weight: bold;
 }
