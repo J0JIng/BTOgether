@@ -12,6 +12,8 @@ import { Icon } from "leaflet";
 import { Toaster, toast } from 'sonner'
 import DeleteAccountDialog from './DeleteAccountDialog';
 
+import UserDataUtility from './UserDataUtility';
+
 const UserProfileForm = () => {
   // init services
   const db = getFirestore();
@@ -155,6 +157,13 @@ const UserProfileForm = () => {
     return null;
   }
 
+  // Load Data using Utility
+  const [loadedData, setLoadedData] = useState(null);
+  const handleLoadedData = (data) => {
+      console.log("Loaded data:", data);
+      setLoadedData(data);
+  };
+
   return (
     <Container>
       <Toaster toastOptions={{
@@ -286,6 +295,7 @@ const UserProfileForm = () => {
         <Button variant="outlined" onClick={clearFields} sx={{ mr: 1, boxShadow: 1 }}>Clear Fields</Button>
         <Button type="submit" variant="contained" sx={{ mr: 1, boxShadow: 1 }}>Update Profile</Button>
         <DeleteAccountDialog/>
+        <UserDataUtility type="save" saveData={"i want to save this"} loadedData={handleLoadedData} />
       </form>
     </Container>
 
