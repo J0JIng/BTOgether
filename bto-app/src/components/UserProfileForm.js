@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { auth } from '../utils/firebase';
 import { getFirestore, collection, addDoc, updateDoc, getDocs, onSnapshot } from 'firebase/firestore';
 import { query, where } from 'firebase/firestore';
@@ -159,10 +159,33 @@ const UserProfileForm = () => {
 
   // Load Data using Utility
   const [loadedData, setLoadedData] = useState(null);
+
+  // To load the data into the useState above
   const handleLoadedData = (data) => {
       console.log("Loaded data:", data);
       setLoadedData(data);
   };
+
+  const dataUtilityRef = useRef(null);
+  // myData Object to add, modify or delete
+  var myData = {
+    salary: '999',
+    parentsAddress: { address: '', latitude: null, longitude: null },
+    workplaceLocation: { address: 'Changi Business Park Central 1', latitude: 1.33411, longitude: 103.96271 }
+  }
+
+  myData.maritalStatus = 'Married' // Adding fields
+  delete myData.parentsAddress  // Delete fields
+
+  // Function created in parent component to call Utility save function
+  const saveDataFunction = () => {
+    dataUtilityRef.current.saveData();
+  }
+
+  // Function created in parent component to call Utility load function
+  const loadDataFunction = () => {
+    dataUtilityRef.current.loadedData();
+  }
 
   return (
     <Container>
@@ -295,7 +318,9 @@ const UserProfileForm = () => {
         <Button variant="outlined" onClick={clearFields} sx={{ mr: 1, boxShadow: 1 }}>Clear Fields</Button>
         <Button type="submit" variant="contained" sx={{ mr: 1, boxShadow: 1 }}>Update Profile</Button>
         <DeleteAccountDialog/>
-        <UserDataUtility type="save" saveData={"i want to save this"} loadedData={handleLoadedData} />
+        <Button variant="contained" sx={{ mr: 1, boxShadow: 1 }} onClick={saveDataFunction}>Save Data</Button>
+        <Button variant="contained" sx={{ mr: 1, boxShadow: 1 }} onClick={loadDataFunction}>Load Data</Button>
+        <UserDataUtility ref={dataUtilityRef} saveData={myData} loadedData={handleLoadedData} />
       </form>
     </Container>
 

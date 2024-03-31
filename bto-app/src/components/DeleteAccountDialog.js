@@ -53,7 +53,6 @@ export default function DeleteAccountDialog() {
                 console.log(error); // Log the error message
             });
     };
-    
 
     return (
         <React.Fragment>
