@@ -1,0 +1,8 @@
+/* tailwind.css or custom.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-customRed {
+  background-color: #f7776b;
+}

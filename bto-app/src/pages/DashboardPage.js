@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import Navbar from "../components/NavBar";
 import { v4 as uuidv4 } from 'uuid';
-import "tailwindcss/tailwind.css";
+import "../css/dashboard.css";
 
 // DnD
 import {
@@ -29,23 +29,54 @@ import { Button } from '../components/Button';
 // Create unique identifiers
 const generateId = () => `item-${uuidv4()}`;
 
-// DNDType
-const DNDType = {
-  id: '',
-  title: '',
+
+// need to accept JSON from Firebase 
+const defaultFrames = [
+  { name: 'Location', description: 'Woodlands Drive 16.' },
+  { name: 'Town', description: 'Woodlands.' },
+  { name: 'Town Council', description: 'Sembawang Town Council.' },
+  { name: 'Price', description: '$670,000.' },
+  { name: 'Square Footage', description: '1245 sqf.' },
+  { name: 'Number of Rooms', description: '4 Room Flat.' },
+  { name: 'Estimated Date of Completion', description: '2027.' },
+];
+
+const defaultContainers = defaultFrames.map((frame) => ({
+  id: generateId(),
+  title: frame.name,
+  description: frame.description, // Access description from the frame object
   items: [],
-};
+}));
+
 
 // Home component
 export default function Home() {
-  const [containers, setContainers] = useState([]);
+  const [containers, setContainers] = useState(defaultContainers);
   const [activeId, setActiveId] = useState(null);
   const [currentContainerId, setCurrentContainerId] = useState(null);
   const [containerName, setContainerName] = useState('');
   const [itemName, setItemName] = useState('');
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(false);
 
+  /*
+  useEffect(() => {
+    if (!initialLoad) {
+      const defaultContainers = defaultFrames.map((frame) => ({
+        id: generateId(),
+        title: frame,
+        
+        items: [],
+      }));
+      setContainers(defaultContainers);
+      setInitialLoad(true);
+    }
+    // Load containers from firebase on component mount
+    // Save containers to firebase once container state changed
+  }, [initialLoad]);*/
+  
+  
   const onAddContainer = () => {
     if (!containerName) return;
     const id = `container-${uuidv4()}`;
@@ -54,6 +85,7 @@ export default function Home() {
       {
         id,
         title: containerName,
+        description: `Description for ${containerName}`,
         items: [],
       },
     ]);
@@ -75,7 +107,7 @@ export default function Home() {
     setShowAddItemModal(false);
   };
 
-  // Find the value of the items
+ 
   function findValueOfItems(id, type) {
     if (type === 'container') {
       return containers.find((item) => item.id === id);
@@ -338,8 +370,6 @@ export default function Home() {
   return (
     <div>
 
-      
-
       {/* add <Navbar/>*/}
       <Navbar/>
 
@@ -377,9 +407,9 @@ export default function Home() {
         </div>
       </Modal>
       <div className="flex items-center justify-between gap-y-2">
-        <h1 className="text-gray-800 text-3xl font-bold">Dashboard</h1>
-        <Button onClick={() => setShowAddContainerModal(true)} >
-          Add Container
+        <h1 className="text-black-800 text-3xl font-bold">Dashboard</h1>
+        <Button onClick={() => setShowAddContainerModal(true)} className="rounded-lg bg-customRed border-transparent hover:bg-red-700 text-white px-6 py-4 transition duration-300 ease-in-out" >
+          Add Frames
         </Button>
       </div>
       <div className="mt-10">
@@ -396,6 +426,7 @@ export default function Home() {
                 <Container
                   id={container.id}
                   title={container.title}
+                  description={container.description}
                   key={container.id}
                   onAddItem={() => {
                     setShowAddItemModal(true);

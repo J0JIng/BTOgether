@@ -10,14 +10,16 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
   };
 
   return (
-    <input
-      type="text" // Specify input type
+    <select
       name={name}
       value={value}
-      placeholder={placeholder}
       onChange={handleChange}
-      className="border p-2 w-full rounded-lg shadow-lg hover:shadow-xl"
-    />
+      className="flex items-center justify-left w-full py-2 pl-1 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+    >
+      <option value="">Select an option</option>
+      <option value="Transportation view">Transportation view</option>
+      <option value="Amenities view">Amenities view</option>
+    </select>
   );
 };
 
