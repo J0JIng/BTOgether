@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { auth } from '../utils/firebase';
 import { getFirestore, collection, addDoc, updateDoc, getDocs, onSnapshot } from 'firebase/firestore';
 import { query, where } from 'firebase/firestore';
-import { Button, Typography, FormControl, InputLabel, TextField, Select, MenuItem, Container, InputAdornment } from '@mui/material';
+import { Button, Typography, FormControl, InputLabel, TextField, Select, MenuItem, Container, InputAdornment, Stack } from '@mui/material';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { TileLayer, Marker, MapContainer, useMap } from "react-leaflet";
@@ -239,7 +239,7 @@ const UserProfileForm = () => {
           <MapDialog type="parentsAddress" locationInfo={(homeLocation) => addressUpdate("parentAddress", homeLocation)} />
         </div>
         <Typography style={{ marginBottom: '10px' }}>
-          {formData.parentsAddress.address!='' && "New Parent's Address: " + formData.parentsAddress.address}
+          {formData.parentsAddress.address!=='' && "New Parent's Address: " + formData.parentsAddress.address}
         </Typography>
         {prefs[0]?.parentsAddress &&<div style={{ marginBottom: '20px' }}>
           <Accordion sx={{ border: 1, borderColor: 'silver', borderRadius: 1 }}>
@@ -279,7 +279,7 @@ const UserProfileForm = () => {
           <MapDialog type="workplaceAddress" locationInfo={(homeLocation) => addressUpdate("workplaceAddress", homeLocation)} />
         </div>
         <Typography style={{ marginBottom: '10px' }}>
-          {formData.workplaceLocation.address!='' && "New Workplace Address: " + formData.workplaceLocation.address}
+          {formData.workplaceLocation.address!=='' && "New Workplace Address: " + formData.workplaceLocation.address}
         </Typography>
         {prefs[0]?.workplaceLocation && <div style={{ marginBottom: '20px' }}>
           <Accordion sx={{ border: 1, borderColor: 'silver', borderRadius: 1 }}>
@@ -315,12 +315,14 @@ const UserProfileForm = () => {
             </AccordionDetails>
           </Accordion>
         </div>}
+        <Stack spacing={{ xs: 1 }} direction="row" useFlexGap flexWrap="wrap">
         <Button variant="outlined" onClick={clearFields} sx={{ mr: 1, boxShadow: 1 }}>Clear Fields</Button>
         <Button type="submit" variant="contained" sx={{ mr: 1, boxShadow: 1 }}>Update Profile</Button>
         <DeleteAccountDialog/>
         <Button variant="contained" sx={{ mr: 1, boxShadow: 1 }} onClick={funcA}>Save Data</Button>
         <Button variant="contained" sx={{ mr: 1, boxShadow: 1 }} onClick={funcB}>Load Data</Button>
         <UserDataUtility ref={dataUtilityRef} saveData={myData} loadedData={handleLoadedData} />
+        </Stack>
       </form>
     </Container>
 
