@@ -14,7 +14,7 @@
     background-color: #f7776b;
     border-radius: 10px;
 
-    height: 35px;
+    min-height: 50px;
     font-size: 20px;
     font-weight: 500;
     

@@ -19,8 +19,8 @@ const handleScrollAnimation = () => {
 
         
         // const scrollPosition = window.scrollY + window.innerHeight;
-        const scrollPosition = window.scrollY + window.innerHeight - 200;
-;
+        const scrollPosition = window.scrollY + window.innerHeight;
+
         anim1Elements.forEach(element => {
             const elementPosition = element.offsetTop;
             if (scrollPosition > elementPosition) {
@@ -31,26 +31,10 @@ const handleScrollAnimation = () => {
             }          
         });
 
-        anim2Elements.forEach(element => {
-            const elementPosition = element.offsetTop;
-            if (scrollPosition > elementPosition) {
-                // console.log(scrollPosition)
-                // console.log(elementPosition)
-                element.classList.add('animate');
-            }
-            else {
-                element.classList.remove('animate');
-            }  
-        });
-
-        const scrollPositionForLogos = window.scrollY + window.innerHeight - 300;
-
         logoElements.forEach(element => {
             // const elementPosition = element.offsetTop;
             const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-            if (scrollPositionForLogos > elementPosition) {
-                // console.log(scrollPosition)
-                // console.log(elementPosition)
+            if (scrollPosition > elementPosition) {
                 element.classList.add('animate');
             }
             else {
@@ -59,6 +43,15 @@ const handleScrollAnimation = () => {
         });
 
 
+        anim2Elements.forEach(element => {
+            const elementPosition = element.offsetTop;
+            if (scrollPosition > elementPosition) {
+                element.classList.add('animate');
+            }
+            else {
+                element.classList.remove('animate');
+            }  
+        });
 
 
     };

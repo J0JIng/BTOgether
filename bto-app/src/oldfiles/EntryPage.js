@@ -7,7 +7,6 @@ import Planner from '../assets/Planner.png'
 import Dashboard from '../assets/Dashboard.png'
 import Search from '../assets/Search.png'
 import Easy from '../assets/Easy.png'
-import background from '../assets/White Background.jpg'
 import handleScrollAnimation from './script';
 
 const EntryPage = () => {
@@ -19,51 +18,15 @@ const EntryPage = () => {
     return (  
         <div className="entry-page">
 
-            {/* <div style={{backgroundImage: `url(${background})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        width: "100%",
-                        height: "100%"
-
-            
-            }}>
-            </div> */}
-
-            {/* <header>
-                <div className="logo-image ">
-                    <img src={btoLogo} alt="bto-logo" style={{ width: '60px', height: '60px', borderRadius: '5px' }} />
-                </div>
-                
-                <div className="title-heading anim-1">
-                    BTOgether
-                </div>
-            </header> */}
-            
-            
-            {/* <div id='entry-navbar'>
-                <div className="logo-image ">
-                    <img src={btoLogo} alt="bto-logo" style={{ width: '60px', height: '60px', borderRadius: '5px' }} />
-                </div>
-                
-                <div className="title-heading anim-1">
-                    BTOgether
-                </div>    
-            </div> */}
-            
-            <div className="top-box-entry-page">
-                <div className="logo-and-title">
-                    <div className="logo-image ">
-                        <img src={btoLogo} alt="bto-logo" style={{ width: '60px', height: '60px', borderRadius: '5px' }} />
-                    </div>
-                    
-                    <div className="title-heading anim-1">
-                        BTOgether
-                    </div>
-                </div>
-                <Link to="/login" className="get-started-button">
-                    Get Started
-                </Link>
+            <header>
+            <div className="logo-image ">
+                <img src={btoLogo} alt="bto-logo" style={{ width: '60px', height: '60px', borderRadius: '5px' }} />
             </div>
+            
+            <div className="title-heading anim-1">
+                BTOgether
+            </div>
+            </header>
             
 
             <div className="container anim-1">
@@ -73,27 +36,10 @@ const EntryPage = () => {
             <div className="heading-box" style={{margin: '10px'}}>
             </div>
 
-            <div className="heading-text anim-1">
-                <div className="heading-text title">Your Search, Your Conditions</div>
-                <div className="heading-text description">
-                Streamline your BTO journey. Explore, plan, and secure your dream home 
-                effortlessly with personalized recommendations and intuitive tools. 
-                Your path, your terms.
-                </div>
-                {/* <div className="container anim-1">
-                    <img src={btoimage} alt="bto-image" className="image-style" />
-                </div> */}
-
-            </div>
-
-            {/* <div className="anim-2 page-info ">    
+            <div className="anim-2 page-info">
                 <Link to="/login" className="get-started-button">
                     Get Started
                 </Link>
-            </div> */}
-
-            <div className="key-features">
-                <div className="title ">Key Features</div>
             </div>
 
             <div className='logos'>

@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import Login from '../components/Login'; 
 import Register from '../components/Register'; 
 import AuthGoogle from '../components/AuthGoogle';
+import btoLogo from '../assets/btodraftlogo.png';
 import '../css/Loginpage.css';
 
 
@@ -21,7 +22,7 @@ const LoginPage = ({ user }) => {
     <div className="login-page">
       
       <div className="top-box">
-          <img src={process.env.PUBLIC_URL + 'btodraftlogo.png'} className="app-logo" style={{width: '60px', height: '60px', borderRadius: '5px'}} />
+          <img src={btoLogo} className="app-logo" style={{width: '60px', height: '60px', borderRadius: '5px'}} />
           <div className="options">
             {/* <a className="homepage-link" href>Homepage</a> */}
             {/* <a className="login-link" href>Login</a> */}
