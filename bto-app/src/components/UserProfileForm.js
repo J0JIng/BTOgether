@@ -230,6 +230,7 @@ const UserProfileForm = () => {
             value={formData.salary}
             InputProps={{
               startAdornment: <InputAdornment position="start">$</InputAdornment>,
+              inputProps: { min: 0 }
             }}
             fullWidth
             sx={{ mb: 2 }}
