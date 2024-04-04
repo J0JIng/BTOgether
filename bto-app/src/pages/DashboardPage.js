@@ -1,6 +1,8 @@
 import { useState , useEffect } from 'react';
 import Navbar from "../components/NavBar";
 import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import "../css/dashboard.css";
 
 // DnD
@@ -26,9 +28,6 @@ import Modal from '../components/Modal';
 import Input from '../components/Input';
 import { Button } from '../components/Button';
 
-// Create unique identifiers
-const generateId = () => `item-${uuidv4()}`;
-
 
 // need to accept JSON from Firebase 
 const defaultFrames = [
@@ -41,6 +40,10 @@ const defaultFrames = [
   { name: 'Estimated Date of Completion', description: '2027.' },
 ];
 
+
+
+const generateId = () => `container-${uuidv4()}`;
+
 const defaultContainers = defaultFrames.map((frame) => ({
   id: generateId(),
   title: frame.name,
@@ -48,9 +51,12 @@ const defaultContainers = defaultFrames.map((frame) => ({
   items: [],
 }));
 
-
 // Home component
-export default function Home() {
+export default function DashboardPage() {
+  const [BTO1, setBTO1] = useState(true);
+  const [BTO2, setBTO2] = useState(true);
+  const [BTO3, setBTO3] = useState(false);
+  const [activeBTO, setActiveBTO] = useState(BTO1);
   const [containers, setContainers] = useState(defaultContainers);
   const [activeId, setActiveId] = useState(null);
   const [currentContainerId, setCurrentContainerId] = useState(null);
@@ -58,27 +64,57 @@ export default function Home() {
   const [itemName, setItemName] = useState('');
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
-  const [initialLoad, setInitialLoad] = useState(false);
+  const [isHeartClicked, setIsHeartClicked] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [showGridsAnimation, setShowGridsAnimation] = useState(true);
 
-  /*
+  // Trigger alert when all BTO states are false
   useEffect(() => {
-    if (!initialLoad) {
-      const defaultContainers = defaultFrames.map((frame) => ({
-        id: generateId(),
-        title: frame,
-        
-        items: [],
-      }));
-      setContainers(defaultContainers);
-      setInitialLoad(true);
+    if (!BTO1 && !BTO2 && !BTO3) {
+      alert('No Favourite BTO!');
     }
-    // Load containers from firebase on component mount
-    // Save containers to firebase once container state changed
-  }, [initialLoad]);*/
+  }, [BTO1, BTO2, BTO3]);
+
+  // Trigger alert when Unfavourite BTO
+  useEffect(() => {
+    if (isHeartClicked) {
+      alert('Unfavourite BTO!');
+    }
+    setIsHeartClicked(false);
+  }, [isHeartClicked]);
+
+  const removeFavouriteBTO = () => {
+    setIsHeartClicked(true); // Trigger the alert
   
+    // Update the individual BTO states
+    if (activeBTO === 'BTO1') {
+      setBTO1(false);
+    } else if (activeBTO === 'BTO2') {
+      setBTO2(false);
+    } else if (activeBTO === 'BTO3') {
+      setBTO3(false);
+    }
+  
+    // Update the activeBTO status to another BTO if available
+    if (activeBTO === 'BTO1') {
+      setActiveBTO(BTO2 ? 'BTO2' : (BTO3 ? 'BTO3' : null));
+    } else if (activeBTO === 'BTO2') {
+      setActiveBTO(BTO1 ? 'BTO1' : (BTO3 ? 'BTO3' : null));
+    } else if (activeBTO === 'BTO3') {
+      setActiveBTO(BTO1 ? 'BTO1' : (BTO2 ? 'BTO2' : null));
+    }
+    
+  };
+  
+  // Log the updated activeBTO state
+  useEffect(() => {
+    console.log('New active BTO: ' + activeBTO);
+    setIsHeartClicked(false);
+
+  }, [activeBTO]);
   
   const onAddContainer = () => {
-    if (!containerName) return;
+    if (!containerName) return; 
     const id = `container-${uuidv4()}`;
     setContainers([
       ...containers,
@@ -392,6 +428,7 @@ export default function Home() {
           <Button onClick={onAddContainer} >Add container</Button>
         </div>
       </Modal>
+
       {/* Add Item Modal */}
       <Modal showModal={showAddItemModal} setShowModal={setShowAddItemModal}>
         <div className="flex flex-col w-full items-start gap-y-4">
@@ -406,14 +443,78 @@ export default function Home() {
           <Button onClick={onAddItem}>Add Item</Button>
         </div>
       </Modal>
-      <div className="flex items-center justify-between gap-y-2">
-        <h1 className="text-black-800 text-3xl font-bold">Dashboard</h1>
-        <Button onClick={() => setShowAddContainerModal(true)} className="rounded-lg bg-customRed border-transparent hover:bg-red-700 text-white px-6 py-4 transition duration-300 ease-in-out" >
-          Add Frames
-        </Button>
+
+      {/* Add Header Buttons */}
+      <div className="flex items-center gap-y-2">
+
+        <div className="flex items-center">
+          <h1 className="text-black-800 text-3xl font-bold mr-2">Dashboard</h1>
+          
+          {activeBTO !== null && (<Button
+            className={`border-transparent px-3 py-3 relative transition duration-300 ease-in-out bg-transparent ${
+              isHeartClicked ? 'text-transparent' : 'text-red-500'
+            }`}
+            onClick={removeFavouriteBTO} // Set clicked state to true when button is clicked
+            onMouseEnter={() => setIsHovered(true)} // Set hovered state to true when mouse enters button area
+            onMouseLeave={() => setIsHovered(false)} // Set hovered state to false when mouse leaves button area
+          >
+            <FontAwesomeIcon icon={faHeart} />
+            {isHovered && (
+              <span className="absolute top-full left-1/2 transform -translate-x-1/2 bg-white text-gray-700 px-2 py-1 rounded-md shadow-md">
+                Click to 
+                unfavorite current 
+                BTO project
+              </span>
+            )}
+          </Button>)}
       </div>
+
+        <div className="ml-auto">
+          <div className="flex gap-x-2">
+            {BTO1 && (
+              <Button
+              className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out ${
+                activeBTO === 'BTO1' ? 'bg-customRed-active hover:text-black' : 'bg-customRed'
+              }`}
+              onClick={() => setActiveBTO('BTO1')}
+            >
+              BTO 1
+            </Button>
+            )}
+            {BTO2 && (
+              <Button
+              className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out ${
+                activeBTO === 'BTO2' ? 'bg-customRed-active hover:text-black' : 'bg-customRed'
+              }`}
+              onClick={() => setActiveBTO('BTO2')}
+              >
+              BTO 2
+            </Button>
+            )}
+            {BTO3 && (
+              <Button
+              className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out ${
+                activeBTO === 'BTO3' ? 'bg-customRed-active hover:text-black' : 'bg-customRed'
+              }`}
+              onClick={() => setActiveBTO('BTO3')}
+            >
+              BTO 3
+            </Button>
+            )}
+            {activeBTO!=null && (
+            <Button onClick={() => setShowAddContainerModal(true)} className="rounded-lg bg-customRed border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out font-bold">
+                Add Frames
+            </Button>
+            )}
+          </div>
+        </div>
+      </div>
+      
+      {/* Add Grid Pattern */}
       <div className="mt-10">
-        <div className="grid grid-cols-3 gap-6">
+        {activeBTO !== null &&(
+        <div className={`grid grid-cols-3 gap-6 ${showGridsAnimation ? 'animate-fadeIn' : ''}`}>
+          {/* Grid items here */}
           <DndContext
             sensors={sensors}
             collisionDetection={closestCorners}
@@ -458,7 +559,7 @@ export default function Home() {
               )}
             </DragOverlay>
           </DndContext>
-        </div>
+        </div>)}
       </div>
     </div>
     </div>

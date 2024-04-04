@@ -35,7 +35,6 @@ const Navbar = () => {
 
       <div className={`links ${menuOpen ? 'open' : ''}`}>
         <Link to={spinalCase(aboutUs)}>About Us</Link>
-        <Link to={spinalCase(faqsTabName)}>FAQs</Link>
         <Link to={spinalCase(profile)}>Profile</Link>
         <Link to={spinalCase(dashboard)}>Dashboard</Link>
         <Link to={spinalCase(btofind)}>BTO Find</Link>

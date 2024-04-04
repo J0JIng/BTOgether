@@ -1,10 +1,11 @@
 import Navbar from "../components/NavBar";
+import UserProfileForm from "../components/UserProfileForm"
 
 const ManageProfilePage = () => {
     return (  
         <div className="profile-page">
             <Navbar/>
-            <h1> Manage Profile Page</h1>
+            <UserProfileForm />
         </div>
     );
 }

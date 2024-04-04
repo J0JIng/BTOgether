@@ -6,3 +6,24 @@
 .bg-customRed {
   background-color: #f7776b;
 }
+
+.text-customRed {
+    background-color: #f7776b;
+  }
+
+.bg-customRed-active {
+    background-color: #ff1500;
+  }
+
+@keyframes fadeIn {
+from {
+    opacity: 0;
+}
+to {
+    opacity: 1;
+}
+}
+  
+.animate-fadeIn {
+animation: fadeIn 1s ease-in-out;
+}
