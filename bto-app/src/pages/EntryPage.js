@@ -92,11 +92,15 @@ const EntryPage = () => {
                 </Link>
             </div> */}
 
-            <div className="key-features">
+            {/* <div className="key-features">
                 <div className="title ">Key Features</div>
-            </div>
+            </div> */}
 
             <div className='logos'>
+                <div className="key-features anim-1">
+                    <div className="title ">Key Features</div>
+                </div>
+
                 <div className="top">
                     <div className="planner-container logo-block">
                         <img src={Planner} alt='Planner' style={{ width: '225px', height: '225px', borderRadius: '5px' }} />
