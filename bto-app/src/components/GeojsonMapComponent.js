@@ -512,8 +512,6 @@ const GeojsonMapComponent = () => {
     return ""; // Return "" if the property doesn't exist or couldn't be extracted
   }
 
-
-
   // This is the content for the Map
   return (
     <div className="map-container">
