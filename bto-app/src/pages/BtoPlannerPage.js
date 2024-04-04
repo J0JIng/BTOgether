@@ -1,5 +1,6 @@
 import Navbar from "../components/NavBar";
 import '../css/plannertab.css';
+import "../css/dashboard.css";
 import React, {
     useEffect,
     useState
@@ -148,6 +149,7 @@ const BtoPlannerPage = () => {
 
 
     return ( 
+    
     <div className="bto-planner-page">
 	<Navbar />
 	<h1 className="planner-heading">Planner</h1>
@@ -929,7 +931,9 @@ const BtoPlannerPage = () => {
 			<p>2. <a href="https://www.cpf.gov.sg/member/home-ownership/plan-your-housing-journey/upgrading-your-home"> CPF </a>
 			</p>
 		</div>
+        
 	</div>
+    
 	<div className="rectangle-container"></div>
 </div> 
 

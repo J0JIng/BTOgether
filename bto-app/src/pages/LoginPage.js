@@ -4,8 +4,8 @@ import Login from '../components/Login';
 import Register from '../components/Register'; 
 import AuthGoogle from '../components/AuthGoogle';
 import btoLogo from '../assets/btodraftlogo.png';
-import '../css/Loginpage.css';
-
+import '../css/loginpage.css';
+import '../css/Login.css';
 
 
 const LoginPage = ({ user }) => {

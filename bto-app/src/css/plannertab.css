@@ -7,6 +7,9 @@ body {
 	width: 100%;
 	height: 100vh;
 	font-family: 'Inter', Helvetica, Arial, sans-serif;
+	width: 100%;
+	height: 100vh;
+	font-family: 'Inter', Helvetica, Arial, sans-serif;
 }
 
 .top-box {
@@ -17,7 +20,20 @@ body {
 	padding: 8px 32px;
 	background-color: #f7776b;
 	border-radius: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px 32px;
+	background-color: #f7776b;
+	border-radius: 10px;
 
+	height: 45px;
+	font-size: 20px;
+	font-weight: 500;
+
+	box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+	min-width: 600px;
 	height: 45px;
 	font-size: 20px;
 	font-weight: 500;
@@ -237,9 +253,9 @@ body {
 }
 
 .planner-heading {
-	font-size: 70px;
+	font-size: 50px;
 	/* Adjust the font size as needed */
-	margin-top: 70 px;
+	margin-top: 1000 px;
 	/* Adjust the margin from the top */
 	margin-left: 2.83%;
 	/* Adjust the margin from the left */
@@ -247,7 +263,7 @@ body {
 
 .counter {
 	display: inline-block;
-	margin-left: 10px;
+	margin-left: 5px;
 	/* Adjust the margin as needed */
 	padding: 4px 8px;
 	/* Adjust padding as needed */
@@ -271,7 +287,7 @@ body {
 .progressbar {
 	position: absolute;
 	margin-top: -68px;
-	margin-left: 250px;
+	margin-left: 50px;
 }
 
 .circle,

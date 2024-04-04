@@ -78,15 +78,15 @@ body {
 }
 
 
-.container{
+.boxcontainer{
     margin-top: 100px;
     display: flex;
     justify-content: space-evenly;
 }
 
-.linkbox{
+.linkbox {
     margin: 0 10px;
-    width:  400px;
+    width: 400px;
     height: 600px;
     background-color: #f7776b;
     border-radius: 10px;
@@ -96,33 +96,45 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    transition: background-image 2s ease; /* Smooth transition for hover effect */
-    background-image: none; /* Initially no background image */
+    position: relative;
+    overflow: hidden;
+    z-index: 1; /* Ensure text remains in front */
 }
 
-.linkbox.btosearch:hover {
-    background-image: url('../assets/yellowhdb\ \(1\).jpeg'); /* Change background image on hover */
-    color: white;
-    text-shadow: -1px -1px 0 black,  
-    1px -1px 0 black,
-   -1px  1px 0 black,
-    1px  1px 0 black; /* Add black outline */
+.linkbox::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: -1; /* Ensure pseudo-element is behind the text */
 }
 
-.linkbox.dashboard:hover {
-    background-image: url('../assets/redhdb\ \(1\).jpg'); /* Change background image on hover */
-    color: white;
-    text-shadow: -1px -1px 0 black,  
-    1px -1px 0 black,
-   -1px  1px 0 black,
-    1px  1px 0 black; /* Add black outline */
+.linkbox:hover::before {
+    opacity: 1;
 }
 
-.linkbox.planner:hover {
-    background-image: url('../assets/greenhdb\ \(2\).jpg'); /* Change background image on hover */
-    color: white;
+.linkbox:hover {
+    color: white; /* Change text color on hover */
     text-shadow: -1px -1px 0 black,  
-    1px -1px 0 black,
-   -1px  1px 0 black,
-    1px  1px 0 black; /* Add black outline */
+                 1px -1px 0 black,
+                -1px  1px 0 black,
+                 1px  1px 0 black; /* Add black outline */
+}
+
+.linkbox.btosearch::before {
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url('../assets/yellowhdb.jpeg');
+}
+
+.linkbox.dashboard::before {
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url('../assets/redhdb.jpg');
+}
+
+.linkbox.planner::before {
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url('../assets/greenhdb.jpg');
 }

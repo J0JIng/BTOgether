@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import '../css/entrypage.css';
 import btoLogo from '../assets/btodraftlogo.png';
@@ -11,6 +12,11 @@ import background from '../assets/White Background.jpg'
 import handleScrollAnimation from './script';
 
 const EntryPage = () => {
+
+    useEffect(() => {
+        handleScrollAnimation();
+    }, []); // Run once after component mounts
+
 
     useEffect(() => {
         handleScrollAnimation();
