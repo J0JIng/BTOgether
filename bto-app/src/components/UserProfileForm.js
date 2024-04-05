@@ -38,12 +38,13 @@ const UserProfileForm = () => {
         prefsData.push({ ...doc.data(), id: doc.id });
       });
       setPrefs(prefsData);
-      if (prefsData[0].salary != null) {
-        setFormData(prevState => ({ ...prevState, salary: prefsData[0].salary }));
-      }
-      if (prefsData[0].maritalStatus != null) {
-        setFormData(prevState => ({ ...prevState, maritalStatus: prefsData[0].maritalStatus }));
-      }
+
+    //   if (prefsData[0].salary !== null) {
+    //     setFormData(prevState => ({ ...prevState, salary: prefsData[0].salary }));
+    //   }
+    //   if (prefsData[0].maritalStatus !== null) {
+    //     setFormData(prevState => ({ ...prevState, maritalStatus: prefsData[0].maritalStatus }));
+    //   }
     });
 
     return () => unsubscribe();
@@ -169,7 +170,7 @@ const UserProfileForm = () => {
   const dataUtilityRef = useRef(null);
   // myData Object to add, modify or delete
   var myData = {
-    salary: '1',
+    salary: '',
     parentsAddress: { address: '', latitude: null, longitude: null },
     workplaceLocation: { address: 'Changi Business Park Central 1', latitude: 1.33411, longitude: 103.96271 }
   }
@@ -218,7 +219,7 @@ const UserProfileForm = () => {
           </FormControl>
         </div>
         <div style={{ marginBottom: '20px' }}>
-          <Typography variant='h7'>Salary: ${prefs[0] && prefs[0].salary}</Typography>
+          <Typography variant='h7'>Salary: ${prefs[0] && prefs[0].salary }</Typography>
           </div>
         <div style={{ marginBottom: '5px' }}>
           <TextField

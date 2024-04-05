@@ -69,7 +69,6 @@ const Routing = ({ startLat, startLng, endLat, endLng, apiKey, mapRef }) => {
         "Circle Line": "#F2AD27",
         "Downtown Line": "#0354A6",
         "Thomson East Coast Line": "#9D5A25"
-        // Add more longNames and corresponding colors as needed
       }
     };
 
@@ -140,17 +139,17 @@ const Routing = ({ startLat, startLng, endLat, endLng, apiKey, mapRef }) => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px'}}>
+    <div style={{ display: 'flex', justifyContent: 'center'}}>
       {routeDrawnRef.current && (
-        <table style={{ borderCollapse: 'collapse', border: '1px solid black', padding: '2px' }}>
+        <table style={{ borderCollapse: 'collapse', border: '1px solid black', padding: '2px'}}>
           <thead>
             <tr>
-              <th colSpan="3" style={{ border: '1px solid black', padding: '2px' }}>Public Transport Route</th>
+              <th colSpan="3" style={{ border: '1px solid black', padding: '0.5rem', backgroundColor: "#87CEFA" }}>Public Transport Route</th>
             </tr>
-            <tr>
-              <th style={{ border: '1px solid black', padding: '2px' }}>Waypoints</th>
-              <th style={{ border: '1px solid black', padding: '2px' }}>Transport Mode</th>
-              <th style={{ border: '1px solid black', padding: '2px' }}>Time Taken</th>
+            <tr style={{ backgroundColor: "#F8F8F8"}}>
+              <th style={{ border: '1px solid black', padding: '0.5rem' }}>Waypoints</th>
+              <th style={{ border: '1px solid black', padding: '0.5rem' }}>Transport Mode</th>
+              <th style={{ border: '1px solid black', padding: '0.5rem' }}>Time Taken</th>
             </tr>
           </thead>
           <tbody>
@@ -167,15 +166,15 @@ const Routing = ({ startLat, startLng, endLat, endLng, apiKey, mapRef }) => {
               timeTaken += `${minutes} min`;
               return (
                 <tr key={index}>
-                  <td style={{ border: '1px solid black', padding: '2px' }}>{section.arrival.place.name}</td>
-                  <td style={{ border: '1px solid black', padding: '2px' }}>{section.transport.name || 'Walk'}</td>
-                  <td style={{ border: '1px solid black', padding: '2px' }}>{timeTaken}</td>
+                  <td style={{ border: '1px solid black', padding: '0.5rem' }}>{section.arrival.place.name}</td>
+                  <td style={{ border: '1px solid black', padding: '0.5rem' }}>{section.transport.name || 'Walk'}</td>
+                  <td style={{ border: '1px solid black', padding: '0.5rem' }}>{timeTaken}</td>
                 </tr>
               );
             })}
-            <tr>
-              <td colSpan="2" style={{ textAlign: 'center', border: '1px solid black', padding: '2px' }}>Total Time:</td>
-              <td style={{ border: '1px solid black', padding: '2px' }}>
+            <tr style={{ backgroundColor: "#F8F8F8"}}>
+              <td colSpan="2" style={{ textAlign: 'center', border: '1px solid black', padding: '0.5rem' }}>Total Time:</td>
+              <td style={{ border: '1px solid black', padding: '0.5rem' }}>
                 {(() => {
                   const totalMilliseconds = routeData.sections.reduce((total, section) => {
                     const departureTime = new Date(section.departure.time);

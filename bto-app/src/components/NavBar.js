@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import btoLogo from '../assets/btodraftlogo.png';
 import { spinalCase, aboutUs, faqsTabName, profile, dashboard, btofind, btoplanner } from "../utils/pageConstants";
-
+import '../css/navbar.css'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -35,7 +35,6 @@ const Navbar = () => {
 
       <div className={`links ${menuOpen ? 'open' : ''}`}>
         <Link to={spinalCase(aboutUs)}>About Us</Link>
-        <Link to={spinalCase(faqsTabName)}>FAQs</Link>
         <Link to={spinalCase(profile)}>Profile</Link>
         <Link to={spinalCase(dashboard)}>Dashboard</Link>
         <Link to={spinalCase(btofind)}>BTO Find</Link>

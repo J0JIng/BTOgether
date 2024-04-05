@@ -498,52 +498,90 @@ const GeojsonMapComponent = () => {
       return ''; // Return an empty string if "NAME" is not found
     } else { return htmlContent.popUp }
   };
+  // Function to parse HTML content and extract ADDRESSSTREETNAME values
+  const extractAttributeName = (obj, key) => {
+    if (obj && obj.hasOwnProperty("popUp")) {
+      const popUpHTML = obj.popUp;
+      const regex = new RegExp(`<th[^>]*>${key}<\/th>\\s*<td[^>]*>(.*?)<\/td>`);
+      const match = popUpHTML.match(regex);
+
+      if (match && match[1]) {
+        return match[1].trim();
+      }
+    }
+    return ""; // Return "" if the property doesn't exist or couldn't be extracted
+  }
 
   // This is the content for the Map
   return (
-    <div>
-      <h2 style={{ marginBottom: 10 }}>Map View of {mapTitle}</h2>
+    <div className="map-container">
+      <div className="map-container__top-bar">
+        <h2 className="map-title">Map View of {mapTitle}</h2>
 
-      {/* Distance slider*/}
-      <div style={{ marginBottom: '10px' }}>
-        <label>Filter Distance (in km): </label>
-        <input
-          type="range"
-          min="0"
-          max="20"
-          value={distance}
-          onChange={(e) => setDistance(e.target.value)}
-        />
-        <span>{distance} km</span>
+        {/* Distance slider*/}
+        <div className="slider-container">
+          <label htmlFor="distance-slider">Filter Distance (in km): </label>
+          <input
+            id="distance-slider"
+            className="slider"
+            type="range"
+            min="0"
+            max="10"
+            value={distance}
+            onChange={(e) => setDistance(e.target.value)}
+          />
+          <span className="slider-distance">{distance} km</span>
+        </div>
       </div>
 
-      <div style={{ display: 'flex' }}>
-        {/* This is for the public transport route, put at the end so routing table is at the bottom*/}
-        <div style={{ flex: 1, padding: '10px' }}>
+      <div className="panel-wrapper">
+        {/* Updated left panel with the table of markers and public transport table */}
+        <div className="left-panel">
           {/* Table of Markers */}
           {markers.length > 0 && (
-              <div style={{ display: 'inline-block', maxWidth: '100%', marginBottom: '20px', marginTop: '20px', maxHeight: '300px', overflowY: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid black', padding: '2px' }}>
-                  <thead>
-                    <tr>
-                      <th style={{ border: '1px solid black', padding: '2px' }}>{markers.length} {mapTitle} in {distance}km Radius: </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {markers.map((marker, index) => (
+            <div className="table-container">
+              <table className="table-style">
+                <thead>
+                  <tr>
+                    <th>{markers.length} {mapTitle} in {distance}km Radius:</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {markers.map((marker, index) => (
+                    <>
                       <tr key={index}>
-                        <td style={{ border: '1px solid black', padding: '5px' }}>{extractNameFromHtml(marker)}</td>
+                        <td>
+                          <div className="table-style__name">
+                            {extractNameFromHtml(marker)}
+                          </div>
+                          <div className="table-style__address">
+                            {extractAttributeName(marker, "ADDRESSSTREETNAME")}
+                            {", "}{extractAttributeName(marker, "ADDRESSPOSTALCODE")}
+                          </div>
+                          <div className="table-style__maptitle">
+                            <img src={markerIcon.options.iconUrl} alt={JSON.stringify(markerIcon)} style={{ width: 24, height: 24, marginRight: 5 }} />
+                            {mapTitle.slice(0, -1)}
+                          </div>
+                        </td>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+                    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
           {/* Public Transport Table */}
-          <Routing startLat={homeLocation.latitude} startLng={homeLocation.longitude} endLat={routingLocation.latitude} endLng={routingLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
+          <div className="public-transport-route">
+            {routingLocation.latitude && routingLocation.longitude ? (
+              <Routing startLat={homeLocation.latitude} startLng={homeLocation.longitude} endLat={routingLocation.latitude} endLng={routingLocation.longitude} apiKey={apiKey} mapRef={mapRef} />
+            ) : (
+              <p> Select a destination to find public transport routes</p>
+            )}
+          </div>
         </div>
-        <div style={{ flex: 1, padding: '10px' }}>
-          <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} style={{ height: '70vh', width: '1200px', border: '4px LightSteelBlue solid' }}>
+
+        <div className="right-panel">
+          <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} className="leaflet-map">
             {/* Google Map Tile Layer */}
             <TileLayer
               attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
@@ -577,23 +615,36 @@ const GeojsonMapComponent = () => {
           </LeafletMap>
 
           {/* This area is the form for the Map */}
-          <h3 style={{ marginBottom: '5px' }}>Set Home Waypoint</h3>
-          <label>Address: </label>
-          <input type='text' placeholder="Enter Address here..." onChange={(e) => setAddressField(e.target.value)}></input>
-          {errorMessage && (
-            <div style={{ color: 'red' }}>{errorMessage}</div>
-          )}
-          <button onClick={handleGeocode}>Find Home</button>
-          {auth.currentUser && <button onClick={setHome}>Set Home</button>}
-          {auth.currentUser && <button onClick={loadHome}>Load Saved Home Location</button>}
-          <button onClick={toggleJson}>Toggle GEOJson</button>
-          <button onClick={clearMap}>Clear Map</button>
+          {/* Form for the Map */}
+          <div className="home-waypoint-form">
+            <h3>Set Home Waypoint</h3>
+            <div className="input-group">
+              <label htmlFor="address-input">Address: </label>
+              <input
+                id="address-input"
+                type='text'
+                placeholder="Enter Address here..."
+                onChange={(e) => setAddressField(e.target.value)}
+              />
+              
+              <div className="buttons-group">
+                <button onClick={handleGeocode}>Find Home</button>
+                {auth.currentUser && <button onClick={setHome}>Set Home</button>}
+                {auth.currentUser && <button onClick={loadHome}>Load Saved Home Location</button>}
+                <button onClick={toggleJson}>Toggle GEOJson</button>
+                <button onClick={clearMap}>Clear Map</button>
+              </div>
+            </div>
 
-          {/* This is to show latitude and longitude coords when available*/}
-          {homeLocation.latitude && homeLocation.longitude && (
-            <h4>Latitude: {homeLocation.latitude}, Longitude: {homeLocation.longitude}, Road: {homeLocation.address}</h4>
-          )}
-
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {homeLocation.latitude && homeLocation.longitude && (
+              <div className="coordinates-display">
+                <span><span style={{fontWeight: "bold", fontSize: 18}}>Latitude: </span>{homeLocation.latitude}{" "}</span>
+                <span><span style={{fontWeight: "bold", fontSize: 18}}>Longitude: </span>{homeLocation.longitude}{" "}</span>
+                <span><span style={{fontWeight: "bold", fontSize: 18}}>Road: </span>{homeLocation.address}</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
