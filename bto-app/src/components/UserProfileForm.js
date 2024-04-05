@@ -38,13 +38,14 @@ const UserProfileForm = () => {
         prefsData.push({ ...doc.data(), id: doc.id });
       });
       setPrefs(prefsData);
-
-    //   if (prefsData[0].salary !== null) {
-    //     setFormData(prevState => ({ ...prevState, salary: prefsData[0].salary }));
-    //   }
-    //   if (prefsData[0].maritalStatus !== null) {
-    //     setFormData(prevState => ({ ...prevState, maritalStatus: prefsData[0].maritalStatus }));
-    //   }
+      if (!prefsData) {
+        if (prefsData[0].salary !== null) {
+          setFormData(prevState => ({ ...prevState, salary: prefsData[0].salary }));
+        }
+        if (prefsData[0].maritalStatus !== null) {
+          setFormData(prevState => ({ ...prevState, maritalStatus: prefsData[0].maritalStatus }));
+        }
+      }
     });
 
     return () => unsubscribe();
