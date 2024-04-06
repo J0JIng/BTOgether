@@ -29,20 +29,22 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${menuOpen ? "open" : ""}`}>
-      <div className="logo-image">
-        <img
-          src={btoLogo}
-          alt="bto-logo"
-          style={{ width: "60px", height: "60px", borderRadius: "5px" }}
-        />
-      </div>
-
+      <Link to="/home">
+        <div className="logo-image">
+          <img
+            src={btoLogo}
+            alt="bto-logo"
+            style={{ width: "60px", height: "60px", borderRadius: "5px" }}
+          />
+        </div>
+      </Link>
+  
       <div className="title-heading">BTOgether</div>
-
+  
       <div className="menu" onClick={toggleMenu}>
         =
       </div>
-
+  
       <div className={`links ${menuOpen ? "open" : ""}`}>
         <Link to={spinalCase(aboutUs)}>About Us</Link>
         <Link to={spinalCase(profile)}>Profile</Link>
@@ -53,6 +55,5 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
-
+}
 export default Navbar;
