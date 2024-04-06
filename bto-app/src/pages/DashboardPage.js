@@ -62,11 +62,17 @@ const defaultFrames3 = [
   { name: 'Estimated Date of Completion', description: '2025.' },
 ];
 
-
 const generateId = () => `container-${uuidv4()}`;
 
+// TESTING
+const testing_frame = defaultFrames1.map(frame => ({
+  id: generateId(),
+  title: frame.name,
+  description: frame.description,
+  items: [],
+}));
+ 
 
-// Home component
 export default function DashboardPage() {
   const [BTO1, setBTO1] = useState(true);
   const [BTO2, setBTO2] = useState(true);
@@ -82,32 +88,29 @@ export default function DashboardPage() {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [showGridsAnimation, setShowGridsAnimation] = useState(true);
+  const [isAddFramesHovered, setIsAddFramesHovered] = useState(false);
+  
+  useEffect(() => {  
+    console.log('containers:', JSON.stringify(containers, null, 2));
+  }, [containers]);
 
   useEffect(() => {  
+
+    // TODO: FUNCTIONALITY TO ACCEPT GET INFO FROM FIREBASE
+    //       UPDATE BTO USESTATE IF NECESSARY
+
     // Trigger alert when Unfavourite BTO
     if (isHeartClicked) {
       alert('Unfavourite BTO!');
       setIsHeartClicked(false);
     }
 
-    // Trigger alert when all BTO states are false
-    if (activeBTO === null && !BTO1 && !BTO2 && !BTO3 ) {
-      alert('No Favourite BTO!');
-    }
-  
-    // Log the updated activeBTO state
-    console.log('New active BTO: ' + activeBTO);
-
     // Set containers based on activeBTO
     switch (activeBTO) {
       case 'BTO1':
-        setContainers(defaultFrames1.map(frame => ({
-          id: generateId(),
-          title: frame.name,
-          description: frame.description,
-          items: [],
-        })));
+        setContainers(testing_frame)
         break;
+
       case 'BTO2':
         setContainers(defaultFrames2.map(frame => ({
           id: generateId(),
@@ -116,6 +119,7 @@ export default function DashboardPage() {
           items: [],
         })));
         break;
+
       case 'BTO3':
         setContainers(defaultFrames3.map(frame => ({
           id: generateId(),
@@ -124,11 +128,27 @@ export default function DashboardPage() {
           items: [],
         })));
         break;
+
       default:
         setContainers([]);
     }
-  
   }, [BTO1, BTO2, BTO3, isHeartClicked, activeBTO]);
+
+  // Determine which BTO project is favorited initially
+  useEffect(() => {  
+    if (BTO1) {
+      setActiveBTO('BTO1');
+    } else if (BTO2) {
+      setActiveBTO('BTO2');
+    } else if (BTO3) {
+      setActiveBTO('BTO3');
+    } else {
+      // No favorite BTO project, alert the user
+      alert('No favorite projects found, please find and favorite a BTO under BTO Find');
+    }
+     // Log the updated activeBTO state
+     console.log('New active BTO: ' + activeBTO);
+  }, [BTO1, BTO2, BTO3]);
 
   // Function to handle button click for BTO1
   const handleBTO1Click = () => {
@@ -145,30 +165,37 @@ export default function DashboardPage() {
     setActiveBTO('BTO3');
   };
 
-  const removeFavouriteBTO = () => {
-    setIsHeartClicked(true); // Trigger the alert
-  
-    // Update the individual BTO states
-    if (activeBTO === 'BTO1') {
-      setBTO1(false);
-    } else if (activeBTO === 'BTO2') {
-      setBTO2(false);
-    } else if (activeBTO === 'BTO3') {
-      setBTO3(false);
-    }
-  
-    // Update the activeBTO status to another BTO if available
-    if (activeBTO === 'BTO1') {
-      setActiveBTO(BTO2 ? 'BTO2' : (BTO3 ? 'BTO3' : null));
-    } else if (activeBTO === 'BTO2') {
-      setActiveBTO(BTO1 ? 'BTO1' : (BTO3 ? 'BTO3' : null));
-    } else if (activeBTO === 'BTO3') {
-      setActiveBTO(BTO1 ? 'BTO1' : (BTO2 ? 'BTO2' : null));
-    }
-    
+  const handleDeleteContainer = (containerId) => {
+    console.log("remove frame" + containerId)
+    const updatedContainers = containers.filter((container) => container.id !== containerId);
+    setContainers(updatedContainers);
   };
+
+  const removeFavouriteBTO = () => {
+  setIsHeartClicked(true); 
+  switch (activeBTO) {
+    case 'BTO1':
+      setBTO1(false);
+      setActiveBTO(BTO2 ? 'BTO2' : (BTO3 ? 'BTO3' : null));
+      break;
+    case 'BTO2':
+      setBTO2(false);
+      setActiveBTO(BTO1 ? 'BTO1' : (BTO3 ? 'BTO3' : null));
+      break;
+    case 'BTO3':
+      setBTO3(false);
+      setActiveBTO(BTO1 ? 'BTO1' : (BTO2 ? 'BTO2' : null));
+      break;
+    default:
+      break;
+  }
+};
   
   const onAddContainer = () => {
+    if (containers.length >= 12) {
+      alert("Maximum number of frames reached");
+      return;
+    }
     if (!containerName) return; 
     const id = `container-${uuidv4()}`;
     setContainers([
@@ -184,39 +211,11 @@ export default function DashboardPage() {
     setShowAddContainerModal(false);
   };
 
-  const onAddItem = () => {
-    if (!itemName) return;
-    const id = generateId();
-    const container = containers.find((item) => item.id === currentContainerId);
-    if (!container) return;
-    container.items.push({
-      id,
-      title: itemName,
-    });
-    setContainers([...containers]);
-    setItemName('');
-    setShowAddItemModal(false);
-  };
-
- 
-  function findValueOfItems(id, type) {
+    function findValueOfItems(id, type) {
     if (type === 'container') {
       return containers.find((item) => item.id === id);
     }
-    if (type === 'item') {
-      return containers.find((container) =>
-        container.items.find((item) => item.id === id)
-      );
-    }
   }
-
-  const findItemTitle = (id) => {
-    const container = findValueOfItems(id, 'item');
-    if (!container) return '';
-    const item = container.items.find((item) => item.id === id);
-    if (!item) return '';
-    return item.title;
-  };
 
   const findContainerTitle = (id) => {
     const container = findValueOfItems(id, 'container');
@@ -224,129 +223,23 @@ export default function DashboardPage() {
     return container.title;
   };
 
-  const findContainerItems = (id) => {
-    const container = findValueOfItems(id, 'container');
-    if (!container) return [];
-    return container.items;
-  };
-
-  // DND Handlers
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
-
+    // DND Handlers
+    const sensors = useSensors(
+      useSensor(PointerSensor),
+      useSensor(KeyboardSensor, {
+        coordinateGetter: sortableKeyboardCoordinates,
+      })
+    );
+  
   function handleDragStart(event) {
     const { active } = event;
     const { id } = active;
     setActiveId(id);
   }
-
-  const handleDragMove = (event) => {
+  
+  const handleDragEnd = (event) => {
     const { active, over } = event;
-
-    // Handle Items Sorting
-    if (
-      active.id.toString().includes('item') &&
-      over?.id.toString().includes('item') &&
-      active &&
-      over &&
-      active.id !== over.id
-    ) {
-      // Find the active container and over container
-      const activeContainer = findValueOfItems(active.id, 'item');
-      const overContainer = findValueOfItems(over.id, 'item');
-
-      // If the active or over container is not found, return
-      if (!activeContainer || !overContainer) return;
-
-      // Find the index of the active and over container
-      const activeContainerIndex = containers.findIndex(
-        (container) => container.id === activeContainer.id
-      );
-      const overContainerIndex = containers.findIndex(
-        (container) => container.id === overContainer.id
-      );
-
-      // Find the index of the active and over item
-      const activeitemIndex = activeContainer.items.findIndex(
-        (item) => item.id === active.id
-      );
-      const overitemIndex = overContainer.items.findIndex(
-        (item) => item.id === over.id
-      );
-
-      // In the same container
-      if (activeContainerIndex === overContainerIndex) {
-        let newItems = [...containers];
-        newItems[activeContainerIndex].items = arrayMove(
-          newItems[activeContainerIndex].items,
-          activeitemIndex,
-          overitemIndex
-        );
-
-        setContainers(newItems);
-      } else {
-        // In different containers
-        let newItems = [...containers];
-        const [removeditem] = newItems[activeContainerIndex].items.splice(
-          activeitemIndex,
-          1
-        );
-        newItems[overContainerIndex].items.splice(
-          overitemIndex,
-          0,
-          removeditem
-        );
-        setContainers(newItems);
-      }
-    }
-
-    // Handling Item Drop Into a Container
-    if (
-      active.id.toString().includes('item') &&
-      over?.id.toString().includes('container') &&
-      active &&
-      over &&
-      active.id !== over.id
-    ) {
-      // Find the active and over container
-      const activeContainer = findValueOfItems(active.id, 'item');
-      const overContainer = findValueOfItems(over.id, 'container');
-
-      // If the active or over container is not found, return
-      if (!activeContainer || !overContainer) return;
-
-      // active and over container
-      const activeContainerIndex = containers.findIndex(
-        (container) => container.id === activeContainer.id
-      );
-      const overContainerIndex = containers.findIndex(
-        (container) => container.id === overContainer.id
-      );
-
-      // Find the index of the active and over item
-      const activeitemIndex = activeContainer.items.findIndex(
-        (item) => item.id === active.id
-      );
-
-      // Remove the active item from the active container and add it to the over container
-      let newItems = [...containers];
-      const [removeditem] = newItems[activeContainerIndex].items.splice(
-        activeitemIndex,
-        1
-      );
-      newItems[overContainerIndex].items.push(removeditem);
-      setContainers(newItems);
-    }
-  };
-
-  // This is the function that handles the sorting of the containers and items when the user is done dragging.
-  function handleDragEnd(event) {
-    const { active, over } = event;
-
+  
     // Handling Container Sorting
     if (
       active.id.toString().includes('container') &&
@@ -367,96 +260,9 @@ export default function DashboardPage() {
       newItems = arrayMove(newItems, activeContainerIndex, overContainerIndex);
       setContainers(newItems);
     }
-
-    // Handling item Sorting
-    if (
-      active.id.toString().includes('item') &&
-      over?.id.toString().includes('item') &&
-      active &&
-      over &&
-      active.id !== over.id
-    ) {
-      // Find the active and over container
-      const activeContainer = findValueOfItems(active.id, 'item');
-      const overContainer = findValueOfItems(over.id, 'item');
-
-      // If the active or over container is not found, return
-      if (!activeContainer || !overContainer) return;
-      // Find the index of the active and over container
-      const activeContainerIndex = containers.findIndex(
-        (container) => container.id === activeContainer.id
-      );
-      const overContainerIndex = containers.findIndex(
-        (container) => container.id === overContainer.id
-      );
-      // Find the index of the active and over item
-      const activeitemIndex = activeContainer.items.findIndex(
-        (item) => item.id === active.id
-      );
-      const overitemIndex = overContainer.items.findIndex(
-        (item) => item.id === over.id
-      );
-
-      // In the same container
-      if (activeContainerIndex === overContainerIndex) {
-        let newItems = [...containers];
-        newItems[activeContainerIndex].items = arrayMove(
-          newItems[activeContainerIndex].items,
-          activeitemIndex,
-          overitemIndex
-        );
-        setContainers(newItems);
-      } else {
-        // In different containers
-        let newItems = [...containers];
-        const [removeditem] = newItems[activeContainerIndex].items.splice(
-          activeitemIndex,
-          1
-        );
-        newItems[overContainerIndex].items.splice(
-          overitemIndex,
-          0,
-          removeditem
-        );
-        setContainers(newItems);
-      }
-    }
-    // Handling item dropping into Container
-    if (
-      active.id.toString().includes('item') &&
-      over?.id.toString().includes('container') &&
-      active &&
-      over &&
-      active.id !== over.id
-    ) {
-      // Find the active and over container
-      const activeContainer = findValueOfItems(active.id, 'item');
-      const overContainer = findValueOfItems(over.id, 'container');
-
-      // If the active or over container is not found, return
-      if (!activeContainer || !overContainer) return;
-      // Find the index of the active and over container
-      const activeContainerIndex = containers.findIndex(
-        (container) => container.id === activeContainer.id
-      );
-      const overContainerIndex = containers.findIndex(
-        (container) => container.id === overContainer.id
-      );
-      // Find the index of the active and over item
-      const activeitemIndex = activeContainer.items.findIndex(
-        (item) => item.id === active.id
-      );
-
-      let newItems = [...containers];
-      const [removeditem] = newItems[activeContainerIndex].items.splice(
-        activeitemIndex,
-        1
-      );
-      newItems[overContainerIndex].items.push(removeditem);
-      setContainers(newItems);
-    }
+  
     setActiveId(null);
-  }
+  };
 
   return (
     <div>
@@ -557,9 +363,23 @@ export default function DashboardPage() {
             </Button>
             )}
             {activeBTO!=null && (
-            <Button onClick={() => setShowAddContainerModal(true)} className="rounded-lg bg-customRed border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out font-bold">
-                Add Frames
-            </Button>
+            <Button 
+            className="rounded-lg bg-customRed border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out font-bold relative"
+            onClick={() => {
+              if (containers.length < 12) {
+                setShowAddContainerModal(true);
+              }
+            }}
+            onMouseEnter={() => setIsAddFramesHovered(true)} 
+            onMouseLeave={() => setIsAddFramesHovered(false)} 
+          >
+            Add Frames
+            {isAddFramesHovered && containers.length >= 12 && (
+              <span className="absolute top-full left-1/2 transform -translate-x-1/2 bg-white text-gray-700 px-2 py-1 rounded-md shadow-md">
+                Maximum number of frames reached
+              </span>
+            )}
+          </Button>
             )}
           </div>
         </div>
@@ -574,7 +394,7 @@ export default function DashboardPage() {
             sensors={sensors}
             collisionDetection={closestCorners}
             onDragStart={handleDragStart}
-            onDragMove={handleDragMove}
+            // onDragMove={handleDragMove}
             onDragEnd={handleDragEnd}
           >
             <SortableContext items={containers.map((i) => i.id)}>
@@ -584,32 +404,15 @@ export default function DashboardPage() {
                   title={container.title}
                   description={container.description}
                   key={container.id}
-                  onAddItem={() => {
-                    setShowAddItemModal(true);
-                    setCurrentContainerId(container.id);
-                  }}
+                  onDelete={handleDeleteContainer}
                 >
-                  <SortableContext items={container.items.map((i) => i.id)}>
-                    <div className="flex items-start flex-col gap-y-4">
-                      {container.items.map((i) => (
-                        <Items title={i.title} id={i.id} key={i.id} />
-                      ))}
-                    </div>
-                  </SortableContext>
                 </Container>
               ))}
             </SortableContext>
             <DragOverlay adjustScale={false}>
-              {/* Drag Overlay For item Item */}
-              {activeId && activeId.toString().includes('item') && (
-                <Items id={activeId} title={findItemTitle(activeId)} />
-              )}
               {/* Drag Overlay For Container */}
               {activeId && activeId.toString().includes('container') && (
                 <Container id={activeId} title={findContainerTitle(activeId)}>
-                  {findContainerItems(activeId).map((i) => (
-                    <Items key={i.id} title={i.title} id={i.id} />
-                  ))}
                 </Container>
               )}
             </DragOverlay>

@@ -12,7 +12,7 @@ const Container = ({
   children,
   title,
   description,
-  onAddItem,
+  onDelete,
 }) => {
   const {
     attributes,
@@ -52,9 +52,7 @@ const Container = ({
           </button>
         </div>
         {children}
-        <Button variant="ghost" onClick={onAddItem}>
-          Expand
-        </Button>
+        <button onClick={() => onDelete(id)}>Remove</button>
       </div>
     </div>
   );
