@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/NavBar";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faCodeCompare,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+
 import "../css/dashboard.css";
 
 // DnD
@@ -80,14 +85,14 @@ export default function DashboardPage() {
   const [activeId, setActiveId] = useState(null);
   const [currentContainerId, setCurrentContainerId] = useState(null);
   const [containerName, setContainerName] = useState("");
-  const [itemName, setItemName] = useState("");
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
-  const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [showGridsAnimation, setShowGridsAnimation] = useState(true);
   const [isAddFramesHovered, setIsAddFramesHovered] = useState(false);
+  const [numberOfTrueBTOs, setNumberOfTrueBTOs] = useState(0); // New state to track count of true BTOs
 
+  // DEBUGGING
   useEffect(() => {
     console.log("containers:", JSON.stringify(containers, null, 2));
   }, [containers]);
@@ -149,6 +154,9 @@ export default function DashboardPage() {
         "No favorite projects found, please find and favorite a BTO under BTO Find"
       );
     }
+    // Update the count of true BTOs
+    const count = [BTO1, BTO2, BTO3].filter((bto) => bto).length;
+    setNumberOfTrueBTOs(count);
     // Log the updated activeBTO state
     console.log("New active BTO: " + activeBTO);
   }, [BTO1, BTO2, BTO3]);
@@ -166,6 +174,11 @@ export default function DashboardPage() {
   // Function to handle button click for BTO3
   const handleBTO3Click = () => {
     setActiveBTO("BTO3");
+  };
+
+  // INSERT CODE FOR COMPARISON
+  const handleComparison = () => {
+    alert("do comparison");
   };
 
   const handleDeleteContainer = (containerId) => {
@@ -338,7 +351,7 @@ export default function DashboardPage() {
             <div className="flex gap-x-2">
               {BTO1 && (
                 <Button
-                  className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out ${
+                  className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out font-bold relative ${
                     activeBTO === "BTO1"
                       ? "bg-customRed-active hover:text-black"
                       : "bg-customRed"
@@ -350,7 +363,7 @@ export default function DashboardPage() {
               )}
               {BTO2 && (
                 <Button
-                  className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out ${
+                  className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out  font-bold relative ${
                     activeBTO === "BTO2"
                       ? "bg-customRed-active hover:text-black"
                       : "bg-customRed"
@@ -362,7 +375,7 @@ export default function DashboardPage() {
               )}
               {BTO3 && (
                 <Button
-                  className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out ${
+                  className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out  font-bold relative ${
                     activeBTO === "BTO3"
                       ? "bg-customRed-active hover:text-black"
                       : "bg-customRed"
@@ -372,7 +385,7 @@ export default function DashboardPage() {
                   BTO 3
                 </Button>
               )}
-              {activeBTO != null && (
+              {activeBTO !== null && (
                 <Button
                   className="rounded-lg bg-customRed border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out font-bold relative"
                   onClick={() => {
@@ -383,12 +396,22 @@ export default function DashboardPage() {
                   onMouseEnter={() => setIsAddFramesHovered(true)}
                   onMouseLeave={() => setIsAddFramesHovered(false)}
                 >
-                  Add Frames
+                  <FontAwesomeIcon icon={faPlus} />
+                  <span className="add-text"> Add Frames</span>
                   {isAddFramesHovered && containers.length >= 12 && (
                     <span className="absolute top-full left-1/2 transform -translate-x-1/2 bg-white text-gray-700 px-2 py-1 rounded-md shadow-md">
                       Maximum number of frames reached
                     </span>
                   )}
+                </Button>
+              )}
+              {activeBTO !== null && numberOfTrueBTOs >= 2 && (
+                <Button
+                  className="rounded-lg border-transparent bg-customRed hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out font-bold relative"
+                  onClick={handleComparison}
+                >
+                  <FontAwesomeIcon icon={faCodeCompare} />
+                  <span className="compare-text"> Compare</span>
                 </Button>
               )}
             </div>
