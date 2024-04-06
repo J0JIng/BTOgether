@@ -1,19 +1,13 @@
-import React from 'react';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import clsx from 'clsx';
-import { Button } from './Button';
+import React from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import clsx from "clsx";
+import { Button } from "./Button";
 import "../css/dashboard.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-const Container = ({
-  id,
-  children,
-  title,
-  description,
-  onAddItem,
-}) => {
+const Container = ({ id, children, title, description, onDelete }) => {
   const {
     attributes,
     setNodeRef,
@@ -24,7 +18,7 @@ const Container = ({
   } = useSortable({
     id: id,
     data: {
-      type: 'container',
+      type: "container",
     },
   });
 
@@ -35,8 +29,8 @@ const Container = ({
         {...attributes}
         style={{ transition, transform: CSS.Translate.toString(transform) }}
         className={clsx(
-          'flex-none w-full md:w-96 p-4 bg-white rounded-lg shadow-md border border-gray-200',
-          isDragging && 'opacity-75',
+          "flex-none w-full md:w-96 p-4 bg-white rounded-lg shadow-md border border-gray-200",
+          isDragging && "opacity-75"
         )}
       >
         <div className="flex items-center justify-between mb-4">
@@ -48,13 +42,11 @@ const Container = ({
             className="flex items-center justify-center w-8 h-8 border-transparent shadow-md border text-gray-500 rounded-md hover:bg-gray-200 transition duration-300"
             {...listeners}
           >
-            <FontAwesomeIcon icon={faBars} /> 
+            <FontAwesomeIcon icon={faBars} />
           </button>
         </div>
         {children}
-        <Button variant="ghost" onClick={onAddItem}>
-          Add Item
-        </Button>
+        <button onClick={() => onDelete(id)}>Remove</button>
       </div>
     </div>
   );

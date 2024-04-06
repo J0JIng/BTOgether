@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth , GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDrcBwgDBLX1gFBM06gAP3iTMiCA2_ICkk",
@@ -7,7 +7,7 @@ const firebaseConfig = {
   projectId: "btogether-571a3",
   storageBucket: "btogether-571a3.appspot.com",
   messagingSenderId: "804210143858",
-  appId: "1:804210143858:web:9d6d9845d1b01b561548eb"
+  appId: "1:804210143858:web:9d6d9845d1b01b561548eb",
 };
 
 // Initialize Firebase
@@ -15,4 +15,4 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-export {auth,provider};
+export { auth, provider };
