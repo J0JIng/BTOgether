@@ -79,7 +79,7 @@ const testing_frame = defaultFrames1.map((frame) => ({
 export default function DashboardPage() {
   const [BTO1, setBTO1] = useState(true);
   const [BTO2, setBTO2] = useState(true);
-  const [BTO3, setBTO3] = useState(false);
+  const [BTO3, setBTO3] = useState(true);
   const [activeBTO, setActiveBTO] = useState(null);
   const [containers, setContainers] = useState([]);
   const [activeId, setActiveId] = useState(null);
