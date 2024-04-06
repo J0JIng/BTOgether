@@ -11,7 +11,6 @@ import MapDialog from './MapDialog';
 import { Icon } from "leaflet";
 import { Toaster, toast } from 'sonner'
 import DeleteAccountDialog from './DeleteAccountDialog';
-
 import UserDataUtility from '../utils/UserDataUtility';
 
 const UserProfileForm = () => {

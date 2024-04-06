@@ -53,7 +53,7 @@ const Container = ({
         </div>
         {children}
         <Button variant="ghost" onClick={onAddItem}>
-          Add Item
+          Expand
         </Button>
       </div>
     </div>

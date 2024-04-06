@@ -5,8 +5,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import clsx from 'clsx';
 import "tailwindcss/tailwind.css";
 
-// Types
-
 export default function Modal({
   children,
   showModal,

@@ -30,7 +30,9 @@ import { Button } from '../components/Button';
 
 
 // need to accept JSON from Firebase 
-const defaultFrames = [
+//Example
+
+const defaultFrames1= [
   { name: 'Location', description: 'Woodlands Drive 16.' },
   { name: 'Town', description: 'Woodlands.' },
   { name: 'Town Council', description: 'Sembawang Town Council.' },
@@ -40,24 +42,37 @@ const defaultFrames = [
   { name: 'Estimated Date of Completion', description: '2027.' },
 ];
 
+const defaultFrames2 = [
+  { name: 'Location', description: 'Marine Parade Central.' },
+  { name: 'Town', description: 'Marine Parade.' },
+  { name: 'Town Council', description: 'Marine Parade Town Council.' },
+  { name: 'Price', description: '$800,000.' },
+  { name: 'Square Footage', description: '1100 sqf.' },
+  { name: 'Number of Rooms', description: '3 Room Flat.' },
+  { name: 'Estimated Date of Completion', description: '2026.' },
+];
+
+const defaultFrames3 = [
+  { name: 'Location', description: 'Jurong West Street 41.' },
+  { name: 'Town', description: 'Jurong West.' },
+  { name: 'Town Council', description: 'Jurong West Town Council.' },
+  { name: 'Price', description: '$720,000.' },
+  { name: 'Square Footage', description: '1350 sqf.' },
+  { name: 'Number of Rooms', description: '5 Room Flat.' },
+  { name: 'Estimated Date of Completion', description: '2025.' },
+];
 
 
 const generateId = () => `container-${uuidv4()}`;
 
-const defaultContainers = defaultFrames.map((frame) => ({
-  id: generateId(),
-  title: frame.name,
-  description: frame.description, // Access description from the frame object
-  items: [],
-}));
 
 // Home component
 export default function DashboardPage() {
   const [BTO1, setBTO1] = useState(true);
   const [BTO2, setBTO2] = useState(true);
   const [BTO3, setBTO3] = useState(false);
-  const [activeBTO, setActiveBTO] = useState(BTO1);
-  const [containers, setContainers] = useState(defaultContainers);
+  const [activeBTO, setActiveBTO] = useState(null);
+  const [containers, setContainers] = useState([]);
   const [activeId, setActiveId] = useState(null);
   const [currentContainerId, setCurrentContainerId] = useState(null);
   const [containerName, setContainerName] = useState('');
@@ -68,20 +83,67 @@ export default function DashboardPage() {
   const [isHovered, setIsHovered] = useState(false);
   const [showGridsAnimation, setShowGridsAnimation] = useState(true);
 
-  // Trigger alert when all BTO states are false
-  useEffect(() => {
-    if (!BTO1 && !BTO2 && !BTO3) {
-      alert('No Favourite BTO!');
-    }
-  }, [BTO1, BTO2, BTO3]);
-
-  // Trigger alert when Unfavourite BTO
-  useEffect(() => {
+  useEffect(() => {  
+    // Trigger alert when Unfavourite BTO
     if (isHeartClicked) {
       alert('Unfavourite BTO!');
+      setIsHeartClicked(false);
     }
-    setIsHeartClicked(false);
-  }, [isHeartClicked]);
+
+    // Trigger alert when all BTO states are false
+    if (activeBTO === null && !BTO1 && !BTO2 && !BTO3 ) {
+      alert('No Favourite BTO!');
+    }
+  
+    // Log the updated activeBTO state
+    console.log('New active BTO: ' + activeBTO);
+
+    // Set containers based on activeBTO
+    switch (activeBTO) {
+      case 'BTO1':
+        setContainers(defaultFrames1.map(frame => ({
+          id: generateId(),
+          title: frame.name,
+          description: frame.description,
+          items: [],
+        })));
+        break;
+      case 'BTO2':
+        setContainers(defaultFrames2.map(frame => ({
+          id: generateId(),
+          title: frame.name,
+          description: frame.description,
+          items: [],
+        })));
+        break;
+      case 'BTO3':
+        setContainers(defaultFrames3.map(frame => ({
+          id: generateId(),
+          title: frame.name,
+          description: frame.description,
+          items: [],
+        })));
+        break;
+      default:
+        setContainers([]);
+    }
+  
+  }, [BTO1, BTO2, BTO3, isHeartClicked, activeBTO]);
+
+  // Function to handle button click for BTO1
+  const handleBTO1Click = () => {
+    setActiveBTO('BTO1');
+  };
+
+  // Function to handle button click for BTO2
+  const handleBTO2Click = () => {
+    setActiveBTO('BTO2');
+  };
+
+  // Function to handle button click for BTO3
+  const handleBTO3Click = () => {
+    setActiveBTO('BTO3');
+  };
 
   const removeFavouriteBTO = () => {
     setIsHeartClicked(true); // Trigger the alert
@@ -105,13 +167,6 @@ export default function DashboardPage() {
     }
     
   };
-  
-  // Log the updated activeBTO state
-  useEffect(() => {
-    console.log('New active BTO: ' + activeBTO);
-    setIsHeartClicked(false);
-
-  }, [activeBTO]);
   
   const onAddContainer = () => {
     if (!containerName) return; 
@@ -430,7 +485,7 @@ export default function DashboardPage() {
       </Modal>
 
       {/* Add Item Modal */}
-      <Modal showModal={showAddItemModal} setShowModal={setShowAddItemModal}>
+      {/* <Modal showModal={showAddItemModal} setShowModal={setShowAddItemModal}>
         <div className="flex flex-col w-full items-start gap-y-4">
           <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1>
           <Input
@@ -442,7 +497,7 @@ export default function DashboardPage() {
           />
           <Button onClick={onAddItem}>Add Item</Button>
         </div>
-      </Modal>
+      </Modal> */}
 
       {/* Add Header Buttons */}
       <div className="flex items-center gap-y-2">
@@ -476,7 +531,7 @@ export default function DashboardPage() {
               className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out ${
                 activeBTO === 'BTO1' ? 'bg-customRed-active hover:text-black' : 'bg-customRed'
               }`}
-              onClick={() => setActiveBTO('BTO1')}
+              onClick={handleBTO1Click}
             >
               BTO 1
             </Button>
@@ -486,7 +541,7 @@ export default function DashboardPage() {
               className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out ${
                 activeBTO === 'BTO2' ? 'bg-customRed-active hover:text-black' : 'bg-customRed'
               }`}
-              onClick={() => setActiveBTO('BTO2')}
+              onClick={handleBTO2Click}
               >
               BTO 2
             </Button>
@@ -496,7 +551,7 @@ export default function DashboardPage() {
               className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out ${
                 activeBTO === 'BTO3' ? 'bg-customRed-active hover:text-black' : 'bg-customRed'
               }`}
-              onClick={() => setActiveBTO('BTO3')}
+              onClick={handleBTO3Click}
             >
               BTO 3
             </Button>
