@@ -16,39 +16,20 @@ const EntryPage = () => {
         handleScrollAnimation();
     }, []); // Run once after component mounts
 
+
+    useEffect(() => {
+        handleScrollAnimation();
+    }, []); // Run once after component mounts
+
     return (  
         <div className="entry-page">
 
-            {/* <div style={{backgroundImage: `url(${background})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        width: "100%",
-                        height: "100%"
+            
+
 
             
-            }}>
-            </div> */}
+            
 
-            {/* <header>
-                <div className="logo-image ">
-                    <img src={btoLogo} alt="bto-logo" style={{ width: '60px', height: '60px', borderRadius: '5px' }} />
-                </div>
-                
-                <div className="title-heading anim-1">
-                    BTOgether
-                </div>
-            </header> */}
-            
-            
-            {/* <div id='entry-navbar'>
-                <div className="logo-image ">
-                    <img src={btoLogo} alt="bto-logo" style={{ width: '60px', height: '60px', borderRadius: '5px' }} />
-                </div>
-                
-                <div className="title-heading anim-1">
-                    BTOgether
-                </div>    
-            </div> */}
             
             <div className="top-box-entry-page">
                 <div className="logo-and-title">
@@ -92,11 +73,15 @@ const EntryPage = () => {
                 </Link>
             </div> */}
 
-            <div className="key-features">
+            {/* <div className="key-features">
                 <div className="title ">Key Features</div>
-            </div>
+            </div> */}
 
             <div className='logos'>
+                <div className="key-features anim-1">
+                    <div className="title ">Key Features</div>
+                </div>
+
                 <div className="top">
                     <div className="planner-container logo-block">
                         <img src={Planner} alt='Planner' style={{ width: '225px', height: '225px', borderRadius: '5px' }} />
