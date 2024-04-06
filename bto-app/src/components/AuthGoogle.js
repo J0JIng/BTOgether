@@ -1,9 +1,9 @@
-import { Navigate } from 'react-router-dom';
-import { signInWithPopup } from 'firebase/auth';
-import { auth, provider } from '../utils/firebase';
-import '../css/AuthGoogle.css';
+import { Navigate } from "react-router-dom";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../utils/firebase";
+import "../css/AuthGoogle.css";
 
-const AuthGoogle = ({  user  }) => {
+const AuthGoogle = ({ user }) => {
   const handleGoogleSignIn = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -23,9 +23,9 @@ const AuthGoogle = ({  user  }) => {
   }
 
   return (
- 
-      <button className="login-with-google-btn" onClick={handleGoogleSignIn}>Sign in with Google</button>
-
+    <button className="login-with-google-btn" onClick={handleGoogleSignIn}>
+      Sign in with Google
+    </button>
   );
 };
 

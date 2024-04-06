@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "tailwindcss/tailwind.css";
 
 const Input = ({ name, defaultValue, placeholder, onChange }) => {

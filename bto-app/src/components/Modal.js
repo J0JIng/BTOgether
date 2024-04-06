@@ -1,8 +1,8 @@
-'use client';
-import { useCallback, useEffect, useRef } from 'react';
-import FocusTrap from 'focus-trap-react';
-import { AnimatePresence, motion } from 'framer-motion';
-import clsx from 'clsx';
+"use client";
+import { useCallback, useEffect, useRef } from "react";
+import FocusTrap from "focus-trap-react";
+import { AnimatePresence, motion } from "framer-motion";
+import clsx from "clsx";
 import "tailwindcss/tailwind.css";
 
 export default function Modal({
@@ -11,21 +11,20 @@ export default function Modal({
   setShowModal,
   containerClasses,
 }) {
-    
   const desktopModalRef = useRef(null);
 
   const onKeyDown = useCallback(
     (e) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setShowModal(false);
       }
     },
-    [setShowModal],
+    [setShowModal]
   );
 
   useEffect(() => {
-    document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [onKeyDown]);
 
   return (
@@ -49,7 +48,7 @@ export default function Modal({
               <div
                 className={clsx(
                   `overflow relative w-full max-w-lg transform rounded-xl border border-gray-200 bg-white p-6 text-left shadow-2xl transition-all`,
-                  containerClasses,
+                  containerClasses
                 )}
               >
                 {children}

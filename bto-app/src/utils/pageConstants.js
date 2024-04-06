@@ -1,4 +1,4 @@
-const entry = "Entry"
+const entry = "Entry";
 const login = "Login";
 const faqsTabName = "FAQs";
 const aboutUs = "About Us";
@@ -9,8 +9,7 @@ const btofind = "bto find";
 const btoplanner = "bto planner";
 
 const pagesValueObj = {
-  
-  1: entry, 
+  1: entry,
   2: login,
   3: faqsTabName,
   4: aboutUs,
@@ -18,8 +17,7 @@ const pagesValueObj = {
   6: profile,
   7: dashboard,
   8: btofind,
-  9: btoplanner
-
+  9: btoplanner,
 };
 
 function spinalCase(str) {

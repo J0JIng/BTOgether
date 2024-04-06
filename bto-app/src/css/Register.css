@@ -1,12 +1,12 @@
 .register-box {
-    background-color: white;
-    min-height: 384px;
-    min-width: 376px;
-    padding: 32px;
+  background-color: white;
+  min-height: 384px;
+  min-width: 376px;
+  padding: 32px;
 
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }

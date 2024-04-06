@@ -1,7 +1,7 @@
-import { useSortable } from '@dnd-kit/sortable';
-import React from 'react';
-import { CSS } from '@dnd-kit/utilities';
-import clsx from 'clsx';
+import { useSortable } from "@dnd-kit/sortable";
+import React from "react";
+import { CSS } from "@dnd-kit/utilities";
+import clsx from "clsx";
 import "tailwindcss/tailwind.css";
 
 const Items = ({ id, title }) => {
@@ -15,7 +15,7 @@ const Items = ({ id, title }) => {
   } = useSortable({
     id: id,
     data: {
-      type: 'item',
+      type: "item",
     },
   });
   return (
@@ -27,8 +27,8 @@ const Items = ({ id, title }) => {
         transform: CSS.Translate.toString(transform),
       }}
       className={clsx(
-        'px-2 py-4 bg-white shadow-md rounded-xl w-full border border-transparent hover:border-gray-200 cursor-pointer',
-        isDragging && 'opacity-50',
+        "px-2 py-4 bg-white shadow-md rounded-xl w-full border border-transparent hover:border-gray-200 cursor-pointer",
+        isDragging && "opacity-50"
       )}
     >
       <div className="flex items-center justify-between">
