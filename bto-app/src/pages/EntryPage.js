@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import '../css/entrypage.css';
 import btoLogo from '../assets/btodraftlogo.png';
 import btoimage from '../assets/hdbdraftimage1.jpg';
+import btoimage2 from '../assets/hdb_aesthetic.jpg';
 import Planner from '../assets/Planner.png'
 import Dashboard from '../assets/Dashboard.png'
 import Search from '../assets/Search.png'
 import Easy from '../assets/Easy.png'
-import background from '../assets/White Background.jpg'
+import apostrophe from '../assets/apostrophe2.png'
+import savetime from '../assets/save-time.png'
+import streetmap from '../assets/street-map.png'
 import handleScrollAnimation from './script';
 
 const EntryPage = () => {
@@ -16,40 +19,14 @@ const EntryPage = () => {
         handleScrollAnimation();
     }, []); // Run once after component mounts
 
+
+    useEffect(() => {
+        handleScrollAnimation();
+    }, []); // Run once after component mounts
+
     return (  
         <div className="entry-page">
 
-            {/* <div style={{backgroundImage: `url(${background})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        width: "100%",
-                        height: "100%"
-
-            
-            }}>
-            </div> */}
-
-            {/* <header>
-                <div className="logo-image ">
-                    <img src={btoLogo} alt="bto-logo" style={{ width: '60px', height: '60px', borderRadius: '5px' }} />
-                </div>
-                
-                <div className="title-heading anim-1">
-                    BTOgether
-                </div>
-            </header> */}
-            
-            
-            {/* <div id='entry-navbar'>
-                <div className="logo-image ">
-                    <img src={btoLogo} alt="bto-logo" style={{ width: '60px', height: '60px', borderRadius: '5px' }} />
-                </div>
-                
-                <div className="title-heading anim-1">
-                    BTOgether
-                </div>    
-            </div> */}
-            
             <div className="top-box-entry-page">
                 <div className="logo-and-title">
                     <div className="logo-image ">
@@ -80,21 +57,9 @@ const EntryPage = () => {
                 effortlessly with personalized recommendations and intuitive tools. 
                 Your path, your terms.
                 </div>
-                {/* <div className="container anim-1">
-                    <img src={btoimage} alt="bto-image" className="image-style" />
-                </div> */}
+                
 
             </div>
-
-            {/* <div className="anim-2 page-info ">    
-                <Link to="/login" className="get-started-button">
-                    Get Started
-                </Link>
-            </div> */}
-
-            {/* <div className="key-features">
-                <div className="title ">Key Features</div>
-            </div> */}
 
             <div className='logos'>
                 <div className="key-features anim-1">
@@ -128,35 +93,42 @@ const EntryPage = () => {
             </div> 
             
 
+           
+
             <div className="anim-2 page-info">
                 <div className="desc-heading">
-                    Your Search, Your Conditions.
+                    <div>Why use BTOgether?</div>
+                    
                 </div>
-
+                <div className="description-box">
+                    <img src={apostrophe} className='apostrophe-image' />
                     <div className="description">
+                        With BTOgether, the endless hours of scouring the web for your ideal home is a thing of the past.
+                        BTOgether is a one stop solution to all your BTO hunting needs. 
+                        Explore a comprehensive database of BTO projects, each curated to provide you with detailed insights and analysis. 
+                        From location advantages to pricing trends, we've got you covered every step of the way!
+                    </div>
+
+                    <img src={savetime} className='save-time-image' />
+                </div>
+            </div>
+
+            <div className="anim-3 page-info">
+                <div className="desc-heading-second">
+                    Your Search, Your Conditions
+                </div>
+                <div className="description-box-second">
+                <img src={streetmap} className='streetmap-image' />
+                    <div className="description-second">
                         Uniting families and meeting needs, BTOgether empowers new home owners to pinpoint the best locations for their new home. 
                         With extensive search functionalities, seeking out your ideal home is easy! Whether you're looking for gyms, supermarkets, schools, clinics, malls or even hawker centres,
                         BTOgether can narrow down the best locations for you. 
-
-                        {/* BTOgether is a one stop solution to all your BTO hunting needs!
-                        Looking to apply for a BTO? BTOgether helps you find the perfect upcoming project spots for you! */}
                     </div>
-            </div>
-
-            <div className="anim-2 page-info">
-                <div className="desc-heading">
-                    <div>Why BTOgether?</div>
-                    
-                </div>
-                <div className="description">
-                    With BTOgether, the endless hours of scouring the web for your ideal home is a thing of the past.
-                    BTOgether is a one stop solution to all your BTO hunting needs. 
-                    Explore a comprehensive database of BTO projects, each curated to provide you with detailed insights and analysis. 
-                    From location advantages to pricing trends, we've got you covered every step of the way!
+                    <img src={apostrophe} className='apostrophe-image-second' />
                 </div>
             </div>
 
-            <div className='anim-2 page-info'>
+            {/* <div className='anim-2 page-info'>
                 <div className="desc-heading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem totam distinctio esse enim! Impedit ipsa esse voluptatum officiis voluptas accusamus quos corrupti doloribus enim, omnis incidunt rerum laudantium quisquam ratione?</div>
             </div>
 
@@ -168,7 +140,23 @@ const EntryPage = () => {
             
             <div className='anim-2 page-info'>
                 <div className="desc-heading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem totam distinctio esse enim! Impedit ipsa esse voluptatum officiis voluptas accusamus quos corrupti doloribus enim, omnis incidunt rerum laudantium quisquam ratione?</div>
-            </div>            
+            </div>    */}
+
+            <footer>
+                <div className="image-title">
+                    <img src={btoLogo} className='bto-logo-bottom' alt="bto-logo" style={{ width: '200px', height: '200px', borderRadius: '5px' }} />
+                    <div className="title-and-tagline">
+                        <div className="footer-title">BTOgether</div>
+                        <div className="footer-title-tagline">Your Search, Your Conditions</div>           
+                        <Link to="/login" className="get-started-button-footer">
+                            Get Started
+                        </Link>
+                    </div>   
+                </div>
+                
+                <img src={btoimage2} className='bto-image-footer' />
+                
+            </footer>         
 
         </div>
     );

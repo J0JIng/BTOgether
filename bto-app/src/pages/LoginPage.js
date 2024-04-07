@@ -5,7 +5,7 @@ import Register from '../components/Register';
 import AuthGoogle from '../components/AuthGoogle';
 import btoLogo from '../assets/btodraftlogo.png';
 import '../css/Loginpage.css';
-
+import '../css/Login.css';
 
 
 const LoginPage = ({ user }) => {
@@ -23,9 +23,8 @@ const LoginPage = ({ user }) => {
       
       <div className="top-box">
           <img src={btoLogo} className="app-logo" style={{width: '60px', height: '60px', borderRadius: '5px'}} />
-          <div className="options">
-            {/* <a className="homepage-link" href>Homepage</a> */}
-            {/* <a className="login-link" href>Login</a> */}
+          <div className="title-heading-login-page">
+          BTOgether
           </div>
       </div>
 
