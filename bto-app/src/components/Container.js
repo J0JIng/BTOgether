@@ -5,9 +5,56 @@ import clsx from "clsx";
 import { Button } from "./Button";
 import "../css/dashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faMaximize,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 
-const Container = ({ id, children, title, description, onDelete }) => {
+import cat from "../assets/image.png";
+import cat2 from "../assets/imagev2.png";
+import BarChart from "../components/BarChart"
+
+const renderImage = (title, description) => {
+  if (title === "Location" && description === "Woodlands Drive 16.") {
+    return (
+      <div className="mb-4 rounded-lg overflow-hidden">
+        <img src={cat} alt="cat" className="w-full h-full object-cover" />
+      </div>
+    );
+  } else if (
+    title === "Town Council" &&
+    description === "Sembawang Town Council."
+    
+  ) {
+    return (
+      <div className="mb-4 rounded-lg overflow-hidden">
+        <img src={cat2} alt="cat" className="w-full h-full object-cover" />
+      </div>
+    );
+  } else if (
+    title === "Historical HDB Price"
+  ) {
+    return (
+      <div className="mb-4 rounded-lg overflow-hidden">
+        <BarChart/>
+      </div>
+    );
+  }else if (
+    title === "Historical BTO Price"
+  ) {
+    return (
+      <div className="mb-4 rounded-lg overflow-hidden">
+        <BarChart/>
+      </div>
+    );
+  }
+    else {
+    return null; // No image for other titles and descriptions
+  }
+};
+
+const Container = ({ id, children, title, description, onExpand }) => {
   const {
     attributes,
     setNodeRef,
@@ -29,24 +76,35 @@ const Container = ({ id, children, title, description, onDelete }) => {
         {...attributes}
         style={{ transition, transform: CSS.Translate.toString(transform) }}
         className={clsx(
-          "flex-none w-full md:w-96 p-4 bg-white rounded-lg shadow-md border border-gray-200",
-          isDragging && "opacity-75"
+          "relative flex-none w-full md:w-64 p-4 bg-white rounded-lg shadow-md border",
+          isDragging && "opacity-50"
         )}
       >
         <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-gray-800 text-lg font-semibold">{title}</h1>
+          <div className="">
+            <h1 className="text-green-800 text-lg font-semibold">{title}</h1>
             <p className="text-gray-600 text-sm">{description}</p>
           </div>
-          <button
-            className="flex items-center justify-center w-8 h-8 border-transparent shadow-md border text-gray-500 rounded-md hover:bg-gray-200 transition duration-300"
-            {...listeners}
-          >
-            <FontAwesomeIcon icon={faBars} />
-          </button>
+          <div className="flex items-center">
+            <button
+              onClick={onExpand}
+              className="w-8 h-8 border-transparent shadow-md border rounded-md hover:bg-gray-200 transition duration-300 text-gray-500"
+            >
+              <FontAwesomeIcon icon={faMaximize} />
+            </button>
+            <button
+              className="ml-2 w-8 h-8 border-transparent shadow-md border text-gray-500 rounded-md hover:bg-gray-200 transition duration-300"
+              {...listeners}
+            >
+              <FontAwesomeIcon icon={faBars} />
+            </button>
+          </div>
         </div>
+
         {children}
-        <button onClick={() => onDelete(id)}>Remove</button>
+        <div className="mb-4 rounded-lg overflow-hidden relative">
+          {renderImage(title, description)}
+        </div>
       </div>
     </div>
   );

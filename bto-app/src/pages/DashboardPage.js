@@ -6,9 +6,8 @@ import {
   faHeart,
   faCodeCompare,
   faPlus,
+  faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-
-import "../css/dashboard.css";
 
 // DnD
 import {
@@ -32,6 +31,7 @@ import Items from "../components/Item";
 import Modal from "../components/Modal";
 import Input from "../components/Input";
 import { Button } from "../components/Button";
+import BarChart from "../components/BarChart"
 
 // need to accept JSON from Firebase
 //Example
@@ -40,8 +40,8 @@ const defaultFrames1 = [
   { name: "Location", description: "Woodlands Drive 16." },
   { name: "Town", description: "Woodlands." },
   { name: "Town Council", description: "Sembawang Town Council." },
-  { name: "Price", description: "$670,000." },
-  { name: "Square Footage", description: "1245 sqf." },
+  { name: "Historical HDB Price", description: "$670,000." },
+  { name: "Historical BTO Price", description: "$550,000." },
   { name: "Number of Rooms", description: "4 Room Flat." },
   { name: "Estimated Date of Completion", description: "2027." },
 ];
@@ -77,37 +77,62 @@ const testing_frame = defaultFrames1.map((frame) => ({
 }));
 
 export default function DashboardPage() {
+  const [activeBTO, setActiveBTO] = useState(null);
   const [BTO1, setBTO1] = useState(true);
   const [BTO2, setBTO2] = useState(true);
   const [BTO3, setBTO3] = useState(true);
-  const [activeBTO, setActiveBTO] = useState(null);
   const [containers, setContainers] = useState([]);
   const [activeId, setActiveId] = useState(null);
   const [currentContainerId, setCurrentContainerId] = useState(null);
   const [containerName, setContainerName] = useState("");
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
+  const [showAddInfoModal, setShowAddInfoModal] = useState(false);
   const [isHeartClicked, setIsHeartClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [showGridsAnimation, setShowGridsAnimation] = useState(true);
   const [isAddFramesHovered, setIsAddFramesHovered] = useState(false);
-  const [numberOfTrueBTOs, setNumberOfTrueBTOs] = useState(0); // New state to track count of true BTOs
+  const [numberOfTrueBTOs, setNumberOfTrueBTOs] = useState(0);
+
+  const STORAGE_KEY_PREFIX = "dashboard_containers_";
+
+  // // Load containers for the active BTO from localStorage on component mount
+  // useEffect(() => {
+  //   if (activeBTO) {
+  //     const storedContainers = localStorage.getItem(
+  //       STORAGE_KEY_PREFIX + activeBTO
+  //     );
+  //     if (storedContainers) {
+  //       setContainers(JSON.parse(storedContainers));
+  //     }
+  //   }
+  // }, [activeBTO]);
+
+  // // Save containers for the active BTO to localStorage whenever containers state changes
+  // useEffect(() => {
+  //   if (activeBTO) {
+  //     localStorage.setItem(
+  //       STORAGE_KEY_PREFIX + activeBTO,
+  //       JSON.stringify(containers)
+  //     );
+  //   }
+  // }, [containers, activeBTO]);
 
   // DEBUGGING
   useEffect(() => {
     console.log("containers:", JSON.stringify(containers, null, 2));
-  }, [containers]);
+
+    // Log the updated activeBTO state
+    console.log("New active BTO: " + activeBTO);
+  }, [containers, activeBTO]);
 
   useEffect(() => {
-    // TODO: FUNCTIONALITY TO ACCEPT GET INFO FROM FIREBASE
-    //       UPDATE BTO USESTATE IF NECESSARY
-
     // Trigger alert when Unfavourite BTO
     if (isHeartClicked) {
       alert("Unfavourite BTO!");
       setIsHeartClicked(false);
     }
 
-    // Set containers based on activeBTO
+    //Set containers based on activeBTO
     switch (activeBTO) {
       case "BTO1":
         setContainers(testing_frame);
@@ -157,8 +182,6 @@ export default function DashboardPage() {
     // Update the count of true BTOs
     const count = [BTO1, BTO2, BTO3].filter((bto) => bto).length;
     setNumberOfTrueBTOs(count);
-    // Log the updated activeBTO state
-    console.log("New active BTO: " + activeBTO);
   }, [BTO1, BTO2, BTO3]);
 
   // Function to handle button click for BTO1
@@ -181,14 +204,6 @@ export default function DashboardPage() {
     alert("do comparison");
   };
 
-  const handleDeleteContainer = (containerId) => {
-    console.log("remove frame" + containerId);
-    const updatedContainers = containers.filter(
-      (container) => container.id !== containerId
-    );
-    setContainers(updatedContainers);
-  };
-
   const removeFavouriteBTO = () => {
     setIsHeartClicked(true);
     switch (activeBTO) {
@@ -209,24 +224,27 @@ export default function DashboardPage() {
     }
   };
 
+  // Function to add a new container
   const onAddContainer = () => {
-    if (containers.length >= 12) {
-      alert("Maximum number of frames reached");
-      return;
-    }
-    if (!containerName) return;
-    const id = `container-${uuidv4()}`;
-    setContainers([
-      ...containers,
-      {
-        id,
-        title: containerName,
-        description: `Description for ${containerName}`,
-        items: [],
-      },
-    ]);
+    if (containerName === "") return;
+    if (containers.length >= 12) return;
+    const id = generateId();
+    const newContainer = {
+      id,
+      title: containerName,
+      description: `Description for ${containerName}`,
+      items: [],
+    };
+    setContainers((prevContainers) => [...prevContainers, newContainer]);
     setContainerName("");
     setShowAddContainerModal(false);
+  };
+
+  // Function to delete a container
+  const onDeleteContainer = (containerId) => {
+    setContainers((prevContainers) =>
+      prevContainers.filter((container) => container.id !== containerId)
+    );
   };
 
   function findValueOfItems(id, type) {
@@ -239,6 +257,12 @@ export default function DashboardPage() {
     const container = findValueOfItems(id, "container");
     if (!container) return "";
     return container.title;
+  };
+
+  const findContainerDescription = (id) => {
+    const container = findValueOfItems(id, "container");
+    if (!container) return "";
+    return container.description;
   };
 
   // DND Handlers
@@ -306,20 +330,25 @@ export default function DashboardPage() {
           </div>
         </Modal>
 
-        {/* Add Item Modal */}
-        {/* <Modal showModal={showAddItemModal} setShowModal={setShowAddItemModal}>
-        <div className="flex flex-col w-full items-start gap-y-4">
-          <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1>
-          <Input
-            type="text"
-            placeholder="Item Title"
-            name="itemname"
-            value={itemName}
-            onChange={(e) => setItemName(e.target.value)}
-          />
-          <Button onClick={onAddItem}>Add Item</Button>
-        </div>
-      </Modal> */}
+        {/* Add Informational Modal*/}
+        <Modal showModal={showAddInfoModal} setShowModal={setShowAddInfoModal}>
+          <div className="flex flex-col w-full items-center justify-center gap-y-4 h-full">
+            <h1 className="text-green-800 text-3xl font-bold">
+              {findContainerTitle(currentContainerId)}
+            </h1>
+            {/* Add Information*/}
+            {findContainerDescription(currentContainerId)}
+            <button
+              onClick={() => {
+                onDeleteContainer(currentContainerId);
+                setShowAddInfoModal(false);
+              }}
+              className="absolute bottom-3 right-3 p-2 border-transparent shadow-md border rounded-md hover:bg-red-400 transition duration-300 "
+            >
+              <FontAwesomeIcon icon={faTrashCan} />
+            </button>
+          </div>
+        </Modal>
 
         {/* Add Header Buttons */}
         <div className="flex items-center gap-y-2">
@@ -422,7 +451,7 @@ export default function DashboardPage() {
         <div className="mt-10">
           {activeBTO !== null && (
             <div
-              className={`grid grid-cols-3 gap-6 ${
+              className={`grid grid-cols-4 gap-6 ${
                 showGridsAnimation ? "animate-fadeIn" : ""
               }`}
             >
@@ -441,7 +470,11 @@ export default function DashboardPage() {
                       title={container.title}
                       description={container.description}
                       key={container.id}
-                      onDelete={handleDeleteContainer}
+                      onExpand={() => {
+                        setCurrentContainerId(container.id);
+
+                        setShowAddInfoModal(true);
+                      }}
                     ></Container>
                   ))}
                 </SortableContext>

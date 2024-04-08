@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500");
 
-body {
+.entry-page body {
   background-color: rgb(249, 250, 251);
   font-family: "Inter", Helvetica, Arial, sans-serif;
   overflow-x: hidden;

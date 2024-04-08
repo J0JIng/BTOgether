@@ -13,6 +13,7 @@
   margin: 0 auto;
   border-bottom: 1px solid #f7776b;
   position: relative;
+  font-family: "Inter", Helvetica, Arial, sans-serif;
   /* Add this line */
 }
 
@@ -70,5 +71,3 @@
     margin-left: auto;
   }
 }
-
-/* Your existing CSS */

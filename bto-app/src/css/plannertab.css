@@ -2,7 +2,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500");
 
-body {
+.bto-planner-page body {
   width: 100%;
   height: 100vh;
   font-family: "Inter", Helvetica, Arial, sans-serif;
