@@ -31,7 +31,7 @@ import mallsgeojson from "../geojson/shopping_mall_coordinates.geojson";
 import RoutingMachine from "./routingMachine";
 import Routing from "./Routing";
 
-import traffic from "../icons/traffic.png";
+import transit2 from "../icons/transit2.png"
 import transit from "../icons/transit.png";
 import satellite from "../icons/satellite.png";
 import base from "../icons/base.png";
@@ -477,14 +477,14 @@ const GeojsonMapComponent = () => {
       setMapStyle(mapStyle);
       setHoveringOverSide(false);
 
-      if (type === "base") {
-        setCurrentSource(satellite);
-      } else if (type === "satellite") {
-        setCurrentSource(base);
-      } else if (type === "traffic") {
-        setCurrentSource(traffic);
-      } else if (type === "transit") {
-        setCurrentSource(transit);
+      if (type === 'base') {
+        setCurrentSource(base)
+      } else if (type === 'satellite') {
+        setCurrentSource(satellite)
+      } else if (type === 'transit2') {
+        setCurrentSource(transit2)
+      } else if (type === 'transit') {
+        setCurrentSource(transit)
       }
     };
 
@@ -634,33 +634,9 @@ const GeojsonMapComponent = () => {
               />
               <span>Transit</span>
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                marginRight: "15px",
-                alignItems: "center",
-              }}
-              onClick={() =>
-                handleClick(
-                  "https://mt1.google.com/vt/lyrs=m@221097413,traffic&hl=en&x={x}&y={y}&z={z}",
-                  "traffic"
-                )
-              }
-            >
-              <img
-                src={traffic}
-                alt="Base Map"
-                style={{
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                  width: iconSize,
-                  height: iconSize,
-                  border: "2px solid LightSteelBlue",
-                  borderRadius: "5px",
-                }}
-              />
-              <span>Traffic</span>
+            <div style={{ display: 'flex', flexDirection: 'column', marginRight: '15px', alignItems: 'center' }} onClick={() => handleClick('https://tile.openstreetmap.org/{z}/{x}/{y}.png', 'transit2')}>
+              <img src={transit2} alt="Base Map" style={{ marginTop: '5px', marginBottom: '5px', width: iconSize, height: iconSize, border: "2px solid LightSteelBlue", borderRadius: '5px' }} />
+              <span>Transit 2</span>
             </div>
           </div>
         )}
@@ -810,7 +786,13 @@ const GeojsonMapComponent = () => {
               url={mapStyle}
               layerName="mapLayer"
             />
-
+            {currentSource === transit2 && (
+              <TileLayer
+                attribution={`Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Map style: &copy; <a href="https://www.OpenRailwayMap.org">OpenRailwayMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)`}
+                url="https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png"
+                layerName='mapLayer'
+              />
+            )}
             {/* This is for the driving route */}
             <RoutingMachine
               start={homeLocation}

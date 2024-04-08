@@ -41,6 +41,11 @@ export default function MapDialog({ type, locationInfo }) {
     setFormData("");
     setCanSubmit(false);
     setErrorMessage();
+    setHomeLocation({
+      address: "",
+      latitude: null,
+      longitude: null,
+    })
     setOpen(true);
   };
 

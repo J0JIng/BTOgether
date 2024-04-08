@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "../components/NavBar";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "../css/dashboard.css";
+import Comparison from '../components/Comparison';
 
 // DnD
 import {
@@ -177,8 +178,15 @@ export default function DashboardPage() {
   };
 
   // INSERT CODE FOR COMPARISON
+  const comparisonRef = useRef(null);
+  // Check for ref and Open Comparison Tab
   const handleComparison = () => {
-    alert("do comparison");
+    const tryOpenComparison = () => {
+      comparisonRef.current
+        ? comparisonRef.current.openComparison()
+        : setTimeout(tryOpenComparison, 100);
+    };
+    tryOpenComparison();
   };
 
   const handleDeleteContainer = (containerId) => {
@@ -414,6 +422,7 @@ export default function DashboardPage() {
                   <span className="compare-text"> Compare</span>
                 </Button>
               )}
+              <Comparison ref={comparisonRef} />
             </div>
           </div>
         </div>
