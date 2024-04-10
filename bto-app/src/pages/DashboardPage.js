@@ -95,27 +95,27 @@ export default function DashboardPage() {
 
   const STORAGE_KEY_PREFIX = "dashboard_containers_";
 
-  // // Load containers for the active BTO from localStorage on component mount
-  // useEffect(() => {
-  //   if (activeBTO) {
-  //     const storedContainers = localStorage.getItem(
-  //       STORAGE_KEY_PREFIX + activeBTO
-  //     );
-  //     if (storedContainers) {
-  //       setContainers(JSON.parse(storedContainers));
-  //     }
-  //   }
-  // }, [activeBTO]);
+  // Load containers for the active BTO from localStorage on component mount
+  useEffect(() => {
+    if (activeBTO) {
+      const storedContainers = localStorage.getItem(
+        STORAGE_KEY_PREFIX + activeBTO
+      );
+      if (storedContainers) {
+        setContainers(JSON.parse(storedContainers));
+      }
+    }
+  }, [activeBTO]);
 
-  // // Save containers for the active BTO to localStorage whenever containers state changes
-  // useEffect(() => {
-  //   if (activeBTO) {
-  //     localStorage.setItem(
-  //       STORAGE_KEY_PREFIX + activeBTO,
-  //       JSON.stringify(containers)
-  //     );
-  //   }
-  // }, [containers, activeBTO]);
+  // Save containers for the active BTO to localStorage whenever containers state changes
+  useEffect(() => {
+    if (activeBTO) {
+      localStorage.setItem(
+        STORAGE_KEY_PREFIX + activeBTO,
+        JSON.stringify(containers)
+      );
+    }
+  }, [containers, activeBTO]);
 
   // DEBUGGING
   useEffect(() => {
@@ -133,36 +133,36 @@ export default function DashboardPage() {
     }
 
     //Set containers based on activeBTO
-    switch (activeBTO) {
-      case "BTO1":
-        setContainers(testing_frame);
-        break;
+    // switch (activeBTO) {
+    //   case "BTO1":
+    //     setContainers(testing_frame);
+    //     break;
 
-      case "BTO2":
-        setContainers(
-          defaultFrames2.map((frame) => ({
-            id: generateId(),
-            title: frame.name,
-            description: frame.description,
-            items: [],
-          }))
-        );
-        break;
+    //   case "BTO2":
+    //     setContainers(
+    //       defaultFrames2.map((frame) => ({
+    //         id: generateId(),
+    //         title: frame.name,
+    //         description: frame.description,
+    //         items: [],
+    //       }))
+    //     );
+    //     break;
 
-      case "BTO3":
-        setContainers(
-          defaultFrames3.map((frame) => ({
-            id: generateId(),
-            title: frame.name,
-            description: frame.description,
-            items: [],
-          }))
-        );
-        break;
+    //   case "BTO3":
+    //     setContainers(
+    //       defaultFrames3.map((frame) => ({
+    //         id: generateId(),
+    //         title: frame.name,
+    //         description: frame.description,
+    //         items: [],
+    //       }))
+    //     );
+    //     break;
 
-      default:
-        setContainers([]);
-    }
+    //   default:
+    //     setContainers([]);
+    // }
   }, [BTO1, BTO2, BTO3, isHeartClicked, activeBTO]);
 
   // Determine which BTO project is favorited initially
