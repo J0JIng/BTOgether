@@ -1,16 +1,14 @@
-import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
-import { auth } from "../utils/firebase";
-import AuthGoogle from "../components/AuthGoogle";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import "../css/Login.css";
+import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { auth } from '../utils/firebase';
+import AuthGoogle from '../components/AuthGoogle';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import '../css/Login.css';
+
 
 const Login = ({ user }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSignIn = () => {
     if (!email || !password) return;
@@ -35,47 +33,31 @@ const Login = ({ user }) => {
   }
 
   return (
-    <div className="login-box">
-      {/* <form> */}
-      {/* <legend>Sign In</legend> */}
+      <div className="login-box">
+        {/* <form> */}
+          {/* <legend>Sign In</legend> */}
 
-      {/* <fieldset> */}
-      <div className="email">
-        <label className="email-label" htmlFor="email">
-          Email
-        </label>
-        <input
-          className="email-label input"
-          type="text"
-          id="email"
-          onChange={handleEmailChange}
-        />
-      </div>
+          {/* <fieldset> */}
+        <div className='email'>
+          <label className='email-label' htmlFor="email">Email</label>
+          <input className='email-label login-input' type="text" id="email" onChange={handleEmailChange} />
+        </div>
 
-      <div className="password">
-        <label className="password-label" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="password-input input"
-          type="password"
-          id="password"
-          onChange={handlePasswordChange}
-        />
-      </div>
-
-      <button className="sign-in-button" type="button" onClick={handleSignIn}>
-        Sign In
-      </button>
+        <div className='password'>
+          <label className='password-label' htmlFor="password">Password</label>
+          <input className='password-input login-input' type="password" id="password" onChange={handlePasswordChange}/>
+        </div>  
+            
+        <button className='sign-in-button' type="button" onClick={handleSignIn}>Sign In</button>
       {/* </fieldset> */}
 
-      <div className="divider">
-        <div className="continue">Or</div>
-      </div>
+        <div className="divider">
+                <div className="continue">Or</div>
+        </div>
 
-      <AuthGoogle user={user} />
-      {/* </form> */}
-    </div>
+        <AuthGoogle user={user}/>
+    {/* </form> */}
+      </div>
   );
 };
 

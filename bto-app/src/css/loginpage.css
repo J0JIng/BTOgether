@@ -1,25 +1,28 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500');
 
 .login-page {
-  background-color: rgb(249, 250, 251);
-  font-family: "Inter", Helvetica, Arial, sans-serif;
+    background-color: rgb(249, 250, 251);
+    font-family: 'Inter', Helvetica,Arial,sans-serif;
+}
+.title-heading-login-page{
+    color: white;
 }
 
 .top-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 32px;
-  background-color: #f7776b;
-  border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 32px;
+    background-color: #f7776b;
+    border-radius: 10px;
 
-  min-height: 50px;
-  font-size: 20px;
-  font-weight: 500;
-
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  min-width: 350px;
+    min-height: 50px;
+    font-size: 20px;
+    font-weight: 500;
+    
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    min-width: 350px;
 }
 
 /* For the 3 buttons at the top of page */
@@ -34,8 +37,8 @@
 /* for hovering over the buttons */
 /* .options *:hover, .app-logo:hover {
     color: rgb(124, 38, 27); */
-/* border-bottom: 2px solid white;  */
-/* cursor: pointer;
+    /* border-bottom: 2px solid white;  */
+    /* cursor: pointer;
     transition-duration: 0.2s;
 } */
 
@@ -48,49 +51,50 @@
     width: 200px;
     display: flex;
     justify-content: space-evenly;
-} */
+} */ 
 
 .title-and-sign-up {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: rgb(55 65 81);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(55 65 81);
+
 }
 
-.title {
-  font-weight: 700;
-  font-size: 30px;
-  color: rgb(55 65 81);
+.title { 
+    font-weight: 700;
+    font-size: 30px; 
+    color: rgb(55 65 81);
 
-  min-width: 350px;
+    min-width: 350px;
 }
 
 .register-link {
-  color: rgb(55 65 81);
+    color: rgb(55 65 81);
 }
 
 .register-link:hover {
-  color: rgb(55 65 81);
-  text-decoration-line: underline;
-  transition-duration: 0.2s;
-  cursor: pointer;
+    color: rgb(55 65 81);
+    text-decoration-line: underline;
+    transition-duration: 0.2s;
+    cursor: pointer;
 }
 
 .title-and-box {
-  margin-top: 60px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-  gap: 50px;
+    gap: 50px;
 }
 
 .redirect {
-  margin-top: 10px;
+    margin-top: 10px;
 
-  &:hover {
-    cursor: pointer;
-    text-decoration-line: underline;
-  }
+    &:hover {
+        cursor: pointer;
+        text-decoration-line: underline;
+    }
 }
