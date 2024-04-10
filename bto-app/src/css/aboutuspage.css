@@ -6,8 +6,8 @@ body {
     overflow-x: hidden;
 }
 
-.heading-box{
-    top: 0px;
+.about-us-page heading-box{
+    top: 200px;
     width: 100%;
     background-color: #f7776b;
     border-radius: 10px;
@@ -22,7 +22,7 @@ body {
     z-index: -2;
 }
 
-.heading-box-waves{
+.about-us-page heading-box-waves{
     top: 405px;
     width: auto;
     height: 400px;
