@@ -141,28 +141,31 @@ const Comparison = forwardRef(({ saveData }, ref) => {
   // To load the data into the useState above
   const handleLoadedData = (data) => {
     console.log("Loaded data:", data);
-    if (data) {
-      data.BTO1 = {
-        projectname: "My House 1",
-        numberofrooms: "5-room",
-        address: data.homeAddress,
-        latitude: data.homeLatitude,
-        longitude: data.homeLongitude,
-      };
-      data.BTO2 = {
-        projectname: "My Other House",
-        numberofrooms: "5-room",
-        address: "NTU Area",
-        latitude: 1.3506,
-        longitude: 103.6963,
-      };
-      data.BTO3 = {
-        projectname: "Kinda not want this house",
-        numberofrooms: "5-room",
-        address: "Marsiling Lane",
-        latitude: 1.44455,
-        longitude: 103.77608,
-      };
+    if (data && data.BTO1 && data.BTO2 && data.BTO3) {
+      if (data.BTO1.address == 0) { delete data.BTO1 }
+      if (data.BTO2.address == 0) { delete data.BTO2 }
+      if (data.BTO3.address == 0) { delete data.BTO3 }
+      // data.BTO1 = {
+      //   projectname: "My House 1",
+      //   numberofrooms: "5-room",
+      //   address: data.homeAddress,
+      //   latitude: data.homeLatitude,
+      //   longitude: data.homeLongitude,
+      // };
+      // data.BTO2 = {
+      //   projectname: "My Other House",
+      //   numberofrooms: "5-room",
+      //   address: "NTU Area",
+      //   latitude: 1.3506,
+      //   longitude: 103.6963,
+      // };
+      // data.BTO3 = {
+      //   projectname: "Kinda not want this house",
+      //   numberofrooms: "5-room",
+      //   address: "Marsiling Lane",
+      //   latitude: 1.44455,
+      //   longitude: 103.77608,
+      // };
       console.log("Setting data:", data);
       setLoadedData(data);
     } else {
@@ -172,7 +175,6 @@ const Comparison = forwardRef(({ saveData }, ref) => {
 
   const fieldLabels = {
     projectname: "Project Name",
-    numberofrooms: "Room Type",
     address: "Address",
     latitude: "Latitude",
     longitude: "Longitude",
@@ -505,7 +507,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
       style={{ background: "white" }}
     >
       <FormControl fullWidth disabled={allData === null}>
-        <InputLabel style={{ background: "white" }}>{allData === null ? "No BTO Saved" : "Choose a BTO"}
+        <InputLabel style={{ background: "white" }}>{allData === null ? "" : "Choose a BTO"}
         </InputLabel>
         <Select
           label="Choose a BTO"
@@ -550,7 +552,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
             }
             spacing={1}
           >
-            {["projectname","numberofrooms","address", "latitude", "longitude"].map((key) => (
+            {["projectname","address", "latitude", "longitude"].map((key) => (
               <React.Fragment key={key}>
                 {data && data[key] && (
                   <Stack spacing={0}>
@@ -565,6 +567,25 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
                 )}
               </React.Fragment>
             ))}
+            {data && (data.numberofrooms > 0 && data.numberofrooms <= 5) && (
+            <React.Fragment>
+              <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                Room Type:
+              </Typography>
+              <Typography>
+                {(() => {
+                  switch (data.numberofrooms) {
+                    case 1: return "2-room Flexi";
+                    case 2: return "3-room";
+                    case 3: return "4-room";
+                    case 4: return "5-room";
+                    case 5: return "3Gen";
+                    default: return "";
+                  }
+                })()}
+              </Typography>
+            </React.Fragment>
+            )}
           </Stack>
           <Divider
             orientation="horizontal"
@@ -736,7 +757,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
           </Stack>)}
         </Stack>
       ) : (
-        <Typography variant="h7">{allData===null? "Tip: Head to BTOFind to Save a BTO": "Choose a BTO to Compare"}</Typography>
+        <Typography variant="h7">{allData===null? "Insufficient BTO to Compare": "Choose a BTO to Compare"}</Typography>
       )}
     </Container>
   );
