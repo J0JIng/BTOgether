@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../utils/firebase";
 import {
   getFirestore,
@@ -53,34 +53,41 @@ const UserProfileForm = () => {
     const unsubscribe = onSnapshot(
       query(colRef, where("email", "==", auth.currentUser.email)),
       (snapshot) => {
-        // Modified colRef, execute this code:
-        let prefsData = [];
-        snapshot.docs.forEach((doc) => {
-          prefsData.push({ ...doc.data(), id: doc.id });
-        });
-        setPrefs(prefsData);
-        setLoadedData({
-          maritalStatus: prefsData[0].maritalStatus,
-          salary: prefsData[0].salary,
-          parentsAddress: {
-            address: prefsData[0].parentsAddress ? prefsData[0].parentsAddress.address : "",
-            latitude: prefsData[0].parentsAddress ? prefsData[0].parentsAddress.latitude : null,
-            longitude: prefsData[0].parentsAddress ? prefsData[0].parentsAddress.longitude : null
-          },
-          workplaceLocation: {
-            address: prefsData[0].workplaceLocation ? prefsData[0].workplaceLocation.address : "",
-            latitude: prefsData[0].workplaceLocation ? prefsData[0].workplaceLocation.address : null,
-            longitude: prefsData[0].workplaceLocation ? prefsData[0].workplaceLocation.address : null,
+        if (snapshot.empty) {
+          console.log("Creating document for user");
+          addDoc(colRef, {
+            email: auth.currentUser.email, // Accessing email property
+          })
+        } else {
+          // Modified colRef, execute this code:
+          let prefsData = [];
+          snapshot.docs.forEach((doc) => {
+            prefsData.push({ ...doc.data(), id: doc.id });
+          });
+          setPrefs(prefsData);
+          setLoadedData({
+            maritalStatus: prefsData[0].maritalStatus,
+            salary: prefsData[0].salary,
+            parentsAddress: {
+              address: prefsData[0].parentsAddress ? prefsData[0].parentsAddress.address : "",
+              latitude: prefsData[0].parentsAddress ? prefsData[0].parentsAddress.latitude : null,
+              longitude: prefsData[0].parentsAddress ? prefsData[0].parentsAddress.longitude : null
+            },
+            workplaceLocation: {
+              address: prefsData[0].workplaceLocation ? prefsData[0].workplaceLocation.address : "",
+              latitude: prefsData[0].workplaceLocation ? prefsData[0].workplaceLocation.address : null,
+              longitude: prefsData[0].workplaceLocation ? prefsData[0].workplaceLocation.address : null,
+            }
+          })
+          if (!prefsData) {
+            if (prefsData[0].salary !== null) {
+              setFormData(prevState => ({ ...prevState, salary: prefsData[0].salary }));
+            }
+            if (prefsData[0].maritalStatus !== null) {
+              setFormData(prevState => ({ ...prevState, maritalStatus: prefsData[0].maritalStatus }));
+            }
           }
-        })
-        if (!prefsData) {
-          if (prefsData[0].salary !== null) {
-            setFormData(prevState => ({ ...prevState, salary: prefsData[0].salary }));
-          }
-          if (prefsData[0].maritalStatus !== null) {
-            setFormData(prevState => ({ ...prevState, maritalStatus: prefsData[0].maritalStatus }));
-          }
-        }
+      }
       }
     );
 
@@ -123,13 +130,13 @@ const UserProfileForm = () => {
 
   function check(loaded, form) {
     // Marital Status
-    if (form.maritalStatus != "" && (form.maritalStatus != loaded.maritalStatus)) return true
+    if (form.maritalStatus !== "" && (form.maritalStatus !== loaded.maritalStatus)) return true
     // Salary
-    if (form.salary != "" && (form.salary != loaded.salary)) return true
+    if (form.salary !== "" && (form.salary !== loaded.salary)) return true
     // Parents Address
-    if (form.parentsAddress.latitude != null) return true
+    if (form.parentsAddress.latitude !== null) return true
     // Workplace Address
-    if (form.workplaceLocation.latitude != null) return true
+    if (form.workplaceLocation.latitude !== null) return true
     return false
   }
 
