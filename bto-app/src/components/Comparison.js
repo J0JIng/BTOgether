@@ -14,7 +14,7 @@ import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
 import DialogTitle from "@mui/material/DialogTitle";
 import UserDataUtility from "../utils/UserDataUtility";
-import axios from "axios";
+import axios, { all } from "axios";
 import CommuteIcon from "@mui/icons-material/Commute";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 
@@ -258,6 +258,17 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
   });
   const [nearestStation, setNearestStation] = useState();
   const [nearestFutureStation, setNearestFutureStation] = useState();
+  const [btoSaved, setBtosSaved] = useState(0);
+
+  useEffect(() => {
+    var cnt = 0
+    if (allData) {
+      if (allData.BTO1) cnt += 1
+      if (allData.BTO2) cnt += 1
+      if (allData.BTO3) cnt += 1
+    }
+    setBtosSaved(cnt)
+  }, [allData])
 
   function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
@@ -504,8 +515,8 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
       }}
       style={{ background: "white" }}
     >
-      <FormControl fullWidth disabled={allData === null}>
-        <InputLabel style={{ background: "white" }}>{allData === null ? "" : "Choose a BTO"}
+      <FormControl fullWidth disabled={btoSaved < 2}>
+        <InputLabel style={{ background: "white" }}>{btoSaved < 2 ? "" : "Choose a BTO"}
         </InputLabel>
         <Select
           label="Choose a BTO"
@@ -573,11 +584,10 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
               <Typography>
                 {(() => {
                   switch (data.numberofrooms) {
-                    case 1: return "2-room Flexi";
-                    case 2: return "3-room";
-                    case 3: return "4-room";
-                    case 4: return "5-room";
-                    case 5: return "3Gen";
+                    case 2: return "2-room";
+                    case 3: return "3-room";
+                    case 4: return "4-room";
+                    case 5: return "5-room";
                     default: return "";
                   }
                 })()}
@@ -755,7 +765,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
           </Stack>)}
         </Stack>
       ) : (
-        <Typography variant="h7">{allData===null? "Insufficient BTO to Compare": "Choose a BTO to Compare"}</Typography>
+        <Typography variant="h7">{btoSaved < 2 ? "Insufficient BTOs to Compare": "Choose a BTO to Compare"}</Typography>
       )}
     </Container>
   );

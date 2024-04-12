@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import { Icon } from "leaflet";
 import { getFirestore, collection, updateDoc, addDoc, getDocs } from 'firebase/firestore';
-import { Box, TextField, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, TextField, InputLabel, MenuItem, Select, FormControl } from '@mui/material';
 import { query, where } from 'firebase/firestore';
 import { auth } from '../utils/firebase';
 
@@ -278,6 +278,7 @@ const GeojsonMapComponent = () => {
           {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
         </Box>
         <Box sx={{ marginBottom: 2 }}>
+        <FormControl fullWidth>
           <InputLabel id="demo-simple-number-rooms">Number of rooms</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -292,6 +293,7 @@ const GeojsonMapComponent = () => {
             <MenuItem value={4}>4-room</MenuItem>
             <MenuItem value={5}>5-room</MenuItem>
           </Select>
+        </FormControl>
         </Box>
         <button onClick={() => savingInBTO(1)}>Save as BTO1</button>
         <button onClick={() => savingInBTO(2)}>Save as BTO2</button>
