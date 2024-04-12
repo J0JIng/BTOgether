@@ -17,7 +17,6 @@ import {
 import { getAuth, reauthenticateWithCredential, EmailAuthProvider, signOut } from "firebase/auth";
 import { signInWithPopup } from "firebase/auth";
 import { provider } from "../utils/firebase";
-import { Toaster, toast } from "sonner";
 
 export default function DeleteAccountDialog() {
   const [open, setOpen] = useState(false);
@@ -185,13 +184,6 @@ export default function DeleteAccountDialog() {
 
   return (
     <React.Fragment>
-      <Toaster
-        toastOptions={{
-          style: { border: "2px green solid", background: "#f1a2a2" },
-          duration: 1500,
-        }}
-        richColors
-      />
       <Button
         variant="contained"
         onClick={handleClickOpen}

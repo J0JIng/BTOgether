@@ -141,10 +141,8 @@ const Comparison = forwardRef(({ saveData }, ref) => {
   // To load the data into the useState above
   const handleLoadedData = (data) => {
     console.log("Loaded data:", data);
-    if (data && data.BTO1 && data.BTO2 && data.BTO3) {
-      if (data.BTO1.address == 0) { delete data.BTO1 }
-      if (data.BTO2.address == 0) { delete data.BTO2 }
-      if (data.BTO3.address == 0) { delete data.BTO3 }
+    if (data) {
+      // Testing code
       // data.BTO1 = {
       //   projectname: "My House 1",
       //   numberofrooms: "5-room",
