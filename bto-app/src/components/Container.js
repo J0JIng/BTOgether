@@ -15,6 +15,13 @@ import cat from "../assets/image.png";
 import cat2 from "../assets/imagev2.png";
 import BarChart from "../components/BarChart"
 
+/**
+ * Renders an image or chart component based on the provided title and description.
+ * 
+ * @param {string} title - The title of the component.
+ * @param {string} description - The description of the component.
+ * @returns {JSX.Element|null} - Returns the JSX representation of the image or chart component if the conditions are met, otherwise returns null.
+ */
 const renderImage = (title, description) => {
   if (title === "Location" && description === "Woodlands Drive 16.") {
     return (
@@ -54,6 +61,18 @@ const renderImage = (title, description) => {
   }
 };
 
+/**
+ * Represents a container component with sortable functionality.
+ * 
+ * @param {object} props - The properties passed to the Container component.
+ * @param {string} props.id - The unique identifier of the container.
+ * @param {ReactNode} props.children - The child components of the container.
+ * @param {string} props.title - The title of the container.
+ * @param {string} props.description - The description of the container.
+ * @param {string} props.long_description - The long description of the container.
+ * @param {Function} props.onExpand - The function to expand the container.
+ * @returns {JSX.Element} - Returns the JSX representation of the Container component.
+ */
 const Container = ({ id, children, title, description, long_description, onExpand }) => {
   const {
     attributes,

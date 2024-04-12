@@ -29,10 +29,19 @@ import clinicgeojson from "../geojson/CHASClinics.geojson";
 import mallsgeojson from "../geojson/shopping_mall_coordinates.geojson";
 import satellite from "../icons/satellite.png";
 
+
+/**
+ * Input component for selecting options and displaying relevant information.
+ * 
+ * @param {Object} props - The properties passed to the Input component.
+ * @param {string} props.name - The name of the input field.
+ * @param {string} props.defaultValue - The default value of the input field.
+ * @param {string} props.placeholder - The placeholder text for the input field.
+ * @param {Function} props.onChange - The function to handle changes in the input field.
+ * @returns {JSX.Element} - Returns the JSX representation of the Input component.
+ */
 const Input = ({ name, defaultValue, placeholder, onChange }) => {
-  const [selected, setSelected] = useState("");
-  const [address, setAddress] = useState("");
-  const [radius, setRadius] = useState("");
+  const [selected, setSelected] = useState(defaultValue);
   const [viewSelected, setViewSelected] = useState(false);
   const [markers, setMarkers] = useState([]);
   const [markerIcon, setMarkerIcon] = useState();
@@ -57,25 +66,85 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
   const [addressField, setAddressField] = useState("");
   const mapRef = useRef(null);
   const iconSize = 36;
+  const apiKey = "ssJnHuXxZBHgTKHCyuaMMxIj0r05GW4vC3K49sWkeZI"; // HERE API key
 
-  const flyToCoords = (lat, long) => {
-    if (mapRef.current && lat && long) {
-      mapRef.current.flyTo([lat, long], 17, {
-        animate: true,
-        duration: 1, // in seconds
-      });
+  useEffect(() => {
+    if (addressField !== "" && addressField !== null) {
+      console.log("Current Address is: " + addressField);
+    } else {
+      console.log("Address is empty or null");
     }
-  };
+  }, [addressField]);
 
   const changeSelectOptionHandler = (event) => {
     setSelected(event.target.value);
-
     setViewSelected(true);
+    setErrorMessage(null);
+    onChange(event);
+  };
+
+  // Function to geocode the address
+  const geocodeAddress = async (address) => {
+    try {
+      const geocodingResponse = await axios.get(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+          address
+        )}&format=json&addressdetails=1&limit=1`
+      );
+      if (geocodingResponse.data.length > 0) {
+        const { lat, lon } = geocodingResponse.data[0];
+        const latitude = parseFloat(lat).toFixed(5);
+        const longitude = parseFloat(lon).toFixed(5);
+        const road =
+          geocodingResponse.data[0].address.road ||
+          geocodingResponse.data[0].address.suburb ||
+          geocodingResponse.data[0].address.postcode;
+
+        const singaporeBounds = {
+          north: 1.5,
+          south: 1.1,
+          east: 104.1,
+          west: 103.6,
+        };
+
+        if (
+          latitude >= singaporeBounds.south &&
+          latitude <= singaporeBounds.north &&
+          longitude >= singaporeBounds.west &&
+          longitude <= singaporeBounds.east
+        ) {
+          setHomeLocation({
+            address: road,
+            latitude: latitude,
+            longitude: longitude,
+          });
+
+          setErrorMessage(null);
+          return {
+            latitude,
+            longitude,
+            road,
+          };
+        } else {
+          console.log(
+            "The latitude is: " + latitude + "The longitude is: " + longitude
+          );
+          setErrorMessage(
+            "The location of is outside Singapore. Please refine your search."
+          );
+        }
+      } else {
+        setErrorMessage("Address not found.");
+      }
+    } catch (error) {
+      setErrorMessage("Error geocoding Address.");
+    }
+    return null; // Return null if geocoding fails
   };
 
   const handleGeocode = async () => {
     if (addressField === null || addressField === "") {
-      alert("Type in an Address");
+      console.log("address not found");
       return;
     }
     try {
@@ -109,8 +178,6 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
             longitude: longitude,
           });
           setErrorMessage("");
-          // Fly to the location
-          flyToCoords(latitude, longitude);
         } else {
           setErrorMessage(
             "The location is outside Singapore. Please refine your search."
@@ -125,16 +192,6 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
     }
   };
 
-  const handleConfirmTransportation = () => {
-    // You can implement logic here to handle transportation confirmation
-    console.log("Transportation confirmed:", selected);
-  };
-
-  const handleConfirmAmenities = () => {
-    // You can implement logic here to handle amenities confirmation
-    console.log("Amenities confirmed:", selected, radius);
-  };
-
   const renderAddressInput = () => {
     if (selected === "Transportation" && viewSelected) {
       return (
@@ -142,8 +199,15 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
           <input
             type="text"
             placeholder="Enter address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            value={addressField}
+            onChange={(e) => {
+              setAddressField(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                geocodeAddress(addressField);
+              }
+            }}
             className="w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
@@ -156,7 +220,9 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
     if (selected === "Amenities" && viewSelected) {
       return (
         <div className="flex flex-col items-center mt-2">
-          <label htmlFor="distance-slider" className="mb-2">Filter Distance (in km): </label>
+          <label htmlFor="distance-slider" className="mb-2">
+            Filter Distance (in km):{" "}
+          </label>
           <input
             id="distance-slider"
             className="w-full"
@@ -172,11 +238,8 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
     }
     return null;
   };
-  
-  
-  
 
-  const Transportation = ["Car", "Public Transport", "Walk"];
+  const Transportation = ["Car", "Public Transport"];
 
   const Amenities = [
     "Gyms",
@@ -193,12 +256,8 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
 
   if (selected === "Transportation") {
     type = Transportation;
-    //setViewSelected(true);
   } else if (selected === "Amenities") {
     type = Amenities;
-    //setViewSelected(true);
-  } else {
-    //setViewSelected(false);
   }
 
   if (type) {
@@ -221,11 +280,11 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
         <div className="mt-2">
           {viewSelected && (
             <select className="w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-              {options} {/* Render the options array directly */}
+              {options}
             </select>
           )}
         </div>
-
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
         {renderAddressInput()}
         {renderRadiusInput()}
       </form>

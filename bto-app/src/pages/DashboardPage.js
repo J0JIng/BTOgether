@@ -130,7 +130,7 @@ export default function DashboardPage() {
 
   // DEBUGGING
   useEffect(() => {
-    console.log("containers:", JSON.stringify(containers, null, 2));
+    // console.log("containers:", JSON.stringify(containers, null, 2));
 
     // Log the updated activeBTO state
     console.log("New active BTO: " + activeBTO);

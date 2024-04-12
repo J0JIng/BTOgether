@@ -876,6 +876,7 @@ const GeojsonMapComponent = () => {
 
               <div className="buttons-group">
                 <button onClick={handleGeocode}>Find Home</button>
+
                 {auth.currentUser && (
                   <button onClick={setHome}>Set Home</button>
                 )}
