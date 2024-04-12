@@ -27,3 +27,11 @@
 .animate-fadeIn {
   animation: fadeIn 1s ease-in-out;
 }
+
+input[type="text"] {
+  width: 462px;
+}
+
+input[type="range"] {
+  width: 462px;
+}

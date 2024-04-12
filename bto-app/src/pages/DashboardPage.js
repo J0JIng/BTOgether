@@ -31,7 +31,7 @@ import Items from "../components/Item";
 import Modal from "../components/Modal";
 import Input from "../components/Input";
 import { Button } from "../components/Button";
-import BarChart from "../components/BarChart"
+import BarChart from "../components/BarChart";
 
 // need to accept JSON from Firebase
 //Example
@@ -40,8 +40,18 @@ const defaultFrames1 = [
   { name: "Location", description: "Woodlands Drive 16." },
   { name: "Town", description: "Woodlands." },
   { name: "Town Council", description: "Sembawang Town Council." },
-  { name: "Historical HDB Price", description: "$670,000." },
-  { name: "Historical BTO Price", description: "$550,000." },
+  {
+    name: "Historical HDB Price",
+    description: "$670,000.",
+    long_description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  },
+  {
+    name: "Historical BTO Price",
+    description: "$500,000",
+    long_description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  },
   { name: "Number of Rooms", description: "4 Room Flat." },
   { name: "Estimated Date of Completion", description: "2027." },
 ];
@@ -73,6 +83,7 @@ const testing_frame = defaultFrames1.map((frame) => ({
   id: generateId(),
   title: frame.name,
   description: frame.description,
+  long_description: frame.long_description,
   items: [],
 }));
 
@@ -133,36 +144,36 @@ export default function DashboardPage() {
     }
 
     //Set containers based on activeBTO
-    // switch (activeBTO) {
-    //   case "BTO1":
-    //     setContainers(testing_frame);
-    //     break;
+    switch (activeBTO) {
+      case "BTO1":
+        setContainers(testing_frame);
+        break;
 
-    //   case "BTO2":
-    //     setContainers(
-    //       defaultFrames2.map((frame) => ({
-    //         id: generateId(),
-    //         title: frame.name,
-    //         description: frame.description,
-    //         items: [],
-    //       }))
-    //     );
-    //     break;
+      case "BTO2":
+        setContainers(
+          defaultFrames2.map((frame) => ({
+            id: generateId(),
+            title: frame.name,
+            description: frame.description,
+            items: [],
+          }))
+        );
+        break;
 
-    //   case "BTO3":
-    //     setContainers(
-    //       defaultFrames3.map((frame) => ({
-    //         id: generateId(),
-    //         title: frame.name,
-    //         description: frame.description,
-    //         items: [],
-    //       }))
-    //     );
-    //     break;
+      case "BTO3":
+        setContainers(
+          defaultFrames3.map((frame) => ({
+            id: generateId(),
+            title: frame.name,
+            description: frame.description,
+            items: [],
+          }))
+        );
+        break;
 
-    //   default:
-    //     setContainers([]);
-    // }
+      default:
+        setContainers([]);
+    }
   }, [BTO1, BTO2, BTO3, isHeartClicked, activeBTO]);
 
   // Determine which BTO project is favorited initially
@@ -265,6 +276,12 @@ export default function DashboardPage() {
     return container.description;
   };
 
+  const findContainerLongDescription = (id) => {
+    const container = findValueOfItems(id, "container");
+    if (!container) return "";
+    return container.long_description;
+  };
+
   // DND Handlers
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -317,8 +334,14 @@ export default function DashboardPage() {
           showModal={showAddContainerModal}
           setShowModal={setShowAddContainerModal}
         >
-          <div className="flex flex-col w-full items-start gap-y-4">
-            <h1 className="text-gray-800 text-3xl font-bold">Add Container</h1>
+          <div className="flex flex-col w-auto items-start gap-y-4 p-3 bg-white rounded-lg">
+            <h1 className="text-green-800 text-3xl font-bold">
+              Add Interactable Frame
+            </h1>
+            <p className="text-gray-700">
+              Please select which interactable frame you would like to create
+              from the dropdown box below.
+            </p>
             <Input
               type="text"
               placeholder="Container Title"
@@ -326,7 +349,15 @@ export default function DashboardPage() {
               value={containerName}
               onChange={(e) => setContainerName(e.target.value)}
             />
-            <Button onClick={onAddContainer}>Add container</Button>
+            <div className="my-2"></div>
+            <Button
+              onClick={onAddContainer}
+              className="rounded-lg bg-customRed border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out font-bold relative"
+              onMouseEnter={() => setIsAddFramesHovered(true)}
+              onMouseLeave={() => setIsAddFramesHovered(false)}>
+              <FontAwesomeIcon icon={faPlus} />
+              <span className="add-text"> Add Frames</span>
+            </Button>
           </div>
         </Modal>
 
@@ -337,7 +368,7 @@ export default function DashboardPage() {
               {findContainerTitle(currentContainerId)}
             </h1>
             {/* Add Information*/}
-            {findContainerDescription(currentContainerId)}
+            {findContainerLongDescription(currentContainerId)}
             <button
               onClick={() => {
                 onDeleteContainer(currentContainerId);

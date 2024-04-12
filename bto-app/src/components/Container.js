@@ -54,7 +54,7 @@ const renderImage = (title, description) => {
   }
 };
 
-const Container = ({ id, children, title, description, onExpand }) => {
+const Container = ({ id, children, title, description, long_description, onExpand }) => {
   const {
     attributes,
     setNodeRef,
