@@ -12,6 +12,7 @@ import Divider from "@mui/material/Divider";
 import axios from "axios";
 import CommuteIcon from "@mui/icons-material/Commute";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import { getAmenities } from "./GetAmenities";
 
 // GeoJson Files
 import gymgeojson from "../geojson/GymsSGGEOJSON.geojson";
@@ -135,38 +136,6 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
       }
     };
   
-    function getAmenities(chosenJson) {
-      if (chosenJson) {
-        return fetch(chosenJson)
-          .then((response) => response.json())
-          .then((dat) => {
-            const newMarkers = dat.features
-              .map((feature) => {
-                const { Description } = feature.properties;
-                const { coordinates } = feature.geometry;
-                const [lng, lat] = coordinates; // Leaflet uses [lat, lng]
-                return {
-                  geocode: [lat, lng],
-                  popUp: Description, // Assuming Description contains HTML content
-                };
-              })
-              // Filter markers by distance
-              .filter((marker) => {
-                if (!data.latitude || !data.longitude)
-                  return true; // Show all if no home marker is set
-                const distanceFromHome = getDistanceFromLatLonInKm(
-                  data.latitude, data.longitude, marker.geocode[0], marker.geocode[1]);
-                return distanceFromHome <= 1; // 1 for 1km
-              });
-            return newMarkers.length; // Return the count of newMarkers
-          })
-          .catch((error) => {
-            console.error("Error fetching GeoJSON:", error);
-            return 0; // Return 0 if there's an error
-          });
-      }
-    };
-  
     const fetchPublicTransport = async (endLat, endLng, setTime) => {
       try {
         const response = await axios.get(
@@ -258,27 +227,33 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
         getNearest(mrtfuturegeojson).then((obj) => {
           setNearestFutureStation({name: extractNameFromHtml(obj.obj), dist: obj.dist.toFixed(2), stationCode: obj.stationCode})
         });
-        getAmenities(clinicgeojson).then((count) => {setAmenities(prevState => ({
+        getAmenities(clinicgeojson, { latitude: data.latitude, longitude: data.longitude })
+        .then((count) => {setAmenities(prevState => ({
           ...prevState, // Copy the previous state
           Clinics: count // Update the value of the 'preschools' field
         }));})
-        getAmenities(gymgeojson).then((count) => {setAmenities(prevState => ({
+        getAmenities(gymgeojson, { latitude: data.latitude, longitude: data.longitude })
+        .then((count) => {setAmenities(prevState => ({
           ...prevState, // Copy the previous state
           Gyms: count // Update the value of the 'preschools' field
         }));})
-        getAmenities(hawkergeojson).then((count) => {setAmenities(prevState => ({
+        getAmenities(hawkergeojson, { latitude: data.latitude, longitude: data.longitude })
+        .then((count) => {setAmenities(prevState => ({
           ...prevState, // Copy the previous state
           Hawkers: count // Update the value of the 'preschools' field
         }));})
-        getAmenities(parksgeojson).then((count) => {setAmenities(prevState => ({
+        getAmenities(parksgeojson, { latitude: data.latitude, longitude: data.longitude })
+        .then((count) => {setAmenities(prevState => ({
           ...prevState, // Copy the previous state
           Parks: count // Update the value of the 'preschools' field
         }));})
-        getAmenities(preschoolgeojson).then((count) => {setAmenities(prevState => ({
+        getAmenities(preschoolgeojson, { latitude: data.latitude, longitude: data.longitude })
+        .then((count) => {setAmenities(prevState => ({
           ...prevState, // Copy the previous state
           Preschools: count // Update the value of the 'preschools' field
         }));})
-        getAmenities(mallsgeojson).then((count) => {setAmenities(prevState => ({
+        getAmenities(mallsgeojson, { latitude: data.latitude, longitude: data.longitude })
+        .then((count) => {setAmenities(prevState => ({
           ...prevState, // Copy the previous state
           Malls: count // Update the value of the 'preschools' field
         }));})
