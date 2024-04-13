@@ -44,22 +44,29 @@ const EntryPage = () => {
             
 
             <div className="container anim-1">
-                <img src={btoimage} alt="bto-image" className="image-style" />
+                <div className="heading-text anim-1">
+                    <div className="heading-text title">Your Search, Your Conditions</div>
+                    <div className="heading-text description">
+                    Streamline your BTO journey. Explore, plan, and secure your dream home 
+                    effortlessly with personalized recommendations and intuitive tools. 
+                    Your path, your terms.
+                    </div>
+                </div>
+
+                <img src={btoimage} alt="bto-image" className="first-hdb-image image-style" />
             </div>
 
             <div className="heading-box" style={{margin: '10px'}}>
             </div>
 
-            <div className="heading-text anim-1">
+            {/* <div className="heading-text anim-1">
                 <div className="heading-text title">Your Search, Your Conditions</div>
                 <div className="heading-text description">
                 Streamline your BTO journey. Explore, plan, and secure your dream home 
                 effortlessly with personalized recommendations and intuitive tools. 
                 Your path, your terms.
                 </div>
-                
-
-            </div>
+            </div> */}
 
             <div className='logos'>
                 <div className="key-features anim-1">

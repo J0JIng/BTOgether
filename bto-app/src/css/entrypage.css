@@ -83,13 +83,12 @@ body {
     align-content: center;
     position: relative; */
 
+    margin-top: 100px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-    z-index: 1;
+    width: 100%;
+    z-index: 10;
     /* max-height: 60vh; */
     margin-bottom: 100px;
 
@@ -111,13 +110,19 @@ body {
     opacity: 0.9;
 }
 
-.image-style{
-    width: 889px;
-    height: 500px;
+/* .image-style{
+    width: 950px;
+    height: auto;
     display: block;
     border-radius: 10px;
     margin-top: 80px;
-    margin-left: 300px;
+    margin-left:600px;
+} */
+
+.first-hdb-image {
+    width: 800px;
+    height: 800px;
+    border-radius: 10px;
 }
 
 .page-info{
@@ -226,13 +231,14 @@ body {
 }
 
 .heading-text {
-    position: relative;
+    /* position: relative;
     bottom: 220px;
-    left: 40px;
-    width: 55%;
+    left: 40px; */
+    width: 30%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    
 }
 
 .heading-text .title, .heading-text .description{
@@ -246,6 +252,8 @@ body {
 .heading-text .description {
     line-height: 1.7;
     font-size: 18px;
+    width: 100%;
+    margin-bottom: 90px;
 }
 
 /* Define breakpoints for different screen sizes */
@@ -508,15 +516,15 @@ footer {
 
 @media screen and (max-width: 1164px) {
 
-    .bto-image-footer {
+    .ge-footer {
         display: none;
     }
 
 }
 
 @media screen and (max-width: 1665px) {
-    .heading-text {
+    /* .heading-text {
         width: 50%;
-    }
+    } */
 
 }
