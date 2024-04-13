@@ -9,6 +9,7 @@ import { getAmenities } from "./GetAmenities";
 import { fetchTravelTime } from "../utils/fetchTravelTime";
 import { fetchPublicTransport } from "../utils/fetchPublicTransport";
 import { GetNearest } from "../utils/GetNearest";
+import { extractNameFromHtml } from "../utils/extractNameFromHtml";
 
 // GeoJson Files
 import gymgeojson from "../geojson/GymsSGGEOJSON.geojson";
@@ -52,6 +53,12 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
     const [nearestStation, setNearestStation] = useState();
     const [nearestFutureStation, setNearestFutureStation] = useState();
     const [btoSaved, setBtosSaved] = useState(0);
+    const [nearestGym, setNearestGym] = useState();
+    const [nearestHawker, setNearestHawker] = useState();
+    const [nearestPark, setNearestPark] = useState();
+    const [nearestPreschool, setNearestPreschool] = useState();
+    const [nearestClinic, setNearestClinic] = useState();
+    const [nearestMall, setNearestMall] = useState();
   
     useEffect(() => {
       var cnt = 0
@@ -82,6 +89,24 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
         });
         GetNearest(mrtfuturegeojson, { latitude: data.latitude, longitude: data.longitude }).then((obj) => {
           setNearestFutureStation({name: obj.properties.Description, dist: obj.dist.toFixed(2), stationCode: obj.properties.code})
+        });
+        GetNearest(clinicgeojson, { latitude: data.latitude, longitude: data.longitude }).then((obj) => {
+          setNearestClinic({description: obj.properties.Description, dist: obj.dist.toFixed(2)})
+        });
+        GetNearest(gymgeojson, { latitude: data.latitude, longitude: data.longitude }).then((obj) => {
+          setNearestGym({description: obj.properties.Description, dist: obj.dist.toFixed(2)})
+        });
+        GetNearest(hawkergeojson, { latitude: data.latitude, longitude: data.longitude }).then((obj) => {
+          setNearestHawker({description: obj.properties.Description, dist: obj.dist.toFixed(2)})
+        });
+        GetNearest(parksgeojson, { latitude: data.latitude, longitude: data.longitude }).then((obj) => {
+          setNearestPark({description: obj.properties.Description, dist: obj.dist.toFixed(2)})
+        });
+        GetNearest(preschoolgeojson, { latitude: data.latitude, longitude: data.longitude }).then((obj) => {
+          setNearestPreschool({description: obj.properties.Description, dist: obj.dist.toFixed(2)})
+        });
+        GetNearest(mallsgeojson, { latitude: data.latitude, longitude: data.longitude }).then((obj) => {
+          setNearestMall({description: obj.properties.Description, dist: obj.dist.toFixed(2)})
         });
         getAmenities(clinicgeojson, { latitude: data.latitude, longitude: data.longitude })
         .then((count) => {setAmenities(prevState => ({...prevState, Clinics: count }));})
@@ -227,8 +252,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
             />
             <Typography variant="h7" sx={{ fontWeight: "bold" }}>
               Amenities within 1km: {Object.values(amenities).reduce(
-                (accumulator, currentValue) => accumulator + (currentValue || 0), // Use 0 if the value is null
-                0
+                (accumulator, currentValue) => accumulator + (currentValue || 0), 0 // Use 0 if the value is null
               )}
             </Typography>
             <Stack
@@ -241,14 +265,40 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
               }
               spacing={1}
             >
-              {Object.entries(amenities).map(([key, value]) => (
-                <React.Fragment key={key}>
-                  <Stack spacing={0}>
-                    <Typography>{key}: {value}</Typography>
-                  </Stack>
-                </React.Fragment>
-              ))}
+            {Object.entries(amenities).map(([key, value]) => (
+              <React.Fragment key={key}>
+                <Stack spacing={0}>
+                  <Typography>{key}: {value}</Typography>
+                </Stack>
+              </React.Fragment>
+            ))}
             </Stack>
+            <Divider
+              orientation="horizontal"
+              flexItem
+              style={{ background: "gray" }}
+            />
+            <Typography variant="h7" sx={{ fontWeight: "bold" }}>Nearest Amenities:</Typography>
+
+            {nearestClinic && nearestClinic.description && (
+            <><Typography>{extractNameFromHtml(nearestClinic.description)}: {nearestClinic.dist}km </Typography>
+            <Divider orientation="horizontal" flexItem style={{ background: "lightgray", marginTop: "10px" }}/></>)}
+            {nearestGym && nearestGym.description && (
+            <><Typography>{extractNameFromHtml(nearestGym.description)}: {nearestGym.dist}km </Typography>
+            <Divider orientation="horizontal" flexItem style={{ background: "lightgray", marginTop: "10px" }}/></>)}
+            {nearestHawker && nearestHawker.description && (
+            <><Typography>{extractNameFromHtml(nearestHawker.description)}: {nearestHawker.dist}km </Typography>
+            <Divider orientation="horizontal" flexItem style={{ background: "lightgray", marginTop: "10px" }}/></>)}
+            {nearestPark && nearestPark.description && (
+            <><Typography>{extractNameFromHtml(nearestPark.description)}: {nearestPark.dist}km </Typography>
+            <Divider orientation="horizontal" flexItem style={{ background: "lightgray", marginTop: "10px" }}/></>)}
+            {nearestPreschool && nearestPreschool.description && (
+            <><Typography>{extractNameFromHtml(nearestPreschool.description)}: {nearestPreschool.dist}km </Typography>
+            <Divider orientation="horizontal" flexItem style={{ background: "lightgray", marginTop: "10px" }}/></>)}
+            {nearestMall && nearestMall.description && (
+            <><Typography>{extractNameFromHtml(nearestMall.description)}: {nearestMall.dist}km </Typography>
+            <Divider orientation="horizontal" flexItem style={{ background: "lightgray", marginTop: "10px" }}/></>)}
+
             <Divider
               orientation="horizontal"
               flexItem
