@@ -1,9 +1,22 @@
 import { Line } from "react-chartjs-2";
-import { Chart, LineController, LineElement, PointElement, Title, CategoryScale, LinearScale } from 'chart.js';
+import {
+  Chart,
+  LineController,
+  LineElement,
+  PointElement,
+  Title,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
 
-Chart.register(LineController, LineElement, PointElement, CategoryScale, LinearScale, Title);
-
-
+Chart.register(
+  LineController,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Title
+);
 
 const ResalePriceChart = () => {
   // Sample data (replace with actual resale price data)
@@ -24,7 +37,7 @@ const ResalePriceChart = () => {
   const options = {
     scales: {
       x: {
-        type: 'category',
+        type: "category",
         labels: data.labels,
       },
       y: {

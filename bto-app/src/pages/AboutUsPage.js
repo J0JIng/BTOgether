@@ -16,7 +16,6 @@ import handleScrollAnimation from "./script";
 import pinkwaves from "../assets/pinkwaves.svg";
 
 const AboutUsPage = () => {
-
   useEffect(() => {
     handleScrollAnimation();
   }, []); // Run once after component mounts
@@ -28,7 +27,6 @@ const AboutUsPage = () => {
   return (
     <div className="about-us-page">
       <Navbar />
-      
 
       <div className="container anim-1">
         <img src={btoimage} alt="bto-image" className="image-style" />
@@ -37,8 +35,8 @@ const AboutUsPage = () => {
       <div className="heading-box" style={{ margin: "10px" }}></div>
 
       {/* use SVG waves .. import pinkwaves from '../assets/pinkwaves.svg'*/}
-      <div className="heading-box-waves" >
-        <img src={pinkwaves} alt="pinkwaves"/>
+      <div className="heading-box-waves">
+        <img src={pinkwaves} alt="pinkwaves" />
       </div>
 
       <div className="heading-text anim-1">

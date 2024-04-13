@@ -38,13 +38,13 @@ const Navbar = () => {
           />
         </div>
       </Link>
-  
+
       <div className="title-heading">BTOgether</div>
-  
+
       <div className="menu" onClick={toggleMenu}>
         =
       </div>
-  
+
       <div className={`links ${menuOpen ? "open" : ""}`}>
         <Link to={spinalCase(aboutUs)}>About Us</Link>
         <Link to={spinalCase(profile)}>Profile</Link>
@@ -55,5 +55,5 @@ const Navbar = () => {
       </div>
     </nav>
   );
-}
+};
 export default Navbar;

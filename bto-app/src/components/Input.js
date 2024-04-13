@@ -130,7 +130,6 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
             onKeyDown={(e) => {
               if (e.key === "Shift" && e.location === 1) {
                 validateAddress(addressField);
-                
               }
             }}
             className="w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -201,7 +200,6 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
           )}
         </div>
         {renderRadiusInput()}
-        
       </form>
     </div>
   );

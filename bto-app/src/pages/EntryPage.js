@@ -49,8 +49,8 @@ const EntryPage = () => {
       <div className="heading-box" style={{ margin: "10px" }}></div>
 
       {/* use SVG waves .. import pinkwaves from '../assets/pinkwaves.svg'*/}
-      <div className="heading-box-waves" >
-        <img src={pinkwaves} alt="pinkwaves"/>
+      <div className="heading-box-waves">
+        <img src={pinkwaves} alt="pinkwaves" />
       </div>
 
       <div className="heading-text anim-1">

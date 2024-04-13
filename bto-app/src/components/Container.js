@@ -1,19 +1,15 @@
-
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import clsx from "clsx";
 import "../css/dashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faMaximize,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faMaximize } from "@fortawesome/free-solid-svg-icons";
 
 import cat from "../assets/image.png";
 import cat2 from "../assets/imagev2.png";
 import BarChart from "../components/BarChart";
 import Counter from "../components/Counter";
-import Timer from "../components/Timer"
+import Timer from "../components/Timer";
 import UserDataUtility from "../utils/UserDataUtility";
 
 const Container = ({
@@ -39,8 +35,6 @@ const Container = ({
       type: "container",
     },
   });
-
-  
 
   return (
     <div className="flex justify-between mb-4">
@@ -76,7 +70,12 @@ const Container = ({
 
         {children}
         <div className="mb-4 rounded-lg overflow-hidden relative">
-          {renderDisplayHandler(title, description, timeToTravel, numberOfAmenities)}
+          {renderDisplayHandler(
+            title,
+            description,
+            timeToTravel,
+            numberOfAmenities
+          )}
         </div>
       </div>
     </div>
@@ -85,16 +84,20 @@ const Container = ({
 
 export default Container;
 
-const renderDisplayHandler = (title, description, timeToTravel, numberOfAmenities) => {
-  if(title === "Amenities") {
+const renderDisplayHandler = (
+  title,
+  description,
+  timeToTravel,
+  numberOfAmenities
+) => {
+  if (title === "Amenities") {
     return (
       <div className="p-4 rounded-lg flex justify-center items-center ">
         {/* // Get Amenities input */}
         <Counter value={numberOfAmenities} />
       </div>
     );
-  } 
-  else if (title === "Transportation") {
+  } else if (title === "Transportation") {
     return (
       <div className="p-4 rounded-lg flex justify-center items-center ">
         {/* // Get distance timing */}

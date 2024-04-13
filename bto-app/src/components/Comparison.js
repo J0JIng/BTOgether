@@ -48,7 +48,7 @@ const Comparison = forwardRef(({ saveData }, ref) => {
   useEffect(() => {
     if (ref) {
       ref.current = {
-        openComparison: handleClickOpen
+        openComparison: handleClickOpen,
       };
     }
   }, [ref, handleClickOpen]);
@@ -165,7 +165,7 @@ const Comparison = forwardRef(({ saveData }, ref) => {
       console.log("Setting data:", data);
       setLoadedData(data);
     } else {
-      console.log("No data found"); 
+      console.log("No data found");
     }
   };
 
@@ -252,21 +252,21 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
     Hawkers: null,
     Parks: null,
     Preschools: null,
-    Malls: null
+    Malls: null,
   });
   const [nearestStation, setNearestStation] = useState();
   const [nearestFutureStation, setNearestFutureStation] = useState();
   const [btoSaved, setBtosSaved] = useState(0);
 
   useEffect(() => {
-    var cnt = 0
+    var cnt = 0;
     if (allData) {
-      if (allData.BTO1) cnt += 1
-      if (allData.BTO2) cnt += 1
-      if (allData.BTO3) cnt += 1
+      if (allData.BTO1) cnt += 1;
+      if (allData.BTO2) cnt += 1;
+      if (allData.BTO3) cnt += 1;
     }
-    setBtosSaved(cnt)
-  }, [allData])
+    setBtosSaved(cnt);
+  }, [allData]);
 
   function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
@@ -282,7 +282,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
     var d = R * c; // Distance in km
     return d;
   }
-  
+
   function deg2rad(deg) {
     return deg * (Math.PI / 180);
   }
@@ -316,8 +316,8 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
     }
   };
 
-  function getNearest(chosenJson){
-    var nearest = {obj: null, dist: null, stationCode: null};
+  function getNearest(chosenJson) {
+    var nearest = { obj: null, dist: null, stationCode: null };
     if (chosenJson) {
       return fetch(chosenJson)
         .then((response) => response.json())
@@ -330,17 +330,24 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
               return {
                 geocode: [lat, lng],
                 popUp: Description, // Assuming Description contains HTML content
-                stationCode: code
+                stationCode: code,
               };
             })
             // Filter markers by distance
             .filter((marker) => {
-              if (!data.latitude || !data.longitude)
-                return true; // Show all if no home marker is set
+              if (!data.latitude || !data.longitude) return true; // Show all if no home marker is set
               const distanceFromHome = getDistanceFromLatLonInKm(
-                data.latitude, data.longitude, marker.geocode[0], marker.geocode[1]);
+                data.latitude,
+                data.longitude,
+                marker.geocode[0],
+                marker.geocode[1]
+              );
               if (distanceFromHome <= nearest.dist || nearest.dist == null) {
-                nearest = {obj: marker, dist: distanceFromHome, stationCode: marker.stationCode}
+                nearest = {
+                  obj: marker,
+                  dist: distanceFromHome,
+                  stationCode: marker.stationCode,
+                };
               }
             });
           return nearest; // Return the count of newMarkers
@@ -350,7 +357,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
           return 0; // Return 0 if there's an error
         });
     }
-  };
+  }
 
   function getAmenities(chosenJson) {
     if (chosenJson) {
@@ -369,10 +376,13 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
             })
             // Filter markers by distance
             .filter((marker) => {
-              if (!data.latitude || !data.longitude)
-                return true; // Show all if no home marker is set
+              if (!data.latitude || !data.longitude) return true; // Show all if no home marker is set
               const distanceFromHome = getDistanceFromLatLonInKm(
-                data.latitude, data.longitude, marker.geocode[0], marker.geocode[1]);
+                data.latitude,
+                data.longitude,
+                marker.geocode[0],
+                marker.geocode[1]
+              );
               return distanceFromHome <= 1; // 1 for 1km
             });
           return newMarkers.length; // Return the count of newMarkers
@@ -382,7 +392,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
           return 0; // Return 0 if there's an error
         });
     }
-  };
+  }
 
   const fetchPublicTransport = async (endLat, endLng, setTime) => {
     try {
@@ -462,43 +472,79 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
   useEffect(() => {
     if (data && selection) {
       if (data.parentsAddress && data.latitude && data.longitude) {
-        fetchPublicTransport(data.parentsAddress.latitude,data.parentsAddress.longitude,setParentsTime);
-        fetchTransport(data.parentsAddress.latitude,data.parentsAddress.longitude,setParentsCarTime);
+        fetchPublicTransport(
+          data.parentsAddress.latitude,
+          data.parentsAddress.longitude,
+          setParentsTime
+        );
+        fetchTransport(
+          data.parentsAddress.latitude,
+          data.parentsAddress.longitude,
+          setParentsCarTime
+        );
       }
       if (data.workplaceLocation && data.latitude && data.longitude) {
-        fetchPublicTransport(data.workplaceLocation.latitude,data.workplaceLocation.longitude,setWorkTime);
-        fetchTransport(data.workplaceLocation.latitude,data.workplaceLocation.longitude,setWorkCarTime);
+        fetchPublicTransport(
+          data.workplaceLocation.latitude,
+          data.workplaceLocation.longitude,
+          setWorkTime
+        );
+        fetchTransport(
+          data.workplaceLocation.latitude,
+          data.workplaceLocation.longitude,
+          setWorkCarTime
+        );
       }
       getNearest(mrtgeojson).then((obj) => {
-        setNearestStation({name: extractNameFromHtml(obj.obj), dist: obj.dist.toFixed(2), stationCode: obj.stationCode})
+        setNearestStation({
+          name: extractNameFromHtml(obj.obj),
+          dist: obj.dist.toFixed(2),
+          stationCode: obj.stationCode,
+        });
       });
       getNearest(mrtfuturegeojson).then((obj) => {
-        setNearestFutureStation({name: extractNameFromHtml(obj.obj), dist: obj.dist.toFixed(2), stationCode: obj.stationCode})
+        setNearestFutureStation({
+          name: extractNameFromHtml(obj.obj),
+          dist: obj.dist.toFixed(2),
+          stationCode: obj.stationCode,
+        });
       });
-      getAmenities(clinicgeojson).then((count) => {setAmenities(prevState => ({
-        ...prevState, // Copy the previous state
-        Clinics: count // Update the value of the 'preschools' field
-      }));})
-      getAmenities(gymgeojson).then((count) => {setAmenities(prevState => ({
-        ...prevState, // Copy the previous state
-        Gyms: count // Update the value of the 'preschools' field
-      }));})
-      getAmenities(hawkergeojson).then((count) => {setAmenities(prevState => ({
-        ...prevState, // Copy the previous state
-        Hawkers: count // Update the value of the 'preschools' field
-      }));})
-      getAmenities(parksgeojson).then((count) => {setAmenities(prevState => ({
-        ...prevState, // Copy the previous state
-        Parks: count // Update the value of the 'preschools' field
-      }));})
-      getAmenities(preschoolgeojson).then((count) => {setAmenities(prevState => ({
-        ...prevState, // Copy the previous state
-        Preschools: count // Update the value of the 'preschools' field
-      }));})
-      getAmenities(mallsgeojson).then((count) => {setAmenities(prevState => ({
-        ...prevState, // Copy the previous state
-        Malls: count // Update the value of the 'preschools' field
-      }));})
+      getAmenities(clinicgeojson).then((count) => {
+        setAmenities((prevState) => ({
+          ...prevState, // Copy the previous state
+          Clinics: count, // Update the value of the 'preschools' field
+        }));
+      });
+      getAmenities(gymgeojson).then((count) => {
+        setAmenities((prevState) => ({
+          ...prevState, // Copy the previous state
+          Gyms: count, // Update the value of the 'preschools' field
+        }));
+      });
+      getAmenities(hawkergeojson).then((count) => {
+        setAmenities((prevState) => ({
+          ...prevState, // Copy the previous state
+          Hawkers: count, // Update the value of the 'preschools' field
+        }));
+      });
+      getAmenities(parksgeojson).then((count) => {
+        setAmenities((prevState) => ({
+          ...prevState, // Copy the previous state
+          Parks: count, // Update the value of the 'preschools' field
+        }));
+      });
+      getAmenities(preschoolgeojson).then((count) => {
+        setAmenities((prevState) => ({
+          ...prevState, // Copy the previous state
+          Preschools: count, // Update the value of the 'preschools' field
+        }));
+      });
+      getAmenities(mallsgeojson).then((count) => {
+        setAmenities((prevState) => ({
+          ...prevState, // Copy the previous state
+          Malls: count, // Update the value of the 'preschools' field
+        }));
+      });
     }
   }, [data]);
 
@@ -514,17 +560,19 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
       style={{ background: "white" }}
     >
       <FormControl fullWidth disabled={btoSaved < 2}>
-        <InputLabel style={{ background: "white" }}>{btoSaved < 2 ? "" : "Choose a BTO"}
+        <InputLabel style={{ background: "white" }}>
+          {btoSaved < 2 ? "" : "Choose a BTO"}
         </InputLabel>
         <Select
           label="Choose a BTO"
           onChange={onChange}
           value={selection}
           sx={{ mb: 2 }}
-          style={{ background: "white" }}>
-        {allData && allData.BTO1 && <MenuItem value="BTO 1">BTO 1</MenuItem>}
-        {allData && allData.BTO2 && <MenuItem value="BTO 2">BTO 2</MenuItem>}
-        {allData && allData.BTO3 && <MenuItem value="BTO 3">BTO 3</MenuItem>}
+          style={{ background: "white" }}
+        >
+          {allData && allData.BTO1 && <MenuItem value="BTO 1">BTO 1</MenuItem>}
+          {allData && allData.BTO2 && <MenuItem value="BTO 2">BTO 2</MenuItem>}
+          {allData && allData.BTO3 && <MenuItem value="BTO 3">BTO 3</MenuItem>}
         </Select>
       </FormControl>
       {data && selection ? (
@@ -559,7 +607,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
             }
             spacing={1}
           >
-            {["projectname","address", "latitude", "longitude"].map((key) => (
+            {["projectname", "address", "latitude", "longitude"].map((key) => (
               <React.Fragment key={key}>
                 {data && data[key] && (
                   <Stack spacing={0}>
@@ -574,23 +622,28 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
                 )}
               </React.Fragment>
             ))}
-            {data && (data.numberofrooms > 0 && data.numberofrooms <= 5) && (
-            <React.Fragment>
-              <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-                Room Type:
-              </Typography>
-              <Typography>
-                {(() => {
-                  switch (data.numberofrooms) {
-                    case 2: return "2-room";
-                    case 3: return "3-room";
-                    case 4: return "4-room";
-                    case 5: return "5-room";
-                    default: return "";
-                  }
-                })()}
-              </Typography>
-            </React.Fragment>
+            {data && data.numberofrooms > 0 && data.numberofrooms <= 5 && (
+              <React.Fragment>
+                <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                  Room Type:
+                </Typography>
+                <Typography>
+                  {(() => {
+                    switch (data.numberofrooms) {
+                      case 2:
+                        return "2-room";
+                      case 3:
+                        return "3-room";
+                      case 4:
+                        return "4-room";
+                      case 5:
+                        return "5-room";
+                      default:
+                        return "";
+                    }
+                  })()}
+                </Typography>
+              </React.Fragment>
             )}
           </Stack>
           <Divider
@@ -602,27 +655,48 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
             Nearest MRT/LRT Station:
           </Typography>
           <Stack spacing={1.5}>
-          {nearestStation && (
-            <Stack spacing={1} direction="row" style={{display: 'flex',alignItems: 'center'}}>
-              <StationIcon stationCode={nearestStation.stationCode} />
-              <Typography variant="h7" > {nearestStation.name}: {nearestStation.dist}km </Typography>
-            </Stack>
-          )}
-          {nearestFutureStation && (nearestStation.name !== nearestFutureStation.name || nearestStation.stationCode !== nearestFutureStation.stationCode) && (
-            <React.Fragment>
-            <Divider
-            orientation="horizontal"
-            flexItem
-            style={{ background: "gray" }}/>
-            <Typography variant="h7" sx={{ fontWeight: "bold" }}>
-            Nearest Future MRT/LRT Station:
-            </Typography>
-            <Stack spacing={1} direction="row" style={{display: 'flex',alignItems: 'center'}}>
-              <StationIcon stationCode={nearestFutureStation.stationCode} />
-              <Typography variant="h7"> {nearestFutureStation.name} (U/C): {nearestFutureStation.dist}km </Typography>
-            </Stack>
-            </React.Fragment>
-          )}
+            {nearestStation && (
+              <Stack
+                spacing={1}
+                direction="row"
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <StationIcon stationCode={nearestStation.stationCode} />
+                <Typography variant="h7">
+                  {" "}
+                  {nearestStation.name}: {nearestStation.dist}km{" "}
+                </Typography>
+              </Stack>
+            )}
+            {nearestFutureStation &&
+              (nearestStation.name !== nearestFutureStation.name ||
+                nearestStation.stationCode !==
+                  nearestFutureStation.stationCode) && (
+                <React.Fragment>
+                  <Divider
+                    orientation="horizontal"
+                    flexItem
+                    style={{ background: "gray" }}
+                  />
+                  <Typography variant="h7" sx={{ fontWeight: "bold" }}>
+                    Nearest Future MRT/LRT Station:
+                  </Typography>
+                  <Stack
+                    spacing={1}
+                    direction="row"
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <StationIcon
+                      stationCode={nearestFutureStation.stationCode}
+                    />
+                    <Typography variant="h7">
+                      {" "}
+                      {nearestFutureStation.name} (U/C):{" "}
+                      {nearestFutureStation.dist}km{" "}
+                    </Typography>
+                  </Stack>
+                </React.Fragment>
+              )}
           </Stack>
           <Divider
             orientation="horizontal"
@@ -630,7 +704,8 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
             style={{ background: "gray" }}
           />
           <Typography variant="h7" sx={{ fontWeight: "bold" }}>
-            Amenities within 1km: {Object.values(amenities).reduce(
+            Amenities within 1km:{" "}
+            {Object.values(amenities).reduce(
               (accumulator, currentValue) => accumulator + (currentValue || 0), // Use 0 if the value is null
               0
             )}
@@ -648,7 +723,9 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
             {Object.entries(amenities).map(([key, value]) => (
               <React.Fragment key={key}>
                 <Stack spacing={0}>
-                  <Typography>{key}: {value}</Typography>
+                  <Typography>
+                    {key}: {value}
+                  </Typography>
                 </Stack>
               </React.Fragment>
             ))}
@@ -659,111 +736,133 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
             style={{ background: "gray" }}
           />
           <Typography variant="h7" sx={{ fontWeight: "bold" }}>
-            Parents' Address: {data.parentsAddress === undefined ? "Not specified" : ""}
+            Parents' Address:{" "}
+            {data.parentsAddress === undefined ? "Not specified" : ""}
           </Typography>
-          {data.parentsAddress !== undefined && (<Stack
-            divider={
-              <Divider
-                orientation="horizontal"
-                flexItem
-                style={{ background: "lightgray" }}
-              />
-            }
-            spacing={1}
-          >
-            {["address", "latitude", "longitude"].map((key) => (
-              <React.Fragment key={key}>
-                {data && data.parentsAddress && (
-                  <Stack spacing={0}>
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: "bold", mb: 0.5 }}
-                    >
-                      {fieldLabels[key]}:
-                    </Typography>
-                    <Typography>{data.parentsAddress[key]}</Typography>
-                  </Stack>
-                )}
-              </React.Fragment>
-            ))}
-            <Stack spacing={0}>
-              <Typography variant="body2" sx={{ fontWeight: "bold", mb: 0.5 }}>
-                <DirectionsCarIcon
-                  fontSize="small"
-                  style={{ verticalAlign: "top" }}
+          {data.parentsAddress !== undefined && (
+            <Stack
+              divider={
+                <Divider
+                  orientation="horizontal"
+                  flexItem
+                  style={{ background: "lightgray" }}
                 />
-                Travel Time via Car:
-              </Typography>
-              <Typography>{parentsCarTime}</Typography>
+              }
+              spacing={1}
+            >
+              {["address", "latitude", "longitude"].map((key) => (
+                <React.Fragment key={key}>
+                  {data && data.parentsAddress && (
+                    <Stack spacing={0}>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: "bold", mb: 0.5 }}
+                      >
+                        {fieldLabels[key]}:
+                      </Typography>
+                      <Typography>{data.parentsAddress[key]}</Typography>
+                    </Stack>
+                  )}
+                </React.Fragment>
+              ))}
+              <Stack spacing={0}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: "bold", mb: 0.5 }}
+                >
+                  <DirectionsCarIcon
+                    fontSize="small"
+                    style={{ verticalAlign: "top" }}
+                  />
+                  Travel Time via Car:
+                </Typography>
+                <Typography>{parentsCarTime}</Typography>
+              </Stack>
+              <Stack spacing={0}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: "bold", mb: 0.5 }}
+                >
+                  <CommuteIcon
+                    fontSize="small"
+                    style={{ verticalAlign: "top" }}
+                  />
+                  Travel Time via Public Transport:
+                </Typography>
+                <Typography>{parentsTime}</Typography>
+              </Stack>
             </Stack>
-            <Stack spacing={0}>
-              <Typography variant="body2" sx={{ fontWeight: "bold", mb: 0.5 }}>
-                <CommuteIcon
-                  fontSize="small"
-                  style={{ verticalAlign: "top" }}
-                />
-                Travel Time via Public Transport:
-              </Typography>
-              <Typography>{parentsTime}</Typography>
-            </Stack>
-          </Stack>)}
+          )}
           <Divider
             orientation="horizontal"
             flexItem
             style={{ background: "gray" }}
           />
           <Typography variant="h7" sx={{ fontWeight: "bold" }}>
-            Workplace Address: {data.workplaceLocation === undefined ? "Not specified" : ""}
+            Workplace Address:{" "}
+            {data.workplaceLocation === undefined ? "Not specified" : ""}
           </Typography>
-          {data.workplaceLocation !== undefined && (<Stack
-            divider={
-              <Divider
-                orientation="horizontal"
-                flexItem
-                style={{ background: "lightgray" }}
-              />
-            }
-            spacing={1}
-          >
-            {["address", "latitude", "longitude"].map((key) => (
-              <React.Fragment key={key}>
-                {data && data.workplaceLocation && (
-                  <Stack spacing={0}>
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: "bold", mb: 0.5 }}
-                    >
-                      {fieldLabels[key]}:
-                    </Typography>
-                    <Typography>{data.workplaceLocation[key]}</Typography>
-                  </Stack>
-                )}
-              </React.Fragment>
-            ))}
-            <Stack spacing={0}>
-              <Typography variant="body2" sx={{ fontWeight: "bold", mb: 0.5 }}>
-                <DirectionsCarIcon
-                  fontSize="small"
-                  style={{ verticalAlign: "top" }}
+          {data.workplaceLocation !== undefined && (
+            <Stack
+              divider={
+                <Divider
+                  orientation="horizontal"
+                  flexItem
+                  style={{ background: "lightgray" }}
                 />
-                Travel Time via Car:
-              </Typography>
-              <Typography>{workCarTime}</Typography>
+              }
+              spacing={1}
+            >
+              {["address", "latitude", "longitude"].map((key) => (
+                <React.Fragment key={key}>
+                  {data && data.workplaceLocation && (
+                    <Stack spacing={0}>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: "bold", mb: 0.5 }}
+                      >
+                        {fieldLabels[key]}:
+                      </Typography>
+                      <Typography>{data.workplaceLocation[key]}</Typography>
+                    </Stack>
+                  )}
+                </React.Fragment>
+              ))}
+              <Stack spacing={0}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: "bold", mb: 0.5 }}
+                >
+                  <DirectionsCarIcon
+                    fontSize="small"
+                    style={{ verticalAlign: "top" }}
+                  />
+                  Travel Time via Car:
+                </Typography>
+                <Typography>{workCarTime}</Typography>
+              </Stack>
+              <Stack spacing={0}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: "bold", mb: 0.5 }}
+                >
+                  <CommuteIcon
+                    fontSize="small"
+                    style={{ verticalAlign: "top" }}
+                  />
+                  Travel Time via Public Transport:
+                </Typography>
+                <Typography>{workTime}</Typography>
+              </Stack>
             </Stack>
-            <Stack spacing={0}>
-              <Typography variant="body2" sx={{ fontWeight: "bold", mb: 0.5 }}>
-                <CommuteIcon
-                  fontSize="small"
-                  style={{ verticalAlign: "top" }}
-                />
-                Travel Time via Public Transport:
-              </Typography>
-              <Typography>{workTime}</Typography>
-            </Stack>
-          </Stack>)}
+          )}
         </Stack>
       ) : (
-        <Typography variant="h7">{btoSaved < 2 ? "Insufficient BTOs to Compare": "Choose a BTO to Compare"}</Typography>
+        <Typography variant="h7">
+          {btoSaved < 2
+            ? "Insufficient BTOs to Compare"
+            : "Choose a BTO to Compare"}
+        </Typography>
       )}
     </Container>
   );

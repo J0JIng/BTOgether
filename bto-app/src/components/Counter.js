@@ -32,7 +32,9 @@ const Counter = ({ value }) => {
   return (
     <div>
       {/* Circular display for the counter value */}
-      <div className={`rounded-full w-28 h-28 flex items-center justify-center relative ring-8 ${colorClass}`}>
+      <div
+        className={`rounded-full w-28 h-28 flex items-center justify-center relative ring-8 ${colorClass}`}
+      >
         {/* Counter value */}
         <span className="text-4xl text-white">{count}</span>
       </div>

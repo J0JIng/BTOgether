@@ -46,7 +46,7 @@ export const fetchTravelTime = async (
       totalTimeTaken += `${minutes} min`;
     }
     console.log("time taken is:", totalSeconds);
-    return totalSeconds; // using this to be passed as seconds 
+    return totalTimeTaken; // using this to be passed as seconds
   } catch (error) {
     return error;
   }

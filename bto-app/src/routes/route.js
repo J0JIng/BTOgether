@@ -54,9 +54,7 @@ const AppRouter = () => {
 
   return (
     <Router>
-   
       <Routes>
-        
         <Route path="/" element={<EntryPage user={user} />} />
         <Route path={spinalCase(login)} element={<LoginPage user={user} />} />
 

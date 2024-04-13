@@ -37,7 +37,7 @@ export const fetchPublicTransport = async (
       0
     );
 
-    const totalSeconds = Math.floor(totalMilliseconds / (1000)); // using this 
+    const totalSeconds = Math.floor(totalMilliseconds / 1000); // using this
     const totalHours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
     const totalMinutes = Math.floor(
       (totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
@@ -50,8 +50,7 @@ export const fetchPublicTransport = async (
     totalTimeTaken += `${totalMinutes} min`;
 
     console.log("time taken is:", totalSeconds);
-    return totalSeconds; // using this to be passed as seconds 
-    
+    return totalTimeTaken; // using this to be passed as seconds
   } catch (error) {
     console.error("Error fetching public transport data:", error);
     return error; // Return the error object
