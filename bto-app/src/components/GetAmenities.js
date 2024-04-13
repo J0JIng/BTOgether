@@ -1,5 +1,12 @@
 import { getDistanceFromLatLonInKm } from "../utils/GetDistanceFromLatLonInKm";
 
+/**
+ * 
+ * @param {GeoJSON} chosenJson - The GEOJson file for which amenities are in the search radius
+ * @param {Object} data - The center of the radius to search from, in the format { latitude, longitude }
+ * @returns {int} - The number of amenities in 1km radius of data's coordinates
+ */
+
 export const getAmenities = (chosenJson, data) => {
 
   if (chosenJson) {
