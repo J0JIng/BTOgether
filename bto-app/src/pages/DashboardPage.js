@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState, useRef, forwardRef } from "react";
 import Navbar from "../components/NavBar";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,68 +24,25 @@ import {
   arrayMove,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
+import axios, { all } from "axios";
+
+// GeoJson Files
+import gymgeojson from "../geojson/GymsSGGEOJSON.geojson";
+import hawkergeojson from "../geojson/HawkerCentresGEOJSON.geojson";
+import parksgeojson from "../geojson/Parks.geojson";
+import preschoolgeojson from "../geojson/PreSchoolsLocation.geojson";
+import clinicgeojson from "../geojson/CHASClinics.geojson";
+import mallsgeojson from "../geojson/shopping_mall_coordinates.geojson";
 
 // Components
 import Container from "../components/Container";
-import Items from "../components/Item";
 import Modal from "../components/Modal";
 import Input from "../components/Input";
 import { Button } from "../components/Button";
-import BarChart from "../components/BarChart";
-
-// need to accept JSON from Firebase
-//Example
-
-const defaultFrames1 = [
-  { name: "Location", description: "Woodlands Drive 16." },
-  { name: "Town", description: "Woodlands." },
-  { name: "Town Council", description: "Sembawang Town Council." },
-  {
-    name: "Historical HDB Price",
-    description: "$670,000.",
-    long_description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-  {
-    name: "Historical BTO Price",
-    description: "$500,000",
-    long_description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-  { name: "Number of Rooms", description: "4 Room Flat." },
-  { name: "Estimated Date of Completion", description: "2027." },
-];
-
-const defaultFrames2 = [
-  { name: "Location", description: "Marine Parade Central." },
-  { name: "Town", description: "Marine Parade." },
-  { name: "Town Council", description: "Marine Parade Town Council." },
-  { name: "Price", description: "$800,000." },
-  { name: "Square Footage", description: "1100 sqf." },
-  { name: "Number of Rooms", description: "3 Room Flat." },
-  { name: "Estimated Date of Completion", description: "2026." },
-];
-
-const defaultFrames3 = [
-  { name: "Location", description: "Jurong West Street 41." },
-  { name: "Town", description: "Jurong West." },
-  { name: "Town Council", description: "Jurong West Town Council." },
-  { name: "Price", description: "$720,000." },
-  { name: "Square Footage", description: "1350 sqf." },
-  { name: "Number of Rooms", description: "5 Room Flat." },
-  { name: "Estimated Date of Completion", description: "2025." },
-];
-
-const generateId = () => `container-${uuidv4()}`;
-
-// TESTING
-const testing_frame = defaultFrames1.map((frame) => ({
-  id: generateId(),
-  title: frame.name,
-  description: frame.description,
-  long_description: frame.long_description,
-  items: [],
-}));
+import Comparison from "../components/Comparison";
+import { getAmenities } from "../components/GetAmenities";
+import { fetchPublicTransport } from "../utils/fetchPublicTransport";
+import { fetchTravelTime } from "../utils/fetchTravelTime";
 
 export default function DashboardPage() {
   const [activeBTO, setActiveBTO] = useState(null);
@@ -103,6 +60,47 @@ export default function DashboardPage() {
   const [showGridsAnimation, setShowGridsAnimation] = useState(true);
   const [isAddFramesHovered, setIsAddFramesHovered] = useState(false);
   const [numberOfTrueBTOs, setNumberOfTrueBTOs] = useState(0);
+
+  const [distance, setDistance] = useState(5);
+  const [addressField, setAddressField] = useState("");
+  const [selected, setSelected] = useState("");
+  const [optionSelected, setOptionSelected] = useState("");
+  const [numberOfAmenities, setNumberOfAmenities] = useState(null);
+  const [timeToTravel, setTimeToTravel] = useState(0);
+
+  const [homeGeoCode, setHomeGeoCode] = useState({
+    latitude: 1.3526941,
+    longitude: 103.6920069,
+  });
+  const [destGeoCode, setDestGeoCode] = useState({
+    latitude: 1.3766432,
+    longitude: 103.8181963,
+  });
+
+  //TESTING : ATTENTION NEED TO REPLACE WITH REAL LOCATION
+  const [homeaddressField, setHomeAddressField] = useState(
+    "nanyang technological university Singapore"
+  );
+
+  useEffect(() => {
+    console.log("distance:", distance);
+    console.log("addressField:", addressField);
+    console.log("selected:", selected);
+    console.log("optionSelected:", optionSelected);
+    console.log("numberOfAmenities:", numberOfAmenities);
+    console.log("timeToTravel:", timeToTravel);
+    console.log("homeGeoCode:", homeGeoCode);
+    console.log("destGeoCode:", destGeoCode);
+  }, [
+    distance,
+    addressField,
+    selected,
+    optionSelected,
+    numberOfAmenities,
+    timeToTravel,
+    homeGeoCode,
+    destGeoCode,
+  ]);
 
   const STORAGE_KEY_PREFIX = "dashboard_containers_";
 
@@ -129,12 +127,12 @@ export default function DashboardPage() {
   }, [containers, activeBTO]);
 
   // DEBUGGING
-  useEffect(() => {
-    // console.log("containers:", JSON.stringify(containers, null, 2));
+  // useEffect(() => {
+  //   // console.log("containers:", JSON.stringify(containers, null, 2));
 
-    // Log the updated activeBTO state
-    console.log("New active BTO: " + activeBTO);
-  }, [containers, activeBTO]);
+  //   // Log the updated activeBTO state
+  //   console.log("New active BTO: " + activeBTO);
+  // }, [containers, activeBTO]);
 
   useEffect(() => {
     // Trigger alert when Unfavourite BTO
@@ -144,36 +142,36 @@ export default function DashboardPage() {
     }
 
     //Set containers based on activeBTO
-    switch (activeBTO) {
-      case "BTO1":
-        setContainers(testing_frame);
-        break;
+    // switch (activeBTO) {
+    //   case "BTO1":
+    //     setContainers(testing_frame);
+    //     break;
 
-      case "BTO2":
-        setContainers(
-          defaultFrames2.map((frame) => ({
-            id: generateId(),
-            title: frame.name,
-            description: frame.description,
-            items: [],
-          }))
-        );
-        break;
+    //   case "BTO2":
+    //     setContainers(
+    //       defaultFrames2.map((frame) => ({
+    //         id: generateId(),
+    //         title: frame.name,
+    //         description: frame.description,
+    //         items: [],
+    //       }))
+    //     );
+    //     break;
 
-      case "BTO3":
-        setContainers(
-          defaultFrames3.map((frame) => ({
-            id: generateId(),
-            title: frame.name,
-            description: frame.description,
-            items: [],
-          }))
-        );
-        break;
+    //   case "BTO3":
+    //     setContainers(
+    //       defaultFrames3.map((frame) => ({
+    //         id: generateId(),
+    //         title: frame.name,
+    //         description: frame.description,
+    //         items: [],
+    //       }))
+    //     );
+    //     break;
 
-      default:
-        setContainers([]);
-    }
+    //   default:
+    //     setContainers([]);
+    // }
   }, [BTO1, BTO2, BTO3, isHeartClicked, activeBTO]);
 
   // Determine which BTO project is favorited initially
@@ -211,8 +209,16 @@ export default function DashboardPage() {
   };
 
   // INSERT CODE FOR COMPARISON
+  const comparisonRef = useRef(null);
+
+  // Check for ref and Open Comparison Tab
   const handleComparison = () => {
-    alert("do comparison");
+    const tryOpenComparison = () => {
+      comparisonRef.current
+        ? comparisonRef.current.openComparison()
+        : setTimeout(tryOpenComparison, 100);
+    };
+    tryOpenComparison();
   };
 
   const removeFavouriteBTO = () => {
@@ -235,20 +241,217 @@ export default function DashboardPage() {
     }
   };
 
+  const handleGeocode = async () => {
+    if (addressField === null || addressField === "") {
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?q=${addressField}&format=json&addressdetails=1&limit=1`
+      );
+      if (response.data.length > 0) {
+        console.log(response.data[0]);
+        const { lat, lon } = response.data[0];
+        const latitude = parseFloat(lat).toFixed(5);
+        const longitude = parseFloat(lon).toFixed(5);
+        const road = response.data[0].address.road
+          ? response.data[0].address.road
+          : response.data[0].display_name;
+
+        const singaporeBounds = {
+          north: 1.5,
+          south: 1.1,
+          east: 104.1,
+          west: 103.6,
+        };
+
+        if (
+          latitude >= singaporeBounds.south &&
+          latitude <= singaporeBounds.north &&
+          longitude >= singaporeBounds.west &&
+          longitude <= singaporeBounds.east
+        ) {
+          setDestGeoCode({
+            latitude: latitude,
+            longitude: longitude,
+          });
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const resetContainerFields = () => {
+    setSelected("");
+    setContainerName("");
+    setOptionSelected("");
+    setDistance(5);
+    setAddressField("");
+    setNumberOfAmenities(null);
+    setTimeToTravel(0);
+    setShowAddContainerModal(false);
+  };
+
+  const getDataFromInputComponent = ({
+    selected,
+    optionSelected,
+    distance,
+    addressField,
+  }) => {
+    setSelected(selected);
+    setContainerName(selected);
+    setOptionSelected(optionSelected);
+    setDistance(distance);
+    setAddressField(addressField);
+  };
+
+  const handleDataFromInputComponent = () => {
+    if (selected === "Transportation") {
+      handleGeocode();
+      switch (optionSelected) {
+        case "Car":
+          setTimeToTravel(
+            fetchTravelTime(
+              homeGeoCode.latitude,
+              homeGeoCode.longitude,
+              destGeoCode.latitude,
+              destGeoCode.longitude,
+              "car"
+            ).then((time) => {
+              setTimeToTravel(time);
+            })
+          );
+          break;
+
+        case "Public Transport":
+          setTimeToTravel(
+            fetchPublicTransport(
+              homeGeoCode.latitude,
+              homeGeoCode.longitude,
+              destGeoCode.latitude,
+              destGeoCode.longitude
+            ).then((time) => {
+              setTimeToTravel(time);
+            })
+          );
+          break;
+
+        default:
+          console.log(
+            "Error fetching Transportation: No option selected",
+            optionSelected
+          );
+          break;
+      }
+    } else if (selected === "Amenities") {
+      switch (optionSelected) {
+        case "Gyms":
+          getAmenities(gymgeojson, homeGeoCode, distance)
+            .then((count) => {
+              setNumberOfAmenities(count);
+            })
+            .catch((error) => {
+              console.error("Error fetching amenities:", error);
+            });
+          break;
+        case "Hawkers":
+          getAmenities(hawkergeojson, homeGeoCode, distance)
+            .then((count) => {
+              setNumberOfAmenities(count);
+            })
+            .catch((error) => {
+              console.error("Error fetching amenities:", error);
+            });
+          break;
+        case "Parks":
+          getAmenities(parksgeojson, homeGeoCode, distance)
+            .then((count) => {
+              setNumberOfAmenities(count);
+            })
+            .catch((error) => {
+              console.error("Error fetching amenities:", error);
+            });
+          break;
+        case "Preschools":
+          getAmenities(preschoolgeojson, homeGeoCode, distance)
+            .then((count) => {
+              setNumberOfAmenities(count);
+            })
+            .catch((error) => {
+              console.error("Error fetching amenities:", error);
+            });
+          break;
+        case "Clinics":
+          getAmenities(clinicgeojson, homeGeoCode, distance)
+            .then((count) => {
+              setNumberOfAmenities(count);
+            })
+            .catch((error) => {
+              console.error("Error fetching amenities:", error);
+            });
+          break;
+        case "Malls":
+          getAmenities(mallsgeojson, homeGeoCode, distance)
+            .then((count) => {
+              setNumberOfAmenities(count);
+            })
+            .catch((error) => {
+              console.error("Error fetching amenities:", error);
+            });
+          break;
+        default:
+          console.log("Error fetching Amenities : No option selcted");
+          break;
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleDataFromInputComponent();
+  }, [selected, optionSelected, homeGeoCode, destGeoCode, distance]);
+
   // Function to add a new container
   const onAddContainer = () => {
-    if (containerName === "") return;
-    if (containers.length >= 12) return;
+    // Reject
+    if (
+      containerName === "" ||
+      containers.length >= 12 ||
+      optionSelected === undefined
+    ) {
+      console.log("Invalid selection");
+      resetContainerFields();
+      return;
+    }
+
     const id = generateId();
+    let description;
+
+    if (containerName === "Transportation") {
+      if (addressField === "" || addressField === null) {
+        console.log("Invalid addressfield");
+        resetContainerFields();
+        return;
+      }
+      description = `The Time to reach ${addressField} by ${optionSelected}`;
+    } else if (containerName === "Amenities") {
+      description = `The number of ${optionSelected} within ${distance} KM`;
+    }
+    handleDataFromInputComponent();
     const newContainer = {
       id,
       title: containerName,
-      description: `Description for ${containerName}`,
-      items: [],
+      description: description,
+      numberOfAmenities,
+      timeToTravel,
     };
+
     setContainers((prevContainers) => [...prevContainers, newContainer]);
-    setContainerName("");
-    setShowAddContainerModal(false);
+    resetContainerFields();
   };
 
   // Function to delete a container
@@ -347,14 +550,15 @@ export default function DashboardPage() {
               placeholder="Container Title"
               name="containername"
               value={containerName}
-              onChange={(e) => setContainerName(e.target.value)}
+              onChange={getDataFromInputComponent}
             />
             <div className="my-2"></div>
             <Button
               onClick={onAddContainer}
               className="rounded-lg bg-customRed border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out font-bold relative"
               onMouseEnter={() => setIsAddFramesHovered(true)}
-              onMouseLeave={() => setIsAddFramesHovered(false)}>
+              onMouseLeave={() => setIsAddFramesHovered(false)}
+            >
               <FontAwesomeIcon icon={faPlus} />
               <span className="add-text"> Add Frames</span>
             </Button>
@@ -474,6 +678,7 @@ export default function DashboardPage() {
                   <span className="compare-text"> Compare</span>
                 </Button>
               )}
+              <Comparison ref={comparisonRef} />
             </div>
           </div>
         </div>
@@ -500,10 +705,11 @@ export default function DashboardPage() {
                       id={container.id}
                       title={container.title}
                       description={container.description}
+                      numberOfAmenities={container.numberOfAmenities}
+                      timeToTravel={container.timeToTravel}
                       key={container.id}
                       onExpand={() => {
                         setCurrentContainerId(container.id);
-
                         setShowAddInfoModal(true);
                       }}
                     ></Container>
@@ -526,3 +732,61 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+// const dataUtilityRef = useRef(null);
+// const tryLoadUserData = () => {
+//   dataUtilityRef.current
+//     ? dataUtilityRef.current.loadUserData()
+//     : setTimeout(tryLoadUserData, 100);
+// };
+
+const defaultFrames1 = [
+  { name: "Location", description: "Woodlands Drive 16." },
+  { name: "Town", description: "Woodlands." },
+  { name: "Town Council", description: "Sembawang Town Council." },
+  {
+    name: "Historical HDB Price",
+    description: "$670,000.",
+    long_description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  },
+  {
+    name: "Historical BTO Price",
+    description: "$500,000",
+    long_description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  },
+  { name: "Number of Rooms", description: "4 Room Flat." },
+  { name: "Estimated Date of Completion", description: "2027." },
+];
+
+const defaultFrames2 = [
+  { name: "Location", description: "Marine Parade Central." },
+  { name: "Town", description: "Marine Parade." },
+  { name: "Town Council", description: "Marine Parade Town Council." },
+  { name: "Price", description: "$800,000." },
+  { name: "Square Footage", description: "1100 sqf." },
+  { name: "Number of Rooms", description: "3 Room Flat." },
+  { name: "Estimated Date of Completion", description: "2026." },
+];
+
+const defaultFrames3 = [
+  { name: "Location", description: "Jurong West Street 41." },
+  { name: "Town", description: "Jurong West." },
+  { name: "Town Council", description: "Jurong West Town Council." },
+  { name: "Price", description: "$720,000." },
+  { name: "Square Footage", description: "1350 sqf." },
+  { name: "Number of Rooms", description: "5 Room Flat." },
+  { name: "Estimated Date of Completion", description: "2025." },
+];
+
+const generateId = () => `container-${uuidv4()}`;
+
+// TESTING
+const testing_frame = defaultFrames1.map((frame) => ({
+  id: generateId(),
+  title: frame.name,
+  description: frame.description,
+  long_description: frame.long_description,
+  items: [],
+}));

@@ -1,79 +1,31 @@
-import React from "react";
+
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import clsx from "clsx";
-import { Button } from "./Button";
 import "../css/dashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faMaximize,
-  faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 
 import cat from "../assets/image.png";
 import cat2 from "../assets/imagev2.png";
-import BarChart from "../components/BarChart"
+import BarChart from "../components/BarChart";
+import Counter from "../components/Counter";
+import Timer from "../components/Timer"
+import UserDataUtility from "../utils/UserDataUtility";
 
-/**
- * Renders an image or chart component based on the provided title and description.
- * 
- * @param {string} title - The title of the component.
- * @param {string} description - The description of the component.
- * @returns {JSX.Element|null} - Returns the JSX representation of the image or chart component if the conditions are met, otherwise returns null.
- */
-const renderImage = (title, description) => {
-  if (title === "Location" && description === "Woodlands Drive 16.") {
-    return (
-      <div className="mb-4 rounded-lg overflow-hidden">
-        <img src={cat} alt="cat" className="w-full h-full object-cover" />
-      </div>
-    );
-  } else if (
-    title === "Town Council" &&
-    description === "Sembawang Town Council."
-    
-  ) {
-    return (
-      <div className="mb-4 rounded-lg overflow-hidden">
-        <img src={cat2} alt="cat" className="w-full h-full object-cover" />
-      </div>
-    );
-  } else if (
-    title === "Historical HDB Price"
-  ) {
-    return (
-      <div className="mb-4 rounded-lg overflow-hidden">
-        <BarChart/>
-      </div>
-    );
-  }else if (
-    title === "Historical BTO Price"
-  ) {
-    return (
-      <div className="mb-4 rounded-lg overflow-hidden">
-        <BarChart/>
-      </div>
-    );
-  }
-    else {
-    return null; // No image for other titles and descriptions
-  }
-};
-
-/**
- * Represents a container component with sortable functionality.
- * 
- * @param {object} props - The properties passed to the Container component.
- * @param {string} props.id - The unique identifier of the container.
- * @param {ReactNode} props.children - The child components of the container.
- * @param {string} props.title - The title of the container.
- * @param {string} props.description - The description of the container.
- * @param {string} props.long_description - The long description of the container.
- * @param {Function} props.onExpand - The function to expand the container.
- * @returns {JSX.Element} - Returns the JSX representation of the Container component.
- */
-const Container = ({ id, children, title, description, long_description, onExpand }) => {
+const Container = ({
+  id,
+  children,
+  title,
+  description,
+  long_description,
+  timeToTravel,
+  numberOfAmenities,
+  onExpand,
+}) => {
   const {
     attributes,
     setNodeRef,
@@ -88,6 +40,8 @@ const Container = ({ id, children, title, description, long_description, onExpan
     },
   });
 
+  
+
   return (
     <div className="flex justify-between mb-4">
       <div
@@ -100,7 +54,7 @@ const Container = ({ id, children, title, description, long_description, onExpan
         )}
       >
         <div className="flex items-center justify-between mb-4">
-          <div className="">
+          <div>
             <h1 className="text-green-800 text-lg font-semibold">{title}</h1>
             <p className="text-gray-600 text-sm">{description}</p>
           </div>
@@ -122,7 +76,7 @@ const Container = ({ id, children, title, description, long_description, onExpan
 
         {children}
         <div className="mb-4 rounded-lg overflow-hidden relative">
-          {renderImage(title, description)}
+          {renderDisplayHandler(title, description, timeToTravel, numberOfAmenities)}
         </div>
       </div>
     </div>
@@ -130,3 +84,72 @@ const Container = ({ id, children, title, description, long_description, onExpan
 };
 
 export default Container;
+
+const renderDisplayHandler = (title, description, timeToTravel, numberOfAmenities) => {
+  if(title === "Amenities") {
+    return (
+      <div className="p-4 rounded-lg flex justify-center items-center ">
+        {/* // Get Amenities input */}
+        <Counter value={numberOfAmenities} />
+      </div>
+    );
+  } 
+  else if (title === "Transportation") {
+    return (
+      <div className="p-4 rounded-lg flex justify-center items-center ">
+        {/* // Get distance timing */}
+        <Timer value={timeToTravel} />
+      </div>
+    );
+  } else {
+    return null; // No image for other titles and descriptions
+  }
+};
+
+/*const renderImage = (title, description) => {
+  if (title === "Location" && description === "Woodlands Drive 16.") {
+    return (
+      <div className="mb-4 rounded-lg overflow-hidden">
+        <img src={cat} alt="cat" className="w-full h-full object-cover" />
+      </div>
+    );
+  } else if (
+    title === "Town Council" &&
+    description === "Sembawang Town Council."
+  ) {
+    return (
+      <div className="mb-4 rounded-lg overflow-hidden">
+        <img src={cat2} alt="cat" className="w-full h-full object-cover" />
+      </div>
+    );
+  } else if (title === "Historical HDB Price") {
+    return (
+      <div className="mb-4 rounded-lg overflow-hidden">
+        <BarChart />
+      </div>
+    );
+  } else if (title === "Historical BTO Price") {
+    return (
+      <div className="mb-4 rounded-lg overflow-hidden">
+        <BarChart />
+      </div>
+    );
+  } else if (title === "Amenities") {
+    return (
+      <div className="p-4 rounded-lg flex justify-center items-center ">
+        
+        <Counter value={1} />
+      </div>
+    );
+  } 
+  else if (title === "Transportation") {
+    return (
+      <div className="p-4 rounded-lg flex justify-center items-center ">
+        
+        <Counter value={1} />
+      </div>
+    );
+  } else {
+    return null; // No image for other titles and descriptions
+  }
+}; */

@@ -7,3 +7,7 @@
 .input[type="text"] {
     width: 400px;
 }
+
+.border-blue-500 {
+    border-color: #4299e1; /* Or any shade of blue you prefer */
+  }
