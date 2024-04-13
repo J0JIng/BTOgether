@@ -1,6 +1,6 @@
 import Navbar from "../components/NavBar";
 import { Link } from "react-router-dom";
-import '../css/entrypage.css';
+import '../css/aboutuspage.css';
 import btoLogo from '../assets/btodraftlogo.png';
 import btoimage from '../assets/hdbdraftimage1.jpg';
 
@@ -11,7 +11,7 @@ const AboutUsPage = () => {
             <Navbar/>
 
             <div className="container">
-                <img src={btoimage} alt="bto-image" className="image-style" />
+                <img src={btoimage} alt="bto-image" className="aboutus-image image-style" />
             </div>
 
             <div className="heading-box">
