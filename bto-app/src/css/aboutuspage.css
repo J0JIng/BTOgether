@@ -1,7 +1,69 @@
+.aboutus-container {
+    display: flex;
+    flex-wrap:  wrap;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 100%;
+
+}
+
 .aboutus-image {
-    width: 1000px;
+    width: 700px;
     height: auto;
     border-radius: 30px;
+    /* position: relative;
+    bottom: 50px; */
+    z-index: 2;
+}
+
+.aboutus-title {
+    color: white;
+    font-size: 80px;
+    position: relative;
+    bottom: 40px;
+}
+
+.waves-image {
+    position: relative;
+    bottom: 105px;
+    right: 8px;
+    z-index: -1;
+    width: 110%;
+    height: auto;
+    transform: scaleX(-1);
+}
+
+.image-logo {
+    width: 280px;
+    height: auto;
+    min-height: 280px;
+    margin-left: 90px;
+
     position: relative;
     bottom: 50px;
+}
+
+@media (max-width: 1200px) {
+    .waves-image{
+        bottom: 210px;
+    }
+
+}
+
+@media (max-width: 1188px) {
+    .aboutus-title {
+        margin-top: 50px;
+    }
+    .waves-image{
+        bottom: 210px;
+    }
+    .aboutus-image{
+        display: none;
+    }
+
+}
+
+.spacer {
+    margin-top: 200px;
 }
