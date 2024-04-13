@@ -14,7 +14,7 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { getAmenities } from "./GetAmenities";
 import { getDistanceFromLatLonInKm } from "../utils/GetDistanceFromLatLonInKm";
 import { extractNameFromHtml } from "../utils/extractNameFromHtml";
-import { fetchTransport } from "../utils/fetchTransport"
+import { fetchTravelTime } from "../utils/fetchTravelTime";
 import { fetchPublicTransport } from "../utils/fetchPublicTransport";
 
 // GeoJson Files
@@ -55,21 +55,19 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
       setBtosSaved(cnt)
     }, [allData])
   
-    function getNearest(chosenJson){
-      var nearest = {obj: null, dist: null, stationCode: null};
+    function getNearest(chosenJson) {
+      var nearest = { obj: null, dist: null, properties: null };
       if (chosenJson) {
         return fetch(chosenJson)
           .then((response) => response.json())
           .then((dat) => {
             const newMarkers = dat.features
               .map((feature) => {
-                const { Description, code } = feature.properties;
                 const { coordinates } = feature.geometry;
                 const [lng, lat] = coordinates; // Leaflet uses [lat, lng]
                 return {
                   geocode: [lat, lng],
-                  popUp: Description, // Assuming Description contains HTML content
-                  stationCode: code
+                  properties: feature.properties // Include all properties
                 };
               })
               // Filter markers by distance
@@ -77,39 +75,47 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
                 if (!data.latitude || !data.longitude)
                   return true; // Show all if no home marker is set
                 const distanceFromHome = getDistanceFromLatLonInKm(
-                  data.latitude, data.longitude, marker.geocode[0], marker.geocode[1]);
+                  data.latitude,
+                  data.longitude,
+                  marker.geocode[0],
+                  marker.geocode[1]
+                );
                 if (distanceFromHome <= nearest.dist || nearest.dist == null) {
-                  nearest = {obj: marker, dist: distanceFromHome, stationCode: marker.stationCode}
+                  nearest = {
+                    obj: marker,
+                    dist: distanceFromHome,
+                    properties: marker.properties
+                  };
                 }
               });
-            return nearest; // Return the count of newMarkers
+            return nearest; // Return the nearest marker
           })
           .catch((error) => {
             console.error("Error fetching GeoJSON:", error);
             return 0; // Return 0 if there's an error
           });
       }
-    };
+    }    
 
     useEffect(() => {
       if (data && selection) {
         if (data.parentsAddress && data.latitude && data.longitude) {
           fetchPublicTransport(data.latitude, data.longitude, data.parentsAddress.latitude,data.parentsAddress.longitude)
-          .then(time => {console.log(time); setParentsTime(time)})
-          fetchTransport(data.latitude, data.longitude, data.parentsAddress.latitude,data.parentsAddress.longitude)
+          .then(time => {setParentsTime(time)})
+          fetchTravelTime(data.latitude, data.longitude, data.parentsAddress.latitude,data.parentsAddress.longitude,"car")
           .then(time => {setParentsCarTime(time)})
         }
         if (data.workplaceLocation && data.latitude && data.longitude) {
           fetchPublicTransport(data.latitude, data.longitude, data.workplaceLocation.latitude,data.workplaceLocation.longitude)
           .then(time => {setWorkTime(time)})
-          fetchTransport(data.latitude, data.longitude, data.workplaceLocation.latitude,data.workplaceLocation.longitude)
+          fetchTravelTime(data.latitude, data.longitude, data.workplaceLocation.latitude,data.workplaceLocation.longitude,"car")
           .then(time => {setWorkCarTime(time)})
         }
         getNearest(mrtgeojson).then((obj) => {
-          setNearestStation({name: extractNameFromHtml(obj.obj), dist: obj.dist.toFixed(2), stationCode: obj.stationCode})
+          setNearestStation({name: obj.properties.Description, dist: obj.dist.toFixed(2), stationCode: obj.properties.code})
         });
         getNearest(mrtfuturegeojson).then((obj) => {
-          setNearestFutureStation({name: extractNameFromHtml(obj.obj), dist: obj.dist.toFixed(2), stationCode: obj.stationCode})
+          setNearestFutureStation({name: obj.properties.Description, dist: obj.dist.toFixed(2), stationCode: obj.properties.code})
         });
         getAmenities(clinicgeojson, { latitude: data.latitude, longitude: data.longitude })
         .then((count) => {setAmenities(prevState => ({
@@ -137,7 +143,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
         }));})
       }
     }, [data]);
-  
+
     return (
       <Container
         sx={{
