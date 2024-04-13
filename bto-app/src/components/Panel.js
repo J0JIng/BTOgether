@@ -296,8 +296,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
             <><Typography>{extractNameFromHtml(nearestPreschool.description)}: {nearestPreschool.dist}km </Typography>
             <Divider orientation="horizontal" flexItem style={{ background: "lightgray", marginTop: "10px" }}/></>)}
             {nearestMall && nearestMall.description && (
-            <><Typography>{extractNameFromHtml(nearestMall.description)}: {nearestMall.dist}km </Typography>
-            <Divider orientation="horizontal" flexItem style={{ background: "lightgray", marginTop: "10px" }}/></>)}
+            <Typography>{extractNameFromHtml(nearestMall.description)}: {nearestMall.dist}km </Typography>)}
 
             <Divider
               orientation="horizontal"
