@@ -9,6 +9,7 @@ body {
 .heading-box{
     top: 0px;
     width: 100%;
+    margin: 10px;
     background-color: #f7776b;
     border-radius: 10px;
 
@@ -16,10 +17,20 @@ body {
     font-size: 20px;
     font-weight: 500;
     
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
+    width: 100%;
     position: absolute;
     left: -10px;
     z-index: -2;
+}
+
+.waves-image {
+    position: relative;
+    bottom: 198px;
+    right: 8px;
+    z-index: -1;
+    width: 110%;
+    height: auto;
 }
 
 /* #entry-navbar {
@@ -110,14 +121,6 @@ body {
     opacity: 0.9;
 }
 
-/* .image-style{
-    width: 950px;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-    margin-top: 80px;
-    margin-left:600px;
-} */
 
 .first-hdb-image {
     width: 800px;

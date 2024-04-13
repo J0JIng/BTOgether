@@ -11,6 +11,7 @@ import Easy from '../assets/Easy.png'
 import apostrophe from '../assets/apostrophe2.png'
 import savetime from '../assets/save-time.png'
 import streetmap from '../assets/street-map.png'
+import pinkwaves from '../assets/pinkwaves.svg'
 import handleScrollAnimation from './script';
 
 const EntryPage = () => {
@@ -56,7 +57,11 @@ const EntryPage = () => {
                 <img src={btoimage} alt="bto-image" className="first-hdb-image image-style" />
             </div>
 
-            <div className="heading-box" style={{margin: '10px'}}>
+            <div className="heading-box">
+            </div>
+
+            <div className="heading-box-waves" >
+                <img src={pinkwaves} alt="pinkwaves" className='waves-image'/>
             </div>
 
             {/* <div className="heading-text anim-1">
