@@ -7,7 +7,9 @@ import { getFirestore, collection, updateDoc, addDoc, getDocs } from 'firebase/f
 import { Box, TextField, InputLabel, MenuItem, Select, FormControl } from '@mui/material';
 import { query, where } from 'firebase/firestore';
 import { auth } from '../utils/firebase';
-
+import { getDistanceFromLatLonInKm } from "../utils/GetDistanceFromLatLonInKm";
+import { extractNameFromHtml } from "../utils/extractNameFromHtml";
+import { MapStylePanel } from "./MapStylePanel";
 
 // GeoJson Files
 import gymgeojson from "../geojson/GymsSGGEOJSON.geojson";
@@ -25,25 +27,6 @@ import transit2 from "../icons/transit2.png"
 import transit from "../icons/transit.png"
 import satellite from "../icons/satellite.png"
 import base from "../icons/base.png"
-
-function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-  var R = 6371; // Radius of the earth in km
-  var dLat = deg2rad(lat2 - lat1);
-  var dLon = deg2rad(lon2 - lon1);
-  var a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2)
-    ;
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  var d = R * c; // Distance in km
-  return d;
-}
-
-function deg2rad(deg) {
-  return deg * (Math.PI / 180)
-}
-
 
 const GeojsonMapComponent = () => {
   const [markers, setMarkers] = useState([]);
@@ -98,7 +81,6 @@ const GeojsonMapComponent = () => {
   useEffect(() => {
     console.log(myhome)
   })
-
 
   const [myhome, setMyHome] = useState({
     BTO1: {
@@ -304,7 +286,6 @@ const GeojsonMapComponent = () => {
     )
   }
 
-
   const setHome = () => {
     let homeLayerExists = false; // Flag to track if the 'home' layer exists
 
@@ -322,8 +303,6 @@ const GeojsonMapComponent = () => {
       alert("Click 'Find Home' to Place a Pin");
     }
   };
-
-
 
   // Load Home
   const loadHome = () => {
@@ -354,7 +333,6 @@ const GeojsonMapComponent = () => {
       .catch((error) => { console.error("Error fetching documents:", error); });
   };
 
-  // WIP
   const clearMap = () => {
     setShowDetails(false)
 
@@ -552,174 +530,11 @@ const GeojsonMapComponent = () => {
     }
   }, [homeLocation]);
 
-  const MapStylePanel = () => {
-    const [expanded, setExpanded] = useState(false);
-    const [timeoutId, setTimeoutId] = useState(null); // To store the timeout ID
-    const [hoveringOverSide, setHoveringOverSide] = useState(false)
-
-    const iconSize = '50px';
-
-    const mainPanelStyle = {
-      position: 'absolute',
-      bottom: '10px',
-      left: '10px',
-      zIndex: 1000,
-      backgroundColor: 'rgba(255, 255, 255, 0.8)',
-      width: '70px',
-      height: '90px',
-    };
-
-    const sidePanelStyle = {
-      position: 'absolute',
-      display: 'flex',
-      zIndex: 1000,
-      flexDirection: 'row',
-      justifyContent: 'right',
-      alignItems: 'center',
-      bottom: '10px',
-      left: '90px',
-      backgroundColor: 'rgba(255, 255, 255, 0.8)',
-      width: '290px',
-      height: '90px',
-      cursor: 'pointer',
-      transition: 'opacity 0.3s ease', // Add transition for smooth hiding
-      opacity: expanded ? 1 : 0, // Hide when not expanded
-    };
-
-    const handleClick = (mapStyle, type) => {
-      setExpanded(false); // Collapse the panel when clicked
-      clearTimeout(timeoutId); // Clear any existing timeout
-      setMapStyle(mapStyle);
-      setHoveringOverSide(false);
-
-      if (type === 'base') {
-        setCurrentSource(base)
-      } else if (type === 'satellite') {
-        setCurrentSource(satellite)
-      } else if (type === 'transit2') {
-        setCurrentSource(transit2)
-      } else if (type === 'transit') {
-        setCurrentSource(transit)
-      }
-    };
-
-    const handleMainPanelHover = () => {
-      clearTimeout(timeoutId); // Clear any existing timeout
-      setExpanded(true); // Always expand when hovering over the main panel
-    };
-
-    const handleMainPanelLeave = () => {
-      clearTimeout(timeoutId); // Clear any existing timeout
-      // Set a new timeout to hide the side panel after 3 seconds
-      setTimeoutId(
-        setTimeout(() => {
-          if (hoveringOverSide === false) {
-            setExpanded(false);
-          }
-        }, 1000)
-      );
-    };
-
-    const handleSidePanelHover = () => {
-      clearTimeout(timeoutId); // Clear any existing timeout
-      setExpanded(true);
-      setHoveringOverSide(true);
-    };
-
-    const handleSidePanelLeave = () => {
-      setHoveringOverSide(false);
-      setExpanded(false);
-    };
-
-    return (
-      <div>
-        <div
-          style={{
-            ...mainPanelStyle,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          className="leaflet-bar leaflet-control"
-          onMouseEnter={handleMainPanelHover}
-          onMouseLeave={handleMainPanelLeave}
-        >
-          <img
-            src={currentSource}
-            alt="Base Map"
-            style={{
-              bottom: '10px',
-              marginBottom: '5px',
-              marginTop: '5px',
-              width: iconSize,
-              height: iconSize,
-              border: '2px solid LightSteelBlue',
-              borderRadius: '5px',
-            }}
-            onClick={() =>
-              handleClick(
-                'https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}'
-              )
-            }
-          />
-          <span>Layers</span>
-        </div>
-
-        {expanded && (
-          <div
-            style={sidePanelStyle}
-            className="leaflet-bar leaflet-control"
-            onMouseEnter={handleSidePanelHover}
-            onMouseLeave={handleSidePanelLeave} // Still hide when leaving the side panel
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', marginRight: '15px', alignItems: 'center' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}', 'base')}>
-              <img src={base} alt="Base Map" style={{ marginTop: '5px', marginBottom: '5px', width: iconSize, height: iconSize, border: "2px solid LightSteelBlue", borderRadius: '5px' }} />
-              <span>Base</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', marginRight: '15px', alignItems: 'center' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}', 'satellite')}>
-              <img src={satellite} alt="Base Map" style={{ marginTop: '5px', marginBottom: '5px', width: iconSize, height: iconSize, border: "2px solid LightSteelBlue", borderRadius: '5px' }} />
-              <span>Satellite</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', marginRight: '15px', alignItems: 'center' }} onClick={() => handleClick('https://mt1.google.com/vt/lyrs=m@221097413,transit&hl=en&x={x}&y={y}&z={z}', 'transit')}>
-              <img src={transit} alt="Base Map" style={{ marginTop: '5px', marginBottom: '5px', width: iconSize, height: iconSize, border: "2px solid LightSteelBlue", borderRadius: '5px' }} />
-              <span>Transit</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', marginRight: '15px', alignItems: 'center' }} onClick={() => handleClick('https://tile.openstreetmap.org/{z}/{x}/{y}.png', 'transit2')}>
-              <img src={transit2} alt="Base Map" style={{ marginTop: '5px', marginBottom: '5px', width: iconSize, height: iconSize, border: "2px solid LightSteelBlue", borderRadius: '5px' }} />
-              <span>Transit 2</span>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-
   const routeHere = (coords) => {
     setRoutingLocation({ latitude: coords[0], longitude: coords[1] })
     mapRef.current.closePopup();
   };
 
-  // Function to parse HTML content and extract attribute values
-  const extractNameFromHtml = (htmlContent) => {
-    const tableRegex = /<(table|tr|th|td)\b[^>]*>/i;
-    if (tableRegex.test(htmlContent.popUp) === true) {
-      const tempElement = document.createElement('div');
-      tempElement.innerHTML = htmlContent.popUp;
-      const thElements = tempElement.querySelectorAll('th');
-      let nameElement = null;
-      thElements.forEach(th => {
-        if (th.textContent.trim() === 'NAME' || th.textContent.trim() === 'CENTRE_NAME' || th.textContent.trim() === 'HCI_NAME') {
-          nameElement = th;
-        }
-      });
-      if (nameElement) {
-        const tdElement = nameElement.nextElementSibling;
-        if (tdElement) { return tdElement.textContent.trim(); }
-      }
-      return ''; // Return an empty string if "NAME" is not found
-    } else { return htmlContent.popUp }
-  };
   // Function to parse HTML content and extract ADDRESSSTREETNAME values
   const extractAttributeName = (obj, key) => {
     if (obj && obj.hasOwnProperty("popUp")) {
@@ -847,7 +662,7 @@ const GeojsonMapComponent = () => {
               addCircleToMap(mapRef.current, [homeLocation.latitude, homeLocation.longitude], distance * 1000) // Adjust radius as needed
             )}
 
-            <MapStylePanel />
+            <MapStylePanel currentSource={currentSource} setMapStyle={setMapStyle} setCurrentSource={setCurrentSource} />
           </LeafletMap>
 
           {/* This area is the form for the Map */}

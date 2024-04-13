@@ -13,6 +13,8 @@ import axios from "axios";
 import CommuteIcon from "@mui/icons-material/Commute";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { getAmenities } from "./GetAmenities";
+import { getDistanceFromLatLonInKm } from "../utils/GetDistanceFromLatLonInKm";
+import { extractNameFromHtml } from "../utils/extractNameFromHtml";
 
 // GeoJson Files
 import gymgeojson from "../geojson/GymsSGGEOJSON.geojson";
@@ -51,54 +53,6 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
       }
       setBtosSaved(cnt)
     }, [allData])
-  
-    function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-      var R = 6371; // Radius of the earth in km
-      var dLat = deg2rad(lat2 - lat1);
-      var dLon = deg2rad(lon2 - lon1);
-      var a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(deg2rad(lat1)) *
-          Math.cos(deg2rad(lat2)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c; // Distance in km
-      return d;
-    }
-    
-    function deg2rad(deg) {
-      return deg * (Math.PI / 180);
-    }
-  
-    // Function to parse HTML content and extract attribute values
-    function extractNameFromHtml(htmlContent) {
-      const tableRegex = /<(table|tr|th|td)\b[^>]*>/i;
-      if (tableRegex.test(htmlContent.popUp) === true) {
-        const tempElement = document.createElement("div");
-        tempElement.innerHTML = htmlContent.popUp;
-        const thElements = tempElement.querySelectorAll("th");
-        let nameElement = null;
-        thElements.forEach((th) => {
-          if (
-            th.textContent.trim() === "NAME" ||
-            th.textContent.trim() === "CENTRE_NAME" ||
-            th.textContent.trim() === "HCI_NAME"
-          ) {
-            nameElement = th;
-          }
-        });
-        if (nameElement) {
-          const tdElement = nameElement.nextElementSibling;
-          if (tdElement) {
-            return tdElement.textContent.trim();
-          }
-        }
-        return ""; // Return an empty string if "NAME" is not found
-      } else {
-        return htmlContent.popUp;
-      }
-    };
   
     function getNearest(chosenJson){
       var nearest = {obj: null, dist: null, stationCode: null};
