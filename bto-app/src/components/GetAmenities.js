@@ -1,6 +1,7 @@
 import { getDistanceFromLatLonInKm } from "../utils/GetDistanceFromLatLonInKm";
 
 /**
+ * A utility component to find the number of a type of amenity in a 1km radius
  * 
  * @param {GeoJSON} chosenJson - The GEOJson file for which amenities are in the search radius
  * @param {Object} data - The center of the radius to search from, in the format { latitude, longitude }

@@ -9,12 +9,13 @@ import {
   Stack
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import axios from "axios";
 import CommuteIcon from "@mui/icons-material/Commute";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { getAmenities } from "./GetAmenities";
 import { getDistanceFromLatLonInKm } from "../utils/GetDistanceFromLatLonInKm";
 import { extractNameFromHtml } from "../utils/extractNameFromHtml";
+import { fetchTransport } from "../utils/fetchTransport"
+import { fetchPublicTransport } from "../utils/fetchPublicTransport";
 
 // GeoJson Files
 import gymgeojson from "../geojson/GymsSGGEOJSON.geojson";
@@ -89,91 +90,20 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
           });
       }
     };
-  
-    const fetchPublicTransport = async (endLat, endLng, setTime) => {
-      try {
-        const response = await axios.get(
-          `https://transit.router.hereapi.com/v8/routes`,
-          {
-            params: {
-              apiKey: "ssJnHuXxZBHgTKHCyuaMMxIj0r05GW4vC3K49sWkeZI",
-              origin: `${data.latitude},${data.longitude}`,
-              destination: `${endLat},${endLng}`,
-              return: "intermediate",
-            },
-          }
-        );
-        {
-          (() => {
-            const totalMilliseconds = response.data.routes[0].sections.reduce(
-              (total, section) => {
-                const departureTime = new Date(section.departure.time);
-                const arrivalTime = new Date(section.arrival.time);
-                return total + (arrivalTime - departureTime);
-              },
-              0
-            );
-            const totalHours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
-            const totalMinutes = Math.floor(
-              (totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
-            );
-            let totalTimeTaken = "";
-            if (totalHours > 0) {
-              totalTimeTaken += `${totalHours} hr `;
-            }
-            totalTimeTaken += `${totalMinutes} min`;
-            setTime(totalTimeTaken);
-          })();
-        }
-      } catch (error) {
-        setTime("Error fetching route data:", error);
-      }
-    };
-  
-    const fetchTransport = async (endLat, endLng, setTime) => {
-      try {
-        const response = await axios.get(
-          "https://router.hereapi.com/v8/routes?transportMode=car&origin=" +
-            data.latitude +
-            "," +
-            data.longitude +
-            "&destination=" +
-            endLat +
-            "," +
-            endLng +
-            "&return=summary&apikey=ssJnHuXxZBHgTKHCyuaMMxIj0r05GW4vC3K49sWkeZI"
-        );
-        (() => {
-          const totalSeconds = response.data.routes[0].sections.reduce(
-            (total, section) => total + section.summary.duration,
-            0
-          );
-          const totalMinutes = Math.floor(totalSeconds / 60);
-          const hours = Math.floor(totalMinutes / 60);
-          const minutes = totalMinutes % 60;
-          let totalTimeTaken = "";
-          if (hours > 0) {
-            totalTimeTaken += `${hours} hr `;
-          }
-          if (minutes > 0) {
-            totalTimeTaken += `${minutes} min`;
-          }
-          setTime(totalTimeTaken);
-        })();
-      } catch (error) {
-        setTime("Error fetching route data:", error);
-      }
-    };
-  
+
     useEffect(() => {
       if (data && selection) {
         if (data.parentsAddress && data.latitude && data.longitude) {
-          fetchPublicTransport(data.parentsAddress.latitude,data.parentsAddress.longitude,setParentsTime);
-          fetchTransport(data.parentsAddress.latitude,data.parentsAddress.longitude,setParentsCarTime);
+          fetchPublicTransport(data.latitude, data.longitude, data.parentsAddress.latitude,data.parentsAddress.longitude)
+          .then(time => {console.log(time); setParentsTime(time)})
+          fetchTransport(data.latitude, data.longitude, data.parentsAddress.latitude,data.parentsAddress.longitude)
+          .then(time => {setParentsCarTime(time)})
         }
         if (data.workplaceLocation && data.latitude && data.longitude) {
-          fetchPublicTransport(data.workplaceLocation.latitude,data.workplaceLocation.longitude,setWorkTime);
-          fetchTransport(data.workplaceLocation.latitude,data.workplaceLocation.longitude,setWorkCarTime);
+          fetchPublicTransport(data.latitude, data.longitude, data.workplaceLocation.latitude,data.workplaceLocation.longitude)
+          .then(time => {setWorkTime(time)})
+          fetchTransport(data.latitude, data.longitude, data.workplaceLocation.latitude,data.workplaceLocation.longitude)
+          .then(time => {setWorkCarTime(time)})
         }
         getNearest(mrtgeojson).then((obj) => {
           setNearestStation({name: extractNameFromHtml(obj.obj), dist: obj.dist.toFixed(2), stationCode: obj.stationCode})
@@ -183,33 +113,27 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
         });
         getAmenities(clinicgeojson, { latitude: data.latitude, longitude: data.longitude })
         .then((count) => {setAmenities(prevState => ({
-          ...prevState, // Copy the previous state
-          Clinics: count // Update the value of the 'preschools' field
+          ...prevState, Clinics: count
         }));})
         getAmenities(gymgeojson, { latitude: data.latitude, longitude: data.longitude })
         .then((count) => {setAmenities(prevState => ({
-          ...prevState, // Copy the previous state
-          Gyms: count // Update the value of the 'preschools' field
+          ...prevState, Gyms: count
         }));})
         getAmenities(hawkergeojson, { latitude: data.latitude, longitude: data.longitude })
         .then((count) => {setAmenities(prevState => ({
-          ...prevState, // Copy the previous state
-          Hawkers: count // Update the value of the 'preschools' field
+          ...prevState, Hawkers: count
         }));})
         getAmenities(parksgeojson, { latitude: data.latitude, longitude: data.longitude })
         .then((count) => {setAmenities(prevState => ({
-          ...prevState, // Copy the previous state
-          Parks: count // Update the value of the 'preschools' field
+          ...prevState, Parks: count
         }));})
         getAmenities(preschoolgeojson, { latitude: data.latitude, longitude: data.longitude })
         .then((count) => {setAmenities(prevState => ({
-          ...prevState, // Copy the previous state
-          Preschools: count // Update the value of the 'preschools' field
+          ...prevState, Preschools: count
         }));})
         getAmenities(mallsgeojson, { latitude: data.latitude, longitude: data.longitude })
         .then((count) => {setAmenities(prevState => ({
-          ...prevState, // Copy the previous state
-          Malls: count // Update the value of the 'preschools' field
+          ...prevState, Malls: count
         }));})
       }
     }, [data]);
