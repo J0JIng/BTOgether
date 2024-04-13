@@ -4,7 +4,9 @@ import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import { Icon } from "leaflet";
 import { getFirestore, collection, updateDoc, addDoc, getDocs } from 'firebase/firestore';
-import { Box, TextField, InputLabel, MenuItem, Select, FormControl } from '@mui/material';
+import { Box, TextField, InputLabel, MenuItem, Select, FormControl, Container,  Stack, Button } from '@mui/material';
+import { InputAdornment, Typography } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { query, where } from 'firebase/firestore';
 import { auth } from '../utils/firebase';
 import { getDistanceFromLatLonInKm } from "../utils/GetDistanceFromLatLonInKm";
@@ -551,9 +553,9 @@ const GeojsonMapComponent = () => {
 
   // This is the content for the Map
   return (
-    <div className="map-container">
+    <Container sx={{ mr: 1, boxShadow: 3 }} maxWidth="100%">
       <div className="map-container__top-bar">
-        <h2 className="map-title">Map View of {mapTitle}</h2>
+        <h2>Map View of {mapTitle}</h2>
 
         {/* Distance slider*/}
         <div className="slider-container">
@@ -574,8 +576,6 @@ const GeojsonMapComponent = () => {
           </div>)}
         </div>
       </div>
-
-
 
       <div className="panel-wrapper">
         {/* Updated left panel with the table of markers and public transport table */}
@@ -626,7 +626,15 @@ const GeojsonMapComponent = () => {
         </div>
 
         <div className="right-panel">
-          <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef} className="leaflet-map">
+          <Container style={{margin: "10px", padding: "0px"}} >
+          <LeafletMap center={mapCenter} zoom={11.5} ref={mapRef}
+            style={{
+                height: "70vh",
+                border: "4px LightSteelBlue solid",
+                borderRadius: "5px",
+                marginRight: "20px",
+              }}
+            >
             {/* Google Map Tile Layer */}
             <TileLayer
               attribution='Map data &copy; <a href="https://www.google.com/maps">Google Maps</a>'
@@ -664,47 +672,83 @@ const GeojsonMapComponent = () => {
 
             <MapStylePanel currentSource={currentSource} setMapStyle={setMapStyle} setCurrentSource={setCurrentSource} />
           </LeafletMap>
-
+          </Container>
           {/* This area is the form for the Map */}
           {/* Form for the Map */}
-          <div className="home-waypoint-form">
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <h3>Set Home Waypoint</h3>
-              <div>
-                <button onClick={() => handleShowDetails(1)}>BTO1</button>
-                <button onClick={() => handleShowDetails(2)}>BTO2</button>
-                <button onClick={() => handleShowDetails(3)}>BTO3</button>
-              </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="address-input">Address: </label>
-              <input
-                id="address-input"
-                type='text'
-                placeholder="Enter Address here..."
-                onChange={(e) => setAddressField(e.target.value)}
-              />
-
-              <div className="buttons-group">
-                <button onClick={handleGeocode}>Find Home</button>
-                {auth.currentUser && <button onClick={setHome}>Set Home</button>}
-    
-                <button onClick={toggleJson}>Toggle GEOJson</button>
-                <button onClick={clearMap}>Clear Map</button>
-              </div>
-            </div>
-
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
-            {homeLocation.latitude && homeLocation.longitude && (
-              <div className="coordinates-display">
-                <span><span style={{ fontWeight: "bold", fontSize: 18 }}>Latitude: </span>{homeLocation.latitude}{" "}</span>
-                <span><span style={{ fontWeight: "bold", fontSize: 18 }}>Longitude: </span>{homeLocation.longitude}{" "}</span>
-                <span><span style={{ fontWeight: "bold", fontSize: 18 }}>Road: </span>{homeLocation.address}</span>
-              </div>
-            )}
-          </div>
-
-
+          <Container sx={{mb: 2}}>
+            <h3>Set Home Waypoint</h3>
+            <TextField
+            variant="outlined"
+            label="Enter Address"
+            onChange={(e) => setAddressField(e.target.value)}
+            fullWidth
+            size="small"
+            sx={{ mb: 2 }}
+            error={errorMessage != ''}
+            helperText={errorMessage ? errorMessage : ''}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton edge="end" color="primary" onClick={handleGeocode}>
+                    <Typography>Search</Typography>
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            />
+            <Stack sx={{mb: 2}} spacing={{ xs: 1 }} direction="row" useFlexGap flexWrap="wrap">
+              <Button
+                variant="contained"
+                onClick={setHome}
+                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+              >
+                Set Home
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                onClick={toggleJson}
+                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+              >
+                Toggle Amenities
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                onClick={clearMap}
+                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+              >
+                Clear Map
+              </Button>
+            </Stack>
+            <hr />
+            <h3>Load BTOs</h3>
+            <Stack spacing={{ xs: 1 }} direction="row" useFlexGap flexWrap="wrap">
+              <Button
+                variant="contained"
+                onClick={() => handleShowDetails(1)}
+                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+              >
+                View BTO1
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                onClick={() => handleShowDetails(2)}
+                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+              >
+                View BTO2
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                onClick={() => handleShowDetails(3)}
+                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+              >
+                View BTO3
+              </Button>
+            </Stack>
+          </Container>
         </div>
       </div>
       <div className="info-section">
@@ -717,11 +761,7 @@ const GeojsonMapComponent = () => {
       <div>
         {showFormPopup && FormPopup()}
       </div>
-
-
-
-
-    </div>
+    </Container>
   );
 };
 

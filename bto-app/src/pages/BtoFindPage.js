@@ -6,7 +6,7 @@ const BtoFindPage = () => {
   return (
     <div className="bto-find-page">
       <Navbar />
-      <div className="mx-auto max-w-7xl py-10">
+      <div className="mx-auto py-2 px-10">
         <h1 className="text-black-800 text-3xl font-bold mr-2">
           Manage BTO Find
         </h1>

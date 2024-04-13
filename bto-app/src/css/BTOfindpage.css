@@ -9,18 +9,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #000000;
+    /* border-bottom: 1px solid #000000;
     border-top: 1px solid #000000;
     border-left: 1px solid #000000;
-    border-right: 1px solid #000000;
+    border-right: 1px solid #000000; */
   }
   .panel-wrapper{
     display: flex;
   }
   .leaflet-map, .LeafletMap {
-    height: 70vh; 
-    width: 99.9%;
-
+    height: 70vh;
   }
     
     button {
@@ -38,14 +36,14 @@
       background-color: #3079ed; 
     }
     
-    input[type='text'] {
+    /* input[type='text'] {
       border: 1px solid #ddd;
       display:inline-block;
       padding: 10px;
       margin: 5px;
       width: 200px;
       border-radius: 2px;
-    }
+    } */
     
     
     .location-name {
@@ -68,15 +66,15 @@
     }
     
     .left-panel {
-      background: #F8F8F8;
+      background: #f8f8f8;
       padding: 1rem;
       display: flex;
       flex-direction: column;
       overflow: hidden;
       flex: 1;
-      border-right: 1px solid grey;
+      /* border-right: 1px solid grey;
       border-left: 1px solid grey;
-      border-bottom: 1px solid grey;
+      border-bottom: 1px solid grey; */
     }
     
     
@@ -138,9 +136,9 @@
   
     .right-panel{
       flex: 2;
-      border-bottom: 1px solid #000000;
+      /* border-bottom: 1px solid #000000;
       
-      border-right: 1px solid #000000;
+      border-right: 1px solid #000000; */
     }
     
     .public-transport-route {
