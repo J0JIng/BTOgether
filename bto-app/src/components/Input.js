@@ -106,7 +106,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
           setAddressField("");
         }
       } else {
-        setErrorMessage("Address not found.");
+        setErrorMessage("Invalid address, please input valid address again.");
         setAddressField("");
       }
     } catch (error) {
@@ -122,7 +122,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
         <div className="mt-2">
           <input
             type="text"
-            placeholder="Enter address"
+            placeholder="Enter address. Press L-Shift to confirm"
             value={addressField}
             onChange={(e) => {
               setAddressField(e.target.value);
@@ -170,7 +170,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
     }
     return null;
   };
-
+  
   return (
     <div className="w-full">
       <form>
@@ -185,7 +185,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
           </select>
         </div>
 
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {errorMessage && <div className="text-red-500">{errorMessage}</div>}
         {renderAddressInput()}
 
         <div className="mt-2">

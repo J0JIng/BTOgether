@@ -43,6 +43,7 @@ import Comparison from "../components/Comparison";
 import { getAmenities } from "../components/GetAmenities";
 import { fetchPublicTransport } from "../utils/fetchPublicTransport";
 import { fetchTravelTime } from "../utils/fetchTravelTime";
+import Gemini from "../components/GoogleGenerativeAIComponent";
 
 export default function DashboardPage() {
   const [activeBTO, setActiveBTO] = useState(null);
@@ -67,6 +68,7 @@ export default function DashboardPage() {
   const [optionSelected, setOptionSelected] = useState("");
   const [numberOfAmenities, setNumberOfAmenities] = useState(null);
   const [timeToTravel, setTimeToTravel] = useState(0);
+  const [timeToTravelInString, setTimeToTravelInString] = useState("");
 
   const [homeGeoCode, setHomeGeoCode] = useState({
     latitude: 1.3526941,
@@ -77,30 +79,33 @@ export default function DashboardPage() {
     longitude: 103.8181963,
   });
 
-  //TESTING : ATTENTION NEED TO REPLACE WITH REAL LOCATION
+  // TODO : ATTENTION NEED TO REPLACE WITH REAL LOCATION
   const [homeaddressField, setHomeAddressField] = useState(
     "nanyang technological university Singapore"
   );
 
-  useEffect(() => {
-    console.log("distance:", distance);
-    console.log("addressField:", addressField);
-    console.log("selected:", selected);
-    console.log("optionSelected:", optionSelected);
-    console.log("numberOfAmenities:", numberOfAmenities);
-    console.log("timeToTravel:", timeToTravel);
-    console.log("homeGeoCode:", homeGeoCode);
-    console.log("destGeoCode:", destGeoCode);
-  }, [
-    distance,
-    addressField,
-    selected,
-    optionSelected,
-    numberOfAmenities,
-    timeToTravel,
-    homeGeoCode,
-    destGeoCode,
-  ]);
+  // DEBUGGING
+  // useEffect(() => {
+  //   console.log("distance:", distance);
+  //   console.log("addressField:", addressField);
+  //   console.log("selected:", selected);
+  //   console.log("optionSelected:", optionSelected);
+  //   console.log("numberOfAmenities:", numberOfAmenities);
+  //   console.log("timeToTravel:", timeToTravel);
+  //   console.log("homeGeoCode:", homeGeoCode);
+  //   console.log("destGeoCode:", destGeoCode);
+  //   console.log("timeToTravelInString:", timeToTravelInString);
+  // }, [
+  //   distance,
+  //   addressField,
+  //   selected,
+  //   optionSelected,
+  //   numberOfAmenities,
+  //   timeToTravel,
+  //   homeGeoCode,
+  //   destGeoCode,
+  //   timeToTravelInString,
+  // ]);
 
   const STORAGE_KEY_PREFIX = "dashboard_containers_";
 
@@ -142,36 +147,36 @@ export default function DashboardPage() {
     }
 
     //Set containers based on activeBTO
-    // switch (activeBTO) {
-    //   case "BTO1":
-    //     setContainers(testing_frame);
-    //     break;
+    switch (activeBTO) {
+      case "BTO1":
+        setContainers(testing_frame);
+        break;
 
-    //   case "BTO2":
-    //     setContainers(
-    //       defaultFrames2.map((frame) => ({
-    //         id: generateId(),
-    //         title: frame.name,
-    //         description: frame.description,
-    //         items: [],
-    //       }))
-    //     );
-    //     break;
+      case "BTO2":
+        setContainers(
+          defaultFrames2.map((frame) => ({
+            id: generateId(),
+            title: frame.name,
+            description: frame.description,
+            items: [],
+          }))
+        );
+        break;
 
-    //   case "BTO3":
-    //     setContainers(
-    //       defaultFrames3.map((frame) => ({
-    //         id: generateId(),
-    //         title: frame.name,
-    //         description: frame.description,
-    //         items: [],
-    //       }))
-    //     );
-    //     break;
+      case "BTO3":
+        setContainers(
+          defaultFrames3.map((frame) => ({
+            id: generateId(),
+            title: frame.name,
+            description: frame.description,
+            items: [],
+          }))
+        );
+        break;
 
-    //   default:
-    //     setContainers([]);
-    // }
+      default:
+        setContainers([]);
+    }
   }, [BTO1, BTO2, BTO3, isHeartClicked, activeBTO]);
 
   // Determine which BTO project is favorited initially
@@ -294,6 +299,7 @@ export default function DashboardPage() {
     setAddressField("");
     setNumberOfAmenities(null);
     setTimeToTravel(0);
+    setTimeToTravelInString("");
     setShowAddContainerModal(false);
   };
 
@@ -321,9 +327,12 @@ export default function DashboardPage() {
               homeGeoCode.longitude,
               destGeoCode.latitude,
               destGeoCode.longitude,
-              "car"
+              "car", // specify the mode of transport
+              true   // return time in seconds
             ).then((time) => {
               setTimeToTravel(time);
+              
+
             })
           );
           break;
@@ -334,9 +343,11 @@ export default function DashboardPage() {
               homeGeoCode.latitude,
               homeGeoCode.longitude,
               destGeoCode.latitude,
-              destGeoCode.longitude
+              destGeoCode.longitude,
+              true  // return time in seconds
             ).then((time) => {
               setTimeToTravel(time);
+              
             })
           );
           break;
@@ -411,6 +422,33 @@ export default function DashboardPage() {
     }
   };
 
+  useEffect(()=>{
+    formatTime(timeToTravel);
+  },[timeToTravel])
+
+  function formatTime(seconds) {
+    console.log()
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+  
+    let result = '';
+  
+    if (hours > 0) {
+      result += `${hours} hour${hours !== 1 ? 's' : ''}`;
+    }
+  
+    if (minutes > 0) {
+      result += `${result.length > 0 ? ' ' : ''}${minutes} minute${minutes !== 1 ? 's' : ''}`;
+    }
+  
+    if (hours === 0 && minutes === 0) {
+      result += `${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
+    }
+  
+    setTimeToTravelInString(result);
+  }
+
   useEffect(() => {
     handleDataFromInputComponent();
   }, [selected, optionSelected, homeGeoCode, destGeoCode, distance]);
@@ -428,6 +466,8 @@ export default function DashboardPage() {
       return;
     }
 
+    handleDataFromInputComponent();
+
     const id = generateId();
     let description;
 
@@ -437,17 +477,18 @@ export default function DashboardPage() {
         resetContainerFields();
         return;
       }
-      description = `The Time to reach ${addressField} by ${optionSelected}`;
+      description = `The Time to reach ${addressField} by ${optionSelected} is ${timeToTravelInString} `;
     } else if (containerName === "Amenities") {
-      description = `The number of ${optionSelected} within ${distance} KM`;
+      description = `The number of ${optionSelected} within ${distance} KM is ${numberOfAmenities}`;
     }
-    handleDataFromInputComponent();
+    
     const newContainer = {
       id,
       title: containerName,
       description: description,
       numberOfAmenities,
       timeToTravel,
+      imageUrl:"",
     };
 
     setContainers((prevContainers) => [...prevContainers, newContainer]);
@@ -567,12 +608,14 @@ export default function DashboardPage() {
 
         {/* Add Informational Modal*/}
         <Modal showModal={showAddInfoModal} setShowModal={setShowAddInfoModal}>
-          <div className="flex flex-col w-full items-center justify-center gap-y-4 h-full">
+          <div className="flex flex-col w-full items-center justify-center gap-y-4 h-400px overflow-auto">
             <h1 className="text-green-800 text-3xl font-bold">
               {findContainerTitle(currentContainerId)}
             </h1>
             {/* Add Information*/}
-            {findContainerLongDescription(currentContainerId)}
+            <div class="overflow-auto">
+            <Gemini prompt={findContainerDescription(currentContainerId)}/>
+            </div>
             <button
               onClick={() => {
                 onDeleteContainer(currentContainerId);

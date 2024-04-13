@@ -5,12 +5,12 @@ import "../css/dashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faMaximize } from "@fortawesome/free-solid-svg-icons";
 
-import cat from "../assets/image.png";
-import cat2 from "../assets/imagev2.png";
+
+import cat2 from "../assets/btolocation/image.png";
 import BarChart from "../components/BarChart";
 import Counter from "../components/Counter";
 import Timer from "../components/Timer";
-import UserDataUtility from "../utils/UserDataUtility";
+import { ImageDisplay } from "../components/ImageRender";
 
 const Container = ({
   id,
@@ -20,6 +20,7 @@ const Container = ({
   long_description,
   timeToTravel,
   numberOfAmenities,
+  imageUrl,
   onExpand,
 }) => {
   const {
@@ -93,18 +94,52 @@ const renderDisplayHandler = (
   if (title === "Amenities") {
     return (
       <div className="p-4 rounded-lg flex justify-center items-center ">
-        {/* // Get Amenities input */}
+        {/* // Get Amenities Widget */}
         <Counter value={numberOfAmenities} />
       </div>
     );
   } else if (title === "Transportation") {
     return (
       <div className="p-4 rounded-lg flex justify-center items-center ">
-        {/* // Get distance timing */}
+        {/* // Get distance timing Widget*/}
         <Timer value={timeToTravel} />
       </div>
     );
-  } else {
+  } else if (title === "Historical HDB Price") {
+    return (
+      <div className="mb-4 rounded-lg overflow-hidden">
+        <BarChart />
+      </div>
+    );
+  } else if (title === "Historical BTO Price") {
+    return (
+      <div className="mb-4 rounded-lg overflow-hidden">
+        <BarChart />
+      </div>
+    );
+  }
+  if (title === "Location") {
+    return (
+      <div className="p-4 rounded-lg flex justify-center items-center object-cover h-48 w-96 overflow-hidden">
+        {/* add image from pexel here  */}
+        <ImageDisplay query={"singapore"} />
+      </div>
+    );
+  } else if (title === "Town Council") {
+    return (
+      <div className="p-4 rounded-lg flex justify-center items-center object-cover h-48 w-96 overflow-hidden">
+        {/* add image from pexel here  */}
+        <ImageDisplay query={"architecture"}  />
+      </div>
+    );
+  } else if (title === "Number of Rooms") {
+    return (
+      <div className="p-4 rounded-lg flex justify-center items-center object-cover h-48 w-96 overflow-hidden">
+        {/* add image from pexel here  */}
+        <ImageDisplay query={"common corridor of hdb flat"} />
+      </div>
+    );
+  }else {
     return null; // No image for other titles and descriptions
   }
 };

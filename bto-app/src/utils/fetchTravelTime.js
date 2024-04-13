@@ -8,14 +8,16 @@ import axios from "axios";
  * @param {*} endLat - The ending destination latitude
  * @param {*} endLng - The ending destination longitude
  * @param {string} mode - The mode of transportation (e.g., 'car', 'pedestrian', "bicycle")
- * @returns {string} - The time taken to travel from start to end in hr and minutes
+ * @param {boolean} returnInSeconds - Flag to determine whether to return total time in seconds
+ * @returns {string | number} - The time taken to travel from start to end in hr and minutes or seconds
  */
 export const fetchTravelTime = async (
   startLat,
   startLng,
   endLat,
   endLng,
-  mode
+  mode,
+  returnInSeconds = false
 ) => {
   // Validate the mode parameter
   if (mode !== "car" && mode !== "pedestrian" && mode !== "bicycle") {
@@ -34,6 +36,10 @@ export const fetchTravelTime = async (
       0
     );
 
+    if (returnInSeconds) {
+      return totalSeconds;
+    }
+
     const totalMinutes = Math.floor(totalSeconds / 60);
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
@@ -45,8 +51,8 @@ export const fetchTravelTime = async (
     if (minutes > 0) {
       totalTimeTaken += `${minutes} min`;
     }
-    console.log("time taken is:", totalSeconds);
-    return totalTimeTaken; // using this to be passed as seconds
+  
+    return totalTimeTaken;
   } catch (error) {
     return error;
   }

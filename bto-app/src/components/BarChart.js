@@ -26,7 +26,7 @@ const ResalePriceChart = () => {
       {
         label: "Resale Price",
         data: [300000, 320000, 310000, 330000, 335000, 670000],
-        fill: false,
+        fill: true,
         borderColor: "rgb(75, 192, 192)",
         tension: 0.1,
       },

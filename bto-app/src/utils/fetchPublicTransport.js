@@ -7,13 +7,15 @@ import axios from "axios";
  * @param {*} startLng - The starting longitude to geolocate from
  * @param {*} endLat - The ending destination latitude
  * @param {*} endLng - The ending destination longitude
- * @returns {string} - The time taken to travel from start to end by public transport in hr and minutes
+ * @param {boolean} returnInSeconds - Flag to determine whether to return total time in seconds
+ * @returns {string | number} - The time taken to travel from start to end by public transport in hr and minutes or seconds
  */
 export const fetchPublicTransport = async (
   startLat,
   startLng,
   endLat,
-  endLng
+  endLng,
+  returnInSeconds = false
 ) => {
   try {
     const response = await axios.get(
@@ -37,7 +39,11 @@ export const fetchPublicTransport = async (
       0
     );
 
-    const totalSeconds = Math.floor(totalMilliseconds / 1000); // using this
+    if (returnInSeconds) {
+      const totalSeconds = Math.floor(totalMilliseconds / 1000);
+      return totalSeconds;
+    }
+
     const totalHours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
     const totalMinutes = Math.floor(
       (totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
@@ -48,9 +54,7 @@ export const fetchPublicTransport = async (
       totalTimeTaken += `${totalHours} hr `;
     }
     totalTimeTaken += `${totalMinutes} min`;
-
-    console.log("time taken is:", totalSeconds);
-    return totalTimeTaken; // using this to be passed as seconds
+    return totalTimeTaken;
   } catch (error) {
     console.error("Error fetching public transport data:", error);
     return error; // Return the error object
