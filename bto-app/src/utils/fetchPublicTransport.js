@@ -3,10 +3,10 @@ import axios from 'axios';
 /**
  * A utility component to find the time taken to travel from start to end by public transport
  * 
- * @param {*} startLat - The starting latitude to geolocate from
- * @param {*} startLng - The starting longitude to geolocate from
- * @param {*} endLat - The ending destination latitude
- * @param {*} endLng - The ending destination longitude
+ * @param {number} startLat - The starting latitude to geolocate from
+ * @param {number} startLng - The starting longitude to geolocate from
+ * @param {number} endLat - The ending destination latitude
+ * @param {number} endLng - The ending destination longitude
  * @returns {string} - The time taken to travel from start to end by public transport in hr and minutes
  */
 export const fetchPublicTransport = async (startLat, startLng, endLat, endLng) => {

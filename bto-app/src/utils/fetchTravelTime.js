@@ -3,10 +3,10 @@ import axios from 'axios';
 /**
  * A utility component to find the time taken to travel from start to end by various modes of transport
  * 
- * @param {*} startLat - The starting latitude to geolocate from
- * @param {*} startLng - The starting longitude to geolocate from
- * @param {*} endLat - The ending destination latitude
- * @param {*} endLng - The ending destination longitude
+ * @param {number} startLat - The starting latitude to geolocate from
+ * @param {number} startLng - The starting longitude to geolocate from
+ * @param {number} endLat - The ending destination latitude
+ * @param {number} endLng - The ending destination longitude
  * @param {string} mode - The mode of transportation (e.g., 'car', 'pedestrian', "bicycle")
  * @returns {string} - The time taken to travel from start to end in hr and minutes
  */

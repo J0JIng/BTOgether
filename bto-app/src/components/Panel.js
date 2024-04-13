@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Container,
-  Stack
-} from "@mui/material";
+import { Typography, FormControl, InputLabel, Select, MenuItem, Container, Stack } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import CommuteIcon from "@mui/icons-material/Commute";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+
+// Utility functions
 import { getAmenities } from "./GetAmenities";
-import { getDistanceFromLatLonInKm } from "../utils/GetDistanceFromLatLonInKm";
-import { extractNameFromHtml } from "../utils/extractNameFromHtml";
 import { fetchTravelTime } from "../utils/fetchTravelTime";
 import { fetchPublicTransport } from "../utils/fetchPublicTransport";
+import { GetNearest } from "../utils/GetNearest";
 
 // GeoJson Files
 import gymgeojson from "../geojson/GymsSGGEOJSON.geojson";
@@ -27,6 +20,21 @@ import mallsgeojson from "../geojson/shopping_mall_coordinates.geojson";
 import mrtgeojson from "../geojson/mrt_coordinates.geojson";
 import mrtfuturegeojson from "../geojson/mrtfuture_coordinates.geojson";
 import StationIcon from "./StationIcon";
+
+/**
+ * This component represents the vertical panel of each Build-To-Order (BTO) displayed 
+ * in the comparison tab. It provides information such as the BTO name, nearest MRT station, 
+ * travel times to various locations, and amenities in the area.
+ * 
+ * @param {Object} props - The props object containing the following properties:
+ *   - allData: An object containing all the BTO data
+ *   - data: The specific data for the current BTO panel
+ *   - fieldLabels: Labels for the fields displayed in the panel
+ *   - selection: The selected BTO option in the comparison dropdown
+ *   - onChange: A function to handle changes in selection
+ * 
+ * @returns JSX element representing the panel component
+ */
 
 const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
     const [parentsTime, setParentsTime] = useState(null);
@@ -53,49 +61,7 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
         if (allData.BTO3) cnt += 1
       }
       setBtosSaved(cnt)
-    }, [allData])
-  
-    function getNearest(chosenJson) {
-      var nearest = { obj: null, dist: null, properties: null };
-      if (chosenJson) {
-        return fetch(chosenJson)
-          .then((response) => response.json())
-          .then((dat) => {
-            const newMarkers = dat.features
-              .map((feature) => {
-                const { coordinates } = feature.geometry;
-                const [lng, lat] = coordinates; // Leaflet uses [lat, lng]
-                return {
-                  geocode: [lat, lng],
-                  properties: feature.properties // Include all properties
-                };
-              })
-              // Filter markers by distance
-              .filter((marker) => {
-                if (!data.latitude || !data.longitude)
-                  return true; // Show all if no home marker is set
-                const distanceFromHome = getDistanceFromLatLonInKm(
-                  data.latitude,
-                  data.longitude,
-                  marker.geocode[0],
-                  marker.geocode[1]
-                );
-                if (distanceFromHome <= nearest.dist || nearest.dist == null) {
-                  nearest = {
-                    obj: marker,
-                    dist: distanceFromHome,
-                    properties: marker.properties
-                  };
-                }
-              });
-            return nearest; // Return the nearest marker
-          })
-          .catch((error) => {
-            console.error("Error fetching GeoJSON:", error);
-            return 0; // Return 0 if there's an error
-          });
-      }
-    }    
+    }, [allData]) 
 
     useEffect(() => {
       if (data && selection) {
@@ -111,36 +77,24 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
           fetchTravelTime(data.latitude, data.longitude, data.workplaceLocation.latitude,data.workplaceLocation.longitude,"car")
           .then(time => {setWorkCarTime(time)})
         }
-        getNearest(mrtgeojson).then((obj) => {
+        GetNearest(mrtgeojson, { latitude: data.latitude, longitude: data.longitude }).then((obj) => {
           setNearestStation({name: obj.properties.Description, dist: obj.dist.toFixed(2), stationCode: obj.properties.code})
         });
-        getNearest(mrtfuturegeojson).then((obj) => {
+        GetNearest(mrtfuturegeojson, { latitude: data.latitude, longitude: data.longitude }).then((obj) => {
           setNearestFutureStation({name: obj.properties.Description, dist: obj.dist.toFixed(2), stationCode: obj.properties.code})
         });
         getAmenities(clinicgeojson, { latitude: data.latitude, longitude: data.longitude })
-        .then((count) => {setAmenities(prevState => ({
-          ...prevState, Clinics: count
-        }));})
+        .then((count) => {setAmenities(prevState => ({...prevState, Clinics: count }));})
         getAmenities(gymgeojson, { latitude: data.latitude, longitude: data.longitude })
-        .then((count) => {setAmenities(prevState => ({
-          ...prevState, Gyms: count
-        }));})
+        .then((count) => {setAmenities(prevState => ({...prevState, Gyms: count }));})
         getAmenities(hawkergeojson, { latitude: data.latitude, longitude: data.longitude })
-        .then((count) => {setAmenities(prevState => ({
-          ...prevState, Hawkers: count
-        }));})
+        .then((count) => {setAmenities(prevState => ({...prevState, Hawkers: count }));})
         getAmenities(parksgeojson, { latitude: data.latitude, longitude: data.longitude })
-        .then((count) => {setAmenities(prevState => ({
-          ...prevState, Parks: count
-        }));})
+        .then((count) => {setAmenities(prevState => ({...prevState, Parks: count }));})
         getAmenities(preschoolgeojson, { latitude: data.latitude, longitude: data.longitude })
-        .then((count) => {setAmenities(prevState => ({
-          ...prevState, Preschools: count
-        }));})
+        .then((count) => {setAmenities(prevState => ({...prevState, Preschools: count }));})
         getAmenities(mallsgeojson, { latitude: data.latitude, longitude: data.longitude })
-        .then((count) => {setAmenities(prevState => ({
-          ...prevState, Malls: count
-        }));})
+        .then((count) => {setAmenities(prevState => ({...prevState, Malls: count }));})
       }
     }, [data]);
 
