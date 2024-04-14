@@ -8,7 +8,7 @@ export function ImageDisplay({ query }) {
   const [photo, setPhoto] = useState(null);
 
   const getPhoto = async () => {
-    console.log("query is:"+query);
+    console.log("query is:" + query);
     setLoading(true);
     try {
       const response = await fetch(`https://api.pexels.com/v1/search?query=${query}&per_page=10`, {
@@ -18,9 +18,15 @@ export function ImageDisplay({ query }) {
       });
       const data = await response.json();
       if (data.photos.length > 0) {
-        // Randomly select an image from the top 10 results
-        const randomIndex = Math.floor(Math.random() * data.photos.length);
-        setPhoto(data.photos[randomIndex]);
+        // Filter square images from the top 10 results
+        const squarePhotos = data.photos.filter(photo => photo.width >= photo.height);
+        if (squarePhotos.length > 0) {
+          // Randomly select a square image from the filtered results
+          const randomIndex = Math.floor(Math.random() * squarePhotos.length);
+          setPhoto(squarePhotos[randomIndex]);
+        } else {
+          console.log("No square images found.");
+        }
       }
     } catch (error) {
       console.error('Error fetching photo:', error);
@@ -28,6 +34,7 @@ export function ImageDisplay({ query }) {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     getPhoto();

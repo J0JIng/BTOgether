@@ -1,184 +1,98 @@
-import { useEffect } from "react";
 import Navbar from "../components/NavBar";
 import { Link } from "react-router-dom";
-import "../css/aboutuspage.css";
-import btoLogo from "../assets/btodraftlogo.png";
-import btoimage from "../assets/hdbdraftimage1.jpg";
-import btoimage2 from "../assets/hdb_aesthetic.jpg";
-import Planner from "../assets/Planner.png";
-import Dashboard from "../assets/Dashboard.png";
-import Search from "../assets/Search.png";
-import Easy from "../assets/Easy.png";
-import apostrophe from "../assets/apostrophe2.png";
-import savetime from "../assets/save-time.png";
-import streetmap from "../assets/street-map.png";
-import handleScrollAnimation from "./script";
-import pinkwaves from "../assets/pinkwaves.svg";
+import '../css/aboutuspage.css';
+import btoimage from '../assets/hdbdraftimage1.jpg';
+import pinkwaves from '../assets/pinkwaves.svg'
+import mission from '../assets/scale.png'
+import unique from '../assets/diamond-anim.png'
+import goal from '../assets/mission.png'
+
 
 const AboutUsPage = () => {
-  useEffect(() => {
-    handleScrollAnimation();
-  }, []); // Run once after component mounts
+    return (  
+        <div className="entry-page">
 
-  useEffect(() => {
-    handleScrollAnimation();
-  }, []); // Run once after component mounts
+            <Navbar/>
 
-  return (
-    <div className="about-us-page">
-      <Navbar />
 
-      <div className="container anim-1">
-        <img src={btoimage} alt="bto-image" className="image-style" />
-      </div>
-
-      <div className="heading-box" style={{ margin: "10px" }}></div>
-
-      {/* use SVG waves .. import pinkwaves from '../assets/pinkwaves.svg'*/}
-      <div className="heading-box-waves">
-        <img src={pinkwaves} alt="pinkwaves" />
-      </div>
-
-      <div className="heading-text anim-1">
-        <div className="heading-text title">Your Search, Your Conditions</div>
-        <div className="heading-text description">
-          Streamline your BTO journey. Explore, plan, and secure your dream home
-          effortlessly with personalized recommendations and intuitive tools.
-          Your path, your terms.
-        </div>
-      </div>
-
-      <div className="logos">
-        <div className="key-features anim-1">
-          <div className="title ">Key Features</div>
-        </div>
-
-        <div className="top">
-          <div className="planner-container logo-block">
-            <img
-              src={Planner}
-              alt="Planner"
-              style={{ width: "225px", height: "225px", borderRadius: "5px" }}
-            />
-            <div className="header">Planner</div>
-            <div className="logo-description">
-              Some words that will become the description of the image and show
-              of the features of out website
+            <div className="aboutus-container">
+                <div className="aboutus-title">About Us</div>
+                <img src={btoimage} alt="bto-image" className="aboutus-image" />
             </div>
-          </div>
-          <div className="dashboard-container logo-block">
-            <img
-              src={Dashboard}
-              alt="Dashboard"
-              style={{ width: "225px", height: "225px", borderRadius: "5px" }}
-            />
-            <div className="header">Dashboard</div>
-            <div className="logo-description">
-              Some words that will become the description of the image and show
-              of the features of out website
+
+            <div className="heading-box">
+                {/* You can add any heading box content here if needed */}
             </div>
-          </div>
-        </div>
-        <div className="bottom">
-          <div className="easy-container logo-block">
-            <img
-              src={Easy}
-              alt="Easy To Search"
-              style={{ width: "225px", height: "225px", borderRadius: "5px" }}
-            />
-            <div className="header">Easy to Use</div>
-            <div className="logo-description">
-              Some words that will become the description of the image and show
-              of the features of out website
-            </div>
-          </div>
-          <div className="search-container logo-block">
-            <img
-              src={Search}
-              alt="Search Function"
-              style={{ width: "225px", height: "225px", borderRadius: "5px" }}
-            />
-            <div className="header">Search Function</div>
-            <div className="logo-description">
-              Some words that will become the description of the image and show
-              of the features of out website
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div className="anim-2 page-info">
-        <div className="desc-heading">
-          <div>Why use BTOgether?</div>
-        </div>
-        <div className="description-box">
-          <img src={apostrophe} className="apostrophe-image" />
-          <div className="description">
-            With BTOgether, the endless hours of scouring the web for your ideal
-            home is a thing of the past. BTOgether is a one stop solution to all
-            your BTO hunting needs. Explore a comprehensive database of BTO
-            projects, each curated to provide you with detailed insights and
-            analysis. From location advantages to pricing trends, we've got you
-            covered every step of the way!
-          </div>
-
-          <img src={savetime} className="save-time-image" />
-        </div>
-      </div>
-
-      <div className="anim-3 page-info">
-        <div className="desc-heading-second">Your Search, Your Conditions</div>
-        <div className="description-box-second">
-          <img src={streetmap} className="streetmap-image" />
-          <div className="description-second">
-            Uniting families and meeting needs, BTOgether empowers new home
-            owners to pinpoint the best locations for their new home. With
-            extensive search functionalities, seeking out your ideal home is
-            easy! Whether you're looking for gyms, supermarkets, schools,
-            clinics, malls or even hawker centres, BTOgether can narrow down the
-            best locations for you.
-          </div>
-          <img src={apostrophe} className="apostrophe-image-second" />
-        </div>
-      </div>
-
-      {/* <div className='anim-2 page-info'>
-                <div className="desc-heading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem totam distinctio esse enim! Impedit ipsa esse voluptatum officiis voluptas accusamus quos corrupti doloribus enim, omnis incidunt rerum laudantium quisquam ratione?</div>
+            <div className="heading-box-waves" >
+                <img src={pinkwaves} alt="pinkwaves" className='waves-image'/>
             </div>
 
 
-            <div className='anim-2 page-info'>
-                <div className="desc-heading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem totam distinctio esse enim! Impedit ipsa esse voluptatum officiis voluptas accusamus quos corrupti doloribus enim, omnis incidunt rerum laudantium quisquam ratione?</div>
+            <div className=" page-info">
+                <div className="desc-heading">
+                    <div>Mission and Values</div>
+                    
+                </div>
+                <div className="description-box">
+
+                    <div className="description">
+                    At BTOgether, our mission is clear: to be the premier destination for individuals seeking to navigate the intricate 
+                    landscape of Build-To-Order (BTO) housing in Singapore. We understand the anxieties and uncertainties that often 
+                    accompany the BTO application process, particularly for couples and young adults embarking on their journey towards 
+                    homeownership. That's why we've made it our purpose to alleviate these fears and provide a seamless, user-friendly 
+                    experience that guides users through every step of the application process.
+                    </div>
+
+                    <img src={mission} alt="mission" className="mission-image image-logo"/>
+
+                </div>
             </div>
 
-            
-            <div className='anim-2 page-info'>
-                <div className="desc-heading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem totam distinctio esse enim! Impedit ipsa esse voluptatum officiis voluptas accusamus quos corrupti doloribus enim, omnis incidunt rerum laudantium quisquam ratione?</div>
-            </div>    */}
+            <div className=" page-info">
+                <div className="desc-heading">
+                    <div>Unique Selling Proposition</div>
+                    
+                </div>
+                <div className="description-box">
+                 
+                    <div className="description">
+                    What sets us apart is our unwavering commitment to our users' needs. Our website offers innovative features that 
+                    revolutionize the BTO application experience. Our comprehensive Planner tool guides users through the step-by-step 
+                    process of applying for and obtaining a BTO property, while our intuitive DashBoard provides essential information 
+                    about BTO properties at their fingertips. Additionally, our search function offers unparalleled convenience, allowing 
+                    users to tailor their search results based on their unique preferences and priorities.
+                    </div>
 
-      <footer>
-        <div className="image-title">
-          <img
-            src={btoLogo}
-            className="bto-logo-bottom"
-            alt="bto-logo"
-            style={{ width: "200px", height: "200px", borderRadius: "5px" }}
-          />
-          <div className="title-and-tagline">
-            <div className="footer-title">BTOgether</div>
-            <div className="footer-title-tagline">
-              Your Search, Your Conditions
+                    <img src={unique} alt="unique" className="unique-image image-logo"/>
+                    
+                </div>
             </div>
-            <Link to="/login" className="get-started-button-footer">
-              Get Started
-            </Link>
-          </div>
+
+            <div className=" page-info">
+                <div className="desc-heading">
+                    <div>Future Goals</div>
+                    
+                </div>
+                <div className="description-box">
+
+                    <div className="description">
+                    Looking ahead, our aspirations are ambitious yet attainable. We aim to become the mainstream and widely accepted 
+                    standard method for Singaporeans to apply for BTOs and HDBs in general. We envision partnering with the government 
+                    to share our website with people nationwide, further extending our reach and impact. As we grow, we anticipate 
+                    expanding our team to enhance our capabilities and better serve our users. Additionally, we aspire to introduce 
+                    innovative features such as virtual tours inside BTOs, enabling users to make even more informed choices and comparisons.
+                    </div>
+
+                    <img src={goal} alt="goals" className="goals-image image-logo"/>
+
+                </div>
+            </div>
+
+            <div className="spacer"></div>
+
         </div>
-
-        <img src={btoimage2} className="bto-image-footer" />
-      </footer>
-    </div>
-  );
-};
-
+    );
+}
+ 
 export default AboutUsPage;

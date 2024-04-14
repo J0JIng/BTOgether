@@ -9,6 +9,7 @@ body {
 .heading-box {
   top: 0px;
   width: 100%;
+  margin: 10px;
   background-color: #f7776b;
   border-radius: 10px;
 
@@ -16,20 +17,24 @@ body {
   font-size: 20px;
   font-weight: 500;
 
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
+  width: 100%;
   position: absolute;
   left: -10px;
   z-index: -2;
 }
 
 .heading-box-waves {
-  top: 405px;
+  top: 505px;
   width: auto;
   height: 400px;
   position: absolute;
   left: -10px;
   z-index: -2;
 }
+
+
+
 
 /* #entry-navbar {
     position: fixed;
@@ -87,13 +92,12 @@ body {
     align-content: center;
     position: relative; */
 
+  margin-top: 100px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
-  z-index: 1;
+  width: 100%;
+  z-index: 10;
   /* max-height: 60vh; */
   margin-bottom: 100px;
 }
@@ -113,13 +117,10 @@ body {
   opacity: 0.9;
 }
 
-.image-style {
-  width: 889px;
-  height: 500px;
-  display: block;
+.first-hdb-image {
+  width: 800px;
+  height: 800px;
   border-radius: 10px;
-  margin-top: 80px;
-  margin-left: 300px;
 }
 
 .page-info {
@@ -176,6 +177,7 @@ body {
 
 .description-box {
   display: flex;
+  flex-wrap: wrap;
   margin-top: 20px;
 }
 
@@ -226,10 +228,10 @@ body {
 }
 
 .heading-text {
-  position: relative;
-  bottom: 220px;
-  left: 40px;
-  width: 55%;
+  /* position: relative;
+    bottom: 220px;
+    left: 40px; */
+  width: 30%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -247,6 +249,8 @@ body {
 .heading-text .description {
   line-height: 1.7;
   font-size: 18px;
+  width: 100%;
+  margin-bottom: 90px;
 }
 
 /* Define breakpoints for different screen sizes */
@@ -404,12 +408,6 @@ body {
 .logo-block:nth-child(4) {
   transition-delay: 600ms;
 }
-/* .anim-2.disappear {
-    opacity: 0;
-    filter : blur(0);
-    transform: translateX(-100%);
-    transition: 1s;
-} */
 
 footer {
   display: flex;
@@ -501,13 +499,23 @@ footer {
 }
 
 @media screen and (max-width: 1164px) {
-  .bto-image-footer {
+  .ge-footer {
     display: none;
   }
 }
 
 @media screen and (max-width: 1665px) {
-  .heading-text {
-    width: 50%;
+  /* .heading-text {
+        width: 50%;
+    } */
+}
+
+@media screen and (max-width: 1148px) {
+  /* .heading-text {
+        width: 50%;
+    } */
+  .image-logo {
+    display: none;
   }
 }
+

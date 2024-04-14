@@ -5,8 +5,6 @@ import "../css/dashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faMaximize } from "@fortawesome/free-solid-svg-icons";
 
-
-import cat2 from "../assets/btolocation/image.png";
 import BarChart from "../components/BarChart";
 import Counter from "../components/Counter";
 import Timer from "../components/Timer";
@@ -120,21 +118,21 @@ const renderDisplayHandler = (
   }
   if (title === "Location") {
     return (
-      <div className="p-4 rounded-lg flex justify-center items-center object-cover h-48 w-96 overflow-hidden">
+      <div class="p-4  rounded-b-lg flex justify-end  object-cover h-48 w-96 ">
         {/* add image from pexel here  */}
         <ImageDisplay query={"singapore"} />
       </div>
     );
   } else if (title === "Town Council") {
     return (
-      <div className="p-4 rounded-lg flex justify-center items-center object-cover h-48 w-96 overflow-hidden">
+      <div class="p-4 rounded-b-lg flex justify-end object-cover h-48 w-96 overflow-hidden">
         {/* add image from pexel here  */}
         <ImageDisplay query={"architecture"}  />
       </div>
     );
   } else if (title === "Number of Rooms") {
     return (
-      <div className="p-4 rounded-lg flex justify-center items-center object-cover h-48 w-96 overflow-hidden">
+      <div class="p-4 rounded-b-lg flex justify-end  object-cover h-48 w-96 overflow-hidden">
         {/* add image from pexel here  */}
         <ImageDisplay query={"common corridor of hdb flat"} />
       </div>

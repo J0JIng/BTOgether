@@ -11,8 +11,8 @@ import Easy from "../assets/Easy.png";
 import apostrophe from "../assets/apostrophe2.png";
 import savetime from "../assets/save-time.png";
 import streetmap from "../assets/street-map.png";
-import handleScrollAnimation from "./script";
 import pinkwaves from "../assets/pinkwaves.svg";
+import handleScrollAnimation from "./script";
 
 const EntryPage = () => {
   useEffect(() => {
@@ -43,24 +43,36 @@ const EntryPage = () => {
       </div>
 
       <div className="container anim-1">
-        <img src={btoimage} alt="bto-image" className="image-style" />
-      </div>
-
-      <div className="heading-box" style={{ margin: "10px" }}></div>
-
-      {/* use SVG waves .. import pinkwaves from '../assets/pinkwaves.svg'*/}
-      <div className="heading-box-waves">
-        <img src={pinkwaves} alt="pinkwaves" />
-      </div>
-
-      <div className="heading-text anim-1">
-        <div className="heading-text title">Your Search, Your Conditions</div>
-        <div className="heading-text description">
-          Streamline your BTO journey. Explore, plan, and secure your dream home
-          effortlessly with personalized recommendations and intuitive tools.
-          Your path, your terms.
+        <div className="heading-text anim-1">
+          <div className="heading-text title">Your Search, Your Conditions</div>
+          <div className="heading-text description">
+            Streamline your BTO journey. Explore, plan, and secure your dream
+            home effortlessly with personalized recommendations and intuitive
+            tools. Your path, your terms.
+          </div>
         </div>
+
+        <img
+          src={btoimage}
+          alt="bto-image"
+          className="first-hdb-image image-style"
+        />
       </div>
+
+      <div className="heading-box"></div>
+
+      <div className="heading-box-waves">
+        <img src={pinkwaves} alt="pinkwaves" className="waves-image" />
+      </div>
+
+      {/* <div className="heading-text anim-1">
+                <div className="heading-text title">Your Search, Your Conditions</div>
+                <div className="heading-text description">
+                Streamline your BTO journey. Explore, plan, and secure your dream home 
+                effortlessly with personalized recommendations and intuitive tools. 
+                Your path, your terms.
+                </div>
+            </div> */}
 
       <div className="logos">
         <div className="key-features anim-1">
@@ -155,20 +167,6 @@ const EntryPage = () => {
           <img src={apostrophe} className="apostrophe-image-second" />
         </div>
       </div>
-
-      {/* <div className='anim-2 page-info'>
-                <div className="desc-heading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem totam distinctio esse enim! Impedit ipsa esse voluptatum officiis voluptas accusamus quos corrupti doloribus enim, omnis incidunt rerum laudantium quisquam ratione?</div>
-            </div>
-
-
-            <div className='anim-2 page-info'>
-                <div className="desc-heading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem totam distinctio esse enim! Impedit ipsa esse voluptatum officiis voluptas accusamus quos corrupti doloribus enim, omnis incidunt rerum laudantium quisquam ratione?</div>
-            </div>
-
-            
-            <div className='anim-2 page-info'>
-                <div className="desc-heading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem totam distinctio esse enim! Impedit ipsa esse voluptatum officiis voluptas accusamus quos corrupti doloribus enim, omnis incidunt rerum laudantium quisquam ratione?</div>
-            </div>    */}
 
       <footer>
         <div className="image-title">

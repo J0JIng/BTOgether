@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSpinner
+} from "@fortawesome/free-solid-svg-icons";
+
 
 const GoogleGenerativeAIComponent = ({ prompt }) => {
   const [generatedContent, setGeneratedContent] = useState("");
@@ -49,9 +54,12 @@ const GoogleGenerativeAIComponent = ({ prompt }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       {isLoading ? (
-        <p>Loading...</p>
+        <div className="flex flex-col items-center">
+          <FontAwesomeIcon icon={faSpinner} className="animate-spin text-black" />
+          <p className="text-gray-600 mt-2">Loading</p>
+        </div>
       ) : (
         <div>{formatContent(generatedContent)}</div>
       )}
