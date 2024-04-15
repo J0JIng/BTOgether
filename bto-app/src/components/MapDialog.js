@@ -63,7 +63,7 @@ export default function MapDialog({ type, locationInfo }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     try {
       // Geocode the address for each updated field
@@ -102,9 +102,7 @@ export default function MapDialog({ type, locationInfo }) {
         const longitude = parseFloat(lon).toFixed(5);
         const road =
           geocodingResponse.data[0].address.road ||
-          geocodingResponse.data[0].address.suburb ||
-          geocodingResponse.data[0].address.postcode;
-
+          geocodingResponse.data[0].display_name;
         const singaporeBounds = {
           north: 1.5,
           south: 1.1,
@@ -157,7 +155,7 @@ export default function MapDialog({ type, locationInfo }) {
       if (response.data) {
         const road = response.data.address.road
           ? response.data.address.road
-          : response.data.address.suburb;
+          : response.data.display_name;
         setHomeLocation({
           address: road,
           latitude: latitude,
@@ -232,6 +230,11 @@ export default function MapDialog({ type, locationInfo }) {
                   </IconButton>
                 </InputAdornment>
               ),
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSubmit(); // Call your search function here
+              }
             }}
           />
           <div style={{ marginRight: "7px" }}>

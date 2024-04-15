@@ -793,7 +793,6 @@ const GeojsonMapComponent = () => {
                 height: "70vh",
                 border: "4px LightSteelBlue solid",
                 borderRadius: "5px",
-                marginRight: "20px",
               }}
             >
               {/* Google Map Tile Layer */}
@@ -887,6 +886,11 @@ const GeojsonMapComponent = () => {
                     </IconButton>
                   </InputAdornment>
                 ),
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleGeocode(); // Call your search function here
+                }
               }}
             />
             <Stack
