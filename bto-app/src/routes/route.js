@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { ProtectedRoute } from "../components/protectedRoute";
+import { PrivateRoute } from "../components/PrivateRoute";
 import "../css/global.css";
 
 import {
@@ -61,63 +61,63 @@ const AppRouter = () => {
         <Route
           path={spinalCase(home)}
           element={
-            <ProtectedRoute user={user}>
+            <PrivateRoute user={user}>
               <HomePage />
-            </ProtectedRoute>
+            </PrivateRoute>
           }
         ></Route>
 
         <Route
           path={spinalCase(faqsTabName)}
           element={
-            <ProtectedRoute user={user}>
+            <PrivateRoute user={user}>
               <FAQsPage />
-            </ProtectedRoute>
+            </PrivateRoute>
           }
         ></Route>
 
         <Route
           path={spinalCase(aboutUs)}
           element={
-            <ProtectedRoute user={user}>
+            <PrivateRoute user={user}>
               <AboutUsPage />
-            </ProtectedRoute>
+            </PrivateRoute>
           }
         ></Route>
 
         <Route
           path={spinalCase(profile)}
           element={
-            <ProtectedRoute user={user}>
+            <PrivateRoute user={user}>
               <ManageProfilePage />
-            </ProtectedRoute>
+            </PrivateRoute>
           }
         ></Route>
 
         <Route
           path={spinalCase(btofind)}
           element={
-            <ProtectedRoute user={user}>
+            <PrivateRoute user={user}>
               <BtoFindPage />
-            </ProtectedRoute>
+            </PrivateRoute>
           }
         ></Route>
 
         <Route
           path={spinalCase(btoplanner)}
           element={
-            <ProtectedRoute user={user}>
+            <PrivateRoute user={user}>
               <BtoPlannerPage />
-            </ProtectedRoute>
+            </PrivateRoute>
           }
         ></Route>
 
         <Route
           path={spinalCase(dashboard)}
           element={
-            <ProtectedRoute user={user}>
+            <PrivateRoute user={user}>
               <DashboardPage />
-            </ProtectedRoute>
+            </PrivateRoute>
           }
         ></Route>
 
