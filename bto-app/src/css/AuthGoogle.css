@@ -1,9 +1,6 @@
 .login-with-google-btn {
   margin-top: 18px;
   cursor: pointer;
-  /* width : 200px;
-  margin-left: auto;
-  margin-right: auto; */
 
   transition: background-color 0.3s, box-shadow 0.3s;
 

@@ -139,7 +139,20 @@ const GeojsonMapComponent = () => {
         }}
       >
         <p>Home location set successfully!</p>
-        <button onClick={onClose}>Close</button>
+        {/* <button onClick={onClose}>Close</button> */}
+        <Button
+          variant="contained"
+          onClick={onClose}
+          sx={{
+            mr: 1,
+            boxShadow: 1,
+            textTransform: "none",
+            backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },
+          }}
+        >
+          close
+        </Button>
       </div>
     );
   };
@@ -370,11 +383,63 @@ const GeojsonMapComponent = () => {
             </Select>
           </FormControl>
         </Box>
-        <button onClick={() => savingInBTO(1)}>Save as BTO1</button>
-        <button onClick={() => savingInBTO(2)}>Save as BTO2</button>
-        <button onClick={() => savingInBTO(3)}>Save as BTO3</button>
+        {/* <button onClick={() => savingInBTO(1)}>Save as BTO1</button> */}
+        <Button
+          variant="contained"
+          onClick={() => savingInBTO(1)}
+          sx={{
+            mr: 1,
+            boxShadow: 1,
+            textTransform: "none",
+            backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },
+          }}
+        >
+          Save as BTO1
+        </Button>
 
-        <button onClick={closeFormPopup}>Close</button>
+        {/* <button onClick={() => savingInBTO(2)}>Save as BTO2</button> */}
+        <Button
+          variant="contained"
+          onClick={() => savingInBTO(2)}
+          sx={{
+            mr: 1,
+            boxShadow: 1,
+            textTransform: "none",
+            backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },
+          }}
+        >
+          Save as BTO2
+        </Button>
+        {/* <button onClick={() => savingInBTO(3)}>Save as BTO3</button> */}
+        <Button
+          variant="contained"
+          onClick={() => savingInBTO(3)}
+          sx={{
+            mr: 1,
+            boxShadow: 1,
+            textTransform: "none",
+            backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },
+          }}
+        >
+          Save as BTO3
+        </Button>
+        {/* <button onClick={closeFormPopup}>Close</button> */}
+        <Button
+          variant="contained"
+          onClick={closeFormPopup}
+          sx={{
+            mr: 1,
+            boxShadow: 1,
+            textTransform: "none",
+            backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },
+          }}
+        >
+          Close
+        </Button>
       </Box>
     );
   };

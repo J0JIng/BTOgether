@@ -33,8 +33,6 @@ const SignUp = ({ user }) => {
 
   return (
     <div className="register-box">
-     
-
       <div className="email">
         <label className="email-label" htmlFor="email">
           Email
@@ -58,7 +56,7 @@ const SignUp = ({ user }) => {
           onChange={handlePasswordChange}
         />
       </div>
-    
+
       <button className="sign-in-button" type="button" onClick={handleSignUp}>
         Sign Up
       </button>
@@ -68,7 +66,6 @@ const SignUp = ({ user }) => {
       </div>
 
       <AuthGoogle user={user} />
-
     </div>
   );
 };

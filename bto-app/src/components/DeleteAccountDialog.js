@@ -14,7 +14,12 @@ import {
   getDocs,
   deleteDoc,
 } from "firebase/firestore";
-import { getAuth, reauthenticateWithCredential, EmailAuthProvider, signOut } from "firebase/auth";
+import {
+  getAuth,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  signOut,
+} from "firebase/auth";
 import { signInWithPopup } from "firebase/auth";
 import { provider } from "../utils/firebase";
 
@@ -22,7 +27,7 @@ export default function DeleteAccountDialog() {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(); // Define errorMessage state
-  const [isGoogle, setIsGoogle] = useState()
+  const [isGoogle, setIsGoogle] = useState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,13 +35,15 @@ export default function DeleteAccountDialog() {
     setPassword("");
 
     const user = auth.currentUser;
-    const isGoogleSignIn = user.providerData.some(provider => provider.providerId === 'google.com');
+    const isGoogleSignIn = user.providerData.some(
+      (provider) => provider.providerId === "google.com"
+    );
 
     if (isGoogleSignIn) {
-      console.log('User is signed in with Google');
-      setIsGoogle(true)
+      console.log("User is signed in with Google");
+      setIsGoogle(true);
     } else {
-      setIsGoogle(false)
+      setIsGoogle(false);
     }
   };
 
@@ -52,31 +59,36 @@ export default function DeleteAccountDialog() {
   const deleteAccount = () => {
     const prevUser = auth.currentUser;
     const user = auth.currentUser;
-    console.log(user.providerData.map(provider => provider.providerId));
+    console.log(user.providerData.map((provider) => provider.providerId));
 
-    if (user.providerData.some((provider) => provider.providerId === 'google.com')) {
+    if (
+      user.providerData.some((provider) => provider.providerId === "google.com")
+    ) {
       // User is signed in with Google, handle accordingly
-      console.log('Cannot delete Google account directly through Firebase');
+      console.log("Cannot delete Google account directly through Firebase");
       signInWithPopup(auth, provider)
         .then((result) => {
           const user = result.user;
-          console.log("now",user);
-          console.log("prev",prevUser);
+          console.log("now", user);
+          console.log("prev", prevUser);
           if (prevUser.email != user.email) {
-            alert("Authenticated with different email, Please Sign In Again")
+            alert("Authenticated with different email, Please Sign In Again");
             const auth = getAuth();
-            signOut(auth).then(() => {
-              // Sign-out successful.
-              console.log("signing out")
-            }).catch((error) => {
-              // An error happened.
-              console.error("Error signing out:", error);
-            });
-            console.log("returning")
-            return
+            signOut(auth)
+              .then(() => {
+                // Sign-out successful.
+                console.log("signing out");
+              })
+              .catch((error) => {
+                // An error happened.
+                console.error("Error signing out:", error);
+              });
+            console.log("returning");
+            return;
           }
           // User reauthenticated successfully, proceed to delete account
-          user.delete()
+          user
+            .delete()
             .then(() => {
               // User deleted.
               const db = getFirestore();
@@ -128,14 +140,15 @@ export default function DeleteAccountDialog() {
       return;
     }
 
-    console.log("Signed in with regular email")
+    console.log("Signed in with regular email");
     const authInstance = getAuth();
     const credential = EmailAuthProvider.credential(user.email, password);
 
     reauthenticateWithCredential(authInstance.currentUser, credential)
       .then(() => {
         // User reauthenticated successfully, proceed to delete account
-        user.delete()
+        user
+          .delete()
           .then(() => {
             // User deleted.
             const db = getFirestore();
@@ -176,9 +189,7 @@ export default function DeleteAccountDialog() {
       .catch((error) => {
         // Reauthentication failed, handle error
         console.error("Error reauthenticating:", error);
-        setErrorMessage(
-          "Incorrect Password. Please try again"
-        );
+        setErrorMessage("Incorrect Password. Please try again");
       });
   };
 
@@ -208,8 +219,12 @@ export default function DeleteAccountDialog() {
               error={errorMessage != null}
               helperText={errorMessage ? errorMessage : null}
               onChange={handlePasswordChange}
-            />)}
-          <p>This action cannot be undone. Press the Red Button to Confirm Account Deletion</p>
+            />
+          )}
+          <p>
+            This action cannot be undone. Press the Red Button to Confirm
+            Account Deletion
+          </p>
         </DialogContent>
         <DialogActions sx={{ m: 1 }}>
           <Button
@@ -227,7 +242,9 @@ export default function DeleteAccountDialog() {
             sx={{ boxShadow: 1 }}
             startIcon={<DeleteIcon />}
           >
-            {isGoogle? "Reauthenticate And Delete" : "Confirm Account Deletion"}
+            {isGoogle
+              ? "Reauthenticate And Delete"
+              : "Confirm Account Deletion"}
           </Button>
         </DialogActions>
       </Dialog>

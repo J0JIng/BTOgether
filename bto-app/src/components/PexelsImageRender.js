@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-const PEXELS_API_KEY = 'HLhZphBYMeRcerPCdf2PuQ7AvbQtLoOEsNNlP1oY02wNEeV4GClQm70O'; // Replace with your actual API key
+const PEXELS_API_KEY =
+  "HLhZphBYMeRcerPCdf2PuQ7AvbQtLoOEsNNlP1oY02wNEeV4GClQm70O"; // Replace with your actual API key
 
 export function ImageDisplay({ query }) {
-
   const [loading, setLoading] = useState(true);
   const [photo, setPhoto] = useState(null);
 
@@ -11,15 +11,20 @@ export function ImageDisplay({ query }) {
     console.log("query is:" + query);
     setLoading(true);
     try {
-      const response = await fetch(`https://api.pexels.com/v1/search?query=${query}&per_page=10`, {
-        headers: {
-          Authorization: PEXELS_API_KEY,
-        },
-      });
+      const response = await fetch(
+        `https://api.pexels.com/v1/search?query=${query}&per_page=10`,
+        {
+          headers: {
+            Authorization: PEXELS_API_KEY,
+          },
+        }
+      );
       const data = await response.json();
       if (data.photos.length > 0) {
         // Filter square images from the top 10 results
-        const squarePhotos = data.photos.filter(photo => photo.width >= photo.height);
+        const squarePhotos = data.photos.filter(
+          (photo) => photo.width >= photo.height
+        );
         if (squarePhotos.length > 0) {
           // Randomly select a square image from the filtered results
           const randomIndex = Math.floor(Math.random() * squarePhotos.length);
@@ -29,12 +34,11 @@ export function ImageDisplay({ query }) {
         }
       }
     } catch (error) {
-      console.error('Error fetching photo:', error);
+      console.error("Error fetching photo:", error);
     } finally {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
     getPhoto();

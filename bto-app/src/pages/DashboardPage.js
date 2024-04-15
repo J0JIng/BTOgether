@@ -616,12 +616,12 @@ export default function DashboardPage() {
             <div class="overflow-auto">
             <Gemini prompt={findContainerDescription(currentContainerId)}/>
             </div>
-            <button
+            <button 
               onClick={() => {
                 onDeleteContainer(currentContainerId);
                 setShowAddInfoModal(false);
               }}
-              className="absolute bottom-3 right-3 p-2 border-transparent shadow-md border rounded-md hover:bg-red-400 transition duration-300 "
+              className="dashboard-button absolute bottom-3 right-3 p-2 border-transparent shadow-md border rounded-md hover:bg-red-400 transition duration-300 "
             >
               <FontAwesomeIcon icon={faTrashCan} />
             </button>
@@ -637,7 +637,7 @@ export default function DashboardPage() {
 
             {activeBTO !== null && (
               <Button
-                className={`border-transparent px-3 py-3 relative transition duration-300 ease-in-out bg-transparent ${
+                className={` dashboard-button border-transparent px-3 py-3 relative transition duration-300 ease-in-out bg-transparent ${
                   isHeartClicked ? "text-transparent" : "text-red-500"
                 }`}
                 onClick={removeFavouriteBTO} // Set clicked state to true when button is clicked

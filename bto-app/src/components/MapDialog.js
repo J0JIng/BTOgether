@@ -232,7 +232,7 @@ export default function MapDialog({ type, locationInfo }) {
               ),
             }}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 handleSubmit(); // Call your search function here
               }
             }}

@@ -51,7 +51,7 @@ export const fetchTravelTime = async (
     if (minutes > 0) {
       totalTimeTaken += `${minutes} min`;
     }
-  
+
     return totalTimeTaken;
   } catch (error) {
     return error;

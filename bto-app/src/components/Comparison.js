@@ -26,7 +26,7 @@ const Comparison = forwardRef((props, ref) => {
   useEffect(() => {
     if (ref) {
       ref.current = {
-        openComparison: handleClickOpen
+        openComparison: handleClickOpen,
       };
     }
   }, [ref, handleClickOpen]);
@@ -37,10 +37,8 @@ const Comparison = forwardRef((props, ref) => {
 
   // Load Data using Utility
   const [loadedData, setLoadedData] = useState(null);
-
   const [leftData, setLeftData] = useState(null);
   const [rightData, setRightData] = useState(null);
-
   const [leftSelection, setLeftSelection] = useState("");
   const [rightSelection, setRightSelection] = useState("");
 
@@ -123,7 +121,7 @@ const Comparison = forwardRef((props, ref) => {
       console.log("Setting data:", data);
       setLoadedData(data);
     } else {
-      console.log("No data found"); 
+      console.log("No data found");
     }
   };
 

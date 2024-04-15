@@ -30,24 +30,32 @@ const Timer = ({ value }) => {
   }, [value]);
 
   return (
-    <div className={`w-48 p-4 bg-gray-100 rounded-lg shadow-md ring-8 ${borderColor}`}>
+    <div
+      className={`w-48 p-4 bg-gray-100 rounded-lg shadow-md ring-8 ${borderColor}`}
+    >
       {/* Timer display */}
       <div className="flex items-center justify-center">
         <div className="flex flex-col items-center">
           {/* Hours */}
-          <span className="text-3xl font-bold">{hours < 10 ? `0${hours}` : hours}</span>
+          <span className="text-3xl font-bold">
+            {hours < 10 ? `0${hours}` : hours}
+          </span>
           <span className="text-sm">Hours</span>
         </div>
         <span className="mx-2 text-3xl">:</span>
         <div className="flex flex-col items-center">
           {/* Minutes */}
-          <span className="text-3xl font-bold">{minutes < 10 ? `0${minutes}` : minutes}</span>
+          <span className="text-3xl font-bold">
+            {minutes < 10 ? `0${minutes}` : minutes}
+          </span>
           <span className="text-sm">Minutes</span>
         </div>
         <span className="mx-2 text-3xl">:</span>
         <div className="flex flex-col items-center">
           {/* Seconds */}
-          <span className="text-3xl font-bold">{seconds < 10 ? `0${seconds}` : seconds}</span>
+          <span className="text-3xl font-bold">
+            {seconds < 10 ? `0${seconds}` : seconds}
+          </span>
           <span className="text-sm">Seconds</span>
         </div>
       </div>

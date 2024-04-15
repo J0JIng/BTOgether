@@ -3,8 +3,8 @@ import NavBar from "../components/NavBar";
 import { Link } from "react-router-dom";
 import "../css/homepage.css";
 import dashboard from "../assets/dashboard-actual.png";
-import btofind from "../assets/bto-find-actual.png"
-import Planner from "../assets/bto-planner-actual.png"
+import btofind from "../assets/bto-find-actual.png";
+import Planner from "../assets/bto-planner-actual.png";
 
 const HomePage = () => {
   const [showGridsAnimation, setShowGridsAnimation] = useState(true);

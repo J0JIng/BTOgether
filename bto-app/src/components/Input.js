@@ -170,7 +170,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
     }
     return null;
   };
-  
+
   return (
     <div className="w-full">
       <form>
