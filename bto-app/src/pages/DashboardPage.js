@@ -608,7 +608,7 @@ export default function DashboardPage() {
 
         {/* Add Informational Modal*/}
         <Modal showModal={showAddInfoModal} setShowModal={setShowAddInfoModal}>
-          <div className="flex flex-col w-full items-center justify-center gap-y-4 h-400px overflow-auto">
+          <div className="flex flex-col w-full items-center justify-center gap-y-4 h-400px overflow-auto relative">
             <h1 className="text-green-800 text-3xl font-bold">
               {findContainerTitle(currentContainerId)}
             </h1>
@@ -621,7 +621,7 @@ export default function DashboardPage() {
                 onDeleteContainer(currentContainerId);
                 setShowAddInfoModal(false);
               }}
-              className="dashboard-button absolute bottom-3 right-3 p-2 border-transparent shadow-md border rounded-md hover:bg-red-400 transition duration-300 "
+              className="dashboard-button absolute bottom-2 right-2 p-2 border-transparent shadow-md border rounded-md hover:bg-red-400 transition duration-300 "
             >
               <FontAwesomeIcon icon={faTrashCan} />
             </button>

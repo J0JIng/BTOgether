@@ -1,4 +1,3 @@
-"use client";
 import { useCallback, useEffect, useRef } from "react";
 import FocusTrap from "focus-trap-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -47,9 +46,10 @@ export default function Modal({
             >
               <div
                 className={clsx(
-                  `overflow relative w-full max-w-lg transform rounded-xl border border-gray-200 bg-white p-6 text-left shadow-2xl transition-all`,
+                  `relative w-full max-w-lg transform rounded-xl border border-gray-200 bg-white p-6 text-left shadow-2xl transition-all overflow-y-auto`, // Added overflow-y-auto
                   containerClasses
                 )}
+                style={{ maxHeight: "80vh" }} // Set a maximum height for scrolling
               >
                 {children}
               </div>
