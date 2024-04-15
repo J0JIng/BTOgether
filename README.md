@@ -17,3 +17,7 @@ Open http://localhost:3000 to view it in the browser.
 
 Alternatively, you may choose to view our website hosted on firebase:
 https://btogether-571a3.web.app/
+
+
+## Usage:
+It is intended for use within a website environment only.
