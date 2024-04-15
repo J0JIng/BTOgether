@@ -8,7 +8,6 @@ body {
 
 .heading-box{
     top: 0px;
-    width: 100%;
     margin: 10px;
     background-color: #f7776b;
     border-radius: 10px;
@@ -18,19 +17,28 @@ body {
     font-weight: 500;
     
     /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
-    width: 100%;
+    width: 110%;
     position: absolute;
     left: -10px;
     z-index: -2;
 }
 
-.waves-image {
+.heading-box-waves {
     position: relative;
-    bottom: 198px;
-    right: 8px;
+    bottom: 94px;
+}
+
+.waves-image {
+    position: inherit;
+    /* bottom: 0px;
+    right: 8px; */
     z-index: -1;
     width: 110%;
     height: auto;
+}
+
+@media (max-width: 1290px) {
+
 }
 
 /* #entry-navbar {
@@ -286,7 +294,7 @@ body {
     }
 }
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
     .image-style{
         height: 180px;
         width: 320px;
@@ -294,7 +302,7 @@ body {
     .heading-box{
         height: 200px;
     }
-}
+} */
 
 /* For elements with animation type 1 */
 
