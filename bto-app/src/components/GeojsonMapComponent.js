@@ -9,6 +9,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import { Icon } from "leaflet";
+import L from "leaflet";
 import {
   getFirestore,
   collection,
@@ -27,6 +28,7 @@ import {
   Stack,
   Button,
 } from "@mui/material";
+import Slider from "@mui/material/Slider";
 import { InputAdornment, Typography } from "@mui/material";
 import { IconButton } from "@mui/material";
 import { query, where } from "firebase/firestore";
@@ -139,20 +141,7 @@ const GeojsonMapComponent = () => {
         }}
       >
         <p>Home location set successfully!</p>
-        {/* <button onClick={onClose}>Close</button> */}
-        <Button
-          variant="contained"
-          onClick={onClose}
-          sx={{
-            mr: 1,
-            boxShadow: 1,
-            textTransform: "none",
-            backgroundColor: "#f7776b",
-            "&:hover": { backgroundColor: "#c55f55" },
-          }}
-        >
-          close
-        </Button>
+        <button onClick={onClose}>Close</button>
       </div>
     );
   };
@@ -383,63 +372,11 @@ const GeojsonMapComponent = () => {
             </Select>
           </FormControl>
         </Box>
-        {/* <button onClick={() => savingInBTO(1)}>Save as BTO1</button> */}
-        <Button
-          variant="contained"
-          onClick={() => savingInBTO(1)}
-          sx={{
-            mr: 1,
-            boxShadow: 1,
-            textTransform: "none",
-            backgroundColor: "#f7776b",
-            "&:hover": { backgroundColor: "#c55f55" },
-          }}
-        >
-          Save as BTO1
-        </Button>
+        <button onClick={() => savingInBTO(1)}>Save as BTO1</button>
+        <button onClick={() => savingInBTO(2)}>Save as BTO2</button>
+        <button onClick={() => savingInBTO(3)}>Save as BTO3</button>
 
-        {/* <button onClick={() => savingInBTO(2)}>Save as BTO2</button> */}
-        <Button
-          variant="contained"
-          onClick={() => savingInBTO(2)}
-          sx={{
-            mr: 1,
-            boxShadow: 1,
-            textTransform: "none",
-            backgroundColor: "#f7776b",
-            "&:hover": { backgroundColor: "#c55f55" },
-          }}
-        >
-          Save as BTO2
-        </Button>
-        {/* <button onClick={() => savingInBTO(3)}>Save as BTO3</button> */}
-        <Button
-          variant="contained"
-          onClick={() => savingInBTO(3)}
-          sx={{
-            mr: 1,
-            boxShadow: 1,
-            textTransform: "none",
-            backgroundColor: "#f7776b",
-            "&:hover": { backgroundColor: "#c55f55" },
-          }}
-        >
-          Save as BTO3
-        </Button>
-        {/* <button onClick={closeFormPopup}>Close</button> */}
-        <Button
-          variant="contained"
-          onClick={closeFormPopup}
-          sx={{
-            mr: 1,
-            boxShadow: 1,
-            textTransform: "none",
-            backgroundColor: "#f7776b",
-            "&:hover": { backgroundColor: "#c55f55" },
-          }}
-        >
-          Close
-        </Button>
+        <button onClick={closeFormPopup}>Close</button>
       </Box>
     );
   };
@@ -678,6 +615,14 @@ const GeojsonMapComponent = () => {
 
   const toggleJson = () => {
     setRoutingLocation({ latitude: null, longitude: null });
+    mapRef.current.eachLayer((layer) => {
+      if (
+        layer instanceof L.Polyline &&
+        layer.options.className === "publictransport"
+      ) {
+        mapRef.current.removeLayer(layer);
+      }
+    });
     if (chosenJson === gymgeojson) {
       setChosenJson(hawkergeojson);
     } else if (chosenJson === hawkergeojson) {
@@ -750,33 +695,31 @@ const GeojsonMapComponent = () => {
     <Container sx={{ mr: 1, boxShadow: 3 }} maxWidth="100%">
       <div className="map-container__top-bar">
         <h2>Map View of {mapTitle}</h2>
-
         {/* Distance slider*/}
-        <div className="slider-container">
-          <label htmlFor="distance-slider">Filter Distance (in km): </label>
-          <input
-            id="distance-slider"
-            className="slider"
-            type="range"
-            min="0"
-            max="10"
-            value={distance}
+        <div style={{ minWidth: "30%" }}>
+          <h3>Filter Distance (in km): {distance} km</h3>
+          <Slider
+            aria-label="Restricted values"
+            defaultValue={1}
+            step={1}
+            min={0}
+            max={10}
+            marks={[
+              { value: 0, label: "0" },
+              { value: 1, label: "1" },
+              { value: 2, label: "2" },
+              { value: 3, label: "3" },
+              { value: 4, label: "4" },
+              { value: 5, label: "5" },
+              { value: 6, label: "6" },
+              { value: 7, label: "7" },
+              { value: 8, label: "8" },
+              { value: 9, label: "9" },
+              { value: 10, label: "10" },
+            ]}
             onChange={(e) => setDistance(e.target.value)}
+            sx={{ color: "#f7776b" }}
           />
-          <span className="slider-distance">{distance} km</span>
-          {showDetails && (
-            <div>
-              <span style={{ fontWeight: "bold", fontSize: 18 }}>
-                Project Name:{" "}
-              </span>
-              {projectName}
-              <br />
-              <span style={{ fontWeight: "bold", fontSize: 18 }}>
-                Number of Rooms:{" "}
-              </span>
-              {numberOfRooms}
-            </div>
-          )}
         </div>
       </div>
 
@@ -788,41 +731,61 @@ const GeojsonMapComponent = () => {
             <div className="table-container">
               <table className="table-style">
                 <thead>
-                  <tr>
-                    <th>
+                  <Container
+                    sx={{
+                      pb: 2,
+                      pl: 0,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography variant="h7">
                       {markers.length} {mapTitle} in {distance}km Radius:
-                    </th>
-                  </tr>
+                    </Typography>
+                  </Container>
                 </thead>
                 <tbody>
                   {markers.map((marker, index) => (
                     <>
                       <tr key={index}>
                         <td>
-                          <div className="table-style__name">
+                          <Container
+                            sx={{
+                              boxShadow: 1,
+                              p: 2,
+                              mb: 2,
+                              mr: 2,
+                              border: "2px lightgray solid",
+                              borderRadius: 2,
+                            }}
+                          >
                             {extractNameFromHtml(marker)}
-                          </div>
-                          <div className="table-style__address">
-                            <span>
+                            <div className="table-style__address">
                               {extractAttributeName(
                                 marker,
                                 "ADDRESSSTREETNAME"
                               )}
-                            </span>
-                            {extractAttributeName(marker, "ADDRESSPOSTALCODE")}
-                            <span>
+                              <br />
+                              {extractAttributeName(
+                                marker,
+                                "ADDRESSPOSTALCODE"
+                              )}
                               {extractAttributeName(marker, "STREET_NAME")}
-                            </span>
-                            {extractAttributeName(marker, "POSTAL_CD")}
-                          </div>
-                          <div className="table-style__maptitle">
-                            <img
-                              src={markerIcon.options.iconUrl}
-                              alt={JSON.stringify(markerIcon)}
-                              style={{ width: 24, height: 24, marginRight: 5 }}
-                            />
-                            {mapTitle.slice(0, -1)}
-                          </div>
+                              {extractAttributeName(marker, "POSTAL_CD")}
+                            </div>
+                            <div className="table-style__maptitle">
+                              <img
+                                src={markerIcon.options.iconUrl}
+                                alt={JSON.stringify(markerIcon)}
+                                style={{
+                                  width: 24,
+                                  height: 24,
+                                  marginRight: 5,
+                                }}
+                              />
+                              {mapTitle.slice(0, -1)}
+                            </div>
+                          </Container>
                         </td>
                       </tr>
                     </>
@@ -833,7 +796,7 @@ const GeojsonMapComponent = () => {
           )}
           {/* Public Transport Table */}
           <div className="public-transport-route">
-            {routingLocation.latitude && routingLocation.longitude ? (
+            {routingLocation.latitude && routingLocation.longitude && (
               <Routing
                 startLat={homeLocation.latitude}
                 startLng={homeLocation.longitude}
@@ -842,13 +805,24 @@ const GeojsonMapComponent = () => {
                 apiKey={apiKey}
                 mapRef={mapRef}
               />
-            ) : (
-              <p> Select a destination to find public transport routes</p>
             )}
           </div>
         </div>
 
         <div className="right-panel">
+          {showDetails && (
+            <Container style={{ margin: "10px", padding: "0px" }}>
+              <span style={{ fontWeight: "bold", fontSize: 18 }}>
+                Project Name:{" "}
+              </span>
+              {projectName}
+              <br />
+              <span style={{ fontWeight: "bold", fontSize: 18 }}>
+                Number of Rooms:{" "}
+              </span>
+              {numberOfRooms}
+            </Container>
+          )}
           <Container style={{ margin: "10px", padding: "0px" }}>
             <LeafletMap
               center={mapCenter}

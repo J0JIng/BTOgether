@@ -193,7 +193,8 @@ export default function MapDialog({ type, locationInfo }) {
       <Button
         variant="contained"
         onClick={handleClickOpen}
-        style={{ marginBottom: "10px" }}
+        style={{ marginBottom: "10px", backgroundColor: "#f7776b",
+        "&:hover": { backgroundColor: "#c55f55" }, }}
       >
         Set{" "}
         {type == "parentsAddress" ? "Parent's Address" : "Workplace Address"}
@@ -212,7 +213,7 @@ export default function MapDialog({ type, locationInfo }) {
         </DialogTitle>
         <DialogContent>
           <TextField
-            style={{ marginTop: "10px" }}
+            style={{ width: "100%", marginTop: "10px" }}
             variant="outlined"
             label="Enter New Address"
             name={type}
@@ -282,6 +283,8 @@ export default function MapDialog({ type, locationInfo }) {
             onClick={handleClose}
             variant="contained"
             disabled={!canSubmit}
+            sx={{backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },}}
           >
             Confirm
           </Button>

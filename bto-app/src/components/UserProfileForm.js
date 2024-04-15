@@ -474,7 +474,8 @@ const UserProfileForm = () => {
           <Button
             type="submit"
             variant="contained"
-            sx={{ mr: 1, boxShadow: 1 }}
+            sx={{ mr: 1, boxShadow: 1, backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" }, }}
           >
             Update Profile
           </Button>

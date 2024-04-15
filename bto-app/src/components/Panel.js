@@ -7,7 +7,7 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 // Utility functions
 import { getAmenities } from "./GetAmenities";
 import { fetchTravelTime } from "../utils/fetchTravelTime";
-//import { fetchPublicTransport } from "../utils/fetchPublicTransport";
+import { fetchPublicTransport } from "../utils/fetchPublicTransport";
 import { GetNearest } from "../utils/GetNearest";
 import { extractNameFromHtml } from "../utils/extractNameFromHtml";
 
@@ -73,16 +73,16 @@ const Panel = ({ allData, data, fieldLabels, selection, onChange }) => {
     useEffect(() => {
       if (data && selection) {
         if (data.parentsAddress && data.latitude && data.longitude) {
-          // fetchPublicTransport(data.latitude, data.longitude, data.parentsAddress.latitude,data.parentsAddress.longitude)
-          // .then(time => {setParentsTime(time)})
-          // fetchTravelTime(data.latitude, data.longitude, data.parentsAddress.latitude,data.parentsAddress.longitude,"car")
-          // .then(time => {setParentsCarTime(time)})
+          fetchPublicTransport(data.latitude, data.longitude, data.parentsAddress.latitude,data.parentsAddress.longitude)
+          .then(time => {setParentsTime(time)})
+          fetchTravelTime(data.latitude, data.longitude, data.parentsAddress.latitude,data.parentsAddress.longitude,"car")
+          .then(time => {setParentsCarTime(time)})
         }
         if (data.workplaceLocation && data.latitude && data.longitude) {
-          // fetchPublicTransport(data.latitude, data.longitude, data.workplaceLocation.latitude,data.workplaceLocation.longitude)
-          // .then(time => {setWorkTime(time)})
-          // fetchTravelTime(data.latitude, data.longitude, data.workplaceLocation.latitude,data.workplaceLocation.longitude,"car")
-          // .then(time => {setWorkCarTime(time)})
+          fetchPublicTransport(data.latitude, data.longitude, data.workplaceLocation.latitude,data.workplaceLocation.longitude)
+          .then(time => {setWorkTime(time)})
+          fetchTravelTime(data.latitude, data.longitude, data.workplaceLocation.latitude,data.workplaceLocation.longitude,"car")
+          .then(time => {setWorkCarTime(time)})
         }
         GetNearest(mrtgeojson, { latitude: data.latitude, longitude: data.longitude }).then((obj) => {
           setNearestStation({name: obj.properties.Description, dist: obj.dist.toFixed(2), stationCode: obj.properties.code})

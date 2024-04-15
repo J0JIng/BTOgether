@@ -1,6 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import L from "leaflet";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Typography } from "@mui/material";
 
 const Routing = ({ startLat, startLng, endLat, endLng, apiKey, mapRef }) => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -45,7 +53,7 @@ const Routing = ({ startLat, startLng, endLat, endLng, apiKey, mapRef }) => {
         );
         drawRoute(response.data.routes[0]);
         setRouteData(response.data.routes[0]);
-        //console.log(routeData)
+        console.log(response.data.routes[0])
       } catch (error) {
         setErrorMessage("Error fetching route data");
         console.error("Error fetching route data:", error);
@@ -203,104 +211,54 @@ const Routing = ({ startLat, startLng, endLat, endLng, apiKey, mapRef }) => {
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       {routeDrawnRef.current && (
-        <table
-          style={{
-            borderCollapse: "collapse",
-            border: "1px solid black",
-            padding: "2px",
-          }}
-        >
-          <thead>
-            <tr>
-              <th
-                colSpan="3"
-                style={{
-                  border: "1px solid black",
-                  padding: "0.5rem",
-                  backgroundColor: "#87CEFA",
-                }}
-              >
-                Public Transport Route
-              </th>
-            </tr>
-            <tr style={{ backgroundColor: "#F8F8F8" }}>
-              <th style={{ border: "1px solid black", padding: "0.5rem" }}>
-                Waypoints
-              </th>
-              <th style={{ border: "1px solid black", padding: "0.5rem" }}>
-                Transport Mode
-              </th>
-              <th style={{ border: "1px solid black", padding: "0.5rem" }}>
-                Time Taken
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {routeData.sections.map((section, index) => {
-              const departureTime = new Date(section.departure.time);
-              const arrivalTime = new Date(section.arrival.time);
-              const diff = arrivalTime - departureTime;
-              const hours = Math.floor(diff / (1000 * 60 * 60)); // Convert milliseconds to hours
-              const minutes = Math.floor(
-                (diff % (1000 * 60 * 60)) / (1000 * 60)
-              ); // Convert remaining milliseconds to minutes
-              let timeTaken = "";
-              if (hours > 0) {
-                timeTaken += `${hours} hr `;
-              }
-              timeTaken += `${minutes} min`;
-              return (
-                <tr key={index}>
-                  <td style={{ border: "1px solid black", padding: "0.5rem" }}>
-                    {section.arrival.place.name}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "0.5rem" }}>
-                    {section.transport.name || "Walk"}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: "0.5rem" }}>
-                    {timeTaken}
-                  </td>
-                </tr>
-              );
-            })}
-            <tr style={{ backgroundColor: "#F8F8F8" }}>
-              <td
-                colSpan="2"
-                style={{
-                  textAlign: "center",
-                  border: "1px solid black",
-                  padding: "0.5rem",
-                }}
-              >
-                Total Time:
-              </td>
-              <td style={{ border: "1px solid black", padding: "0.5rem" }}>
-                {(() => {
-                  const totalMilliseconds = routeData.sections.reduce(
-                    (total, section) => {
-                      const departureTime = new Date(section.departure.time);
-                      const arrivalTime = new Date(section.arrival.time);
-                      return total + (arrivalTime - departureTime);
-                    },
-                    0
-                  );
-                  const totalHours = Math.floor(
-                    totalMilliseconds / (1000 * 60 * 60)
-                  );
-                  const totalMinutes = Math.floor(
-                    (totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
-                  );
-                  let totalTimeTaken = "";
-                  if (totalHours > 0) {
-                    totalTimeTaken += `${totalHours} hr `;
-                  }
-                  totalTimeTaken += `${totalMinutes} min`;
-                  return totalTimeTaken;
-                })()}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <TableContainer component={Paper} sx={{boxShadow: 1, p: 1, mr: 1, border: "2px lightgray solid", borderRadius: 2}}>
+          <Table aria-label="simple table" size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell colSpan={3} sx={{textAlign: "center"}}><Typography>Public Transport Route</Typography></TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left" sx={{backgroundColor: "#f7776b", color: "white", borderTopLeftRadius: "5px"}}>Waypoints</TableCell>
+                <TableCell align="left" sx={{backgroundColor: "#f7776b", color: "white"}}>Transport Mode</TableCell>
+                <TableCell align="left" sx={{backgroundColor: "#f7776b", color: "white", borderTopRightRadius: "5px"}}>Time Taken</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {routeData.sections.map((section, index) => {
+                const departureTime = new Date(section.departure.time);
+                const arrivalTime = new Date(section.arrival.time);
+                const diff = arrivalTime - departureTime;
+                const hours = Math.floor(diff / (1000 * 60 * 60)); // Convert milliseconds to hours
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); // Convert remaining milliseconds to minutes
+                let timeTaken = "";
+                if (hours > 0) {
+                  timeTaken += `${hours} hr `;
+                }
+                timeTaken += `${minutes} min`;
+                return (
+                  <TableRow
+                    key={index}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="left" sx={{ backgroundColor: "#ffeae9" }}>
+                      {section.arrival.place.name}
+                    </TableCell>
+                    <TableCell align="left" sx={{ backgroundColor: "#ffeae9" }}>
+                      {section.transport.name
+                        ? section.transport.mode === "bus"
+                          ? "Bus " + section.transport.name
+                          : section.transport.name
+                        : "Walk"}
+                    </TableCell>
+                    <TableCell align="left" sx={{ backgroundColor: "#ffeae9" }}>
+                      {timeTaken}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
     </div>
   );
