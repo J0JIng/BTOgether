@@ -328,11 +328,9 @@ export default function DashboardPage() {
               destGeoCode.latitude,
               destGeoCode.longitude,
               "car", // specify the mode of transport
-              true   // return time in seconds
+              true // return time in seconds
             ).then((time) => {
               setTimeToTravel(time);
-              
-
             })
           );
           break;
@@ -344,10 +342,9 @@ export default function DashboardPage() {
               homeGeoCode.longitude,
               destGeoCode.latitude,
               destGeoCode.longitude,
-              true  // return time in seconds
+              true // return time in seconds
             ).then((time) => {
               setTimeToTravel(time);
-              
             })
           );
           break;
@@ -422,30 +419,34 @@ export default function DashboardPage() {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     formatTime(timeToTravel);
-  },[timeToTravel])
+  }, [timeToTravel]);
 
   function formatTime(seconds) {
-    console.log()
+    console.log();
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
-  
-    let result = '';
-  
+
+    let result = "";
+
     if (hours > 0) {
-      result += `${hours} hour${hours !== 1 ? 's' : ''}`;
+      result += `${hours} hour${hours !== 1 ? "s" : ""}`;
     }
-  
+
     if (minutes > 0) {
-      result += `${result.length > 0 ? ' ' : ''}${minutes} minute${minutes !== 1 ? 's' : ''}`;
+      result += `${result.length > 0 ? " " : ""}${minutes} minute${
+        minutes !== 1 ? "s" : ""
+      }`;
     }
-  
+
     if (hours === 0 && minutes === 0) {
-      result += `${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
+      result += `${remainingSeconds} second${
+        remainingSeconds !== 1 ? "s" : ""
+      }`;
     }
-  
+
     setTimeToTravelInString(result);
   }
 
@@ -481,14 +482,14 @@ export default function DashboardPage() {
     } else if (containerName === "Amenities") {
       description = `The number of ${optionSelected} within ${distance} KM is ${numberOfAmenities}`;
     }
-    
+
     const newContainer = {
       id,
       title: containerName,
       description: description,
       numberOfAmenities,
       timeToTravel,
-      imageUrl:"",
+      imageUrl: "",
     };
 
     setContainers((prevContainers) => [...prevContainers, newContainer]);
@@ -609,19 +610,25 @@ export default function DashboardPage() {
         {/* Add Informational Modal*/}
         <Modal showModal={showAddInfoModal} setShowModal={setShowAddInfoModal}>
           <div className="flex flex-col w-full items-center justify-center gap-y-4 h-400px overflow-auto relative">
-            <h1 className="text-green-800 text-3xl font-bold">
+            <h1 className="text-green-800 text-3xl font-bold mb-4">
+              {" "}
+              {/* Added mb-4 */}
               {findContainerTitle(currentContainerId)}
             </h1>
             {/* Add Information*/}
             <div class="overflow-auto">
-            <Gemini prompt={findContainerDescription(currentContainerId)}/>
+              <Gemini prompt={findContainerDescription(currentContainerId)} />
             </div>
-            <button 
+          </div>
+          <div className="mt-2">
+            {" "}
+            {/* Added mt-2 */}
+            <button
               onClick={() => {
                 onDeleteContainer(currentContainerId);
                 setShowAddInfoModal(false);
               }}
-              className="dashboard-button absolute bottom-2 right-2 p-2 border-transparent shadow-md border rounded-md hover:bg-red-400 transition duration-300 "
+              className="dashboard-button relative p-2 buttom-2 right-2 border-transparent shadow-md border rounded-md hover:bg-red-400 transition duration-300 "
             >
               <FontAwesomeIcon icon={faTrashCan} />
             </button>
