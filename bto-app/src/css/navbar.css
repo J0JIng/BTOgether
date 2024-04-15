@@ -6,7 +6,6 @@
 /* Navbar styles */
 .navbar {
   background-color: #f7776b;
-  padding: 20px;
   display: flex;
   align-items: center;
   max-width: 100%;
@@ -14,6 +13,7 @@
   border-bottom: 1px solid #f7776b;
   position: relative;
   font-family: "Inter", Helvetica, Arial, sans-serif;
+  border-top-left-radius: 10px; border-bottom-left-radius: 10px;
   /* Add this line */
 }
 

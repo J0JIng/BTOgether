@@ -13,7 +13,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 32px;
+  padding: 14px 32px !important;
   background-color: #f7776b;
   border-radius: 10px;
 
@@ -23,6 +23,8 @@
 
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   min-width: 350px;
+  border-top-right-radius: 0px !important; 
+  border-bottom-right-radius: 0px !important;
 }
 
 .title-and-sign-up {
