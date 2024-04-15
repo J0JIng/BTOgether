@@ -845,13 +845,14 @@ const GeojsonMapComponent = () => {
               )}
 
               {/* This is for the amenities radius circle */}
-              {homeLocation.latitude &&
-                homeLocation.longitude &&
-                addCircleToMap(
-                  mapRef.current,
-                  [homeLocation.latitude, homeLocation.longitude],
-                  distance * 1000
-                ) // Adjust radius as needed
+              {
+                homeLocation.latitude &&
+                  homeLocation.longitude &&
+                  addCircleToMap(
+                    mapRef.current,
+                    [homeLocation.latitude, homeLocation.longitude],
+                    distance * 1000
+                  ) // Adjust radius as needed
               }
 
               <MapStylePanel
@@ -863,10 +864,11 @@ const GeojsonMapComponent = () => {
           </Container>
           {/* This area is the form for the Map */}
           {/* Form for the Map */}
-          <Container sx={{ mb: 2 }}>
+          <Container sx={{ mb: 2 }} style={{ paddingRight: "0px" }}>
             <h3>Set Home Waypoint</h3>
             <TextField
               variant="outlined"
+              className="btofindtext"
               label="Enter Address"
               onChange={(e) => setAddressField(e.target.value)}
               fullWidth
@@ -888,7 +890,7 @@ const GeojsonMapComponent = () => {
                 ),
               }}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   handleGeocode(); // Call your search function here
                 }
               }}
@@ -903,7 +905,13 @@ const GeojsonMapComponent = () => {
               <Button
                 variant="contained"
                 onClick={setHome}
-                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+                sx={{
+                  mr: 1,
+                  boxShadow: 1,
+                  textTransform: "none",
+                  backgroundColor: "#f7776b",
+                  "&:hover": { backgroundColor: "#c55f55" },
+                }}
               >
                 Set Home
               </Button>
@@ -911,7 +919,13 @@ const GeojsonMapComponent = () => {
                 type="submit"
                 variant="contained"
                 onClick={toggleJson}
-                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+                sx={{
+                  mr: 1,
+                  boxShadow: 1,
+                  textTransform: "none",
+                  backgroundColor: "#f7776b",
+                  "&:hover": { backgroundColor: "#c55f55" },
+                }}
               >
                 Toggle Amenities
               </Button>
@@ -919,7 +933,13 @@ const GeojsonMapComponent = () => {
                 type="submit"
                 variant="contained"
                 onClick={clearMap}
-                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+                sx={{
+                  mr: 1,
+                  boxShadow: 1,
+                  textTransform: "none",
+                  backgroundColor: "#f7776b",
+                  "&:hover": { backgroundColor: "#c55f55" },
+                }}
               >
                 Clear Map
               </Button>
@@ -935,7 +955,13 @@ const GeojsonMapComponent = () => {
               <Button
                 variant="contained"
                 onClick={() => handleShowDetails(1)}
-                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+                sx={{
+                  mr: 1,
+                  boxShadow: 1,
+                  textTransform: "none",
+                  backgroundColor: "#f7776b",
+                  "&:hover": { backgroundColor: "#c55f55" },
+                }}
               >
                 View BTO1
               </Button>
@@ -943,7 +969,13 @@ const GeojsonMapComponent = () => {
                 type="submit"
                 variant="contained"
                 onClick={() => handleShowDetails(2)}
-                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+                sx={{
+                  mr: 1,
+                  boxShadow: 1,
+                  textTransform: "none",
+                  backgroundColor: "#f7776b",
+                  "&:hover": { backgroundColor: "#c55f55" },
+                }}
               >
                 View BTO2
               </Button>
@@ -951,7 +983,13 @@ const GeojsonMapComponent = () => {
                 type="submit"
                 variant="contained"
                 onClick={() => handleShowDetails(3)}
-                sx={{ mr: 1, boxShadow: 1, textTransform: "none" }}
+                sx={{
+                  mr: 1,
+                  boxShadow: 1,
+                  textTransform: "none",
+                  backgroundColor: "#f7776b",
+                  "&:hover": { backgroundColor: "#c55f55" },
+                }}
               >
                 View BTO3
               </Button>
