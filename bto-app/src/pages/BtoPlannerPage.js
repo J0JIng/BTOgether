@@ -254,14 +254,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/booking-of-flat/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/booking-of-flat/" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.homeanddecor.com.sg/property-tips/how-to-apply-hdb-bto-first-time-homeowners-step-by-step/">
+            <a href="https://www.homeanddecor.com.sg/property-tips/how-to-apply-hdb-bto-first-time-homeowners-step-by-step/" target="_blank" rel="noopener noreferrer">
               {" "}
               Home&Decor{" "}
             </a>
@@ -295,7 +295,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/working-out-your-flat-budget/budget-for-flat/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/working-out-your-flat-budget/budget-for-flat/" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB - Working Out Your Budget
             </a>
@@ -303,7 +303,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             2.{" "}
-            <a href="https://homes.hdb.gov.sg/home/calculator/budget/">
+            <a href="https://homes.hdb.gov.sg/home/calculator/budget/" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB - Budget Calculator{" "}
             </a>
@@ -335,7 +335,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/singles/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/singles/" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -343,7 +343,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             2.{" "}
-            <a href="https://www.dbs.com.sg/personal/articles/nav/my-home/the-single-guide-to-buying-a-HDB-flat-in-singapore#:~:text=From%202H2024%2C%20with%20the%20new,flat%20in%20the%20resale%20market/">
+            <a href="https://www.dbs.com.sg/personal/articles/nav/my-home/the-single-guide-to-buying-a-HDB-flat-in-singapore#:~:text=From%202H2024%2C%20with%20the%20new,flat%20in%20the%20resale%20market/" target="_blank" rel="noopener noreferrer">
               {" "}
               DBS{" "}
             </a>
@@ -351,7 +351,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             3.{" "}
-            <a href="https://www.moneysmart.sg/home-loan/housing-guide-for-singles-ms/">
+            <a href="https://www.moneysmart.sg/home-loan/housing-guide-for-singles-ms/" target="_blank" rel="noopener noreferrer">
               {" "}
               MoneySmart{" "}
             </a>
@@ -383,7 +383,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             1.{" "}
-            <a href="https://www.income.com.sg/blog/guide-to-bto-for-newbies#:~:text=You%20will%20only%20be%20able,and%20control%20of%20your%20child/">
+            <a href="https://www.income.com.sg/blog/guide-to-bto-for-newbies#:~:text=You%20will%20only%20be%20able,and%20control%20of%20your%20child/" target="_blank" rel="noopener noreferrer">
               {" "}
               Income{" "}
             </a>
@@ -391,7 +391,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             2.{" "}
-            <a href="https://www.hdb.gov.sg/cs/infoweb/residential/renting-a-flat/renting-from-hdb/public-rental-scheme/eligibility/joint-singles-scheme-operator-run-pilot/">
+            <a href="https://www.hdb.gov.sg/cs/infoweb/residential/renting-a-flat/renting-from-hdb/public-rental-scheme/eligibility/joint-singles-scheme-operator-run-pilot/" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -424,7 +424,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             {" "}
-            1. <a href="https://homes.hdb.gov.sg/home/landing/"> HDB </a>
+            1. <a href="https://homes.hdb.gov.sg/home/landing/" target="_blank" rel="noopener noreferrer"> HDB </a>
           </p>
         </div>
         <button
@@ -455,7 +455,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/application/priority-schemes#:~:text=First%20priority%20under%20the%20Family,Parenthood%20Priority%20Scheme%20(FPPS)./">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/application/priority-schemes#:~:text=First%20priority%20under%20the%20Family,Parenthood%20Priority%20Scheme%20(FPPS)./" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -463,7 +463,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             2.{" "}
-            <a href="https://www.99.co/singapore/insider/in-depth-guide-hdb-priority-schemes/">
+            <a href="https://www.99.co/singapore/insider/in-depth-guide-hdb-priority-schemes/" target="_blank" rel="noopener noreferrer">
               {" "}
               99.co{" "}
             </a>
@@ -497,7 +497,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             1.{" "}
-            <a href="https://www.yp.sg/a-beginners-guide-on-how-to-select-an-ideal-and-huat-bto-unit/">
+            <a href="https://www.yp.sg/a-beginners-guide-on-how-to-select-an-ideal-and-huat-bto-unit/" target="_blank" rel="noopener noreferrer">
               {" "}
               YP.sg{" "}
             </a>
@@ -505,7 +505,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             2.{" "}
-            <a href="https://elpisinterior.com.sg/4-room-bto-size-crash-course/#:~:text=It's%20important%20to%20consider%20your,home%20especially%20for%20young%20couples./">
+            <a href="https://elpisinterior.com.sg/4-room-bto-size-crash-course/#:~:text=It's%20important%20to%20consider%20your,home%20especially%20for%20young%20couples./" target="_blank" rel="noopener noreferrer">
               {" "}
               ELPSInterior{" "}
             </a>
@@ -544,7 +544,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             1.{" "}
-            <a href="https://www.singsaver.com.sg/blog/hdb-flat-selection/">
+            <a href="https://www.singsaver.com.sg/blog/hdb-flat-selection/" target="_blank" rel="noopener noreferrer">
               {" "}
               SingSaver{" "}
             </a>
@@ -552,7 +552,7 @@ const BtoPlannerPage = () => {
           <p>
             {" "}
             2.{" "}
-            <a href="https://www.aia.com.sg/en/health-wellness/healthy-living-with-aia/guide-to-planning-your-finances-for-first-time-home-buyers/">
+            <a href="https://www.aia.com.sg/en/health-wellness/healthy-living-with-aia/guide-to-planning-your-finances-for-first-time-home-buyers/" target="_blank" rel="noopener noreferrer">
               {" "}
               AIA{" "}
             </a>
@@ -634,21 +634,21 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/application/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/application/" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.mynicehome.gov.sg/hdb-how-to/buy-your-flat/your-guide-to-buying-a-bto-flat/">
+            <a href="https://www.mynicehome.gov.sg/hdb-how-to/buy-your-flat/your-guide-to-buying-a-bto-flat/" target="_blank" rel="noopener noreferrer">
               {" "}
               MyNiceHome{" "}
             </a>
           </p>
           <p>
             3.{" "}
-            <a href="https://dollarsandsense.sg/bto-application-edition-step-step-guide-buying-hdb-bto-flat/">
+            <a href="https://dollarsandsense.sg/bto-application-edition-step-step-guide-buying-hdb-bto-flat/" target="_blank" rel="noopener noreferrer">
               {" "}
               Dollars&Sense{" "}
             </a>
@@ -676,14 +676,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/modes-of-sale/faqs-for-sales-launch#:~:text=No.,exercise%2C%20and%20not%20both%20exercises./">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/modes-of-sale/faqs-for-sales-launch#:~:text=No.,exercise%2C%20and%20not%20both%20exercises./" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://seedly.sg/posts/if-i-already-have-a-hdb-bto-queue-number-can-i-apply-for-a-flat-in-another-sales-launch/">
+            <a href="https://seedly.sg/posts/if-i-already-have-a-hdb-bto-queue-number-can-i-apply-for-a-flat-in-another-sales-launch/" target="_blank" rel="noopener noreferrer">
               {" "}
               Seedly{" "}
             </a>
@@ -710,14 +710,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://dollarbackmortgage.com/blog/secure-bto-ballot-tips/#:~:text=Balloting%3A%20After%20the%20application%20period,chance%20of%20securing%20a%20flat./">
+            <a href="https://dollarbackmortgage.com/blog/secure-bto-ballot-tips/#:~:text=Balloting%3A%20After%20the%20application%20period,chance%20of%20securing%20a%20flat./" target="_blank" rel="noopener noreferrer">
               {" "}
               DollarBackMortgage{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.hdb.gov.sg/about-us/news-and-publications/publications/hdbspeaks/balloting-process-for-buildtoorder-bto-flats/">
+            <a href="https://www.hdb.gov.sg/about-us/news-and-publications/publications/hdbspeaks/balloting-process-for-buildtoorder-bto-flats/" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -746,14 +746,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/application/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/application/" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.income.com.sg/blog/guide-to-bto-for-newbies#:~:text=Eligible%20buyers%20may%20apply%20for,how%20to%20apply%20for%20one./">
+            <a href="https://www.income.com.sg/blog/guide-to-bto-for-newbies#:~:text=Eligible%20buyers%20may%20apply%20for,how%20to%20apply%20for%20one./" target="_blank" rel="noopener noreferrer">
               {" "}
               Income{" "}
             </a>
@@ -779,14 +779,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://dollarbackmortgage.com/blog/secure-bto-ballot-tips/#:~:text=If%20you%20have%20applied%20for,in%20a%20non%2Dmature%20estate./">
+            <a href="https://dollarbackmortgage.com/blog/secure-bto-ballot-tips/#:~:text=If%20you%20have%20applied%20for,in%20a%20non%2Dmature%20estate./" target="_blank" rel="noopener noreferrer">
               {" "}
               DollarBackMortgage{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.propertyguru.com.sg/property-guides/hdb-bto-ballot-chances-priority-schemes-31048/">
+            <a href="https://www.propertyguru.com.sg/property-guides/hdb-bto-ballot-chances-priority-schemes-31048/" target="_blank" rel="noopener noreferrer">
               {" "}
               PropertyGuru{" "}
             </a>
@@ -811,7 +811,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://seedly.sg/posts/if-i-already-have-a-hdb-bto-queue-number-can-i-apply-for-a-flat-in-another-sales-launch/">
+            <a href="https://seedly.sg/posts/if-i-already-have-a-hdb-bto-queue-number-can-i-apply-for-a-flat-in-another-sales-launch/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Seedly{" "}
             </a>
@@ -839,14 +839,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/modes-of-sale/faqs-for-sales-launch/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/modes-of-sale/faqs-for-sales-launch/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://dollarsandsense.sg/bto-application-edition-step-step-guide-buying-hdb-bto-flat/">
+            <a href="https://dollarsandsense.sg/bto-application-edition-step-step-guide-buying-hdb-bto-flat/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Dollars&Sense{" "}
             </a>
@@ -872,7 +872,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/renting-a-flat/renting-from-hdb/public-rental-scheme/changes-and-cancellation/">
+            <a href="https://www.hdb.gov.sg/residential/renting-a-flat/renting-from-hdb/public-rental-scheme/changes-and-cancellation/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -901,7 +901,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://homes.hdb.gov.sg/home/frequently-asked-questions/">
+            <a href="https://homes.hdb.gov.sg/home/frequently-asked-questions/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -982,21 +982,21 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/singles/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/singles/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.dbs.com.sg/personal/articles/nav/my-home/the-single-guide-to-buying-a-HDB-flat-in-singapore#:~:text=From%202H2024%2C%20with%20the%20new,flat%20in%20the%20resale%20market/">
+            <a href="https://www.dbs.com.sg/personal/articles/nav/my-home/the-single-guide-to-buying-a-HDB-flat-in-singapore#:~:text=From%202H2024%2C%20with%20the%20new,flat%20in%20the%20resale%20market/"  target="_blank" rel="noopener noreferrer">
               {" "}
               DBS{" "}
             </a>
           </p>
           <p>
             3.{" "}
-            <a href="https://www.moneysmart.sg/home-loan/housing-guide-for-singles-ms/">
+            <a href="https://www.moneysmart.sg/home-loan/housing-guide-for-singles-ms/"  target="_blank" rel="noopener noreferrer">
               {" "}
               MoneySmart{" "}
             </a>
@@ -1025,14 +1025,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.cpf.gov.sg/member/infohub/educational-resources/essential-budgeting-tips-for-your-bto/">
+            <a href="https://www.cpf.gov.sg/member/infohub/educational-resources/essential-budgeting-tips-for-your-bto/"  target="_blank" rel="noopener noreferrer">
               {" "}
               CPF{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://endowus.com/insights/planning-finances-hdb-bto/">
+            <a href="https://endowus.com/insights/planning-finances-hdb-bto/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Endowus{" "}
             </a>
@@ -1060,7 +1060,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.cpf.gov.sg/member/faq/home-ownership/housing-scheme/how-much-cpf-savings-can-i-use-for-my-property-purchase/">
+            <a href="https://www.cpf.gov.sg/member/faq/home-ownership/housing-scheme/how-much-cpf-savings-can-i-use-for-my-property-purchase/"  target="_blank" rel="noopener noreferrer">
               {" "}
               CPF{" "}
             </a>
@@ -1089,14 +1089,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.madeforfamilies.gov.sg/support-measures/your-home-matters-new/housing-schemes-and-grants#:~:text=You%20can%20apply%20for%20the,prior%20to%20the%20flat%20application./">
+            <a href="https://www.madeforfamilies.gov.sg/support-measures/your-home-matters-new/housing-schemes-and-grants#:~:text=You%20can%20apply%20for%20the,prior%20to%20the%20flat%20application./"  target="_blank" rel="noopener noreferrer">
               {" "}
               MadeForFamilies{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -1124,14 +1124,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.99.co/singapore/insider/hdb-grants-for-couples/">
+            <a href="https://www.99.co/singapore/insider/hdb-grants-for-couples/"  target="_blank" rel="noopener noreferrer">
               {" "}
               99.co{" "}
             </a>
@@ -1157,7 +1157,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.cpf.gov.sg/member/faq/home-ownership/housing-scheme/can-i-use-my-cpf-savings-for-renovation-and-repairs-of-my-proper/">
+            <a href="https://www.cpf.gov.sg/member/faq/home-ownership/housing-scheme/can-i-use-my-cpf-savings-for-renovation-and-repairs-of-my-proper/"  target="_blank" rel="noopener noreferrer">
               {" "}
               CPF{" "}
             </a>
@@ -1187,7 +1187,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/timeline/plan-your-finances/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/timeline/plan-your-finances/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -1216,14 +1216,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/timeline/plan-your-finances/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/timeline/plan-your-finances/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://endowus.com/insights/planning-finances-hdb-bto/">
+            <a href="https://endowus.com/insights/planning-finances-hdb-bto/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Endowus{" "}
             </a>
@@ -1304,11 +1304,11 @@ const BtoPlannerPage = () => {
             For additional information from external resources:
           </p>
           <p>
-            1. <a href="https://www.btohq.com/bto-selection-guide/"> BTOHQ </a>
+            1. <a href="https://www.btohq.com/bto-selection-guide/"  target="_blank" rel="noopener noreferrer"> BTOHQ </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.99.co/singapore/insider/selecting-bto-unit/">
+            <a href="https://www.99.co/singapore/insider/selecting-bto-unit/"  target="_blank" rel="noopener noreferrer">
               {" "}
               99.co{" "}
             </a>
@@ -1335,7 +1335,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://seedly.sg/posts/is-it-possible-to-see-available-units-before-selecting-bto-unit/">
+            <a href="https://seedly.sg/posts/is-it-possible-to-see-available-units-before-selecting-bto-unit/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Seedly{" "}
             </a>
@@ -1362,14 +1362,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/booking-of-flat/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/booking-of-flat/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.lemon8-app.com/curiousonlooker/7197327734614295042?region=sg/">
+            <a href="https://www.lemon8-app.com/curiousonlooker/7197327734614295042?region=sg/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Lemon8{" "}
             </a>
@@ -1397,7 +1397,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.mynicehome.gov.sg/hdb-how-to/renovate-your-flat/top-questions-hdb-home-owners-ask-when-renovating-their-bto-flat/">
+            <a href="https://www.mynicehome.gov.sg/hdb-how-to/renovate-your-flat/top-questions-hdb-home-owners-ask-when-renovating-their-bto-flat/"  target="_blank" rel="noopener noreferrer">
               {" "}
               MyNiceHome.gov{" "}
             </a>
@@ -1424,14 +1424,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/application#:~:text=Your%20flat%20application%20will%20be,after%20your%20flat%20booking%20appointment./">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/application#:~:text=Your%20flat%20application%20will%20be,after%20your%20flat%20booking%20appointment./"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.propertyguru.com.sg/property-guides/hdb-bto-ballot-chances-priority-schemes-31048/">
+            <a href="https://www.propertyguru.com.sg/property-guides/hdb-bto-ballot-chances-priority-schemes-31048/"  target="_blank" rel="noopener noreferrer">
               {" "}
               PropertyGuru{" "}
             </a>
@@ -1477,7 +1477,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/renting-a-flat/renting-from-hdb/public-rental-scheme/changes-and-cancellation/">
+            <a href="https://www.hdb.gov.sg/residential/renting-a-flat/renting-from-hdb/public-rental-scheme/changes-and-cancellation/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -1505,7 +1505,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.businesstimes.com.sg/property/choose-or-lose-your-bto-spot-hdb-tightens-rules-flat-selection#:~:text=From%20August%202023%20onwards%2C%20first,%2DFlats%20(SBF)%20programme./">
+            <a href="https://www.businesstimes.com.sg/property/choose-or-lose-your-bto-spot-hdb-tightens-rules-flat-selection#:~:text=From%20August%202023%20onwards%2C%20first,%2DFlats%20(SBF)%20programme./"  target="_blank" rel="noopener noreferrer">
               {" "}
               BusinessTimes{" "}
             </a>
@@ -1533,7 +1533,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.singsaver.com.sg/blog/lesser-known-things-to-be-aware-of-before-buying-a-hdb-bto-flat/">
+            <a href="https://www.singsaver.com.sg/blog/lesser-known-things-to-be-aware-of-before-buying-a-hdb-bto-flat/"  target="_blank" rel="noopener noreferrer">
               {" "}
               SingSaver{" "}
             </a>
@@ -1561,7 +1561,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://homes.hdb.gov.sg/home/frequently-asked-questions/">
+            <a href="https://homes.hdb.gov.sg/home/frequently-asked-questions/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -1642,14 +1642,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://numberoneproperty.com/hdb-key-collection/#:~:text=On%20your%20key%20collection%20appointment,Fire%20Insurance%20Certificate%20of%20Insurance./">
+            <a href="https://numberoneproperty.com/hdb-key-collection/#:~:text=On%20your%20key%20collection%20appointment,Fire%20Insurance%20Certificate%20of%20Insurance./"  target="_blank" rel="noopener noreferrer">
               {" "}
               NumberOneProperty{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.mynicehome.gov.sg/hdb-how-to/move-into-your-flat/collecting-the-keys-to-your-hdb-flat/">
+            <a href="https://www.mynicehome.gov.sg/hdb-how-to/move-into-your-flat/collecting-the-keys-to-your-hdb-flat/"  target="_blank" rel="noopener noreferrer">
               {" "}
               MyNiceHome.gov{" "}
             </a>
@@ -1677,7 +1677,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/key-collection/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/key-collection/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -1705,7 +1705,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.mynicehome.gov.sg/hdb-how-to/move-into-your-flat/collecting-the-keys-to-your-hdb-flat/">
+            <a href="https://www.mynicehome.gov.sg/hdb-how-to/move-into-your-flat/collecting-the-keys-to-your-hdb-flat/"  target="_blank" rel="noopener noreferrer">
               {" "}
               MyNiceHome.gov{" "}
             </a>
@@ -1732,14 +1732,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://qanvast.com/sg/articles/how-to-inspect-your-new-hdb-flat-and-rectify-any-defects-2390/">
+            <a href="https://qanvast.com/sg/articles/how-to-inspect-your-new-hdb-flat-and-rectify-any-defects-2390/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Qanvast{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.mynicehome.gov.sg/hdb-how-to/move-into-your-flat/a-guide-to-defects-inspection-for-your-new-hdb-bto-flat/">
+            <a href="https://www.mynicehome.gov.sg/hdb-how-to/move-into-your-flat/a-guide-to-defects-inspection-for-your-new-hdb-bto-flat/"  target="_blank" rel="noopener noreferrer">
               {" "}
               MyNiceHome.gov{" "}
             </a>
@@ -1767,7 +1767,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/key-collection#:~:text=Stamp%20duty%20and%20legal%20fees,on%20the%20Deed%20of%20Assignment./">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/key-collection#:~:text=Stamp%20duty%20and%20legal%20fees,on%20the%20Deed%20of%20Assignment./"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -1796,7 +1796,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/key-collection#:~:text=Power%20of%20Attorney%20(POA),or%20collect%20the%20keys%20personally.&text=A%20Power%20of%20Attorney%20(POA,matters%20specified%20in%20the%20POA./">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-new-flats/key-collection#:~:text=Power%20of%20Attorney%20(POA),or%20collect%20the%20keys%20personally.&text=A%20Power%20of%20Attorney%20(POA,matters%20specified%20in%20the%20POA./"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -1824,7 +1824,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://qanvast.com/sg/articles/bto-101-what-to-do-after-key-collection-1803">
+            <a href="https://qanvast.com/sg/articles/bto-101-what-to-do-after-key-collection-1803" target="_blank" rel="noopener noreferrer">
               {" "}
               Qanvast{" "}
             </a>
@@ -1853,7 +1853,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://mrd.com.sg/hdb-key-collection/#:~:text=Inspect%20your%20new%20HDB%2FBTO&text=Check%20for%20faulty%20starters%20and,hinges%20to%20ensure%20they%20work./">
+            <a href="https://mrd.com.sg/hdb-key-collection/#:~:text=Inspect%20your%20new%20HDB%2FBTO&text=Check%20for%20faulty%20starters%20and,hinges%20to%20ensure%20they%20work./"  target="_blank" rel="noopener noreferrer">
               {" "}
               MRD{" "}
             </a>
@@ -1882,7 +1882,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.homeanddecor.com.sg/design/home-tips/steps-to-take-before-during-and-after-moving-house-for-a-smooth-transition-into-your-new-home/">
+            <a href="https://www.homeanddecor.com.sg/design/home-tips/steps-to-take-before-during-and-after-moving-house-for-a-smooth-transition-into-your-new-home/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HomeAndDecor{" "}
             </a>
@@ -1911,7 +1911,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.singsaver.com.sg/blog/essentials-to-buy-before-moving-to-new-hdb-flat/">
+            <a href="https://www.singsaver.com.sg/blog/essentials-to-buy-before-moving-to-new-hdb-flat/"  target="_blank" rel="noopener noreferrer">
               {" "}
               SingSaver{" "}
             </a>
@@ -1992,7 +1992,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/living-in-an-hdb-flat/renovation/guidelines/">
+            <a href="https://www.hdb.gov.sg/residential/living-in-an-hdb-flat/renovation/guidelines/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -2021,7 +2021,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.mynicehome.gov.sg/hdb-how-to/interior-designer-contractor-or-home-stylist/">
+            <a href="https://www.mynicehome.gov.sg/hdb-how-to/interior-designer-contractor-or-home-stylist/"  target="_blank" rel="noopener noreferrer">
               {" "}
               MyNiceHome.gov{" "}
             </a>
@@ -2048,7 +2048,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://qanvast.com/sg/articles/design-ideas-for-every-hdb-bto-layout-from-2345-room-to-3gen-flats-2965/">
+            <a href="https://qanvast.com/sg/articles/design-ideas-for-every-hdb-bto-layout-from-2345-room-to-3gen-flats-2965/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Qanvast{" "}
             </a>
@@ -2076,14 +2076,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://9creation.com.sg/bto-interior-design-tips/#:~:text=2)%20How%20can%20I%20make,floor%20space%20clear%20and%20organized./">
+            <a href="https://9creation.com.sg/bto-interior-design-tips/#:~:text=2)%20How%20can%20I%20make,floor%20space%20clear%20and%20organized./"  target="_blank" rel="noopener noreferrer">
               {" "}
               9creation{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.homeguide.com.sg/interior-design-ideas-to-maximise-space-in-a-two-room-bto/">
+            <a href="https://www.homeguide.com.sg/interior-design-ideas-to-maximise-space-in-a-two-room-bto/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Homeguide{" "}
             </a>
@@ -2112,7 +2112,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://megafurniture.sg/blogs/articles/right-materials-for-your-hdb-renovation/">
+            <a href="https://megafurniture.sg/blogs/articles/right-materials-for-your-hdb-renovation/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Megafurniture{" "}
             </a>
@@ -2140,7 +2140,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/business/commercial/managing-your-unit/renovation/addition-and-alteration-works/">
+            <a href="https://www.hdb.gov.sg/business/commercial/managing-your-unit/renovation/addition-and-alteration-works/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -2169,7 +2169,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://9creation.com.sg/how-to-make-sure-your-renovation-is-on-track/">
+            <a href="https://9creation.com.sg/how-to-make-sure-your-renovation-is-on-track/"  target="_blank" rel="noopener noreferrer">
               {" "}
               9creation{" "}
             </a>
@@ -2197,14 +2197,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://prdt.com.sg/transform-your-singapore-bto-with-inspiring-renovation-and-design-ideas/#:~:text=Install%20smart%20lighting%20systems%2C%20automated,or%20through%20a%20mobile%20app.">
+            <a href="https://prdt.com.sg/transform-your-singapore-bto-with-inspiring-renovation-and-design-ideas/#:~:text=Install%20smart%20lighting%20systems%2C%20automated,or%20through%20a%20mobile%20app." target="_blank" rel="noopener noreferrer">
               {" "}
               PRDT{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://homesmart.sg/guide-to-creating-a-smart-home/">
+            <a href="https://homesmart.sg/guide-to-creating-a-smart-home/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HomeSmart{" "}
             </a>
@@ -2284,7 +2284,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.mynicehome.gov.sg/hdb-how-to/maintain-your-flat/a-guide-to-maintaining-your-hdb-flat/">
+            <a href="https://www.mynicehome.gov.sg/hdb-how-to/maintain-your-flat/a-guide-to-maintaining-your-hdb-flat/"  target="_blank" rel="noopener noreferrer">
               {" "}
               MyNiceHome.gov{" "}
             </a>
@@ -2312,7 +2312,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.mynicehome.gov.sg/hdb-how-to/maintain-your-flat/a-guide-to-maintaining-your-hdb-flat/">
+            <a href="https://www.mynicehome.gov.sg/hdb-how-to/maintain-your-flat/a-guide-to-maintaining-your-hdb-flat/"  target="_blank" rel="noopener noreferrer">
               {" "}
               MyNiceHome.gov{" "}
             </a>
@@ -2340,7 +2340,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/living-in-an-hdb-flat/home-maintenance/home-care-guide/">
+            <a href="https://www.hdb.gov.sg/residential/living-in-an-hdb-flat/home-maintenance/home-care-guide/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -2369,7 +2369,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/living-in-an-hdb-flat/home-maintenance">
+            <a href="https://www.hdb.gov.sg/residential/living-in-an-hdb-flat/home-maintenance" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -2396,7 +2396,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/living-in-an-hdb-flat/home-maintenance">
+            <a href="https://www.hdb.gov.sg/residential/living-in-an-hdb-flat/home-maintenance" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -2425,7 +2425,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/living-in-an-hdb-flat/home-maintenance">
+            <a href="https://www.hdb.gov.sg/residential/living-in-an-hdb-flat/home-maintenance" target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -2453,7 +2453,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.moneysmart.sg/home-insurance/bto-renovation-coverage-ms">
+            <a href="https://www.moneysmart.sg/home-insurance/bto-renovation-coverage-ms" target="_blank" rel="noopener noreferrer">
               {" "}
               MoneySmart{" "}
             </a>
@@ -2482,7 +2482,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://9creation.com.sg/tips-for-keeping-a-4-room-hdb-flat-in-good-condition/">
+            <a href="https://9creation.com.sg/tips-for-keeping-a-4-room-hdb-flat-in-good-condition/"  target="_blank" rel="noopener noreferrer">
               {" "}
               9creation{" "}
             </a>
@@ -2564,7 +2564,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/selling-a-flat/overview/">
+            <a href="https://www.hdb.gov.sg/residential/selling-a-flat/overview/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -2591,14 +2591,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.propertyguru.com.sg/property-guides/mop-sell-hdb-singapore-16413/">
+            <a href="https://www.propertyguru.com.sg/property-guides/mop-sell-hdb-singapore-16413/"  target="_blank" rel="noopener noreferrer">
               {" "}
               PropertyGuru{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.hdb.gov.sg/residential/selling-a-flat/eligibility/">
+            <a href="https://www.hdb.gov.sg/residential/selling-a-flat/eligibility/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -2636,7 +2636,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://jimmy-sum.com/blog/5-key-factors-to-consider-before-selling-your-hdb/">
+            <a href="https://jimmy-sum.com/blog/5-key-factors-to-consider-before-selling-your-hdb/"  target="_blank" rel="noopener noreferrer">
               {" "}
               JimmySum{" "}
             </a>
@@ -2663,14 +2663,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.99.co/singapore/insider/hidden-costs-selling-house/">
+            <a href="https://www.99.co/singapore/insider/hidden-costs-selling-house/"  target="_blank" rel="noopener noreferrer">
               {" "}
               99.co{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.singsaver.com.sg/blog/hidden-cost-of-selling-hdb-flat">
+            <a href="https://www.singsaver.com.sg/blog/hidden-cost-of-selling-hdb-flat" target="_blank" rel="noopener noreferrer">
               {" "}
               SingSaver{" "}
             </a>
@@ -2698,14 +2698,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://propseller.com/guides-insights/hdb-flat-downgrade-step-by-step-guide/">
+            <a href="https://propseller.com/guides-insights/hdb-flat-downgrade-step-by-step-guide/"  target="_blank" rel="noopener noreferrer">
               {" "}
               PropSeller{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.99.co/singapore/insider/upgrade-property-type-sell-bto/">
+            <a href="https://www.99.co/singapore/insider/upgrade-property-type-sell-bto/"  target="_blank" rel="noopener noreferrer">
               {" "}
               99.co{" "}
             </a>
@@ -2734,7 +2734,7 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/couples-and-families/cpf-housing-grants-for-resale-flats-families#:~:text=Under%20the%20CPF%20Housing%20Grant,Enhanced%20CPF%20Housing%20Grant%20(EHG)/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/couples-and-families/cpf-housing-grants-for-resale-flats-families#:~:text=Under%20the%20CPF%20Housing%20Grant,Enhanced%20CPF%20Housing%20Grant%20(EHG)/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
@@ -2762,21 +2762,21 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/singles/">
+            <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/singles/"  target="_blank" rel="noopener noreferrer">
               {" "}
               HDB{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.dbs.com.sg/personal/articles/nav/my-home/the-single-guide-to-buying-a-HDB-flat-in-singapore#:~:text=From%202H2024%2C%20with%20the%20new,flat%20in%20the%20resale%20market/">
+            <a href="https://www.dbs.com.sg/personal/articles/nav/my-home/the-single-guide-to-buying-a-HDB-flat-in-singapore#:~:text=From%202H2024%2C%20with%20the%20new,flat%20in%20the%20resale%20market/"  target="_blank" rel="noopener noreferrer">
               {" "}
               DBS{" "}
             </a>
           </p>
           <p>
             3.{" "}
-            <a href="https://www.moneysmart.sg/home-loan/housing-guide-for-singles-ms/">
+            <a href="https://www.moneysmart.sg/home-loan/housing-guide-for-singles-ms/"  target="_blank" rel="noopener noreferrer">
               {" "}
               MoneySmart{" "}
             </a>
@@ -2803,14 +2803,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.99.co/singapore/insider/ways-increase-property-value-before-selling/">
+            <a href="https://www.99.co/singapore/insider/ways-increase-property-value-before-selling/"  target="_blank" rel="noopener noreferrer">
               {" "}
               99.co{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://ohmyhome.com/en-sg/blog/tips-to-enhance-your-hdb-resale-flats-value/">
+            <a href="https://ohmyhome.com/en-sg/blog/tips-to-enhance-your-hdb-resale-flats-value/"  target="_blank" rel="noopener noreferrer">
               {" "}
               Ohmyhome{" "}
             </a>
@@ -2839,14 +2839,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://blog.bluenest.sg/selling-property-mistakes//">
+            <a href="https://blog.bluenest.sg/selling-property-mistakes//"  target="_blank" rel="noopener noreferrer">
               {" "}
               BlueNest{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.99.co/singapore/insider/6-things-seller-avoid-selling-home/">
+            <a href="https://www.99.co/singapore/insider/6-things-seller-avoid-selling-home/"  target="_blank" rel="noopener noreferrer">
               {" "}
               99.co{" "}
             </a>
@@ -2877,14 +2877,14 @@ const BtoPlannerPage = () => {
           </p>
           <p>
             1.{" "}
-            <a href="https://www.madeforfamilies.gov.sg/support-measures/your-home-matters-new/housing-schemes-and-grants">
+            <a href="https://www.madeforfamilies.gov.sg/support-measures/your-home-matters-new/housing-schemes-and-grants" target="_blank" rel="noopener noreferrer">
               {" "}
               MadeforFamilies.gov{" "}
             </a>
           </p>
           <p>
             2.{" "}
-            <a href="https://www.cpf.gov.sg/member/home-ownership/plan-your-housing-journey/upgrading-your-home">
+            <a href="https://www.cpf.gov.sg/member/home-ownership/plan-your-housing-journey/upgrading-your-home" target="_blank" rel="noopener noreferrer">
               {" "}
               CPF{" "}
             </a>
