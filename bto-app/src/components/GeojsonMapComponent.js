@@ -1142,9 +1142,80 @@ const filterHtmlContent = (htmlContent) => {
       textContent === "FMEL_UPD_D" ||
       textContent === "PHOTOURL" ||
       textContent === "EST_ORIGINAL_COMPLETION_DATE" ||
-      textContent === "ADDRESSBLOCKHOUSENUMBER"
+      textContent === "ADDRESSBLOCKHOUSENUMBER" ||
+      textContent === "APPROXIMATE_GFA" ||
+      textContent === "STATUS" ||
+      textContent === "HUP_COMPLETION_DATE" ||
+      textContent === "IMPLEMENTATION_DATE" ||
+      textContent === "INFO_ON_CO_LOCATORS" ||
+      textContent === "AWARDED_DATE" ||
+      textContent === "CENTRE_CODE" ||
+      textContent === "HCI_CODE" ||
+      textContent === "LICENCE_TYPE" ||
+      textContent === "ADDR_TYPE" ||
+      textContent === "X_COORDINATE" ||
+      textContent === "Y_COORDINATE"
     ) {
       thElement.parentNode.remove();
+    } else {
+      switch (thElement.textContent) {
+        case "ADDRESSPOSTALCODE":
+          thElement.textContent = "Postal Code";
+          break;
+        case "ADDRESSBUILDINGNAME":
+          thElement.textContent = "Building Name";
+          break;
+        case "ADDRESSUNITNUMBER":
+          thElement.textContent = "Unit Number";
+          break;
+        case "ADDRESSFLOORNUMBER":
+          thElement.textContent = "Floor Number";
+          break;
+        case "ADDRESSSTREETNAME":
+          thElement.textContent = "Street Name";
+          break;
+        case "DESCRIPTION":
+          thElement.textContent = "Description";
+          break;
+        case "NAME":
+          thElement.textContent = "Name";
+          break;
+        case "ADDRESS_MYENV":
+          thElement.textContent = "Address"
+          break;
+        case "CENTRE_NAME":
+          thElement.textContent = "Centre Name"
+          break;
+        case "HCI_NAME":
+          thElement.textContent = "HCI Name";
+          break;
+        case "HCI_TEL":
+          thElement.textContent = "HCI Telephone";
+          break;
+        case "POSTAL_CD":
+          thElement.textContent = "Postal Code";
+          break;
+        case "BLK_HSE_NO":
+          thElement.textContent = "Block/House Number";
+          break;
+        case "FLOOR_NO":
+          thElement.textContent = "Floor Number";
+          break;
+        case "UNIT_NO":
+          thElement.textContent = "Unit Number";
+          break;
+        case "STREET_NAME":
+          thElement.textContent = "Street Name";
+          break;
+        case "BUILDING_NAME":
+          thElement.textContent = "Building Name";
+          break;
+        case "CLINIC_PROGRAMME_CODE":
+          thElement.textContent = "Clinic Programme Code";
+          break;
+        default:
+          break;
+      }
     }
   });
   return tempElement.innerHTML;
