@@ -23,22 +23,6 @@
   height: 70vh;
 }
 
-/* TODO Debug @zaiqin */
-button {
-  background-color: #f7776b;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #c55f55;
-}
-
 .btofindtext input[type="text"] {
   /* border: 1px solid #ddd;
     display:inline-block;

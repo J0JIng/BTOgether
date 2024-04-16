@@ -141,7 +141,19 @@ const GeojsonMapComponent = () => {
         }}
       >
         <p>Home location set successfully!</p>
-        <button onClick={onClose}>Close</button>
+        <Button
+          variant="contained"
+          onClick={onClose}
+          sx={{
+            mr: 1,
+            boxShadow: 1,
+            textTransform: "none",
+            backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },
+          }}
+        >
+          close
+        </Button>
       </div>
     );
   };
@@ -250,6 +262,7 @@ const GeojsonMapComponent = () => {
   };
 
   const handleShowDetails = (val) => {
+    clearMap();
     setShowDetails(true);
 
     const q = query(colRef, where("email", "==", auth.currentUser.email));
@@ -268,7 +281,7 @@ const GeojsonMapComponent = () => {
 
         // Update the UI based on the selected BTO
         if (val === 1) {
-          if (docData.BTO1.projectname === "placeholder") {
+          if (!docData.BTO1) {
             alert("No records exist for BTO1");
           } else {
             setProjectName(docData.BTO1.projectname);
@@ -282,7 +295,7 @@ const GeojsonMapComponent = () => {
             flyToCoords(docData.BTO1.latitude, docData.BTO1.longitude);
           }
         } else if (val === 2) {
-          if (docData.BTO2.projectname === "placeholder") {
+          if (!docData.BTO2) {
             alert("No records exist for BTO2");
           } else {
             setProjectName(docData.BTO2.projectname);
@@ -296,7 +309,7 @@ const GeojsonMapComponent = () => {
             flyToCoords(docData.BTO2.latitude, docData.BTO2.longitude);
           }
         } else if (val === 3) {
-          if (docData.BTO3.projectname === "placeholder") {
+          if (!docData.BTO3) {
             alert("No records exist for BTO3");
           } else {
             setProjectName(docData.BTO3.projectname);
@@ -372,11 +385,58 @@ const GeojsonMapComponent = () => {
             </Select>
           </FormControl>
         </Box>
-        <button onClick={() => savingInBTO(1)}>Save as BTO1</button>
-        <button onClick={() => savingInBTO(2)}>Save as BTO2</button>
-        <button onClick={() => savingInBTO(3)}>Save as BTO3</button>
-
-        <button onClick={closeFormPopup}>Close</button>
+        <Button
+          variant="contained"
+          onClick={() => savingInBTO(1)}
+          sx={{
+            mr: 1,
+            boxShadow: 1,
+            textTransform: "none",
+            backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },
+          }}
+        >
+          Save as BTO1
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => savingInBTO(2)}
+          sx={{
+            mr: 1,
+            boxShadow: 1,
+            textTransform: "none",
+            backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },
+          }}
+        >
+          Save as BTO2
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => savingInBTO(3)}
+          sx={{
+            mr: 1,
+            boxShadow: 1,
+            textTransform: "none",
+            backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },
+          }}
+        >
+          Save as BTO3
+        </Button>
+        <Button
+          variant="contained"
+          onClick={closeFormPopup}
+          sx={{
+            mr: 1,
+            boxShadow: 1,
+            textTransform: "none",
+            backgroundColor: "#f7776b",
+            "&:hover": { backgroundColor: "#c55f55" },
+          }}
+        >
+          Close
+        </Button>
       </Box>
     );
   };
@@ -810,7 +870,7 @@ const GeojsonMapComponent = () => {
         </div>
 
         <div className="right-panel">
-          {showDetails && (
+          {showDetails && projectName !== null && projectName !== "" && (
             <Container style={{ margin: "10px", padding: "0px" }}>
               <span style={{ fontWeight: "bold", fontSize: 18 }}>
                 Project Name:{" "}
@@ -820,7 +880,7 @@ const GeojsonMapComponent = () => {
               <span style={{ fontWeight: "bold", fontSize: 18 }}>
                 Number of Rooms:{" "}
               </span>
-              {numberOfRooms}
+              {numberOfRooms !== null ? numberOfRooms : "N/A"}
             </Container>
           )}
           <Container style={{ margin: "10px", padding: "0px" }}>
@@ -863,9 +923,19 @@ const GeojsonMapComponent = () => {
                         __html: filterHtmlContent(marker.popUp),
                       }}
                     />
-                    <button onClick={() => routeHere(marker.geocode)}>
+                    <Button
+                      variant="contained"
+                      onClick={() => routeHere(marker.geocode)}
+                      sx={{
+                        mr: 1,
+                        boxShadow: 1,
+                        textTransform: "none",
+                        backgroundColor: "#f7776b",
+                        "&:hover": { backgroundColor: "#c55f55" },
+                      }}
+                    >
                       Get Directions
-                    </button>
+                    </Button>
                   </Popup>
                 </Marker>
               ))}
