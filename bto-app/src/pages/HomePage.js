@@ -5,9 +5,20 @@ import "../css/homepage.css";
 import dashboard from "../assets/dashboard-actual.png";
 import btofind from "../assets/bto-find-actual.png";
 import Planner from "../assets/bto-planner-actual.png";
+import { auth } from "../utils/firebase"; // Import Firebase auth
 
 const HomePage = () => {
   const [showGridsAnimation, setShowGridsAnimation] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+    });
+
+    // Clean-up function
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="home-page">
@@ -15,6 +26,11 @@ const HomePage = () => {
 
       <div className="mx-auto max-w-7xl py-10">
         <h1>Welcome!</h1>
+        {currentUser ? (
+          <p>Hello, {currentUser.displayName || currentUser.email}!</p>
+        ) : (
+          <p>Please sign in.</p>
+        )}
         <div className="mt-10">
           <div
             className={`grid grid-cols-3 gap-6 ${
