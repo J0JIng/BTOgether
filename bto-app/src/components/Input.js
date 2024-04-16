@@ -2,6 +2,7 @@ import "../css/global.css";
 import React, { useState, useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
+import Slider from "@mui/material/Slider";
 
 /**
  * Input component for selecting options and displaying relevant information.
@@ -144,27 +145,39 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
     if (selected === "Amenities" && viewSelected) {
       return (
         <div className="flex flex-col items-center mt-2">
-          <label htmlFor="distance-slider" className="mb-2">
-            Filter Distance (in km):{" "}
-          </label>
-          <input
-            id="distance-slider"
-            className="w-full"
-            type="range"
-            min="1"
-            max="10"
-            value={distance}
-            onChange={(e) => {
-              setDistance(e.target.value);
-              onChange({
-                selected,
-                optionSelected,
-                distance: e.target.value,
-                addressField,
-              });
-            }}
-          />
-          <span className="text-center">{distance} km</span>
+          <div style={{ minWidth: "50%" }}>
+            <h3>Filter Distance (in km): {distance} km</h3>
+            <Slider
+              aria-label="Restricted values"
+              defaultValue={1}
+              step={1}
+              min={1}
+              max={10}
+              marks={[
+                { value: 0, label: "0" },
+                { value: 1, label: "1" },
+                { value: 2, label: "2" },
+                { value: 3, label: "3" },
+                { value: 4, label: "4" },
+                { value: 5, label: "5" },
+                { value: 6, label: "6" },
+                { value: 7, label: "7" },
+                { value: 8, label: "8" },
+                { value: 9, label: "9" },
+                { value: 10, label: "10" },
+              ]}
+              onChange={(e) => {
+                setDistance(e.target.value);
+                onChange({
+                  selected,
+                  optionSelected,
+                  distance: e.target.value,
+                  addressField,
+                });
+              }}
+              sx={{ color: "#f7776b" }}
+            />
+          </div>
         </div>
       );
     }
