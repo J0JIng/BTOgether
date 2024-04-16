@@ -1154,7 +1154,8 @@ const filterHtmlContent = (htmlContent) => {
       textContent === "LICENCE_TYPE" ||
       textContent === "ADDR_TYPE" ||
       textContent === "X_COORDINATE" ||
-      textContent === "Y_COORDINATE"
+      textContent === "Y_COORDINATE" ||
+      textContent === "HYPERLINK"
     ) {
       thElement.parentNode.remove();
     } else {

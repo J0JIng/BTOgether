@@ -39,14 +39,14 @@ body {
   align-items: center;
 
   background-color: #f7776b;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 
   justify-content: space-between;
   padding: 10px;
 
   position: fixed;
   width: 100%;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   top: 0px;
   left: -1px;
   z-index: 1;
@@ -225,38 +225,28 @@ body {
 }
 
 /* Define breakpoints for different screen sizes */
-@media (min-width: 768px) {
-  .heading-box {
-    height: 300px;
-  }
+@media (max-width: 1280px) {
   .image-style {
-    height: 300px;
-    width: 533px;
+    display: none;
+  }
+  .ge-footer {
+    display: none;
+  }
+  .heading-box {
+    height: 200px;
+  }
+  .heading-text {
+    width: 80%;
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1280px) {
   .heading-box {
-    height: 350px;
+    height: 300px;
   }
   .image-style {
     height: 400px;
     width: 711px;
-  }
-}
-@media (min-width: 1200px) {
-  .heading-box {
-    height: 400px;
-  }
-}
-
-@media (max-width: 767px) {
-  .image-style {
-    height: 180px;
-    width: 320px;
-  }
-  .heading-box {
-    height: 200px;
   }
 }
 
@@ -417,9 +407,10 @@ footer {
 
 .footer-title {
   font-weight: 400;
-  font-size: 70px;
+  font-size: 60px;
   color: white;
   z-index: 1;
+  margin-bottom: 20px;
 }
 
 .footer-title-tagline {
@@ -427,7 +418,7 @@ footer {
   font-size: 20px;
 
   position: relative;
-  left: 50px;
+  left: 30px;
   bottom: 8px;
 }
 
@@ -436,6 +427,7 @@ footer {
   border-radius: 12px;
   padding: 20px 20px;
   font-size: 18px;
+  margin-top: 10px;
   font-weight: bold;
   text-align: center;
   /* border: 1px solid black; */
@@ -461,31 +453,10 @@ footer {
 }
 
 .bto-image-footer {
-  width: 500px;
+  width: 400px;
   height: auto;
   display: block;
   border-radius: 10px;
   margin-top: 80px;
   margin-left: 100px;
-}
-
-@media screen and (max-width: 1164px) {
-  .ge-footer {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 1665px) {
-  /* .heading-text {
-        width: 50%;
-    } */
-}
-
-@media screen and (max-width: 1148px) {
-  /* .heading-text {
-        width: 50%;
-    } */
-  .image-logo {
-    display: none;
-  }
 }

@@ -6,25 +6,62 @@ import pinkwaves from "../assets/pinkwaves.svg";
 import mission from "../assets/scale.png";
 import unique from "../assets/diamond-anim.png";
 import goal from "../assets/mission.png";
+import { Box } from "@mui/material";
+import React, { useState, useEffect } from "react";
 
 const AboutUsPage = () => {
+  const [boxHeight, setBoxHeight] = useState(""); // State to hold box height
+  const [waveHeight, setWaveHeight] = useState(""); // State to hold box height
+
+  useEffect(() => {
+    // Function to update box height based on window width
+    const updateBoxHeight = () => {
+      if (window.innerWidth < 1188) {
+        setBoxHeight("10vh");
+        setWaveHeight("20vh");
+      } else {
+        setBoxHeight("40vh");
+        setWaveHeight("30vh");
+      }
+    };
+
+    // Call the function initially
+    updateBoxHeight();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", updateBoxHeight);
+
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener("resize", updateBoxHeight);
+    };
+  }, []); // Run this effect only once when component mounts
+
+
   return (
     <div className="entry-page">
       <Navbar />
-
-      <div className="aboutus-container">
-        <div className="aboutus-title">About Us</div>
-        <img src={btoimage} alt="bto-image" className="aboutus-image" />
-      </div>
-
-      <div className="heading-box">
-        {/* You can add any heading box content here if needed */}
-      </div>
-
-      <div className="heading-box-waves">
-        <img src={pinkwaves} alt="pinkwaves" className="waves-image" />
-      </div>
-
+      <Box
+        sx={{
+          backgroundColor: "#f7776b",
+          height: boxHeight, // Set height based on state
+          width: "100%"
+        }}
+      >
+        <div className="aboutus-container">
+          <div className="aboutus-title">About Us</div>
+          <img src={btoimage} alt="bto-image" className="aboutus-image" />
+        </div>
+      </Box>
+      <Box
+        sx={{
+          backgroundImage: `url(${pinkwaves})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover", // Stretch both horizontally and vertically to cover the container
+          width: "100%", // Stretch horizontally to cover entire width
+          height: waveHeight, // Fixed height of 25% of viewport height
+        }}
+      ></Box>
       <div className=" page-info">
         <div className="desc-heading">
           <div>Mission and Values</div>

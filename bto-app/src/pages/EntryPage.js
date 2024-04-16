@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/entrypage.css";
 import btoLogo from "../assets/btodraftlogo.png";
@@ -13,6 +13,7 @@ import savetime from "../assets/save-time.png";
 import streetmap from "../assets/street-map.png";
 import pinkwaves from "../assets/pinkwaves.svg";
 import handleScrollAnimation from "./script";
+import { Box } from "@mui/material";
 
 const EntryPage = () => {
   useEffect(() => {
@@ -22,6 +23,33 @@ const EntryPage = () => {
   useEffect(() => {
     handleScrollAnimation();
   }, []); // Run once after component mounts
+
+  const [boxHeight, setBoxHeight] = useState(""); // State to hold box height
+  const [waveHeight, setWaveHeight] = useState(""); // State to hold box height
+
+  useEffect(() => {
+    // Function to update box height based on window width
+    const updateBoxHeight = () => {
+      if (window.innerWidth < 1280) {
+        setBoxHeight("30vh");
+        setWaveHeight("20vh");
+      } else {
+        setBoxHeight("50vh");
+        setWaveHeight("30vh");
+      }
+    };
+
+    // Call the function initially
+    updateBoxHeight();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", updateBoxHeight);
+
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener("resize", updateBoxHeight);
+    };
+  }, []); // Run this effect only once when component mounts
 
   return (
     <div className="entry-page">
@@ -41,41 +69,45 @@ const EntryPage = () => {
           Get Started
         </Link>
       </div>
-
-      <div className="container anim-1">
-        <div className="heading-text anim-1">
-          <div className="heading-text title">Your Search, Your Conditions</div>
-          <div className="heading-text description">
-            Streamline your BTO journey. Explore, plan, and secure your dream
-            home effortlessly with personalized recommendations and intuitive
-            tools. Your path, your terms.
+      <Box
+        sx={{
+          backgroundColor: "#f7776b",
+          height: boxHeight, // Set height based on state
+          width: "100%"
+        }}
+      >
+        <div className="container anim-1">
+          <div className="heading-text anim-1">
+            <div className="heading-text title">Your Search, Your Conditions</div>
+            <div className="heading-text description">
+              Streamline your BTO journey. Explore, plan, and secure your dream
+              home effortlessly with personalized recommendations and intuitive
+              tools. Your path, your terms.
+            </div>
           </div>
+
+          <img
+            src={btoimage}
+            alt="bto-image"
+            className="first-hdb-image image-style"
+          />
         </div>
 
-        <img
-          src={btoimage}
-          alt="bto-image"
-          className="first-hdb-image image-style"
-        />
-      </div>
+      </Box>
+      <Box
+        sx={{
+          backgroundImage: `url(${pinkwaves})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover", // Stretch both horizontally and vertically to cover the container
+          width: "100%", // Stretch horizontally to cover entire width
+          height: waveHeight, // Fixed height of 25% of viewport height
+        }}
+      ></Box>
 
       <div className="heading-box"></div>
 
-      <div className="heading-box-waves">
-        <img src={pinkwaves} alt="pinkwaves" className="waves-image" />
-      </div>
-
-      {/* <div className="heading-text anim-1">
-                <div className="heading-text title">Your Search, Your Conditions</div>
-                <div className="heading-text description">
-                Streamline your BTO journey. Explore, plan, and secure your dream home 
-                effortlessly with personalized recommendations and intuitive tools. 
-                Your path, your terms.
-                </div>
-            </div> */}
-
       <div className="logos">
-        <div className="key-features anim-1">
+        <div className="key-features anim-1" style={{marginTop: 70}}>
           <div className="title ">Key Features</div>
         </div>
 
@@ -174,7 +206,7 @@ const EntryPage = () => {
             src={btoLogo}
             className="bto-logo-bottom"
             alt="bto-logo"
-            style={{ width: "200px", height: "200px", borderRadius: "5px" }}
+            style={{ width: "100px", height: "100px", borderRadius: "5px" }}
           />
           <div className="title-and-tagline">
             <div className="footer-title">BTOgether</div>

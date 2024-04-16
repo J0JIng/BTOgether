@@ -13,9 +13,8 @@
   border-bottom: 1px solid #f7776b;
   position: relative;
   font-family: "Inter", Helvetica, Arial, sans-serif;
-  border-top-left-radius: 10px; border-bottom-left-radius: 10px;
   /* Add this line */
-  z-index: 9999;
+  z-index: 2;
   padding-right: 20px;
 }
 
