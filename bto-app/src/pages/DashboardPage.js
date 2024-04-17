@@ -1,5 +1,16 @@
 import { useEffect, useState, useRef, forwardRef } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/NavBar";
+import { auth } from "../utils/firebase";
+import {
+  getFirestore,
+  collection,
+  updateDoc,
+  addDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -33,6 +44,7 @@ import parksgeojson from "../geojson/Parks.geojson";
 import preschoolgeojson from "../geojson/PreSchoolsLocation.geojson";
 import clinicgeojson from "../geojson/CHASClinics.geojson";
 import mallsgeojson from "../geojson/shopping_mall_coordinates.geojson";
+import notFound from "../assets/item-not-found.svg";
 
 // Components
 import Container from "../components/Container";
@@ -44,16 +56,22 @@ import { getAmenities } from "../components/GetAmenities";
 import { fetchPublicTransport } from "../utils/fetchPublicTransport";
 import { fetchTravelTime } from "../utils/fetchTravelTime";
 import Gemini from "../components/GoogleGenerativeAIComponent";
+import UserDataUtility from "../utils/UserDataUtility";
+
+const generateId = () => `container-${uuidv4()}`;
 
 export default function DashboardPage() {
   const [activeBTO, setActiveBTO] = useState(null);
-  const [BTO1, setBTO1] = useState(true);
-  const [BTO2, setBTO2] = useState(true);
-  const [BTO3, setBTO3] = useState(true);
+  const [BTO1Status, setBTO1Status] = useState(false);
+  const [BTO2Status, setBTO2Status] = useState(false);
+  const [BTO3Status, setBTO3Status] = useState(false);
+
   const [containers, setContainers] = useState([]);
   const [activeId, setActiveId] = useState(null);
   const [currentContainerId, setCurrentContainerId] = useState(null);
   const [containerName, setContainerName] = useState("");
+
+  const [showImage, setShowImage] = useState(false);
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddInfoModal, setShowAddInfoModal] = useState(false);
   const [isHeartClicked, setIsHeartClicked] = useState(false);
@@ -62,141 +80,246 @@ export default function DashboardPage() {
   const [isAddFramesHovered, setIsAddFramesHovered] = useState(false);
   const [numberOfTrueBTOs, setNumberOfTrueBTOs] = useState(0);
 
+  const [loadedData, setLoadedData] = useState(null);
   const [distance, setDistance] = useState(5);
   const [addressField, setAddressField] = useState("");
   const [selected, setSelected] = useState("");
   const [optionSelected, setOptionSelected] = useState("");
   const [numberOfAmenities, setNumberOfAmenities] = useState(null);
+
   const [timeToTravel, setTimeToTravel] = useState(0);
   const [timeToTravelInString, setTimeToTravelInString] = useState("");
-
-  const [homeGeoCode, setHomeGeoCode] = useState({
-    latitude: 1.3526941,
-    longitude: 103.6920069,
+  const [numberofroomsinform, setNumberOfRoomsInForm] = useState();
+  const [projectnameinform, setProjectNameInForm] = useState("");
+  const [myhome, setMyHome] = useState({
+    BTO1: {
+      address: 0,
+      latitude: 0,
+      longitude: 0,
+      projectname: "placeholder",
+      numberofrooms: "placeholder",
+    },
+    BTO2: {
+      address: 0,
+      latitude: 0,
+      longitude: 0,
+      projectname: "placeholder",
+      numberofrooms: "placeholder",
+    },
+    BTO3: {
+      address: 0,
+      latitude: 0,
+      longitude: 0,
+      projectname: "placeholder",
+      numberofrooms: "placeholder",
+    },
   });
+
+  const [homeLocation, setHomeLocation] = useState({
+    address: "",
+    latitude: null,
+    longitude: null,
+  });
+
   const [destGeoCode, setDestGeoCode] = useState({
-    latitude: 1.3766432,
-    longitude: 103.8181963,
+    latitude: null,
+    longitude: null,
   });
 
-  // TODO : ATTENTION NEED TO REPLACE WITH REAL LOCATION
-  const [homeaddressField, setHomeAddressField] = useState(
-    "nanyang technological university Singapore"
-  );
+  // Variables to declare
+  const db = getFirestore();
+  const dataUtilityRef = useRef(null);
+  const colRef = collection(db, "User_prefs");
+  const comparisonRef = useRef(null);
 
-  // DEBUGGING
-  // useEffect(() => {
-  //   console.log("distance:", distance);
-  //   console.log("addressField:", addressField);
-  //   console.log("selected:", selected);
-  //   console.log("optionSelected:", optionSelected);
-  //   console.log("numberOfAmenities:", numberOfAmenities);
-  //   console.log("timeToTravel:", timeToTravel);
-  //   console.log("homeGeoCode:", homeGeoCode);
-  //   console.log("destGeoCode:", destGeoCode);
-  //   console.log("timeToTravelInString:", timeToTravelInString);
-  // }, [
-  //   distance,
-  //   addressField,
-  //   selected,
-  //   optionSelected,
-  //   numberOfAmenities,
-  //   timeToTravel,
-  //   homeGeoCode,
-  //   destGeoCode,
-  //   timeToTravelInString,
-  // ]);
-
-  const STORAGE_KEY_PREFIX = "dashboard_containers_";
-
-  // Load containers for the active BTO from localStorage on component mount
+  // load data from UserDataUtility
   useEffect(() => {
-    if (activeBTO) {
-      const storedContainers = localStorage.getItem(
-        STORAGE_KEY_PREFIX + activeBTO
-      );
-      if (storedContainers) {
-        setContainers(JSON.parse(storedContainers));
+    const tryLoadUserData = () => {
+      dataUtilityRef.current
+        ? dataUtilityRef.current.loadUserData()
+        : setTimeout(tryLoadUserData, 100);
+    };
+    tryLoadUserData();
+  }, []);
+
+  // load data from UserDataUtility
+  const handleLoadedData = (data) => {
+    if (data) {
+      console.log("Loaded from firestore:", data);
+      setLoadedData(data);
+
+      const { BTO1, BTO2, BTO3 } = data;
+
+      if (BTO1) {
+        setBTO1Status(true); // Set BTO1 state to true if BTO1 exists
       }
+      if (BTO2) {
+        setBTO2Status(true); // Set BTO2 state to true if BTO2 exists
+      }
+      if (BTO3) {
+        setBTO3Status(true); // Set BTO2 state to true if BTO2 exists
+      } else {
+        setActiveBTO(null);
+      }
+    } else {
+      console.log("No data found");
     }
+  };
+
+  // Update/Save Data
+  const updateLoadedData = () => {
+    if (dataUtilityRef.current) {
+      dataUtilityRef.current.saveUserData().catch((error) => {
+        console.error("Error saving data:", error);
+      });
+    } else {
+      console.error("Data utility reference is not available.");
+    }
+  };
+
+  // Update/Save Data
+  const savingInBTO = (index) => {
+    const q = query(colRef, where("email", "==", auth.currentUser.email));
+
+    getDocs(q)
+      .then((snapshot) => {
+        const btoKey = `BTO${index}`;
+        const updatedBTOData = {
+          address: homeLocation.address,
+          latitude: homeLocation.latitude,
+          longitude: homeLocation.longitude,
+          projectname: projectnameinform,
+          numberofrooms: numberofroomsinform,
+        };
+
+        if (!snapshot.empty) {
+          const docRef = snapshot.docs[0].ref;
+          const currentDocData = snapshot.docs[0].data();
+
+          const updatedDocData = {
+            ...currentDocData,
+            [btoKey]: updatedBTOData,
+          };
+
+          console.log("Updating existing document:", updatedDocData);
+
+          updateDoc(docRef, updatedDocData)
+            .then(() => {
+              console.log("Document updated successfully!");
+              setMyHome(updatedDocData);
+            })
+            .catch((error) => {
+              console.error("Error updating document:", error);
+            });
+        } else {
+          console.log("No document found, creating a new one.");
+          const newHomeData = {
+            email: auth.currentUser.email,
+            [btoKey]: updatedBTOData,
+          };
+
+          addDoc(colRef, newHomeData)
+            .then(() => {
+              console.log("Document created successfully!");
+              setMyHome(newHomeData);
+            })
+            .catch((error) => {
+              console.error("Error creating new document:", error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching documents:", error);
+      });
+  };
+
+  // Display Image when activeBTO is NULL
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowImage(activeBTO === null);
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, [activeBTO]);
 
-  // Save containers for the active BTO to localStorage whenever containers state changes
+  // Trigger alert when Unfavourite BTO
   useEffect(() => {
-    if (activeBTO) {
-      localStorage.setItem(
-        STORAGE_KEY_PREFIX + activeBTO,
-        JSON.stringify(containers)
-      );
-    }
-  }, [containers, activeBTO]);
-
-  // DEBUGGING
-  // useEffect(() => {
-  //   // console.log("containers:", JSON.stringify(containers, null, 2));
-
-  //   // Log the updated activeBTO state
-  //   console.log("New active BTO: " + activeBTO);
-  // }, [containers, activeBTO]);
-
-  useEffect(() => {
-    // Trigger alert when Unfavourite BTO
     if (isHeartClicked) {
       alert("Unfavourite BTO!");
       setIsHeartClicked(false);
     }
+  }, [isHeartClicked]);
 
-    //Set containers based on activeBTO
+  // Get Saved Containers from User Data
+  const getSavedContainers = ({}) => {};
+
+  // Determine which BTO project is favorited initially
+  useEffect(() => {
+    if (BTO1Status) {
+      setActiveBTO("BTO1");
+    } else if (BTO2Status) {
+      setActiveBTO("BTO2");
+    } else if (BTO3Status) {
+      setActiveBTO("BTO3");
+    } else {
+      setActiveBTO(null);
+    }
+    // Update the count of true BTOs
+    const count = [BTO1Status, BTO2Status, BTO3Status].filter(
+      (bto) => bto
+    ).length;
+    setNumberOfTrueBTOs(count);
+  }, [BTO1Status, BTO2Status, BTO3Status]);
+
+  // Load Active BTO Saved containers
+  useEffect(() => {
     switch (activeBTO) {
       case "BTO1":
-        setContainers(testing_frame);
+        if (loadedData) {
+          setHomeLocation(
+            loadedData.BTO1.address,
+            loadedData.BTO1.latitude,
+            loadedData.BTO1.longitude
+          );
+        }
+        // Fetch BTO 1 container
+        setContainers(generateDefaultFrames(activeBTO));
         break;
 
       case "BTO2":
-        setContainers(
-          defaultFrames2.map((frame) => ({
-            id: generateId(),
-            title: frame.name,
-            description: frame.description,
-            items: [],
-          }))
-        );
+        if (loadedData) {
+          setHomeLocation(
+            loadedData.BTO2.address,
+            loadedData.BTO2.latitude,
+            loadedData.BTO2.longitude
+          );
+        }
+        // Fetch BTO 1 container
+        setContainers(generateDefaultFrames(activeBTO));
         break;
 
       case "BTO3":
-        setContainers(
-          defaultFrames3.map((frame) => ({
-            id: generateId(),
-            title: frame.name,
-            description: frame.description,
-            items: [],
-          }))
-        );
+        if (loadedData) {
+          setHomeLocation(
+            loadedData.BTO3.address,
+            loadedData.BTO3.latitude,
+            loadedData.BTO3.longitude
+          );
+        }
+        // Fetch BTO 1 container
+        setContainers(generateDefaultFrames(activeBTO));
         break;
 
       default:
         setContainers([]);
     }
-  }, [BTO1, BTO2, BTO3, isHeartClicked, activeBTO]);
+    // DEBUG
+    console.log(
+      "my Active home Location is set to: " + JSON.stringify(homeLocation)
+    );
 
-  // Determine which BTO project is favorited initially
-  useEffect(() => {
-    if (BTO1) {
-      setActiveBTO("BTO1");
-    } else if (BTO2) {
-      setActiveBTO("BTO2");
-    } else if (BTO3) {
-      setActiveBTO("BTO3");
-    } else {
-      // No favorite BTO project, alert the user
-      alert(
-        "No favorite projects found, please find and favorite a BTO under BTO Find"
-      );
-    }
-    // Update the count of true BTOs
-    const count = [BTO1, BTO2, BTO3].filter((bto) => bto).length;
-    setNumberOfTrueBTOs(count);
-  }, [BTO1, BTO2, BTO3]);
+    console.log("my Active BTO is set to: " + JSON.stringify(activeBTO));
+  }, [activeBTO]);
 
   // Function to handle button click for BTO1
   const handleBTO1Click = () => {
@@ -213,9 +336,6 @@ export default function DashboardPage() {
     setActiveBTO("BTO3");
   };
 
-  // INSERT CODE FOR COMPARISON
-  const comparisonRef = useRef(null);
-
   // Check for ref and Open Comparison Tab
   const handleComparison = () => {
     const tryOpenComparison = () => {
@@ -226,71 +346,55 @@ export default function DashboardPage() {
     tryOpenComparison();
   };
 
+  // Remove BTO from UserData
   const removeFavouriteBTO = () => {
     setIsHeartClicked(true);
-    switch (activeBTO) {
-      case "BTO1":
-        setBTO1(false);
-        setActiveBTO(BTO2 ? "BTO2" : BTO3 ? "BTO3" : null);
-        break;
-      case "BTO2":
-        setBTO2(false);
-        setActiveBTO(BTO1 ? "BTO1" : BTO3 ? "BTO3" : null);
-        break;
-      case "BTO3":
-        setBTO3(false);
-        setActiveBTO(BTO1 ? "BTO1" : BTO2 ? "BTO2" : null);
-        break;
-      default:
-        break;
-    }
-  };
 
-  const handleGeocode = async () => {
-    if (addressField === null || addressField === "") {
-      return;
-    }
-    try {
-      const response = await axios.get(
-        `https://nominatim.openstreetmap.org/search?q=${addressField}&format=json&addressdetails=1&limit=1`
-      );
-      if (response.data.length > 0) {
-        console.log(response.data[0]);
-        const { lat, lon } = response.data[0];
-        const latitude = parseFloat(lat).toFixed(5);
-        const longitude = parseFloat(lon).toFixed(5);
-        const road = response.data[0].address.road
-          ? response.data[0].address.road
-          : response.data[0].display_name;
+    if (loadedData) {
+      const { BTO1, BTO2, BTO3, ...remainingData } = loadedData;
 
-        const singaporeBounds = {
-          north: 1.5,
-          south: 1.1,
-          east: 104.1,
-          west: 103.6,
-        };
-
-        if (
-          latitude >= singaporeBounds.south &&
-          latitude <= singaporeBounds.north &&
-          longitude >= singaporeBounds.west &&
-          longitude <= singaporeBounds.east
-        ) {
-          setDestGeoCode({
-            latitude: latitude,
-            longitude: longitude,
+      switch (activeBTO) {
+        // Remove BTO1
+        case "BTO1":
+          setBTO1Status(false);
+          setLoadedData({
+            ...(setBTO2Status && { BTO2 }),
+            ...(setBTO3Status && { BTO3 }),
+            ...remainingData,
           });
-        } else {
-          return null;
-        }
-      } else {
-        return null;
+          setActiveBTO(setBTO2Status ? "BTO2" : setBTO3Status ? "BTO3" : null);
+          break;
+
+        // Remove BTO2
+        case "BTO2":
+          setBTO2Status(false);
+          setLoadedData({
+            ...(setBTO1Status && { BTO1 }),
+            ...(setBTO3Status && { BTO3 }),
+            ...remainingData,
+          });
+          setActiveBTO(setBTO1Status ? "BTO1" : setBTO3Status ? "BTO3" : null);
+          break;
+
+        // Remove BTO3
+        case "BTO3":
+          setBTO3Status(false);
+          setLoadedData({
+            ...(setBTO1Status && { BTO1 }),
+            ...(setBTO2Status && { BTO2 }),
+            ...remainingData,
+          });
+          setActiveBTO(setBTO1Status ? "BTO1" : setBTO2Status ? "BTO2" : null);
+          break;
+
+        default:
+          break;
       }
-    } catch (error) {
-      return null;
+      // updateLoadedData();
     }
   };
 
+  // Reset All fields - Used after creating containers
   const resetContainerFields = () => {
     setSelected("");
     setContainerName("");
@@ -303,28 +407,42 @@ export default function DashboardPage() {
     setShowAddContainerModal(false);
   };
 
+  // Get data from input Form
   const getDataFromInputComponent = ({
     selected,
     optionSelected,
     distance,
     addressField,
+    destGeoCode,
   }) => {
     setSelected(selected);
     setContainerName(selected);
     setOptionSelected(optionSelected);
     setDistance(distance);
     setAddressField(addressField);
+    setDestGeoCode(destGeoCode);
   };
+
+  // Handle data from input Form
+  useEffect(() => {
+    handleDataFromInputComponent();
+  }, [selected, optionSelected, homeLocation, destGeoCode, distance]);
 
   const handleDataFromInputComponent = () => {
     if (selected === "Transportation") {
-      handleGeocode();
+      //handleGeocode();
       switch (optionSelected) {
         case "Car":
+          // DEBUGGING
+          console.log("Home Latitude:", homeLocation.latitude);
+          console.log("Home Longitude:", homeLocation.longitude);
+          console.log("Destination Latitude:", destGeoCode.latitude);
+          console.log("Destination Longitude:", destGeoCode.longitude);
+
           setTimeToTravel(
             fetchTravelTime(
-              homeGeoCode.latitude,
-              homeGeoCode.longitude,
+              homeLocation.latitude,
+              homeLocation.longitude,
               destGeoCode.latitude,
               destGeoCode.longitude,
               "car", // specify the mode of transport
@@ -338,8 +456,8 @@ export default function DashboardPage() {
         case "Public Transport":
           setTimeToTravel(
             fetchPublicTransport(
-              homeGeoCode.latitude,
-              homeGeoCode.longitude,
+              homeLocation.latitude,
+              homeLocation.longitude,
               destGeoCode.latitude,
               destGeoCode.longitude,
               true // return time in seconds
@@ -359,7 +477,7 @@ export default function DashboardPage() {
     } else if (selected === "Amenities") {
       switch (optionSelected) {
         case "Gyms":
-          getAmenities(gymgeojson, homeGeoCode, distance)
+          getAmenities(gymgeojson, homeLocation, distance)
             .then((count) => {
               setNumberOfAmenities(count);
             })
@@ -368,7 +486,7 @@ export default function DashboardPage() {
             });
           break;
         case "Hawkers":
-          getAmenities(hawkergeojson, homeGeoCode, distance)
+          getAmenities(hawkergeojson, homeLocation, distance)
             .then((count) => {
               setNumberOfAmenities(count);
             })
@@ -377,7 +495,7 @@ export default function DashboardPage() {
             });
           break;
         case "Parks":
-          getAmenities(parksgeojson, homeGeoCode, distance)
+          getAmenities(parksgeojson, homeLocation, distance)
             .then((count) => {
               setNumberOfAmenities(count);
             })
@@ -386,7 +504,7 @@ export default function DashboardPage() {
             });
           break;
         case "Preschools":
-          getAmenities(preschoolgeojson, homeGeoCode, distance)
+          getAmenities(preschoolgeojson, homeLocation, distance)
             .then((count) => {
               setNumberOfAmenities(count);
             })
@@ -395,7 +513,7 @@ export default function DashboardPage() {
             });
           break;
         case "Clinics":
-          getAmenities(clinicgeojson, homeGeoCode, distance)
+          getAmenities(clinicgeojson, homeLocation, distance)
             .then((count) => {
               setNumberOfAmenities(count);
             })
@@ -404,7 +522,7 @@ export default function DashboardPage() {
             });
           break;
         case "Malls":
-          getAmenities(mallsgeojson, homeGeoCode, distance)
+          getAmenities(mallsgeojson, homeLocation, distance)
             .then((count) => {
               setNumberOfAmenities(count);
             })
@@ -419,6 +537,7 @@ export default function DashboardPage() {
     }
   };
 
+  // Used to Format time to Hours, Mins and Seconds
   useEffect(() => {
     formatTime(timeToTravel);
   }, [timeToTravel]);
@@ -450,13 +569,30 @@ export default function DashboardPage() {
     setTimeToTravelInString(result);
   }
 
-  useEffect(() => {
-    handleDataFromInputComponent();
-  }, [selected, optionSelected, homeGeoCode, destGeoCode, distance]);
+  // generated default frames from user Data
+  const generateDefaultFrames = (currentActiveBTO) => {
+    let data = [{}]; // Initialize with an empty array
+    if (currentActiveBTO !== null && loadedData !== null && loadedData[currentActiveBTO]) {
+      const activeBTOData = loadedData[currentActiveBTO];
+      data = [
+        { name: "Location", description: activeBTOData.address },
+        { name: "Town Council", description: "Sembawang Town Council." },
+        { name: "Historical HDB Price", description: "Historical HDB price around the location is $670,000." },
+        { name: "Historical BTO Price", description: "Historical BTO price around the location is $450,000."  },
+        { name: "Number of Rooms", description: activeBTOData.numberofrooms + " Room flat"},
+      ];
+    }
+    return data.map((frame) => ({
+      id: generateId(),
+      title: frame.name,
+      description: frame.description,
+      frametype: "default",
+    }));
+  };
 
-  // Function to add a new container
+  // Function to create a new interactable Frame
   const onAddContainer = () => {
-    // Reject
+    // Reject Condition
     if (
       containerName === "" ||
       containers.length >= 12 ||
@@ -486,6 +622,7 @@ export default function DashboardPage() {
     const newContainer = {
       id,
       title: containerName,
+      frametype: "interactable",
       description: description,
       numberOfAmenities,
       timeToTravel,
@@ -496,13 +633,14 @@ export default function DashboardPage() {
     resetContainerFields();
   };
 
-  // Function to delete a container
+  // Function to delete interactable Frame
   const onDeleteContainer = (containerId) => {
     setContainers((prevContainers) =>
       prevContainers.filter((container) => container.id !== containerId)
     );
   };
 
+  // Following Functions specific to dragging logic
   function findValueOfItems(id, type) {
     if (type === "container") {
       return containers.find((item) => item.id === id);
@@ -513,6 +651,12 @@ export default function DashboardPage() {
     const container = findValueOfItems(id, "container");
     if (!container) return "";
     return container.title;
+  };
+
+  const findContainerType = (id) => {
+    const container = findValueOfItems(id, "container");
+    if (!container) return "";
+    return container.frametype;
   };
 
   const findContainerDescription = (id) => {
@@ -570,11 +714,14 @@ export default function DashboardPage() {
 
   return (
     <div>
-      {/* add <Navbar/>*/}
+      <UserDataUtility
+        ref={dataUtilityRef}
+        loadedData={handleLoadedData}
+        saveData={loadedData}
+      />
       <Navbar />
-
       <div className="mx-auto max-w-7xl py-10">
-        {/* Add Container Modal*/}
+        {/* Add Frame Modal*/}
         <Modal
           showModal={showAddContainerModal}
           setShowModal={setShowAddContainerModal}
@@ -623,7 +770,7 @@ export default function DashboardPage() {
           <div className="mt-2">
             {" "}
             {/* Added mt-2 */}
-            <button
+            {findContainerType(currentContainerId) !== "default" &&( <button
               onClick={() => {
                 onDeleteContainer(currentContainerId);
                 setShowAddInfoModal(false);
@@ -631,7 +778,7 @@ export default function DashboardPage() {
               className="dashboard-button relative p-2 buttom-2 right-2 border-transparent shadow-md border rounded-md hover:bg-red-400 transition duration-300 "
             >
               <FontAwesomeIcon icon={faTrashCan} />
-            </button>
+            </button>)}
           </div>
         </Modal>
 
@@ -663,7 +810,7 @@ export default function DashboardPage() {
 
           <div className="ml-auto">
             <div className="flex gap-x-2">
-              {BTO1 && (
+              {BTO1Status && (
                 <Button
                   className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out font-bold relative ${
                     activeBTO === "BTO1"
@@ -675,7 +822,7 @@ export default function DashboardPage() {
                   BTO 1
                 </Button>
               )}
-              {BTO2 && (
+              {BTO2Status && (
                 <Button
                   className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out  font-bold relative ${
                     activeBTO === "BTO2"
@@ -687,7 +834,7 @@ export default function DashboardPage() {
                   BTO 2
                 </Button>
               )}
-              {BTO3 && (
+              {BTO3Status && (
                 <Button
                   className={`rounded-lg border-transparent hover:text-red-700 text-white px-6 py-4 transition duration-300 ease-in-out  font-bold relative ${
                     activeBTO === "BTO3"
@@ -732,6 +879,27 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
+
+        {showImage && (
+          <div className="relative flex justify-center items-center animate-slideIn">
+            <img
+              src={notFound}
+              alt="No items found"
+              className="w-[400px] h-[500px]"
+            />
+            <div className="flex flex-col justify-center items-center text-center">
+              <h1 className="text-black font-bold relative">
+                No Favourite BTO Selected
+              </h1>
+              <div className="inline">
+                <p className="inline">Please Favourite a BTO. </p>
+                <Link to="/bto-find" className="no-underline">
+                  <p className="inline no-underline  ">Click Here</p>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Add Grid Pattern */}
         <div className="mt-10">
@@ -782,61 +950,31 @@ export default function DashboardPage() {
     </div>
   );
 }
+// DEBUGGING
+// useEffect(() => {
+//   console.log("distance:", distance);
+//   console.log("addressField:", addressField);
+//   console.log("selected:", selected);
+//   console.log("optionSelected:", optionSelected);
+//   console.log("numberOfAmenities:", numberOfAmenities);
+//   console.log("timeToTravel:", timeToTravel);
+//   console.log("destGeoCode:", destGeoCode);
+//   console.log("timeToTravelInString:", timeToTravelInString);
+// }, [
+//   distance,
+//   addressField,
+//   selected,
+//   optionSelected,
+//   numberOfAmenities,
+//   timeToTravel,
+//   destGeoCode,
+//   timeToTravelInString,
+// ]);
 
-// const dataUtilityRef = useRef(null);
-// const tryLoadUserData = () => {
-//   dataUtilityRef.current
-//     ? dataUtilityRef.current.loadUserData()
-//     : setTimeout(tryLoadUserData, 100);
-// };
+// DEBUGGING
+// useEffect(() => {
+//   // console.log("containers:", JSON.stringify(containers, null, 2));
 
-const defaultFrames1 = [
-  { name: "Location", description: "Woodlands Drive 16." },
-  { name: "Town", description: "Woodlands." },
-  { name: "Town Council", description: "Sembawang Town Council." },
-  {
-    name: "Historical HDB Price",
-    description: "$670,000.",
-    long_description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-  {
-    name: "Historical BTO Price",
-    description: "$500,000",
-    long_description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-  { name: "Number of Rooms", description: "4 Room Flat." },
-  { name: "Estimated Date of Completion", description: "2027." },
-];
-
-const defaultFrames2 = [
-  { name: "Location", description: "Marine Parade Central." },
-  { name: "Town", description: "Marine Parade." },
-  { name: "Town Council", description: "Marine Parade Town Council." },
-  { name: "Price", description: "$800,000." },
-  { name: "Square Footage", description: "1100 sqf." },
-  { name: "Number of Rooms", description: "3 Room Flat." },
-  { name: "Estimated Date of Completion", description: "2026." },
-];
-
-const defaultFrames3 = [
-  { name: "Location", description: "Jurong West Street 41." },
-  { name: "Town", description: "Jurong West." },
-  { name: "Town Council", description: "Jurong West Town Council." },
-  { name: "Price", description: "$720,000." },
-  { name: "Square Footage", description: "1350 sqf." },
-  { name: "Number of Rooms", description: "5 Room Flat." },
-  { name: "Estimated Date of Completion", description: "2025." },
-];
-
-const generateId = () => `container-${uuidv4()}`;
-
-// TESTING
-const testing_frame = defaultFrames1.map((frame) => ({
-  id: generateId(),
-  title: frame.name,
-  description: frame.description,
-  long_description: frame.long_description,
-  items: [],
-}));
+//   // Log the updated activeBTO state
+//   console.log("New active BTO: " + activeBTO);
+// }, [containers, activeBTO]);

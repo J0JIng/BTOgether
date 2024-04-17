@@ -21,6 +21,10 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [distance, setDistance] = useState(5);
   const [addressField, setAddressField] = useState("");
+  const [destGeoCode, setDestGeoCode] = useState({
+    latitude: null,
+    longitude: null,
+  });
 
   const Transportation = ["Select an option", "Car", "Public Transport"];
 
@@ -55,6 +59,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
       optionSelected,
       distance,
       addressField,
+      destGeoCode,
     }); // Pass an object with both values
   };
 
@@ -65,6 +70,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
       optionSelected: event.target.value,
       distance,
       addressField,
+      destGeoCode,
     });
   };
 
@@ -100,6 +106,12 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
           longitude <= singaporeBounds.east
         ) {
           setErrorMessage(null);
+          setDestGeoCode({
+            latitude: latitude,
+            longitude: longitude,
+          });
+
+          console.log("New destination" + JSON.stringify(destGeoCode));
         } else {
           setErrorMessage(
             "The location of is outside Singapore. Please refine your search."
@@ -173,6 +185,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
                   optionSelected,
                   distance: e.target.value,
                   addressField,
+                  destGeoCode,
                 });
               }}
               sx={{ color: "#f7776b" }}

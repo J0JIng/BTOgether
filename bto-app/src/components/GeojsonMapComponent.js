@@ -1182,10 +1182,10 @@ const filterHtmlContent = (htmlContent) => {
           thElement.textContent = "Name";
           break;
         case "ADDRESS_MYENV":
-          thElement.textContent = "Address"
+          thElement.textContent = "Address";
           break;
         case "CENTRE_NAME":
-          thElement.textContent = "Centre Name"
+          thElement.textContent = "Centre Name";
           break;
         case "HCI_NAME":
           thElement.textContent = "HCI Name";

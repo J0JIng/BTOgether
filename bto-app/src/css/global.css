@@ -7,6 +7,22 @@
   width: 400px;
 }
 
-.border-blue-500 {
-  border-color: #4299e1; /* Or any shade of blue you prefer */
+.border-customRed-500 {
+  border-color: #f7776b;
+}
+
+.ring-customRed-500 {
+  border-color: #f7776b;
+}
+
+.bg-customRed {
+  background-color: #f7776b;
+}
+
+.text-customRed {
+  background-color: #f7776b;
+}
+
+.bg-customRed-active {
+  background-color: #ff1500;
 }

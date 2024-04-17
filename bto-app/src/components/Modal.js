@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useRef } from "react";
 import FocusTrap from "focus-trap-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faXmark
+} from "@fortawesome/free-solid-svg-icons";
+
 import clsx from "clsx";
 import "tailwindcss/tailwind.css";
 
@@ -52,9 +57,16 @@ export default function Modal({
                 style={{ maxHeight: "80vh" }} // Set a maximum height for scrolling
               >
                 {children}
+                <button
+                  className="absolute top-3 right-3 text-2xl text-bold border-transparent bg-transparent transition duration-300"
+                  onClick={() => setShowModal(false)}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
               </div>
             </motion.div>
           </FocusTrap>
+
           <motion.div
             key="desktop-backdrop"
             className="fixed inset-0 z-30 bg-gray-100 bg-opacity-10 backdrop-blur"

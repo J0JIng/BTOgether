@@ -7,11 +7,21 @@ import mission from "../assets/scale.png";
 import unique from "../assets/diamond-anim.png";
 import goal from "../assets/mission.png";
 import { Box } from "@mui/material";
+import handleScrollAnimation from "./script";
 import React, { useState, useEffect } from "react";
 
 const AboutUsPage = () => {
   const [boxHeight, setBoxHeight] = useState(""); // State to hold box height
   const [waveHeight, setWaveHeight] = useState(""); // State to hold box height
+  const [slideIn, setSlideIn] = useState(true);
+
+  useEffect(() => {
+    handleScrollAnimation();
+  }, []); // Run once after component mounts
+
+  useEffect(() => {
+    handleScrollAnimation();
+  }, []); // Run once after component mounts
 
   useEffect(() => {
     // Function to update box height based on window width
@@ -37,6 +47,9 @@ const AboutUsPage = () => {
     };
   }, []); // Run this effect only once when component mounts
 
+  useEffect(() => {
+    setSlideIn(true); // Trigger slide animation on component mount
+  }, []);
 
   return (
     <div className="entry-page">
@@ -45,14 +58,15 @@ const AboutUsPage = () => {
         sx={{
           backgroundColor: "#f7776b",
           height: boxHeight, // Set height based on state
-          width: "100%"
+          width: "100%",
         }}
       >
-        <div className="aboutus-container">
+        <div className={`aboutus-container ${slideIn ? "slide-in" : ""}`}>
           <div className="aboutus-title">About Us</div>
           <img src={btoimage} alt="bto-image" className="aboutus-image" />
         </div>
       </Box>
+
       <Box
         sx={{
           backgroundImage: `url(${pinkwaves})`,
@@ -62,8 +76,9 @@ const AboutUsPage = () => {
           height: waveHeight, // Fixed height of 25% of viewport height
         }}
       ></Box>
-      <div className=" page-info">
-        <div className="desc-heading">
+
+      <div className=" page-info ">
+        <div className="desc-heading ">
           <div>Mission and Values</div>
         </div>
         <div className="description-box">

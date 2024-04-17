@@ -8,11 +8,15 @@
 }
 
 .text-customRed {
-  background-color: #f7776b;
+  color: #f7776b; /* Corrected from background-color */
 }
 
 .bg-customRed-active {
   background-color: #ff1500;
+}
+
+.border-customRed {
+  border-color: #f7776b; /* Adjusted to border-color */
 }
 
 @keyframes fadeIn {
@@ -25,7 +29,11 @@
 }
 
 .animate-fadeIn {
-  animation: fadeIn 1s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-fadeIn-notfound {
+  animation: fadeIn 2s ease-in-out;
 }
 
 input[type="text"] {
