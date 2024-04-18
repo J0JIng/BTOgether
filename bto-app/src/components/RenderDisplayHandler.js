@@ -21,7 +21,7 @@ const RenderDisplayHandler = ({ title, description, timeToTravel, numberOfAmenit
   } else if (title === "Historical HDB Price" || title === "Historical BTO Price") {
     return (
       <div className="mb-4 rounded-lg overflow-hidden">
-        <BarChart latitude={latitude} longitude={longitude} flat_type={flatType} description={title}  />
+        <BarChart title={title}  />
       </div>
     );
   } else if (title === "Location") {
