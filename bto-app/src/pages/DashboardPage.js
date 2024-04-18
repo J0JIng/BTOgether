@@ -6,6 +6,7 @@ import {
   getFirestore,
   collection,
   updateDoc,
+  setDoc,
   addDoc,
   getDocs,
   query,
@@ -61,6 +62,7 @@ import UserDataUtility from "../utils/UserDataUtility";
 const generateId = () => `container-${uuidv4()}`;
 
 export default function DashboardPage() {
+  const [mutex, setMutex] = useState(false);
   const [activeBTO, setActiveBTO] = useState(null);
   const [BTO1Status, setBTO1Status] = useState(false);
   const [BTO2Status, setBTO2Status] = useState(false);
@@ -140,10 +142,6 @@ export default function DashboardPage() {
     const tryLoadUserData = () => {
       if (dataUtilityRef.current) {
         dataUtilityRef.current.loadUserData();
-        if(activeBTO){
-        const index = parseInt(activeBTO.replace(/\D/g, ""), 10);
-        savingInBTO(index);
-        }
       } else {
         setTimeout(tryLoadUserData, 100);
       }
@@ -167,8 +165,6 @@ export default function DashboardPage() {
       }
       if (BTO3) {
         setBTO3Status(true); // Set BTO2 state to true if BTO2 exists
-      } else {
-        setActiveBTO(null);
       }
     } else {
       console.log("No data found");
@@ -176,18 +172,8 @@ export default function DashboardPage() {
   };
 
   // Update/Save Data
-  // const updateLoadedData = () => {
-  //   if (dataUtilityRef.current) {
-  //     dataUtilityRef.current.saveUserData().catch((error) => {
-  //       console.error("Error saving data:", error);
-  //     });
-  //   } else {
-  //     console.error("Data utility reference is not available.");
-  //   }
-  // };
-
-  // Update/Save Data
-  const savingInBTO = (index) => {
+  const savingInBTO = (index, deleteActiveBTO = false) => {
+    setMutex(true); // block useEffect from running while data is changing.
     const currentBtoData = loadedData[activeBTO];
     const q = query(colRef, where("email", "==", auth.currentUser.email));
 
@@ -200,28 +186,54 @@ export default function DashboardPage() {
           longitude: currentBtoData.longitude,
           projectname: currentBtoData.projectname,
           numberofrooms: currentBtoData.numberofrooms,
-          containers: containers
+          containers: containers,
         };
 
         if (!snapshot.empty) {
           const docRef = snapshot.docs[0].ref;
           const currentDocData = snapshot.docs[0].data();
 
-          const updatedDocData = {
-            ...currentDocData,
-            [btoKey]: updatedBTOData,
-          };
+          // Check if deleteActiveBTO flag is true and the property exists
 
-          console.log("Updating existing document:", updatedDocData);
-
-          updateDoc(docRef, updatedDocData)
-            .then(() => {
-              console.log("Document updated successfully!");
-              setMyHome(updatedDocData);
-            })
-            .catch((error) => {
-              console.error("Error updating document:", error);
-            });
+          // Delete Data
+          if (deleteActiveBTO && currentDocData[activeBTO]) {
+            delete currentDocData[activeBTO];
+            const updatedDocData = {
+              ...currentDocData,
+            };
+            console.log("Updating existing document [DELETE]:", updatedDocData);
+            setDoc(docRef, updatedDocData) // Use setDoc to completely replace the document
+              .then(() => {
+                console.log("Document updated successfully!");
+                dataUtilityRef.current.loadUserData().then(() => {
+                  console.log("Document created successfully!");
+                  updateActiveBTO();
+                  setMutex(false);
+                });
+              })
+              .catch((error) => {
+                console.error("Error updating document:", error);
+              });
+          }
+          // Save Data
+          else if (!deleteActiveBTO && currentDocData[activeBTO]) {
+            const updatedDocData = {
+              ...currentDocData,
+              [btoKey]: updatedBTOData,
+            };
+            console.log("Updating existing document [UPDATE]:", updatedDocData);
+            updateDoc(docRef, updatedDocData)
+              .then(() => {
+                console.log("Document updated successfully!");
+                dataUtilityRef.current.loadUserData().then(() => {
+                  console.log("Document created successfully!");
+                  setMutex(false);
+                });
+              })
+              .catch((error) => {
+                console.error("Error updating document:", error);
+              });
+          }
         } else {
           console.log("No document found, creating a new one.");
           const newHomeData = {
@@ -232,7 +244,10 @@ export default function DashboardPage() {
           addDoc(colRef, newHomeData)
             .then(() => {
               console.log("Document created successfully!");
-              setMyHome(newHomeData);
+              dataUtilityRef.current.loadUserData().then(() => {
+                console.log("Document created successfully!");
+                setMutex(false);
+              });
             })
             .catch((error) => {
               console.error("Error creating new document:", error);
@@ -269,8 +284,6 @@ export default function DashboardPage() {
       setActiveBTO("BTO2");
     } else if (BTO3Status) {
       setActiveBTO("BTO3");
-    } else {
-      setActiveBTO(null);
     }
     // Update the count of true BTOs
     const count = [BTO1Status, BTO2Status, BTO3Status].filter(
@@ -283,41 +296,51 @@ export default function DashboardPage() {
   useEffect(() => {
     if (activeBTO && containers) {
       setContainers(containers);
-      if(activeBTO){
+      if (activeBTO) {
         const index = parseInt(activeBTO.replace(/\D/g, ""), 10);
         savingInBTO(index);
-        }
-    }
-  }, [containers,activeBTO]);
-
-  // Load Active BTO Saved containers
-  useEffect(() => {
-    console.log("changed bto")
-    dataUtilityRef.current.loadUserData().then(()=> {
-      console.log("Newly fetched again")
-      if (loadedData && activeBTO) {
-        console.log("we are at BTO",activeBTO)
-        const btoData = loadedData[activeBTO]; // BTO1 BTO2 BTO3 null
-        console.log(btoData.address, btoData.latitude, btoData.longitude)
-        setHomeLocation({
-          address: btoData.address,
-          latitude: btoData.latitude,
-          longitude: btoData.longitude
-        });
-        // If new location set and container has not been created before
-        // console.log("bto container: " + JSON.stringify(btoData.containers));
-  
-        if (btoData.containers === null || btoData.containers === undefined || (Array.isArray(btoData.containers) && btoData.containers.length === 0)) {
-          console.log("Creating new default Containers")
-          setContainers(generateDefaultFrames(activeBTO));
-        } else {
-          console.log("Saved Containers have been loaded")
-          setContainers(btoData.containers);
-        }
-      } else {
-        setContainers([]);
       }
-    })
+    }
+  }, [containers]);
+
+  // Load Active BTO Saved containers TODO
+  useEffect(() => {
+    if (mutex === false) {
+      console.log("changed bto");
+      dataUtilityRef.current.loadUserData().then(() => {
+        console.log("Newly fetched again");
+        if (loadedData && activeBTO) {
+          console.log("we are at BTO", activeBTO);
+          const btoData = loadedData[activeBTO]; // BTO1 BTO2 BTO3 null
+
+          console.log(btoData.address, btoData.latitude, btoData.longitude);
+          setHomeLocation({
+            address: btoData.address,
+            latitude: btoData.latitude,
+            longitude: btoData.longitude,
+          });
+          // If new location set and container has not been created before
+          // console.log("bto container: " + JSON.stringify(btoData.containers));
+
+          if (
+            btoData.containers === null ||
+            btoData.containers === undefined ||
+            (Array.isArray(btoData.containers) &&
+              btoData.containers.length === 0)
+          ) {
+            console.log("Creating new default Containers");
+            setContainers(generateDefaultFrames(activeBTO));
+          } else {
+            console.log("Saved Containers have been loaded");
+            setContainers(btoData.containers);
+          }
+        } else {
+          setContainers([]);
+        }
+      });
+    } else {
+      console.log("Mutex block active BTO to Save container");
+    }
   }, [activeBTO]);
 
   // Function to handle button click for BTO1
@@ -345,51 +368,43 @@ export default function DashboardPage() {
     tryOpenComparison();
   };
 
-  // Remove BTO from UserData
-  const removeFavouriteBTO = () => {
-    setIsHeartClicked(true);
+  const updateActiveBTO = () =>{
+    if (loadedData && activeBTO!==null) {
 
-    if (loadedData) {
-      const { BTO1, BTO2, BTO3, ...remainingData } = loadedData;
+      console.log("BTO2Status"+ BTO2Status);
 
       switch (activeBTO) {
         // Remove BTO1
         case "BTO1":
           setBTO1Status(false);
-          setLoadedData({
-            ...(setBTO2Status && { BTO2 }),
-            ...(setBTO3Status && { BTO3 }),
-            ...remainingData,
-          });
-          setActiveBTO(setBTO2Status ? "BTO2" : setBTO3Status ? "BTO3" : null);
+          setActiveBTO(BTO2Status ? "BTO2" : BTO3Status ? "BTO3" : null);
           break;
 
         // Remove BTO2
         case "BTO2":
           setBTO2Status(false);
-          setLoadedData({
-            ...(setBTO1Status && { BTO1 }),
-            ...(setBTO3Status && { BTO3 }),
-            ...remainingData,
-          });
-          setActiveBTO(setBTO1Status ? "BTO1" : setBTO3Status ? "BTO3" : null);
+          setActiveBTO(BTO1Status ? "BTO1" : BTO3Status ? "BTO3" : null);
           break;
 
         // Remove BTO3
         case "BTO3":
           setBTO3Status(false);
-          setLoadedData({
-            ...(setBTO1Status && { BTO1 }),
-            ...(setBTO2Status && { BTO2 }),
-            ...remainingData,
-          });
-          setActiveBTO(setBTO1Status ? "BTO1" : setBTO2Status ? "BTO2" : null);
+          setActiveBTO(BTO1Status ? "BTO1" : BTO2Status ? "BTO2" : null);
           break;
 
         default:
           break;
       }
-      // updateLoadedData();
+    }
+  }
+
+  // Remove BTO from UserData
+  const deleteFavouriteBTO = () => {
+    setIsHeartClicked(true);
+    console.log("Deleteing fav BTO");
+    if (loadedData) {
+      const index = parseInt(activeBTO.replace(/\D/g, ""), 10);
+      savingInBTO(index, true);
     }
   };
 
@@ -621,11 +636,7 @@ export default function DashboardPage() {
     let description;
 
     if (containerName === "Transportation") {
-      console.log(destGeoCode)
-      if (destGeoCode.latitude === null || destGeoCode.latitude === undefined) {
-        alert("Please Press L-Shift in the address bar to confirm your address again")
-        return;
-      } else if (addressField === "" || addressField === null) {
+      if (addressField === "" || addressField === null) {
         console.log("Invalid addressfield");
         resetContainerFields();
         return;
@@ -812,7 +823,7 @@ export default function DashboardPage() {
                 className={` dashboard-button border-transparent px-3 py-3 relative transition duration-300 ease-in-out bg-transparent ${
                   isHeartClicked ? "text-transparent" : "text-red-500"
                 }`}
-                onClick={removeFavouriteBTO} // Set clicked state to true when button is clicked
+                onClick={deleteFavouriteBTO} // Set clicked state to true when button is clicked
                 onMouseEnter={() => setIsHovered(true)} // Set hovered state to true when mouse enters button area
                 onMouseLeave={() => setIsHovered(false)} // Set hovered state to false when mouse leaves button area
               >
