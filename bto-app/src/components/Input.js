@@ -173,7 +173,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
             <h3>Filter Distance (in km): {distance} km</h3>
             <Slider
               aria-label="Restricted values"
-              defaultValue={1}
+              defaultValue={5}
               step={1}
               min={1}
               max={10}
