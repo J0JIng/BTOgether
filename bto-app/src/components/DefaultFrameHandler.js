@@ -11,8 +11,6 @@ const DefaultFrameHandler = () => {
 export default DefaultFrameHandler;
 
 
-
-
 // const defaultFrames1 = [
 //   { name: "Location", description: "Woodlands Drive 16." },
 //   { name: "Town", description: "Woodlands." },

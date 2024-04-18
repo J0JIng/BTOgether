@@ -8,7 +8,6 @@ export function ImageDisplay({ query }) {
   const [photo, setPhoto] = useState(null);
 
   const getPhoto = async () => {
-    console.log("query is:" + query);
     setLoading(true);
     try {
       const response = await fetch(

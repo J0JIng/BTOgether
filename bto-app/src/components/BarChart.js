@@ -46,7 +46,8 @@ const ResalePriceChart = () => {
     },
   };
 
-  return <Line data={data} options={options} />;
+   return null 
+  //<Line data={data} options={options} />;
 };
 
 export default ResalePriceChart;

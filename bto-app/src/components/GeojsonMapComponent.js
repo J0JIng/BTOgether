@@ -206,6 +206,7 @@ const GeojsonMapComponent = () => {
           longitude: homeLocation.longitude,
           projectname: projectnameinform,
           numberofrooms: numberofroomsinform,
+          
         };
 
         if (!snapshot.empty) {

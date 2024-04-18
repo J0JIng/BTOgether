@@ -98,6 +98,7 @@ export default function DashboardPage() {
       longitude: 0,
       projectname: "placeholder",
       numberofrooms: "placeholder",
+      containers: [],
     },
     BTO2: {
       address: 0,
@@ -105,6 +106,7 @@ export default function DashboardPage() {
       longitude: 0,
       projectname: "placeholder",
       numberofrooms: "placeholder",
+      containers: [],
     },
     BTO3: {
       address: 0,
@@ -112,6 +114,7 @@ export default function DashboardPage() {
       longitude: 0,
       projectname: "placeholder",
       numberofrooms: "placeholder",
+      containers: [],
     },
   });
 
@@ -135,9 +138,15 @@ export default function DashboardPage() {
   // load data from UserDataUtility
   useEffect(() => {
     const tryLoadUserData = () => {
-      dataUtilityRef.current
-        ? dataUtilityRef.current.loadUserData()
-        : setTimeout(tryLoadUserData, 100);
+      if (dataUtilityRef.current) {
+        dataUtilityRef.current.loadUserData();
+        if(activeBTO){
+        const index = parseInt(activeBTO.replace(/\D/g, ""), 10);
+        savingInBTO(index);
+        }
+      } else {
+        setTimeout(tryLoadUserData, 100);
+      }
     };
     tryLoadUserData();
   }, []);
@@ -167,29 +176,31 @@ export default function DashboardPage() {
   };
 
   // Update/Save Data
-  const updateLoadedData = () => {
-    if (dataUtilityRef.current) {
-      dataUtilityRef.current.saveUserData().catch((error) => {
-        console.error("Error saving data:", error);
-      });
-    } else {
-      console.error("Data utility reference is not available.");
-    }
-  };
+  // const updateLoadedData = () => {
+  //   if (dataUtilityRef.current) {
+  //     dataUtilityRef.current.saveUserData().catch((error) => {
+  //       console.error("Error saving data:", error);
+  //     });
+  //   } else {
+  //     console.error("Data utility reference is not available.");
+  //   }
+  // };
 
   // Update/Save Data
   const savingInBTO = (index) => {
+    const currentBtoData = loadedData[activeBTO];
     const q = query(colRef, where("email", "==", auth.currentUser.email));
 
     getDocs(q)
       .then((snapshot) => {
         const btoKey = `BTO${index}`;
         const updatedBTOData = {
-          address: homeLocation.address,
-          latitude: homeLocation.latitude,
-          longitude: homeLocation.longitude,
-          projectname: projectnameinform,
-          numberofrooms: numberofroomsinform,
+          address: currentBtoData.address,
+          latitude: currentBtoData.latitude,
+          longitude: currentBtoData.longitude,
+          projectname: currentBtoData.projectname,
+          numberofrooms: currentBtoData.numberofrooms,
+          containers: containers
         };
 
         if (!snapshot.empty) {
@@ -250,9 +261,6 @@ export default function DashboardPage() {
     }
   }, [isHeartClicked]);
 
-  // Get Saved Containers from User Data
-  const getSavedContainers = ({}) => {};
-
   // Determine which BTO project is favorited initially
   useEffect(() => {
     if (BTO1Status) {
@@ -271,55 +279,36 @@ export default function DashboardPage() {
     setNumberOfTrueBTOs(count);
   }, [BTO1Status, BTO2Status, BTO3Status]);
 
+  // Save containers for the active BTO whenever containers state changes
+  useEffect(() => {
+    if (activeBTO && containers) {
+      setContainers(containers);
+      if(activeBTO){
+        const index = parseInt(activeBTO.replace(/\D/g, ""), 10);
+        savingInBTO(index);
+        }
+    }
+  }, [containers,activeBTO]);
+
   // Load Active BTO Saved containers
   useEffect(() => {
-    switch (activeBTO) {
-      case "BTO1":
-        if (loadedData) {
-          setHomeLocation(
-            loadedData.BTO1.address,
-            loadedData.BTO1.latitude,
-            loadedData.BTO1.longitude
-          );
-        }
-        // Fetch BTO 1 container
-        setContainers(generateDefaultFrames(activeBTO));
-        break;
+    if (loadedData && activeBTO) {
+      const btoData = loadedData[activeBTO]; // BTO1 BTO2 BTO3 null
+      setHomeLocation(btoData.address, btoData.latitude, btoData.longitude);
+      // If new location set and container has not been created before
+      // console.log("bto container: " + JSON.stringify(btoData.containers));
 
-      case "BTO2":
-        if (loadedData) {
-          setHomeLocation(
-            loadedData.BTO2.address,
-            loadedData.BTO2.latitude,
-            loadedData.BTO2.longitude
-          );
-        }
-        // Fetch BTO 1 container
+      if (btoData.containers === null || btoData.containers === undefined || (Array.isArray(btoData.containers) && btoData.containers.length === 0)) {
+        console.log("Creating new default Containers")
         setContainers(generateDefaultFrames(activeBTO));
-        break;
-
-      case "BTO3":
-        if (loadedData) {
-          setHomeLocation(
-            loadedData.BTO3.address,
-            loadedData.BTO3.latitude,
-            loadedData.BTO3.longitude
-          );
-        }
-        // Fetch BTO 1 container
-        setContainers(generateDefaultFrames(activeBTO));
-        break;
-
-      default:
-        setContainers([]);
+      } else {
+        console.log("Saved Containers have been loaded")
+        setContainers(btoData.containers);
+      }
+    } else {
+      setContainers([]);
     }
-    // DEBUG
-    console.log(
-      "my Active home Location is set to: " + JSON.stringify(homeLocation)
-    );
-
-    console.log("my Active BTO is set to: " + JSON.stringify(activeBTO));
-  }, [activeBTO]);
+  }, [activeBTO, loadedData]);
 
   // Function to handle button click for BTO1
   const handleBTO1Click = () => {
@@ -572,14 +561,27 @@ export default function DashboardPage() {
   // generated default frames from user Data
   const generateDefaultFrames = (currentActiveBTO) => {
     let data = [{}]; // Initialize with an empty array
-    if (currentActiveBTO !== null && loadedData !== null && loadedData[currentActiveBTO]) {
+    if (
+      currentActiveBTO !== null &&
+      loadedData !== null &&
+      loadedData[currentActiveBTO]
+    ) {
       const activeBTOData = loadedData[currentActiveBTO];
       data = [
         { name: "Location", description: activeBTOData.address },
         { name: "Town Council", description: "Sembawang Town Council." },
-        { name: "Historical HDB Price", description: "Historical HDB price around the location is $670,000." },
-        { name: "Historical BTO Price", description: "Historical BTO price around the location is $450,000."  },
-        { name: "Number of Rooms", description: activeBTOData.numberofrooms + " Room flat"},
+        {
+          name: "Historical HDB Price",
+          description: "Historical HDB price around the location is $670,000.",
+        },
+        {
+          name: "Historical BTO Price",
+          description: "Historical BTO price around the location is $450,000.",
+        },
+        {
+          name: "Number of Rooms",
+          description: activeBTOData.numberofrooms + " Room flat",
+        },
       ];
     }
     return data.map((frame) => ({
@@ -770,15 +772,17 @@ export default function DashboardPage() {
           <div className="mt-2">
             {" "}
             {/* Added mt-2 */}
-            {findContainerType(currentContainerId) !== "default" &&( <button
-              onClick={() => {
-                onDeleteContainer(currentContainerId);
-                setShowAddInfoModal(false);
-              }}
-              className="dashboard-button relative p-2 buttom-2 right-2 border-transparent shadow-md border rounded-md hover:bg-red-400 transition duration-300 "
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>)}
+            {findContainerType(currentContainerId) !== "default" && (
+              <button
+                onClick={() => {
+                  onDeleteContainer(currentContainerId);
+                  setShowAddInfoModal(false);
+                }}
+                className="dashboard-button relative p-2 buttom-2 right-2 border-transparent shadow-md border rounded-md hover:bg-red-400 transition duration-300 "
+              >
+                <FontAwesomeIcon icon={faTrashCan} />
+              </button>
+            )}
           </div>
         </Modal>
 
