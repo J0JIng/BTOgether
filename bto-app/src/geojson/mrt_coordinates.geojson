@@ -1330,575 +1330,574 @@
     {
       "type": "Feature",
       "geometry": {
-         "type": "Point",
-         "coordinates": [103.745286, 1.380299]
+        "type": "Point",
+        "coordinates": [103.745286, 1.380299]
       },
       "properties": {
-         "Description": "South View",
-         "code": "BP2"
+        "Description": "South View",
+        "code": "BP2"
       }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.749058, 1.378604]
-      },
-      "properties": {
-         "Description": "Keat Hong",
-         "code": "BP3"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.753665, 1.376738]
-      },
-      "properties": {
-         "Description": "Teck Whye",
-         "code": "BP4"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.758021, 1.378798]
-      },
-      "properties": {
-         "Description": "Phoenix",
-         "code": "BP5"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.762312, 1.382852]
-      },
-      "properties": {
-         "Description": "Senja",
-         "code": "BP13"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.764547, 1.386703]
-      },
-      "properties": {
-         "Description": "Jelapang",
-         "code": "BP12"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.769599, 1.387713]
-      },
-      "properties": {
-         "Description": "Segar",
-         "code": "BP11"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.770862, 1.384502]
-      },
-      "properties": {
-         "Description": "Fajar",
-         "code": "BP10"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.772576, 1.380281]
-      },
-      "properties": {
-         "Description": "Bangkit",
-         "code": "BP9"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.771277, 1.376223]
-      },
-      "properties": {
-         "Description": "Pending",
-         "code": "BP8"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.76655, 1.377828]
-      },
-      "properties": {
-         "Description": "Petir",
-         "code": "BP7"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.900443, 1.394615]
-      },
-      "properties": {
-         "Description": "Compassvale",
-         "code": "SE1"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.905947, 1.391553]
-      },
-      "properties": {
-         "Description": "Rumbia",
-         "code": "SE2"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.905412, 1.38804]
-      },
-      "properties": {
-         "Description": "Bakau",
-         "code": "SE3"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.90216, 1.383957]
-      },
-      "properties": {
-         "Description": "Kangkar",
-         "code": "SE4"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.897386, 1.384116]
-      },
-      "properties": {
-         "Description": "Ranggung",
-         "code": "SE5"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.89379, 1.396332]
-      },
-      "properties": {
-         "Description": "Cheng Lim",
-         "code": "SW1"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.889168, 1.397178]
-      },
-      "properties": {
-         "Description": "Farmway",
-         "code": "SW2"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.881283, 1.398271]
-      },
-      "properties": {
-         "Description": "Kupang",
-         "code": "SW3"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.87561, 1.397378]
-      },
-      "properties": {
-         "Description": "Thanggam",
-         "code": "SW4"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.876256, 1.392033]
-      },
-      "properties": {
-         "Description": "Fernvale",
-         "code": "SW5"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.880022, 1.392141]
-      },
-      "properties": {
-         "Description": "Layar",
-         "code": "SW6"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.885829, 1.389519]
-      },
-      "properties": {
-         "Description": "Tongkang",
-         "code": "SW7"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.890541, 1.386827]
-      },
-      "properties": {
-         "Description": "Renjong",
-         "code": "SW8"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.905792, 1.399534]
-      },
-      "properties": {
-         "Description": "Cove",
-         "code": "PE1"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.908884, 1.397002]
-      },
-      "properties": {
-         "Description": "Meridian",
-         "code": "PE2"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.912633, 1.39392]
-      },
-      "properties": {
-         "Description": "Coral Edge",
-         "code": "PE3"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.916056, 1.39454]
-      },
-      "properties": {
-         "Description": "Riviera",
-         "code": "PE4"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.916536, 1.399633]
-      },
-      "properties": {
-         "Description": "Kadaloor",
-         "code": "PE5"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.912736, 1.402304]
-      },
-      "properties": {
-         "Description": "Oasis",
-         "code": "PE6"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.908606, 1.405293]
-      },
-      "properties": {
-         "Description": "Damai",
-         "code": "PE7"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.90492, 1.409808]
-      },
-      "properties": {
-         "Description": "Sam Kee",
-         "code": "PW1"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.906565, 1.412783]
-      },
-      "properties": {
-         "Description": "Teck Lee",
-         "code": "PW2"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.90668, 1.416932]
-      },
-      "properties": {
-         "Description": "Punggol Point",
-         "code": "PW3"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.902185, 1.415955]
-      },
-      "properties": {
-         "Description": "Samudera",
-         "code": "PW4"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.900321, 1.411865]
-      },
-      "properties": {
-         "Description": "Nibong",
-         "code": "PW5"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.898605, 1.408501]
-      },
-      "properties": {
-         "Description": "Sumang",
-         "code": "PW6"
-      }
-   },
-   {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [103.897287, 1.405436]
-      },
-      "properties": {
-         "Description": "Soo Teck",
-         "code": "PW7"
-      }
-   },
-   {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates": [ 103.7851, 1.4482]
     },
-    "properties": {
-       "Description": "Woodlands North",
-       "code": "TE1"
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.749058, 1.378604]
+      },
+      "properties": {
+        "Description": "Keat Hong",
+        "code": "BP3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.753665, 1.376738]
+      },
+      "properties": {
+        "Description": "Teck Whye",
+        "code": "BP4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.758021, 1.378798]
+      },
+      "properties": {
+        "Description": "Phoenix",
+        "code": "BP5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.762312, 1.382852]
+      },
+      "properties": {
+        "Description": "Senja",
+        "code": "BP13"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.764547, 1.386703]
+      },
+      "properties": {
+        "Description": "Jelapang",
+        "code": "BP12"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.769599, 1.387713]
+      },
+      "properties": {
+        "Description": "Segar",
+        "code": "BP11"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.770862, 1.384502]
+      },
+      "properties": {
+        "Description": "Fajar",
+        "code": "BP10"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.772576, 1.380281]
+      },
+      "properties": {
+        "Description": "Bangkit",
+        "code": "BP9"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.771277, 1.376223]
+      },
+      "properties": {
+        "Description": "Pending",
+        "code": "BP8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.76655, 1.377828]
+      },
+      "properties": {
+        "Description": "Petir",
+        "code": "BP7"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.900443, 1.394615]
+      },
+      "properties": {
+        "Description": "Compassvale",
+        "code": "SE1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.905947, 1.391553]
+      },
+      "properties": {
+        "Description": "Rumbia",
+        "code": "SE2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.905412, 1.38804]
+      },
+      "properties": {
+        "Description": "Bakau",
+        "code": "SE3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.90216, 1.383957]
+      },
+      "properties": {
+        "Description": "Kangkar",
+        "code": "SE4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.897386, 1.384116]
+      },
+      "properties": {
+        "Description": "Ranggung",
+        "code": "SE5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.89379, 1.396332]
+      },
+      "properties": {
+        "Description": "Cheng Lim",
+        "code": "SW1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.889168, 1.397178]
+      },
+      "properties": {
+        "Description": "Farmway",
+        "code": "SW2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.881283, 1.398271]
+      },
+      "properties": {
+        "Description": "Kupang",
+        "code": "SW3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.87561, 1.397378]
+      },
+      "properties": {
+        "Description": "Thanggam",
+        "code": "SW4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.876256, 1.392033]
+      },
+      "properties": {
+        "Description": "Fernvale",
+        "code": "SW5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.880022, 1.392141]
+      },
+      "properties": {
+        "Description": "Layar",
+        "code": "SW6"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.885829, 1.389519]
+      },
+      "properties": {
+        "Description": "Tongkang",
+        "code": "SW7"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.890541, 1.386827]
+      },
+      "properties": {
+        "Description": "Renjong",
+        "code": "SW8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.905792, 1.399534]
+      },
+      "properties": {
+        "Description": "Cove",
+        "code": "PE1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.908884, 1.397002]
+      },
+      "properties": {
+        "Description": "Meridian",
+        "code": "PE2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.912633, 1.39392]
+      },
+      "properties": {
+        "Description": "Coral Edge",
+        "code": "PE3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.916056, 1.39454]
+      },
+      "properties": {
+        "Description": "Riviera",
+        "code": "PE4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.916536, 1.399633]
+      },
+      "properties": {
+        "Description": "Kadaloor",
+        "code": "PE5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.912736, 1.402304]
+      },
+      "properties": {
+        "Description": "Oasis",
+        "code": "PE6"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.908606, 1.405293]
+      },
+      "properties": {
+        "Description": "Damai",
+        "code": "PE7"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.90492, 1.409808]
+      },
+      "properties": {
+        "Description": "Sam Kee",
+        "code": "PW1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.906565, 1.412783]
+      },
+      "properties": {
+        "Description": "Teck Lee",
+        "code": "PW2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.90668, 1.416932]
+      },
+      "properties": {
+        "Description": "Punggol Point",
+        "code": "PW3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.902185, 1.415955]
+      },
+      "properties": {
+        "Description": "Samudera",
+        "code": "PW4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.900321, 1.411865]
+      },
+      "properties": {
+        "Description": "Nibong",
+        "code": "PW5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.898605, 1.408501]
+      },
+      "properties": {
+        "Description": "Sumang",
+        "code": "PW6"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.897287, 1.405436]
+      },
+      "properties": {
+        "Description": "Soo Teck",
+        "code": "PW7"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7851, 1.4482]
+      },
+      "properties": {
+        "Description": "Woodlands North",
+        "code": "TE1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7938, 1.4273]
+      },
+      "properties": {
+        "Description": "Woodlands South",
+        "code": "TE3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8182, 1.3978]
+      },
+      "properties": {
+        "Description": "Springleaf",
+        "code": "TE4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8368, 1.3846]
+      },
+      "properties": {
+        "Description": "Lentor",
+        "code": "TE5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8372, 1.3724]
+      },
+      "properties": {
+        "Description": "Mayflower",
+        "code": "TE6"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.834748, 1.36384]
+      },
+      "properties": {
+        "Description": "Bright Hill",
+        "code": "TE7"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8332, 1.3542]
+      },
+      "properties": {
+        "Description": "Upper Thomson",
+        "code": "TE8"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8191, 1.3069]
+      },
+      "properties": {
+        "Description": "Napier",
+        "code": "TE12"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.823869, 1.302422]
+      },
+      "properties": {
+        "Description": "Orchard Boulevard",
+        "code": "TE13"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.833333, 1.295]
+      },
+      "properties": {
+        "Description": "Great World",
+        "code": "TE15"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.83325, 1.290005]
+      },
+      "properties": {
+        "Description": "Havelock",
+        "code": "TE16"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.844, 1.2803]
+      },
+      "properties": {
+        "Description": "Maxwell",
+        "code": "TE18"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8507, 1.2775]
+      },
+      "properties": {
+        "Description": "Shenton Way",
+        "code": "TE19"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8679, 1.27955]
+      },
+      "properties": {
+        "Description": "Gardens by the Bay",
+        "code": "TE22"
+      }
     }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.7938, 1.4273 ]
-      },
-      "properties": {
-         "Description": "Woodlands South",
-         "code": "TE3"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.8182, 1.3978 ]
-      },
-      "properties": {
-         "Description": "Springleaf",
-         "code": "TE4"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.8368,1.3846 ]
-      },
-      "properties": {
-         "Description": "Lentor",
-         "code": "TE5"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.8372, 1.3724 ]
-      },
-      "properties": {
-         "Description": "Mayflower",
-         "code": "TE6"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.834748, 1.36384 ]
-      },
-      "properties": {
-         "Description": "Bright Hill",
-         "code": "TE7"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.8332, 1.3542 ]
-      },
-      "properties": {
-         "Description": "Upper Thomson",
-         "code": "TE8"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.8191, 1.3069 ]
-      },
-      "properties": {
-         "Description": "Napier",
-         "code": "TE12"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.823869, 1.302422]
-      },
-      "properties": {
-         "Description": "Orchard Boulevard",
-         "code": "TE13"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.833333, 1.295]
-      },
-      "properties": {
-         "Description": "Great World",
-         "code": "TE15"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.83325, 1.290005]
-      },
-      "properties": {
-         "Description": "Havelock",
-         "code": "TE16"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.844, 1.2803]
-      },
-      "properties": {
-         "Description": "Maxwell",
-         "code": "TE18"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.8507, 1.2775]
-      },
-      "properties": {
-         "Description": "Shenton Way",
-         "code": "TE19"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-         "type": "Point",
-         "coordinates": [ 103.86790, 1.27955]
-      },
-      "properties": {
-         "Description": "Gardens by the Bay",
-         "code": "TE22"
-      }
-    }
-   
   ]
 }
