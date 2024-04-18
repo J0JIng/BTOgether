@@ -36,10 +36,8 @@
   animation: fadeIn 2s ease-in-out;
 }
 
-input[type="text"] {
+.modal input[type="text"] {
   width: 462px;
 }
 
-input[type="range"] {
-  width: 462px;
-}
+

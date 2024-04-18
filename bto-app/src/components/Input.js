@@ -1,4 +1,5 @@
 import "../css/global.css";
+import "../css/dashboard.css";
 import React, { useState, useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
@@ -143,7 +144,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
   const renderAddressInput = () => {
     if (selected === "Transportation" && viewSelected) {
       return (
-        <div className="mt-2">
+        <div className="modal mt-2 ">
           <input
             type="text"
             placeholder="Enter address. Press L-Shift to confirm"

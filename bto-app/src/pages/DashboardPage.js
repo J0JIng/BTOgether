@@ -829,7 +829,7 @@ export default function DashboardPage() {
               >
                 <FontAwesomeIcon icon={faHeart} />
                 {isHovered && (
-                  <span className="absolute top-full left-1/2 transform -translate-x-1/2 bg-white text-gray-700 px-2 py-1 rounded-md shadow-md">
+                  <span className="absolute top-full left-1/2 transform -translate-x-1/2 z-50 fond-bold bg-white text-gray-700 px-2 py-1 rounded-md shadow-md">
                     Click to unfavorite current BTO project
                   </span>
                 )}
@@ -889,7 +889,7 @@ export default function DashboardPage() {
                   <FontAwesomeIcon icon={faPlus} />
                   <span className="add-text"> Add Frames</span>
                   {isAddFramesHovered && containers.length >= 12 && (
-                    <span className="absolute top-full left-1/2 transform -translate-x-1/2 bg-white text-gray-700 px-2 py-1 rounded-md shadow-md">
+                    <span className="absolute top-full left-1/2 transform -translate-x-1/2 z-50 bg-white text-gray-700 px-2 py-1 rounded-md shadow-md">
                       Maximum number of frames reached
                     </span>
                   )}
@@ -943,7 +943,6 @@ export default function DashboardPage() {
                 sensors={sensors}
                 collisionDetection={closestCorners}
                 onDragStart={handleDragStart}
-                // onDragMove={handleDragMove}
                 onDragEnd={handleDragEnd}
               >
                 <SortableContext items={containers.map((i) => i.id)}>
@@ -979,31 +978,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-// DEBUGGING
-// useEffect(() => {
-//   console.log("distance:", distance);
-//   console.log("addressField:", addressField);
-//   console.log("selected:", selected);
-//   console.log("optionSelected:", optionSelected);
-//   console.log("numberOfAmenities:", numberOfAmenities);
-//   console.log("timeToTravel:", timeToTravel);
-//   console.log("destGeoCode:", destGeoCode);
-//   console.log("timeToTravelInString:", timeToTravelInString);
-// }, [
-//   distance,
-//   addressField,
-//   selected,
-//   optionSelected,
-//   numberOfAmenities,
-//   timeToTravel,
-//   destGeoCode,
-//   timeToTravelInString,
-// ]);
-
-// DEBUGGING
-// useEffect(() => {
-//   // console.log("containers:", JSON.stringify(containers, null, 2));
-
-//   // Log the updated activeBTO state
-//   console.log("New active BTO: " + activeBTO);
-// }, [containers, activeBTO]);

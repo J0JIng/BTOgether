@@ -42,25 +42,33 @@ const Container = ({
           isDragging && "opacity-50"
         )}
       >
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-green-800 text-lg font-semibold">{title}</h1>
-            <p className="text-gray-600 text-sm">{description}</p>
+        <div className="flex flex-col mb-4">
+          {" "}
+          {/* Adjusted structure */}
+          <div className="flex items-center justify-between">
+            {" "}
+            {/* Utilizing justify-between */}
+            <h1 className="p-2 text-green-800 text-lg font-semibold">
+              {title}
+            </h1>
+            <div className="flex items-center">
+              {" "}
+              {/* Moved icons to the right */}
+              <button
+                onClick={onExpand}
+                className="w-8 h-8 border-transparent shadow-md border rounded-md hover:bg-gray-200 transition duration-300 text-gray-500"
+              >
+                <FontAwesomeIcon icon={faMaximize} />
+              </button>
+              <button
+                className="ml-2 w-8 h-8 border-transparent shadow-md border text-gray-500 rounded-md hover:bg-gray-200 transition duration-300"
+                {...listeners}
+              >
+                <FontAwesomeIcon icon={faBars} />
+              </button>
+            </div>
           </div>
-          <div className="flex items-center">
-            <button
-              onClick={onExpand}
-              className="w-8 h-8 border-transparent shadow-md border rounded-md hover:bg-gray-200 transition duration-300 text-gray-500"
-            >
-              <FontAwesomeIcon icon={faMaximize} />
-            </button>
-            <button
-              className="ml-2 w-8 h-8 border-transparent shadow-md border text-gray-500 rounded-md hover:bg-gray-200 transition duration-300"
-              {...listeners}
-            >
-              <FontAwesomeIcon icon={faBars} />
-            </button>
-          </div>
+          <p className="p-2 text-gray-600 text-sm">{description}</p>
         </div>
 
         {children}
