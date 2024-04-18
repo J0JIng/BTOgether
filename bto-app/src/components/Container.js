@@ -16,6 +16,9 @@ const Container = ({
   numberOfAmenities,
   imageUrl,
   onExpand,
+  latitude,
+  longitude,
+  flatType,
 }) => {
   const {
     attributes,
@@ -78,6 +81,9 @@ const Container = ({
             description={description}
             timeToTravel={timeToTravel}
             numberOfAmenities={numberOfAmenities}
+            latitude={latitude}
+            longitude={longitude}
+            flatType={flatType}
           />
         </div>
       </div>

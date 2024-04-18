@@ -4,7 +4,8 @@ import Timer from "./Timer";
 import BarChart from "./BarChart";
 import { ImageDisplay } from "./PexelsImageRender";
 
-const RenderDisplayHandler = ({ title, description, timeToTravel, numberOfAmenities }) => {
+const RenderDisplayHandler = ({ title, description, timeToTravel, numberOfAmenities , latitude , longitude ,flatType }) => {
+ 
   if (title === "Amenities") {
     return (
       <div className="p-4 rounded-lg flex justify-center items-center">
@@ -20,7 +21,7 @@ const RenderDisplayHandler = ({ title, description, timeToTravel, numberOfAmenit
   } else if (title === "Historical HDB Price" || title === "Historical BTO Price") {
     return (
       <div className="mb-4 rounded-lg overflow-hidden">
-        <BarChart />
+        <BarChart latitude={latitude} longitude={longitude} flat_type={flatType} description={title}  />
       </div>
     );
   } else if (title === "Location") {

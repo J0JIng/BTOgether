@@ -1,0 +1,495 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8926609, 1.3717125]
+      },
+      "properties": {
+        "Description": "Aljunied-Hougang Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.9111705, 1.3335538]
+      },
+      "properties": {
+        "Description": "Aljunied-Hougang Town Council",
+        "Office": "Bedok Reservoir Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.9263156, 1.3313184]
+      },
+      "properties": {
+        "Description": "Aljunied-Hougang Town Council",
+        "Office": "Kaki Bukit Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8902267, 1.36556]
+      },
+      "properties": {
+        "Description": "Aljunied-Hougang Town Council",
+        "Office": "Hougang Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8714239, 1.3684314]
+      },
+      "properties": {
+        "Description": "Aljunied-Hougang Town Council",
+        "Office": "Serangoon North Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8485727, 1.3647006]
+      },
+      "properties": {
+        "Description": "Ang Mo Kio Town Council",
+        "Office": "Main Ave 1 Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8544795, 1.3725319]
+      },
+      "properties": {
+        "Description": "Ang Mo Kio Town Council",
+        "Office": "Ave 10 Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8393511, 1.3740166]
+      },
+      "properties": {
+        "Description": "Ang Mo Kio Town Council",
+        "Office": "Kebun Baru Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8779485, 1.3936616]
+      },
+      "properties": {
+        "Description": "Ang Mo Kio Town Council",
+        "Office": "Fernvale Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8826757, 1.3745066]
+      },
+      "properties": {
+        "Description": "Ang Mo Kio Town Council",
+        "Office": "Ang Mo Kio-Hougang Service Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8451769, 1.3373853]
+      },
+      "properties": {
+        "Description": "Bishan-Toa Payoh Town Council",
+        "Office": "Main - Toa Payoh Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.850475, 1.3490164]
+      },
+      "properties": {
+        "Description": "Bishan-Toa Payoh Town Council",
+        "Office": "Bishan Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.746994, 1.384792]
+      },
+      "properties": {
+        "Description": "Chua Chu Kang Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.753129, 1.3569055]
+      },
+      "properties": {
+        "Description": "Chua Chu Kang Town Council",
+        "Office": "Bukit Gombak Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.9301698, 1.3265359]
+      },
+      "properties": {
+        "Description": "East Coast Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7715031, 1.3789387]
+      },
+      "properties": {
+        "Description": "Holland-Bukit Panjang Town Council",
+        "Office": "Main Bangkit Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7873506, 1.3121173]
+      },
+      "properties": {
+        "Description": "Holland-Bukit Panjang Town Council",
+        "Office": "Ghim Moh Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8699538, 1.321587]
+      },
+      "properties": {
+        "Description": "Jalan Besar Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8643032, 1.3356611]
+      },
+      "properties": {
+        "Description": "Jalan Besar Town Council",
+        "Office": "Potong Pasir Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7369091, 1.3438038]
+      },
+      "properties": {
+        "Description": "Jurong-Clementi Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.746752, 1.3504151]
+      },
+      "properties": {
+        "Description": "Jurong-Clementi Town Council",
+        "Office": "Bukit Batok Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7660743, 1.3150911]
+      },
+      "properties": {
+        "Description": "Jurong-Clementi Town Council",
+        "Office": "Clementi Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7193654, 1.3487319]
+      },
+      "properties": {
+        "Description": "Jurong-Clementi Town Council",
+        "Office": "Jurong Spring Collection & Service Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7198068, 1.3346031]
+      },
+      "properties": {
+        "Description": "Jurong-Clementi Town Council",
+        "Office": "Taman Jurong Collection & Service Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.915754, 1.3051474]
+      },
+      "properties": {
+        "Description": "Marine Parade Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8696488, 1.3531077]
+      },
+      "properties": {
+        "Description": "Marine Parade Town Council",
+        "Office": "Serangoon Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7752439, 1.4298617]
+      },
+      "properties": {
+        "Description": "Marsiling-Yew Tee Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7456388, 1.3957823]
+      },
+      "properties": {
+        "Description": "Marsiling-Yew Tee Town Council",
+        "Office": "Choa Chu Kang Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8354816, 1.4360589]
+      },
+      "properties": {
+        "Description": "Nee Soon Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8340275, 1.427632]
+      },
+      "properties": {
+        "Description": "Nee Soon Town Council",
+        "Office": "Nee Soon Central Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8349402, 1.4160561]
+      },
+      "properties": {
+        "Description": "Nee Soon Town Council",
+        "Office": "Nee Soon South Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8474426, 1.4257773]
+      },
+      "properties": {
+        "Description": "Nee Soon Town Council",
+        "Office": "Nee Soon Link Collection Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.9463809, 1.3737869]
+      },
+      "properties": {
+        "Description": "Pasir Ris-Punggol Town Council",
+        "Office": "Main Pasir Ris Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.9073669, 1.4039328]
+      },
+      "properties": {
+        "Description": "Pasir Ris-Punggol Town Council",
+        "Office": "Punggol Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8234073, 1.4499681]
+      },
+      "properties": {
+        "Description": "Sembawang Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8008056, 1.4397745]
+      },
+      "properties": {
+        "Description": "Sembawang Town Council",
+        "Office": "Kampung Admiralty Collection Centre"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8314663, 1.3749877]
+      },
+      "properties": {
+        "Description": "Sengkang Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.9070243, 1.3917649]
+      },
+      "properties": {
+        "Description": "Sengkang Town Council",
+        "Office": "Rivervale Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.9446005, 1.3447003]
+      },
+      "properties": {
+        "Description": "Tampines Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8166644, 1.2827139]
+      },
+      "properties": {
+        "Description": "Tanjong Pagar Town Council",
+        "Office": "Main Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7641921, 1.3147587]
+      },
+      "properties": {
+        "Description": "West Coast Town Council",
+        "Office": "Main Clementi Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.7170499, 1.3493432]
+      },
+      "properties": {
+        "Description": "West Coast Town Council",
+        "Office": "Boon Lay Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.6887538, 1.3425666]
+      },
+      "properties": {
+        "Description": "West Coast Town Council",
+        "Office": "Nanyang Office"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.806468, 1.2733284]
+      },
+      "properties": {
+        "Description": "West Coast Town Council",
+        "Office": "Telok Blangah Service Centre"
+      }
+    }
+  ]
+}

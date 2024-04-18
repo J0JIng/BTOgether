@@ -36,6 +36,8 @@ import { auth } from "../utils/firebase";
 import { getDistanceFromLatLonInKm } from "../utils/GetDistanceFromLatLonInKm";
 import { extractNameFromHtml } from "../utils/extractNameFromHtml";
 import { MapStylePanel } from "./MapStylePanel";
+import { GetNearestPrice } from "../utils/GetNearestPrice";
+import { GetNearest } from "../utils/GetNearest";
 
 // GeoJson Files
 import gymgeojson from "../geojson/GymsSGGEOJSON.geojson";
@@ -44,6 +46,9 @@ import parksgeojson from "../geojson/Parks.geojson";
 import preschoolgeojson from "../geojson/PreSchoolsLocation.geojson";
 import clinicgeojson from "../geojson/CHASClinics.geojson";
 import mallsgeojson from "../geojson/shopping_mall_coordinates.geojson";
+import averagepricegeojson from "../geojson/average_price.geojson";
+import towncouncilgeojson from "../geojson/towncouncil.geojson";
+import btoaveragepricegeojson from "../geojson/bto_average_price.geojson";
 
 // RoutingMachine for Car, Routing for Public transport
 import RoutingMachine from "./routingMachine";
@@ -162,11 +167,18 @@ const GeojsonMapComponent = () => {
     console.log(myhome);
   });
 
+  const [HDBpriceData, setHDBpriceData] = useState(null);
+  const [BTOpriceData, setBTOpriceData] = useState(null);
+  const [towncouncil, setTowncouncil] = useState(null);
+
   const [myhome, setMyHome] = useState({
     BTO1: {
       address: 0,
       latitude: 0,
       longitude: 0,
+      historicalbtoprice: 0,
+      historicalhdbprice: 0,
+      towncounciil: "placeholder",
       projectname: "placeholder",
       numberofrooms: "placeholder",
     },
@@ -174,6 +186,9 @@ const GeojsonMapComponent = () => {
       address: 0,
       latitude: 0,
       longitude: 0,
+      historicalbtoprice: 0,
+      historicalhdbprice: 0,
+      towncounciil: "placeholder",
       projectname: "placeholder",
       numberofrooms: "placeholder",
     },
@@ -181,6 +196,9 @@ const GeojsonMapComponent = () => {
       address: 0,
       latitude: 0,
       longitude: 0,
+      historicalbtoprice: 0,
+      historicalhdbprice: 0,
+      towncounciil: "placeholder",
       projectname: "placeholder",
       numberofrooms: "placeholder",
     },
@@ -192,6 +210,74 @@ const GeojsonMapComponent = () => {
 
   const handleProjectNameInForm = (event) => {
     setProjectNameInForm(event.target.value);
+  };
+
+  const handlefetchAmenitiesData = () => {
+    // Fetch HDB price data
+    GetNearestPrice(
+      averagepricegeojson,
+      {
+        latitude: homeLocation.latitude,
+        longitude: homeLocation.longitude,
+      },
+      numberofroomsinform,
+      2021
+    ).then((nearestHDB) => {
+      if (nearestHDB && nearestHDB.obj) {
+        const properties = nearestHDB.properties;
+        const HDBdata = properties.resale_price.toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        });
+        console.log("HDB price:" + HDBdata);
+        setHDBpriceData(HDBdata);
+      } else {
+        console.log("Nearest HDB amenity not found or is null.");
+      }
+    });
+
+    // Fetch BTO price data
+    GetNearestPrice(
+      btoaveragepricegeojson,
+      {
+        latitude: homeLocation.latitude,
+        longitude: homeLocation.longitude,
+      },
+      numberofroomsinform,
+      2021
+    ).then((nearestBTO) => {
+      if (nearestBTO && nearestBTO.obj) {
+        const properties = nearestBTO.properties;
+        const BTOdata = properties.resale_price.toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        });
+        console.log("BTO price:" + BTOdata);
+        setBTOpriceData(BTOdata);
+      } else {
+        console.log("Nearest BTO amenity not found or is null.");
+      }
+    });
+
+    // Fetch office data
+    GetNearest(towncouncilgeojson, {
+      latitude: homeLocation.latitude,
+      longitude: homeLocation.longitude,
+    }).then((nearestOffice) => {
+      if (nearestOffice && nearestOffice.obj) {
+        const properties = nearestOffice.properties;
+        setTowncouncil(properties.Description);
+        console.log(
+          "the inside office:" + JSON.stringify(properties.Description)
+        );
+      } else {
+        console.log("Nearest amenity not found or is null.");
+      }
+    });
   };
 
   const savingInBTO = (index) => {
@@ -206,7 +292,9 @@ const GeojsonMapComponent = () => {
           longitude: homeLocation.longitude,
           projectname: projectnameinform,
           numberofrooms: numberofroomsinform,
-          
+          historicalbtoprice: BTOpriceData,
+          historicalhdbprice: HDBpriceData,
+          towncouncil: towncouncil,
         };
 
         if (!snapshot.empty) {
@@ -514,6 +602,22 @@ const GeojsonMapComponent = () => {
     });
     setErrorMessage("");
   };
+
+  useEffect(() => {
+    // Check if homeLocation.latitude, homeLocation.longitude, and numberofroomsinform are not null
+    if (homeLocation.latitude !== null && homeLocation.longitude !== null && numberofroomsinform !== null) {
+      // Execute the fetch function
+      handlefetchAmenitiesData();
+      
+      // Set up the interval to fetch data every 1 second
+      const interval = setInterval(() => {
+        handlefetchAmenitiesData();
+      }, 3000);
+  
+      // Cleanup function to clear the interval when the component unmounts
+      return () => clearInterval(interval);
+    }
+  }, [homeLocation.latitude, homeLocation.longitude, numberofroomsinform]);
 
   // This is to parse the GEOJson data
   useEffect(() => {

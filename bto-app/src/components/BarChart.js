@@ -1,3 +1,4 @@
+import { getDistanceFromLatLonInKm } from "../utils/GetDistanceFromLatLonInKm";
 import { Line } from "react-chartjs-2";
 import {
   Chart,
@@ -18,7 +19,8 @@ Chart.register(
   Title
 );
 
-const ResalePriceChart = () => {
+
+const ResalePriceChart = ({ latitude, longitude, flat_type }) => {
   // Sample data (replace with actual resale price data)
   const data = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],

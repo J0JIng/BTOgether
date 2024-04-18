@@ -1,0 +1,1245 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3613327, 103.7472769] },
+      "properties": {
+        "year": 2017,
+        "town": "BUKIT BATOK",
+        "flat_type": "2 ROOM",
+        "resale_price": 164000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3613327, 103.7472769] },
+      "properties": {
+        "year": 2020,
+        "town": "BUKIT BATOK",
+        "flat_type": "2 ROOM ",
+        "resale_price": 144000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3613327, 103.7472769] },
+      "properties": {
+        "year": 2017,
+        "town": "BUKIT BATOK",
+        "flat_type": "3 ROOM",
+        "resale_price": 246000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3613327, 103.7472769] },
+      "properties": {
+        "year": 2020,
+        "town": "BUKIT BATOK",
+        "flat_type": "3 ROOM",
+        "resale_price": 221000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3613327, 103.7472769] },
+      "properties": {
+        "year": 2017,
+        "town": "BUKIT BATOK",
+        "flat_type": "4 ROOM",
+        "resale_price": 321000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3613327, 103.7472769] },
+      "properties": {
+        "year": 2020,
+        "town": "BUKIT BATOK",
+        "flat_type": "4 ROOM",
+        "resale_price": 334000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3613327, 103.7472769] },
+      "properties": {
+        "year": 2017,
+        "town": "BUKIT BATOK",
+        "flat_type": "5 ROOM",
+        "resale_price": 418000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3613327, 103.7472769] },
+      "properties": {
+        "year": 2020,
+        "town": "BUKIT BATOK",
+        "flat_type": "5 ROOM",
+        "resale_price": 460000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3737091, 103.7741394] },
+      "properties": {
+        "year": 2016,
+        "town": "BUKIT PANJANG",
+        "flat_type": "2 ROOM",
+        "resale_price": 139000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3737091, 103.7741394] },
+      "properties": {
+        "year": 2016,
+        "town": "BUKIT PANJANG",
+        "flat_type": "3 ROOM",
+        "resale_price": 210000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3737091, 103.7741394] },
+      "properties": {
+        "year": 2016,
+        "town": "BUKIT PANJANG",
+        "flat_type": "4 ROOM",
+        "resale_price": 336000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3737091, 103.7741394] },
+      "properties": {
+        "year": 2016,
+        "town": "BUKIT PANJANG",
+        "flat_type": "5 ROOM",
+        "resale_price": 410000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.37792195, 103.7528853] },
+      "properties": {
+        "year": 2017,
+        "town": "CHOA CHU KANG",
+        "flat_type": "2 ROOM",
+        "resale_price": 139000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.37792195, 103.7528853] },
+      "properties": {
+        "year": 2020,
+        "town": "CHOA CHU KANG",
+        "flat_type": "2 ROOM ",
+        "resale_price": 143000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.37792195, 103.7528853] },
+      "properties": {
+        "year": 2017,
+        "town": "CHOA CHU KANG",
+        "flat_type": "3 ROOM",
+        "resale_price": 211000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.37792195, 103.7528853] },
+      "properties": {
+        "year": 2020,
+        "town": "CHOA CHU KANG",
+        "flat_type": "3 ROOM",
+        "resale_price": 214000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.37792195, 103.7528853] },
+      "properties": {
+        "year": 2017,
+        "town": "CHOA CHU KANG",
+        "flat_type": "4 ROOM",
+        "resale_price": 340000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.37792195, 103.7528853] },
+      "properties": {
+        "year": 2020,
+        "town": "CHOA CHU KANG",
+        "flat_type": "4 ROOM",
+        "resale_price": 326000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.37792195, 103.7528853] },
+      "properties": {
+        "year": 2017,
+        "town": "CHOA CHU KANG",
+        "flat_type": "5 ROOM",
+        "resale_price": 316000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.37792195, 103.7528853] },
+      "properties": {
+        "year": 2020,
+        "town": "CHOA CHU KANG",
+        "flat_type": "5 ROOM",
+        "resale_price": 376000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3729237, 103.886037] },
+      "properties": {
+        "year": 2021,
+        "town": "HOUGANG",
+        "flat_type": "2 ROOM ",
+        "resale_price": 234000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3729237, 103.886037] },
+      "properties": {
+        "year": 2021,
+        "town": "HOUGANG",
+        "flat_type": "3 ROOM",
+        "resale_price": 340000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3729237, 103.886037] },
+      "properties": {
+        "year": 2021,
+        "town": "HOUGANG",
+        "flat_type": "4 ROOM",
+        "resale_price": 507000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3729237, 103.886037] },
+      "properties": {
+        "year": 2021,
+        "town": "HOUGANG",
+        "flat_type": "5 ROOM",
+        "resale_price": 495000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438561, 103.7417138] },
+      "properties": {
+        "year": 2021,
+        "town": "JURONG EAST",
+        "flat_type": "2 ROOM ",
+        "resale_price": 189000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438561, 103.7417138] },
+      "properties": {
+        "year": 2021,
+        "town": "JURONG EAST",
+        "flat_type": "3 ROOM",
+        "resale_price": 281000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438561, 103.7417138] },
+      "properties": {
+        "year": 2021,
+        "town": "JURONG EAST",
+        "flat_type": "4 ROOM",
+        "resale_price": 436000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438561, 103.7417138] },
+      "properties": {
+        "year": 2021,
+        "town": "JURONG EAST",
+        "flat_type": "5 ROOM",
+        "resale_price": 466000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438075, 103.7110262] },
+      "properties": {
+        "year": 2018,
+        "town": "JURONG WEST",
+        "flat_type": "2 ROOM",
+        "resale_price": 160000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438075, 103.7110262] },
+      "properties": {
+        "year": 2021,
+        "town": "JURONG WEST",
+        "flat_type": "2 ROOM",
+        "resale_price": 160000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438075, 103.7110262] },
+      "properties": {
+        "year": 2018,
+        "town": "JURONG WEST",
+        "flat_type": "3 ROOM",
+        "resale_price": 243000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438075, 103.7110262] },
+      "properties": {
+        "year": 2021,
+        "town": "JURONG WEST",
+        "flat_type": "3 ROOM",
+        "resale_price": 229000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438075, 103.7110262] },
+      "properties": {
+        "year": 2018,
+        "town": "JURONG WEST",
+        "flat_type": "4 ROOM",
+        "resale_price": 364000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438075, 103.7110262] },
+      "properties": {
+        "year": 2021,
+        "town": "JURONG WEST",
+        "flat_type": "4 ROOM",
+        "resale_price": 321000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438075, 103.7110262] },
+      "properties": {
+        "year": 2018,
+        "town": "JURONG WEST",
+        "flat_type": "5 ROOM",
+        "resale_price": 457000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3438075, 103.7110262] },
+      "properties": {
+        "year": 2021,
+        "town": "JURONG WEST",
+        "flat_type": "5 ROOM",
+        "resale_price": 487000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2016,
+        "town": "PUNGGOL",
+        "flat_type": "2 ROOM",
+        "resale_price": 140000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2017,
+        "town": "PUNGGOL",
+        "flat_type": "2 ROOM",
+        "resale_price": 140000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2018,
+        "town": "PUNGGOL",
+        "flat_type": "2 ROOM",
+        "resale_price": 158000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2019,
+        "town": "PUNGGOL",
+        "flat_type": "2 ROOM",
+        "resale_price": 173000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2016,
+        "town": "PUNGGOL",
+        "flat_type": "3 ROOM",
+        "resale_price": 210000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2017,
+        "town": "PUNGGOL",
+        "flat_type": "3 ROOM",
+        "resale_price": 210000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2018,
+        "town": "PUNGGOL",
+        "flat_type": "3 ROOM",
+        "resale_price": 243000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2019,
+        "town": "PUNGGOL",
+        "flat_type": "3 ROOM",
+        "resale_price": 268000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2016,
+        "town": "PUNGGOL",
+        "flat_type": "4 ROOM",
+        "resale_price": 365000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2017,
+        "town": "PUNGGOL",
+        "flat_type": "4 ROOM",
+        "resale_price": 347000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2018,
+        "town": "PUNGGOL",
+        "flat_type": "4 ROOM",
+        "resale_price": 362000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2019,
+        "town": "PUNGGOL",
+        "flat_type": "4 ROOM",
+        "resale_price": 398000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2016,
+        "town": "PUNGGOL",
+        "flat_type": "5 ROOM",
+        "resale_price": 498000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2017,
+        "town": "PUNGGOL",
+        "flat_type": "5 ROOM",
+        "resale_price": 434000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2018,
+        "town": "PUNGGOL",
+        "flat_type": "5 ROOM",
+        "resale_price": 489000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.40611565, 103.9055375] },
+      "properties": {
+        "year": 2019,
+        "town": "PUNGGOL",
+        "flat_type": "5 ROOM",
+        "resale_price": 551000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2016,
+        "town": "SEMBAWANG",
+        "flat_type": "2 ROOM",
+        "resale_price": 116000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2018,
+        "town": "SEMBAWANG",
+        "flat_type": "2 ROOM",
+        "resale_price": 116000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2019,
+        "town": "SEMBAWANG",
+        "flat_type": "2 ROOM",
+        "resale_price": 141000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2020,
+        "town": "SEMBAWANG",
+        "flat_type": "2 ROOM",
+        "resale_price": 122000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2016,
+        "town": "SEMBAWANG",
+        "flat_type": "3 ROOM",
+        "resale_price": 181000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2018,
+        "town": "SEMBAWANG",
+        "flat_type": "3 ROOM",
+        "resale_price": 204000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2019,
+        "town": "SEMBAWANG",
+        "flat_type": "3 ROOM",
+        "resale_price": 210000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2020,
+        "town": "SEMBAWANG",
+        "flat_type": "3 ROOM",
+        "resale_price": 189000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2016,
+        "town": "SEMBAWANG",
+        "flat_type": "4 ROOM",
+        "resale_price": 300000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2018,
+        "town": "SEMBAWANG",
+        "flat_type": "4 ROOM",
+        "resale_price": 304000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2019,
+        "town": "SEMBAWANG",
+        "flat_type": "4 ROOM",
+        "resale_price": 320000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2020,
+        "town": "SEMBAWANG",
+        "flat_type": "4 ROOM",
+        "resale_price": 302000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2016,
+        "town": "SEMBAWANG",
+        "flat_type": "5 ROOM",
+        "resale_price": 392000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2018,
+        "town": "SEMBAWANG",
+        "flat_type": "5 ROOM",
+        "resale_price": 391000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2019,
+        "town": "SEMBAWANG",
+        "flat_type": "5 ROOM",
+        "resale_price": 406000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.45432815, 103.8163804] },
+      "properties": {
+        "year": 2020,
+        "town": "SEMBAWANG",
+        "flat_type": "5 ROOM",
+        "resale_price": 388000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3912104, 103.8753124] },
+      "properties": {
+        "year": 2017,
+        "town": "SENGKANG",
+        "flat_type": "2 ROOM",
+        "resale_price": 139000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3912104, 103.8753124] },
+      "properties": {
+        "year": 2018,
+        "town": "SENGKANG",
+        "flat_type": "2 ROOM",
+        "resale_price": 151000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3912104, 103.8753124] },
+      "properties": {
+        "year": 2017,
+        "town": "SENGKANG",
+        "flat_type": "3 ROOM",
+        "resale_price": 215000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3912104, 103.8753124] },
+      "properties": {
+        "year": 2018,
+        "town": "SENGKANG",
+        "flat_type": "3 ROOM",
+        "resale_price": 242000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3912104, 103.8753124] },
+      "properties": {
+        "year": 2017,
+        "town": "SENGKANG",
+        "flat_type": "4 ROOM",
+        "resale_price": 331000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3912104, 103.8753124] },
+      "properties": {
+        "year": 2018,
+        "town": "SENGKANG",
+        "flat_type": "4 ROOM",
+        "resale_price": 353000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3912104, 103.8753124] },
+      "properties": {
+        "year": 2017,
+        "town": "SENGKANG",
+        "flat_type": "5 ROOM",
+        "resale_price": 402000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.3912104, 103.8753124] },
+      "properties": {
+        "year": 2018,
+        "town": "SENGKANG",
+        "flat_type": "5 ROOM",
+        "resale_price": 438000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2018,
+        "town": "TENGAH",
+        "flat_type": "2 ROOM",
+        "resale_price": 150000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2019,
+        "town": "TENGAH",
+        "flat_type": "2 ROOM",
+        "resale_price": 167000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2020,
+        "town": "TENGAH",
+        "flat_type": "2 ROOM",
+        "resale_price": 167000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2021,
+        "town": "TENGAH",
+        "flat_type": "2 ROOM",
+        "resale_price": 190000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2018,
+        "town": "TENGAH",
+        "flat_type": "3 ROOM",
+        "resale_price": 243000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2019,
+        "town": "TENGAH",
+        "flat_type": "3 ROOM",
+        "resale_price": 256000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2020,
+        "town": "TENGAH",
+        "flat_type": "3 ROOM",
+        "resale_price": 248000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2021,
+        "town": "TENGAH",
+        "flat_type": "3 ROOM",
+        "resale_price": 273000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2018,
+        "town": "TENGAH",
+        "flat_type": "4 ROOM",
+        "resale_price": 355000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2019,
+        "town": "TENGAH",
+        "flat_type": "4 ROOM",
+        "resale_price": 381000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2020,
+        "town": "TENGAH",
+        "flat_type": "4 ROOM",
+        "resale_price": 366000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2021,
+        "town": "TENGAH",
+        "flat_type": "4 ROOM",
+        "resale_price": 403000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2018,
+        "town": "TENGAH",
+        "flat_type": "5 ROOM",
+        "resale_price": 480000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2019,
+        "town": "TENGAH",
+        "flat_type": "5 ROOM",
+        "resale_price": 510000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2020,
+        "town": "TENGAH",
+        "flat_type": "5 ROOM",
+        "resale_price": 489000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [null, null] },
+      "properties": {
+        "year": 2021,
+        "town": "TENGAH",
+        "flat_type": "5 ROOM",
+        "resale_price": 525000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2017,
+        "town": "WOODLANDS",
+        "flat_type": "2 ROOM",
+        "resale_price": 129000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2019,
+        "town": "WOODLANDS",
+        "flat_type": "2 ROOM",
+        "resale_price": 128000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2020,
+        "town": "WOODLANDS",
+        "flat_type": "2 ROOM",
+        "resale_price": 162000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2021,
+        "town": "WOODLANDS",
+        "flat_type": "2 ROOM",
+        "resale_price": 148000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2017,
+        "town": "WOODLANDS",
+        "flat_type": "3 ROOM",
+        "resale_price": 189000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2019,
+        "town": "WOODLANDS",
+        "flat_type": "3 ROOM",
+        "resale_price": 194000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2020,
+        "town": "WOODLANDS",
+        "flat_type": "3 ROOM",
+        "resale_price": 228000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2021,
+        "town": "WOODLANDS",
+        "flat_type": "3 ROOM",
+        "resale_price": 219000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2017,
+        "town": "WOODLANDS",
+        "flat_type": "4 ROOM",
+        "resale_price": 318000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2019,
+        "town": "WOODLANDS",
+        "flat_type": "4 ROOM",
+        "resale_price": 295000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2020,
+        "town": "WOODLANDS",
+        "flat_type": "4 ROOM",
+        "resale_price": 381000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2021,
+        "town": "WOODLANDS",
+        "flat_type": "4 ROOM",
+        "resale_price": 373000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2017,
+        "town": "WOODLANDS",
+        "flat_type": "5 ROOM",
+        "resale_price": 401000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2019,
+        "town": "WOODLANDS",
+        "flat_type": "5 ROOM",
+        "resale_price": 383000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2020,
+        "town": "WOODLANDS",
+        "flat_type": "5 ROOM",
+        "resale_price": 516000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.44063665, 103.7757372] },
+      "properties": {
+        "year": 2021,
+        "town": "WOODLANDS",
+        "flat_type": "5 ROOM",
+        "resale_price": 491000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2016,
+        "town": "YISHUN",
+        "flat_type": "2 ROOM",
+        "resale_price": 123000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2017,
+        "town": "YISHUN",
+        "flat_type": "2 ROOM",
+        "resale_price": 113000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2018,
+        "town": "YISHUN",
+        "flat_type": "2 ROOM",
+        "resale_price": 132000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2021,
+        "town": "YISHUN",
+        "flat_type": "2 ROOM",
+        "resale_price": 149000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2016,
+        "town": "YISHUN",
+        "flat_type": "3 ROOM",
+        "resale_price": 190000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2017,
+        "town": "YISHUN",
+        "flat_type": "3 ROOM",
+        "resale_price": 177000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2018,
+        "town": "YISHUN",
+        "flat_type": "3 ROOM",
+        "resale_price": 216000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2021,
+        "town": "YISHUN",
+        "flat_type": "3 ROOM",
+        "resale_price": 248000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2016,
+        "town": "YISHUN",
+        "flat_type": "4 ROOM",
+        "resale_price": 297000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2017,
+        "town": "YISHUN",
+        "flat_type": "4 ROOM",
+        "resale_price": 291000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2018,
+        "town": "YISHUN",
+        "flat_type": "4 ROOM",
+        "resale_price": 317000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2021,
+        "town": "YISHUN",
+        "flat_type": "4 ROOM",
+        "resale_price": 374000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2016,
+        "town": "YISHUN",
+        "flat_type": "5 ROOM",
+        "resale_price": 378000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2017,
+        "town": "YISHUN",
+        "flat_type": "5 ROOM",
+        "resale_price": 378000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2018,
+        "town": "YISHUN",
+        "flat_type": "5 ROOM",
+        "resale_price": 405000.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [1.4351207, 103.8284646] },
+      "properties": {
+        "year": 2021,
+        "town": "YISHUN",
+        "flat_type": "5 ROOM",
+        "resale_price": 490000.0
+      }
+    }
+  ]
+}

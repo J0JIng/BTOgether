@@ -15,11 +15,12 @@ export function GetNearest(chosenJson, data) {
       .then((dat) => {
         const newMarkers = dat.features
           .map((feature) => {
+            
             const { coordinates } = feature.geometry;
-            const [lng, lat] = coordinates; // Leaflet uses [lat, lng]
+            const [lng, lat] = coordinates; 
             return {
               geocode: [lat, lng],
-              properties: feature.properties, // Include all properties
+              properties: feature.properties, 
             };
           })
           // Filter markers by distance

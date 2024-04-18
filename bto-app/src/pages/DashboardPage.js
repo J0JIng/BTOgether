@@ -47,6 +47,7 @@ import clinicgeojson from "../geojson/CHASClinics.geojson";
 import mallsgeojson from "../geojson/shopping_mall_coordinates.geojson";
 import notFound from "../assets/item-not-found.svg";
 
+
 // Components
 import Container from "../components/Container";
 import Modal from "../components/Modal";
@@ -59,10 +60,13 @@ import { fetchTravelTime } from "../utils/fetchTravelTime";
 import Gemini from "../components/GoogleGenerativeAIComponent";
 import UserDataUtility from "../utils/UserDataUtility";
 
+
 const generateId = () => `container-${uuidv4()}`;
 
 export default function DashboardPage() {
   const [mutex, setMutex] = useState(false);
+  const [fetchComplete, setFetchComplete] = useState(false);
+
   const [activeBTO, setActiveBTO] = useState(null);
   const [BTO1Status, setBTO1Status] = useState(false);
   const [BTO2Status, setBTO2Status] = useState(false);
@@ -98,6 +102,9 @@ export default function DashboardPage() {
       address: 0,
       latitude: 0,
       longitude: 0,
+      historicalbtoprice:0,
+      historicalhdbprice:0,
+      towncounciil:"placeholder",
       projectname: "placeholder",
       numberofrooms: "placeholder",
       containers: [],
@@ -106,6 +113,9 @@ export default function DashboardPage() {
       address: 0,
       latitude: 0,
       longitude: 0,
+      historicalbtoprice:0,
+      historicalhdbprice:0,
+      towncounciil:"placeholder",
       projectname: "placeholder",
       numberofrooms: "placeholder",
       containers: [],
@@ -114,6 +124,9 @@ export default function DashboardPage() {
       address: 0,
       latitude: 0,
       longitude: 0,
+      historicalbtoprice:0,
+      historicalhdbprice:0,
+      towncounciil:"placeholder",
       projectname: "placeholder",
       numberofrooms: "placeholder",
       containers: [],
@@ -186,6 +199,9 @@ export default function DashboardPage() {
           longitude: currentBtoData.longitude,
           projectname: currentBtoData.projectname,
           numberofrooms: currentBtoData.numberofrooms,
+          historicalbtoprice:currentBtoData.historicalbtoprice,
+          historicalhdbprice:currentBtoData.historicalhdbprice,
+          towncouncil:currentBtoData.towncouncil,
           containers: containers,
         };
 
@@ -368,10 +384,9 @@ export default function DashboardPage() {
     tryOpenComparison();
   };
 
-  const updateActiveBTO = () =>{
-    if (loadedData && activeBTO!==null) {
-
-      console.log("BTO2Status"+ BTO2Status);
+  const updateActiveBTO = () => {
+    if (loadedData && activeBTO !== null) {
+      console.log("BTO2Status" + BTO2Status);
 
       switch (activeBTO) {
         // Remove BTO1
@@ -396,7 +411,7 @@ export default function DashboardPage() {
           break;
       }
     }
-  }
+  };
 
   // Remove BTO from UserData
   const deleteFavouriteBTO = () => {
@@ -448,10 +463,10 @@ export default function DashboardPage() {
       switch (optionSelected) {
         case "Car":
           // DEBUGGING
-          console.log("Home Latitude:", homeLocation.latitude);
-          console.log("Home Longitude:", homeLocation.longitude);
-          console.log("Destination Latitude:", destGeoCode.latitude);
-          console.log("Destination Longitude:", destGeoCode.longitude);
+          // console.log("Home Latitude:", homeLocation.latitude);
+          // console.log("Home Longitude:", homeLocation.longitude);
+          // console.log("Destination Latitude:", destGeoCode.latitude);
+          // console.log("Destination Longitude:", destGeoCode.longitude);
 
           setTimeToTravel(
             fetchTravelTime(
@@ -583,6 +598,84 @@ export default function DashboardPage() {
     setTimeToTravelInString(result);
   }
 
+
+  // const fetchAmenitiesData = (activeBTO) => {
+  //   if (activeBTO !== null && loadedData !== null && loadedData[activeBTO]) {
+  //     const activeBTOData = loadedData[activeBTO];
+
+  //     // Fetch HDB price data
+  //     GetNearestPrice(
+  //       averagepricegeojson,
+  //       {
+  //         latitude: activeBTOData.latitude,
+  //         longitude: activeBTOData.longitude,
+  //       },
+  //       activeBTOData.numberofrooms,
+  //       2021
+  //     ).then((nearestHDB) => {
+  //       if (nearestHDB && nearestHDB.obj) {
+  //         const properties = nearestHDB.properties;
+  //         const HDBdata = properties.resale_price.toLocaleString("en-US", {
+  //           style: "currency",
+  //           currency: "USD",
+  //           minimumFractionDigits: 0,
+  //           maximumFractionDigits: 0,
+  //         });
+  //         console.log("HDB price:" + HDBdata);
+  //         setHDBpriceData(HDBdata);
+  //       } else {
+  //         console.log("Nearest HDB amenity not found or is null.");
+  //       }
+  //     });
+
+  //     // Fetch BTO price data
+  //     GetNearestPrice(
+  //       btoaveragepricegeojson,
+  //       {
+  //         latitude: activeBTOData.latitude,
+  //         longitude: activeBTOData.longitude,
+  //       },
+  //       activeBTOData.numberofrooms,
+  //       2021
+  //     ).then((nearestBTO) => {
+  //       if (nearestBTO && nearestBTO.obj) {
+  //         const properties = nearestBTO.properties;
+  //         const BTOdata = properties.resale_price.toLocaleString("en-US", {
+  //           style: "currency",
+  //           currency: "USD",
+  //           minimumFractionDigits: 0,
+  //           maximumFractionDigits: 0,
+  //         });
+  //         console.log("BTO price:" + BTOdata);
+  //         setBTOpriceData(BTOdata);
+  //       } else {
+  //         console.log("Nearest BTO amenity not found or is null.");
+  //       }
+  //     });
+
+  //     // Fetch office data
+  //     GetNearest(towncouncilgeojson, {
+  //       latitude: activeBTOData.latitude,
+  //       longitude: activeBTOData.longitude,
+  //     })
+  //       .then((nearestOffice) => {
+  //         if (nearestOffice && nearestOffice.obj) {
+  //           const properties = nearestOffice.properties;
+  //           setOffice(properties.Description);
+  //           console.log(
+  //             "the inside office:" + JSON.stringify(properties.Description)
+  //           );
+  //         } else {
+  //           console.log("Nearest amenity not found or is null.");
+  //         }
+  //       })
+  //       .finally(() => {
+  //         // Once all fetch operations are complete, set the flag to true
+  //         setFetchComplete(true);
+  //       });
+  //   }
+  // };
+
   // generated default frames from user Data
   const generateDefaultFrames = (currentActiveBTO) => {
     let data = [{}]; // Initialize with an empty array
@@ -592,29 +685,42 @@ export default function DashboardPage() {
       loadedData[currentActiveBTO]
     ) {
       const activeBTOData = loadedData[currentActiveBTO];
+    
       data = [
         { name: "Location", description: activeBTOData.address },
-        { name: "Town Council", description: "Sembawang Town Council." },
+        { name: "Town Council", description: activeBTOData.towncouncil },
         {
           name: "Historical HDB Price",
-          description: "Historical HDB price around the location is $670,000.",
+          description:
+            "Historical HDB price around the location is " +
+            activeBTOData.historicalhdbprice +
+            " for a " +
+            activeBTOData.numberofrooms +
+            " Room flat",
         },
         {
           name: "Historical BTO Price",
-          description: "Historical BTO price around the location is $450,000.",
+          description:
+            "Historical BTO price around the location is " +
+            activeBTOData.historicalbtoprice +
+            " for a " +
+            activeBTOData.numberofrooms +
+            " Room flat",
         },
         {
           name: "Number of Rooms",
           description: activeBTOData.numberofrooms + " Room flat",
         },
       ];
+
+      // Map data to frames
+      return data.map((frame) => ({
+        id: generateId(),
+        title: frame.name,
+        description: frame.description,
+        frametype: "default",
+      }));
     }
-    return data.map((frame) => ({
-      id: generateId(),
-      title: frame.name,
-      description: frame.description,
-      frametype: "default",
-    }));
   };
 
   // Function to create a new interactable Frame
@@ -946,20 +1052,31 @@ export default function DashboardPage() {
                 onDragEnd={handleDragEnd}
               >
                 <SortableContext items={containers.map((i) => i.id)}>
-                  {containers.map((container) => (
-                    <Container
-                      id={container.id}
-                      title={container.title}
-                      description={container.description}
-                      numberOfAmenities={container.numberOfAmenities}
-                      timeToTravel={container.timeToTravel}
-                      key={container.id}
-                      onExpand={() => {
-                        setCurrentContainerId(container.id);
-                        setShowAddInfoModal(true);
-                      }}
-                    ></Container>
-                  ))}
+                  {containers.map((container) => {
+                    // Find corresponding BTO data for the container
+                    const currentBtoData = loadedData[activeBTO];
+                    // console.log(JSON.stringify(currentBtoData))
+                    // console.log(JSON.stringify(currentBtoData.latitude))
+                    // console.log(JSON.stringify(currentBtoData.longitude))
+                    // console.log(JSON.stringify(currentBtoData.numberofrooms))
+                    return (
+                      <Container
+                        id={container.id}
+                        title={container.title}
+                        description={container.description}
+                        numberOfAmenities={container.numberOfAmenities}
+                        timeToTravel={container.timeToTravel}
+                        latitude={currentBtoData.latitude}
+                        longitude={currentBtoData.longitude}
+                        flatType={currentBtoData.numberofrooms}
+                        key={container.id}
+                        onExpand={() => {
+                          setCurrentContainerId(container.id);
+                          setShowAddInfoModal(true);
+                        }}
+                      />
+                    );
+                  })}
                 </SortableContext>
                 <DragOverlay adjustScale={false}>
                   {/* Drag Overlay For Container */}
