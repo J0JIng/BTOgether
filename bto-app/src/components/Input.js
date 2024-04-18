@@ -129,6 +129,17 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
     return null;
   };
 
+  useEffect(() => {
+    console.log("New destination", destGeoCode);
+    onChange({
+      selected,
+      optionSelected,
+      distance,
+      addressField,
+      destGeoCode,
+    });
+  }, [destGeoCode]);
+
   const renderAddressInput = () => {
     if (selected === "Transportation" && viewSelected) {
       return (

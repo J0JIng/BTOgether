@@ -292,23 +292,33 @@ export default function DashboardPage() {
 
   // Load Active BTO Saved containers
   useEffect(() => {
-    if (loadedData && activeBTO) {
-      const btoData = loadedData[activeBTO]; // BTO1 BTO2 BTO3 null
-      setHomeLocation(btoData.address, btoData.latitude, btoData.longitude);
-      // If new location set and container has not been created before
-      // console.log("bto container: " + JSON.stringify(btoData.containers));
-
-      if (btoData.containers === null || btoData.containers === undefined || (Array.isArray(btoData.containers) && btoData.containers.length === 0)) {
-        console.log("Creating new default Containers")
-        setContainers(generateDefaultFrames(activeBTO));
+    console.log("changed bto")
+    dataUtilityRef.current.loadUserData().then(()=> {
+      console.log("Newly fetched again")
+      if (loadedData && activeBTO) {
+        console.log("we are at BTO",activeBTO)
+        const btoData = loadedData[activeBTO]; // BTO1 BTO2 BTO3 null
+        console.log(btoData.address, btoData.latitude, btoData.longitude)
+        setHomeLocation({
+          address: btoData.address,
+          latitude: btoData.latitude,
+          longitude: btoData.longitude
+        });
+        // If new location set and container has not been created before
+        // console.log("bto container: " + JSON.stringify(btoData.containers));
+  
+        if (btoData.containers === null || btoData.containers === undefined || (Array.isArray(btoData.containers) && btoData.containers.length === 0)) {
+          console.log("Creating new default Containers")
+          setContainers(generateDefaultFrames(activeBTO));
+        } else {
+          console.log("Saved Containers have been loaded")
+          setContainers(btoData.containers);
+        }
       } else {
-        console.log("Saved Containers have been loaded")
-        setContainers(btoData.containers);
+        setContainers([]);
       }
-    } else {
-      setContainers([]);
-    }
-  }, [activeBTO, loadedData]);
+    })
+  }, [activeBTO]);
 
   // Function to handle button click for BTO1
   const handleBTO1Click = () => {
@@ -611,7 +621,11 @@ export default function DashboardPage() {
     let description;
 
     if (containerName === "Transportation") {
-      if (addressField === "" || addressField === null) {
+      console.log(destGeoCode)
+      if (destGeoCode.latitude === null || destGeoCode.latitude === undefined) {
+        alert("Please Press L-Shift in the address bar to confirm your address again")
+        return;
+      } else if (addressField === "" || addressField === null) {
         console.log("Invalid addressfield");
         resetContainerFields();
         return;
