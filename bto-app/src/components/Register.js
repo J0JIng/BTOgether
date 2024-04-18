@@ -11,6 +11,17 @@ const SignUp = ({ user }) => {
 
   const handleSignUp = () => {
     if (!email || !password) return;
+
+    // Validate password
+    if (!validatePassword(password)) {
+      alert(
+        "Password must be at least 8 characters long and contain a mix of upper and lower case characters, numbers, and special characters."
+      );
+      // Reset password input
+      setPassword("");
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -30,6 +41,11 @@ const SignUp = ({ user }) => {
   if (user) {
     return <Navigate to="/home" />;
   }
+
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+    return passwordRegex.test(password);
+  };
 
   return (
     <div className="register-box">
@@ -53,6 +69,7 @@ const SignUp = ({ user }) => {
           className="password-input login-input"
           type="password"
           id="password"
+          value={password}
           onChange={handlePasswordChange}
         />
       </div>
