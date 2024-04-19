@@ -159,6 +159,7 @@ const Input = ({ name, defaultValue, placeholder, onChange }) => {
             }}
             className="w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
+          <p style={{fontSize: "13px", fontStyle: "italic"}}>Press L-Shift in the address field above to confirm</p>
         </div>
       );
     }
