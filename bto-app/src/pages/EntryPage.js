@@ -73,12 +73,14 @@ const EntryPage = () => {
         sx={{
           backgroundColor: "#f7776b",
           height: boxHeight, // Set height based on state
-          width: "100%"
+          width: "100%",
         }}
       >
         <div className="container anim-1">
           <div className="heading-text anim-1">
-            <div className="heading-text title">Your Search, Your Conditions</div>
+            <div className="heading-text title">
+              Your Search, Your Conditions
+            </div>
             <div className="heading-text description">
               Streamline your BTO journey. Explore, plan, and secure your dream
               home effortlessly with personalized recommendations and intuitive
@@ -92,7 +94,6 @@ const EntryPage = () => {
             className="first-hdb-image image-style"
           />
         </div>
-
       </Box>
       <Box
         sx={{
@@ -107,7 +108,7 @@ const EntryPage = () => {
       <div className="heading-box"></div>
 
       <div className="logos">
-        <div className="key-features anim-1" style={{marginTop: 70}}>
+        <div className="key-features anim-1" style={{ marginTop: 70 }}>
           <div className="title ">Key Features</div>
         </div>
 
@@ -120,8 +121,8 @@ const EntryPage = () => {
             />
             <div className="header">Planner</div>
             <div className="logo-description">
-              Some words that will become the description of the image and show
-              of the features of out website
+              Find Answers to Common FAQs about BTOs and track progress with an
+              organised and dynamic timeline.
             </div>
           </div>
           <div className="dashboard-container logo-block">
@@ -132,8 +133,8 @@ const EntryPage = () => {
             />
             <div className="header">Dashboard</div>
             <div className="logo-description">
-              Some words that will become the description of the image and show
-              of the features of out website
+              Access essential information information such as location, town
+              council details, and estimated transport timings.
             </div>
           </div>
         </div>
@@ -146,8 +147,8 @@ const EntryPage = () => {
             />
             <div className="header">Easy to Use</div>
             <div className="logo-description">
-              Some words that will become the description of the image and show
-              of the features of out website
+              Straightforward, Simple, Intuitive. Specially designed to provide
+              all your needs and information a click away.
             </div>
           </div>
           <div className="search-container logo-block">
@@ -156,10 +157,9 @@ const EntryPage = () => {
               alt="Search Function"
               style={{ width: "225px", height: "225px", borderRadius: "5px" }}
             />
-            <div className="header">Search Function</div>
+            <div className="header">Find your BTO</div>
             <div className="logo-description">
-              Some words that will become the description of the image and show
-              of the features of out website
+              Explore nearby amenities related to each BTO Location.
             </div>
           </div>
         </div>
