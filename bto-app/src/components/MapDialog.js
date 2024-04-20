@@ -209,7 +209,7 @@ export default function MapDialog({ type, locationInfo }) {
       >
         <DialogTitle id="alert-dialog-title">
           Find New{" "}
-          {type != "parentsAddress" ? "Parent's Address" : "Workplace Address"}
+          {type == "parentsAddress" ? "Parent's Address" : "Workplace Address"}
         </DialogTitle>
         <DialogContent>
           <TextField
