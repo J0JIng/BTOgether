@@ -1,6 +1,6 @@
 # BTOgether-SC2006
 
-<h3>BTOgether is a web application that aims to simplify the BTO housing journey in Singapore, offering a seamless and user-friendly experience that guides users, particularly couples and young adults seeking to embark on their homeownership journey, through every step of the application process.</h3>
+<p>BTOgether is a web application that aims to simplify the BTO housing journey in Singapore, offering a seamless and user-friendly experience that guides users, particularly couples and young adults seeking to embark on their homeownership journey, through every step of the application process.</p>
 
 ![image](https://github.com/J0JIng/BTOgether/assets/111691710/ba4c7d37-5d9d-4e96-a354-bf4cc36faeeb)
 
